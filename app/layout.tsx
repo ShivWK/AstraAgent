@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -13,15 +12,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Astra Agent",
+  title: 'Astra Agent',
+  description:
+    'Astra Agent is a customizable AI companion platform where users can create and manage their own intelligent agents. Choose AI models like ChatGPT, Gemini, or Claude, assign tasks, and build agents for translation, grammar correction, language practice, research, and automation. Includes voice-enabled interaction, subscriptions, and fully personalized workflows — all powered by a modern full-stack Next.js architecture.',
   icons: {
     icon: [
-      { url: "favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" }
+      { url: 'favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: 'favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
     ],
-    apple: "favicon/apple-touch-icon.png"
+    apple: 'favicon/apple-touch-icon.png',
   },
-  manifest: "favicon/site.webmanifest",
+  manifest: 'favicon/site.webmanifest',
 };
 
 export default function RootLayout({
