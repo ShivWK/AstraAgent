@@ -21,7 +21,9 @@ const Header = () => {
           height={50}
           className="rounded"
         />
-        <p className="text-2xl font-semibold tracking-wide">Astra Agent</p>
+        <p className="hidden text-2xl font-semibold tracking-wide lg:block">
+          Astra Agent
+        </p>
       </div>
       <div className="flex items-center gap-4">
         <Button
