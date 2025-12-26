@@ -1,12 +1,29 @@
 'use client';
 
 import { Button } from './ui/button';
-import { Sun } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import ThemeChanger from './ThemeChanger';
 
 const Header = () => {
   const router = useRouter();
+  const { resolvedTheme } = useTheme();
+  let src = null;
+
+  switch (resolvedTheme) {
+    case 'light':
+      src = '/logo-transparent.png';
+      break;
+
+    case 'dark':
+      src = '/logo-solid.jpeg';
+      break;
+
+    default:
+      src = '/logo-transparent.png';
+      break;
+  }
 
   return (
     <header className="fixed flex w-full justify-between p-3 backdrop-blur-md">
@@ -15,7 +32,7 @@ const Header = () => {
         onClick={() => router.push('/')}
       >
         <Image
-          src="/logo-solid.jpeg"
+          src={src}
           alt="Astra agent logo"
           width={50}
           height={50}
@@ -26,14 +43,8 @@ const Header = () => {
         </p>
       </div>
       <div className="flex items-center gap-4">
-        <Button
-          variant="secondary"
-          size="icon"
-          className="rounded-full text-xl"
-        >
-          <Sun size={24} strokeWidth={2} />
-        </Button>
-        <Button variant="secondary" className="text-md">
+        <ThemeChanger />
+        <Button variant="secondary" className="text-lg tracking-wide">
           Get Started
         </Button>
       </div>
