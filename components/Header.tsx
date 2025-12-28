@@ -1,12 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
+import { LoginForm } from './LoginForm';
 
 const Header = () => {
+  const [openLoginForm, setOpenLoginForm] = useState(false);
   const router = useRouter();
   const { resolvedTheme } = useTheme();
   let src = null;
@@ -34,8 +37,8 @@ const Header = () => {
         <Image
           src={src}
           alt="Astra agent logo"
-          width={50}
-          height={50}
+          width={55}
+          height={55}
           className="rounded"
         />
         <p className="hidden text-2xl font-semibold tracking-wide lg:block">
@@ -44,9 +47,15 @@ const Header = () => {
       </div>
       <div className="flex items-center gap-4">
         <ThemeChanger />
-        <Button variant="secondary" className="text-lg tracking-wide">
+        <Button
+          onClick={() => setOpenLoginForm(!openLoginForm)}
+          variant="secondary"
+          size="lg"
+          className="text-md tracking-wide"
+        >
           Get Started
         </Button>
+        <LoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
       </div>
     </header>
   );
