@@ -9,7 +9,7 @@ import {
 } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 
 type PropsType = {
   open: boolean;
@@ -28,7 +28,6 @@ export function LoginForm({ open, setOpen }: PropsType) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormType>({
-    mode: 'onSubmit',
     defaultValues: {
       name: '',
       email: '',
@@ -43,22 +42,30 @@ export function LoginForm({ open, setOpen }: PropsType) {
     setOpen(false);
   };
 
-  const nameValidation = isLogIn
-    ? {}
-    : {
-        required: { value: true, message: 'Name is required' },
-        minLength: 2,
-        maxLength: 50,
-        pattern: {
-          value: /^[A-Za-z][A-Za-z\s]{1,49}$/,
-          message: 'Provide a valid name',
-        },
-        validate: (fieldValue: string) => {
-          if (fieldValue.toLowerCase() === 'xxx') {
-            return 'Provide a valid name';
-          }
-        },
-      };
+  const onError = (error: FieldErrors<FormType>) => {
+    console.log(error);
+  };
+
+  const nameValidation = {
+    required: { value: true, message: 'Name is required' },
+    minLength: {
+      value: 2,
+      message: 'Name must be at least 2 characters',
+    },
+    maxLength: {
+      value: 50,
+      message: 'Name must be at most 50 characters',
+    },
+    pattern: {
+      value: /^[A-Za-z][A-Za-z\s]{1,49}$/,
+      message: 'Provide a valid name',
+    },
+    validate: (fieldValue: string) => {
+      if (fieldValue.toLowerCase() === 'xxx') {
+        return 'Provide a valid name';
+      }
+    },
+  };
 
   useEffect(() => {
     console.log(errors);
@@ -66,13 +73,13 @@ export function LoginForm({ open, setOpen }: PropsType) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
+      <DialogContent className="sm:max-w-[425px]">
+        <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
+          <DialogHeader className="mb-5">
             <DialogTitle>{isLogIn ? 'Sign In' : 'Sign Up'}</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4">
-            {!isLogIn && (
+          <div className="mb-5 grid gap-4">
+            {
               <div className="grid gap-3">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -82,26 +89,35 @@ export function LoginForm({ open, setOpen }: PropsType) {
                   {...register('name', nameValidation)}
                 />
                 {errors.name && (
-                  <p className="text-red-400">{errors.name.message}</p>
+                  <p className="text-sm text-red-400">{errors.name.message}</p>
                 )}
               </div>
-            )}
+            }
             <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
-                type="email"
+                type="text"
                 id="email"
                 placeholder="Enter Your Email"
                 {...register('email', {
                   required: { value: true, message: 'Email is required' },
-                  minLength: 5,
-                  maxLength: 254,
+                  minLength: {
+                    value: 5,
+                    message: 'Email must be at least 5 characters',
+                  },
+                  maxLength: {
+                    value: 254,
+                    message: 'Email must be at most 254 characters',
+                  },
                   pattern: {
                     value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
                     message: 'Provide a valid email',
                   },
                 })}
               />
+              {errors.email && (
+                <p className="text-sm text-red-400">{errors.email.message}</p>
+              )}
             </div>
 
             <div className="grid gap-3">
@@ -120,14 +136,19 @@ export function LoginForm({ open, setOpen }: PropsType) {
                     value: 64,
                     message: 'Password must be at most 64 characters',
                   },
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
-                    message:
-                      'Password must include upper, lower, number, and special character',
-                  },
+                  // pattern: {
+                  //   value:
+                  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
+                  //   message:
+                  //     'Password must include upper, lower, number, and special character',
+                  // },
                 })}
               />
+              {errors.password && (
+                <p className="text-sm text-red-400">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           </div>
           <DialogFooter className="w-full">
@@ -171,7 +192,7 @@ export function LoginForm({ open, setOpen }: PropsType) {
                 </Button>
               </div>
 
-              <p className="flex items-center gap-1">
+              <p className="mt-2 flex items-center gap-1">
                 <span className="text-gray-300">
                   {!isLogIn ? 'Already registered?' : 'New to Astra Agent?'}
                 </span>
@@ -185,8 +206,8 @@ export function LoginForm({ open, setOpen }: PropsType) {
               </p>
             </div>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
