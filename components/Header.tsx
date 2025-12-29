@@ -29,35 +29,37 @@ const Header = () => {
   }
 
   return (
-    <header className="fixed flex w-full justify-between p-3 backdrop-blur-md">
-      <div
-        className="flex cursor-pointer items-center gap-3"
-        onClick={() => router.push('/')}
-      >
-        <Image
-          src={src}
-          alt="Astra agent logo"
-          width={55}
-          height={55}
-          className="rounded"
-        />
-        <p className="hidden text-2xl font-semibold tracking-wide lg:block">
-          Astra Agent
-        </p>
-      </div>
-      <div className="flex items-center gap-4">
-        <ThemeChanger />
-        <Button
-          onClick={() => setOpenLoginForm(!openLoginForm)}
-          variant="secondary"
-          size="lg"
-          className="text-md tracking-wide"
+    <>
+      <header className="fixed flex w-full justify-between px-1 py-2 backdrop-blur-md md:px-2 md:py-3">
+        <div
+          className="flex cursor-pointer items-center gap-3"
+          onClick={() => router.push('/')}
         >
-          Get Started
-        </Button>
-        <LoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
-      </div>
-    </header>
+          <Image
+            src={src}
+            alt="Astra agent logo"
+            width={55}
+            height={55}
+            className="rounded"
+          />
+          <p className="hidden text-2xl font-semibold tracking-wide lg:block">
+            Astra Agent
+          </p>
+        </div>
+        <div className="flex items-center gap-4">
+          <ThemeChanger />
+          <Button
+            onClick={() => setOpenLoginForm(!openLoginForm)}
+            variant="secondary"
+            size="lg"
+            className="text-md tracking-wide"
+          >
+            Get Started
+          </Button>
+        </div>
+      </header>
+      <LoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
+    </>
   );
 };
 

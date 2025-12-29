@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import {
   Dialog,
@@ -9,17 +9,64 @@ import {
 } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
+import { useForm } from 'react-hook-form';
 
 type PropsType = {
   open: boolean;
   setOpen: (value: boolean) => void;
 };
 
+type FormType = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export function LoginForm({ open, setOpen }: PropsType) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormType>({
+    mode: 'onSubmit',
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+  });
   const [isLogIn, setLogin] = useState(true);
+
+  const onSubmit = (data: FormType) => {
+    console.log('Clicked');
+    console.log(data);
+    setOpen(false);
+  };
+
+  const nameValidation = isLogIn
+    ? {}
+    : {
+        required: { value: true, message: 'Name is required' },
+        minLength: 2,
+        maxLength: 50,
+        pattern: {
+          value: /^[A-Za-z][A-Za-z\s]{1,49}$/,
+          message: 'Provide a valid name',
+        },
+        validate: (fieldValue: string) => {
+          if (fieldValue.toLowerCase() === 'xxx') {
+            return 'Provide a valid name';
+          }
+        },
+      };
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{isLogIn ? 'Sign In' : 'Sign Up'}</DialogTitle>
@@ -27,13 +74,16 @@ export function LoginForm({ open, setOpen }: PropsType) {
           <div className="grid gap-4">
             {!isLogIn && (
               <div className="grid gap-3">
-                <Label htmlFor="name-1">Name</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
                   type="text"
-                  id="name-1"
-                  name="name"
-                  defaultValue="Shivendra Dwivedi"
+                  id="name"
+                  placeholder="Enter Your Name"
+                  {...register('name', nameValidation)}
                 />
+                {errors.name && (
+                  <p className="text-red-400">{errors.name.message}</p>
+                )}
               </div>
             )}
             <div className="grid gap-3">
@@ -41,8 +91,16 @@ export function LoginForm({ open, setOpen }: PropsType) {
               <Input
                 type="email"
                 id="email"
-                name="email"
-                defaultValue="example@gamil.com"
+                placeholder="Enter Your Email"
+                {...register('email', {
+                  required: { value: true, message: 'Email is required' },
+                  minLength: 5,
+                  maxLength: 254,
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+                    message: 'Provide a valid email',
+                  },
+                })}
               />
             </div>
 
@@ -51,8 +109,24 @@ export function LoginForm({ open, setOpen }: PropsType) {
               <Input
                 type="password"
                 id="password"
-                name="password"
-                defaultValue="example@gamil.com"
+                placeholder="Enter Your Password"
+                {...register('password', {
+                  required: { value: true, message: 'Password is required' },
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters',
+                  },
+                  maxLength: {
+                    value: 64,
+                    message: 'Password must be at most 64 characters',
+                  },
+                  pattern: {
+                    value:
+                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
+                    message:
+                      'Password must include upper, lower, number, and special character',
+                  },
+                })}
               />
             </div>
           </div>
@@ -93,7 +167,7 @@ export function LoginForm({ open, setOpen }: PropsType) {
                   type="submit"
                   className="basis-[49%] text-white dark:bg-[#0c2e96]"
                 >
-                  {isLogIn ? 'Log In' : 'Sign Up'}
+                  {isLogIn ? 'Sign In' : 'Sign Up'}
                 </Button>
               </div>
 
