@@ -79,7 +79,10 @@ export function LoginForm({ open, setOpen }: PropsType) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent
+        className="sm:max-w-[425px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
           <DialogHeader className="mb-5">
             <DialogTitle>{isLogIn ? 'Sign In' : 'Sign Up'}</DialogTitle>
