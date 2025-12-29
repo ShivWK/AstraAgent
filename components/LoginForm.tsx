@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from './ui/button';
 import {
   Dialog,
@@ -28,6 +28,7 @@ export function LoginForm({ open, setOpen }: PropsType) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormType>({
+    shouldUnregister: true,
     defaultValues: {
       name: '',
       email: '',
@@ -37,7 +38,6 @@ export function LoginForm({ open, setOpen }: PropsType) {
   const [isLogIn, setLogin] = useState(true);
 
   const onSubmit = (data: FormType) => {
-    console.log('Clicked');
     console.log(data);
     setOpen(false);
   };
@@ -46,30 +46,28 @@ export function LoginForm({ open, setOpen }: PropsType) {
     console.log(error);
   };
 
-  const nameValidation = {
-    required: { value: true, message: 'Name is required' },
-    minLength: {
-      value: 2,
-      message: 'Name must be at least 2 characters',
-    },
-    maxLength: {
-      value: 50,
-      message: 'Name must be at most 50 characters',
-    },
-    pattern: {
-      value: /^[A-Za-z][A-Za-z\s]{1,49}$/,
-      message: 'Provide a valid name',
-    },
-    validate: (fieldValue: string) => {
-      if (fieldValue.toLowerCase() === 'xxx') {
-        return 'Provide a valid name';
-      }
-    },
-  };
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  const nameValidation = isLogIn
+    ? {}
+    : {
+        required: { value: true, message: 'Name is required' },
+        minLength: {
+          value: 2,
+          message: 'Name must be at least 2 characters',
+        },
+        maxLength: {
+          value: 50,
+          message: 'Name must be at most 50 characters',
+        },
+        pattern: {
+          value: /^[A-Za-z][A-Za-z\s]{1,49}$/,
+          message: 'Provide a valid name',
+        },
+        validate: (fieldValue: string) => {
+          if (fieldValue.toLowerCase() === 'xxx') {
+            return 'Provide a valid name';
+          }
+        },
+      };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -79,7 +77,7 @@ export function LoginForm({ open, setOpen }: PropsType) {
             <DialogTitle>{isLogIn ? 'Sign In' : 'Sign Up'}</DialogTitle>
           </DialogHeader>
           <div className="mb-5 grid gap-4">
-            {
+            {!isLogIn && (
               <div className="grid gap-3">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -92,7 +90,7 @@ export function LoginForm({ open, setOpen }: PropsType) {
                   <p className="text-sm text-red-400">{errors.name.message}</p>
                 )}
               </div>
-            }
+            )}
             <div className="grid gap-3">
               <Label htmlFor="email">Email</Label>
               <Input
