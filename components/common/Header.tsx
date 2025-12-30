@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
-import { LoginForm } from './auth/LoginForm';
+import AuthForm from '../auth/AuthForm';
 
 const Header = () => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
@@ -58,7 +58,7 @@ const Header = () => {
           </Button>
         </div>
       </header>
-      <LoginForm open={openLoginForm} setOpen={setOpenLoginForm} />
+      <AuthForm open={openLoginForm} setOpen={setOpenLoginForm} />
     </>
   );
 };
