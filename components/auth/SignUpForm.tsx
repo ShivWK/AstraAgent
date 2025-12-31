@@ -2,6 +2,7 @@ import { Button } from '../ui/button';
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { Spinner } from '../ui/spinner';
 import { FieldErrors, useForm } from 'react-hook-form';
 import SignInWithGoogle from './SignInWithGoogle';
 import * as z from 'zod';
@@ -28,7 +29,7 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormType>({
     resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
@@ -54,7 +55,7 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
     if (result.error) {
       setError(result.error);
     } else {
-      console.log('Success', result.message);
+      // console.log('Success', result.message);
       setOpen(false);
     }
   };
@@ -123,7 +124,9 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
           <Button
             type="submit"
             className="basis-[49%] text-white dark:bg-[#0c2e96]"
+            disabled={isSubmitting}
           >
+            {isSubmitting && <Spinner />}
             Sign Up
           </Button>
         </div>

@@ -8,7 +8,7 @@ type PropsType = {
 const EyeButton = ({ eyeOpen, setEyeOpen }: PropsType) => {
   return (
     <button onClick={() => setEyeOpen(!eyeOpen)} type="button">
-      {eyeOpen ? <Eye size={18} /> : <EyeOff size={18} />}
+      {eyeOpen ? <Eye size={16} /> : <EyeOff size={16} />}
     </button>
   );
 };

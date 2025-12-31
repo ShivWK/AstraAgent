@@ -6,6 +6,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
+import { Spinner } from '../ui/spinner';
 import { loginSchema } from '@/lib/validations/auth.schema';
 import { useState } from 'react';
 import EyeButton from './EyeButton';
@@ -22,7 +23,7 @@ export function LoginForm({ setOpen, setError }: PropsType) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormType>({
     resolver: zodResolver(loginSchema),
     mode: 'onBlur',
@@ -47,7 +48,7 @@ export function LoginForm({ setOpen, setError }: PropsType) {
     if (result.error) {
       setError(result.error);
     } else {
-      console.log('Success', result.message);
+      // console.log('Success', result.message);
       setOpen(false);
     }
   };
@@ -102,7 +103,9 @@ export function LoginForm({ setOpen, setError }: PropsType) {
             <Button
               type="submit"
               className="basis-[49%] text-white dark:bg-[#0c2e96]"
+              disabled={isSubmitting}
             >
+              {isSubmitting && <Spinner />}
               Sign In
             </Button>
           </div>

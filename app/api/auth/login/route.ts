@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
+import { SessionModel } from '@/model/sessionModel';
 import * as z from 'zod';
 import { signCookie } from '@/lib/utils';
 
@@ -10,12 +11,7 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     if (!body || Object.keys(body).length === 0) {
-      return Response.json(
-        { error: 'Data not provided' },
-        {
-          status: 400,
-        },
-      );
+      return Response.json({ error: 'Data not provided' }, { status: 400 });
     }
 
     const parsed = loginSchema.safeParse(body);
@@ -55,8 +51,12 @@ export const POST = async (request: Request) => {
       );
     }
 
+    const session = await SessionModel.create({
+      userId: user._id,
+    });
+
     const cookiesStore = await cookies();
-    cookiesStore.set('userId', signCookie(user._id.toString()), {
+    cookiesStore.set('sessionId', signCookie(session._id.toString()), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: '/',

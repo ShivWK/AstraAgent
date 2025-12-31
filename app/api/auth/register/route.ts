@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
+import { SessionModel } from '@/model/sessionModel';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 import { MongoServerError } from 'mongodb';
 import { cookies } from 'next/headers';
@@ -46,8 +47,12 @@ export const POST = async (request: Request) => {
       password: hashedPassword,
     });
 
+    const session = await SessionModel.create({
+      userId: user._id,
+    });
+
     const cookiesStore = await cookies();
-    cookiesStore.set('userId', signCookie(user._id.toString()), {
+    cookiesStore.set('sessionId', signCookie(session._id.toString()), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 60 * 60 * 24,
