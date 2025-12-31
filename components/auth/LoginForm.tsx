@@ -1,3 +1,4 @@
+import * as z from 'zod';
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import SignInWithGoogle from './SignInWithGoogle';
@@ -5,19 +6,19 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
-import * as z from 'zod';
+import { loginSchema } from '@/lib/validations/auth.schema';
 
-const loginSchema = z.object({
-  email: z
-    .email('Provide a valid email')
-    .min(5, 'Email must be at least 5 characters')
-    .max(254, 'Email must be at most 254 characters'),
+// const loginSchema = z.object({
+//   email: z
+//     .email('Provide a valid email')
+//     .min(5, 'Email must be at least 5 characters')
+//     .max(254, 'Email must be at most 254 characters'),
 
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .max(65, 'Password must be at most 64 characters'),
-});
+//   password: z
+//     .string()
+//     .min(8, 'Password must be at least 8 characters')
+//     .max(65, 'Password must be at most 64 characters'),
+// });
 
 type PropsType = { setOpen: (value: boolean) => void };
 type FormType = z.infer<typeof loginSchema>;
