@@ -1,9 +1,9 @@
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { zodResolver } from '@hookform/resolvers/zod';
+import SignInWithGoogle from './SignInWithGoogle';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FieldErrors, useForm } from 'react-hook-form';
-import SignInWithGoogle from './SignInWithGoogle';
 import { Button } from '../ui/button';
 import * as z from 'zod';
 
