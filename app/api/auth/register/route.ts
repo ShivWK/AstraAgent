@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
-import { loginSchema, signUpSchema } from '@/lib/validations/auth.schema';
+import { signUpSchema } from '@/lib/validations/auth.schema';
 import { MongoServerError } from 'mongodb';
 import { cookies } from 'next/headers';
 import { signCookie } from '@/lib/utils';
