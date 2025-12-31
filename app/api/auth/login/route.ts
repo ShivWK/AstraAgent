@@ -7,7 +7,7 @@ import { SessionModel } from '@/model/sessionModel';
 import * as z from 'zod';
 import { signCookie } from '@/lib/utils';
 
-export const POST = async (request: Request) => {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
     if (!body || Object.keys(body).length === 0) {
@@ -67,4 +67,4 @@ export const POST = async (request: Request) => {
       },
     );
   }
-};
+}

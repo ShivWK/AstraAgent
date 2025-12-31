@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 import { signCookie } from '@/lib/utils';
 import bcrypt from 'bcryptjs';
 
-export const POST = async (request: Request) => {
+export async function POST(request: Request) {
   try {
     const body = await request.json();
 
@@ -84,4 +84,4 @@ export const POST = async (request: Request) => {
       );
     }
   }
-};
+}
