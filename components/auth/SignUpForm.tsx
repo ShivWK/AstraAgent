@@ -7,6 +7,8 @@ import SignInWithGoogle from './SignInWithGoogle';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
+import EyeButton from './EyeButton';
+import { useState } from 'react';
 
 type PropsType = {
   setOpen: (value: boolean) => void;
@@ -15,6 +17,8 @@ type PropsType = {
 type FormType = z.infer<typeof signUpSchema>;
 
 export function SignUpForm({ setOpen }: PropsType) {
+  const [eyeOpen, setEyeOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -91,9 +95,12 @@ export function SignUpForm({ setOpen }: PropsType) {
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="password">Password</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Password</Label>
+            <EyeButton eyeOpen={eyeOpen} setEyeOpen={setEyeOpen} />
+          </div>
           <Input
-            type="password"
+            type={eyeOpen ? 'text' : 'password'}
             id="password"
             placeholder="Enter Your Password"
             {...register('password')}

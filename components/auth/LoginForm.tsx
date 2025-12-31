@@ -7,11 +7,15 @@ import { Label } from '../ui/label';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { loginSchema } from '@/lib/validations/auth.schema';
+import { useState } from 'react';
+import EyeButton from './EyeButton';
 
 type PropsType = { setOpen: (value: boolean) => void };
 type FormType = z.infer<typeof loginSchema>;
 
 export function LoginForm({ setOpen }: PropsType) {
+  const [eyeOpen, setEyeOpen] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -58,9 +62,12 @@ export function LoginForm({ setOpen }: PropsType) {
         </div>
 
         <div className="grid gap-3">
-          <Label htmlFor="password">Password</Label>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Password</Label>
+            <EyeButton eyeOpen={eyeOpen} setEyeOpen={setEyeOpen} />
+          </div>
           <Input
-            type="password"
+            type={eyeOpen ? 'text' : 'password'}
             id="password"
             placeholder="Enter Your Password"
             {...register('password')}
