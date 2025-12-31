@@ -48,7 +48,7 @@ export function LoginForm({ setOpen, setError }: PropsType) {
     if (result.error) {
       setError(result.error);
     } else {
-      // console.log('Success', result.message);
+      console.log('Success', result.message);
       setOpen(false);
     }
   };

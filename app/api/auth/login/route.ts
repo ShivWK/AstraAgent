@@ -43,10 +43,13 @@ export const POST = async (request: Request) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return Response.json(
-        { error: 'Invalid email or password' },
+      return new Response(
+        JSON.stringify({ error: 'Invalid email or password' }),
         {
           status: 401,
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
       );
     }
