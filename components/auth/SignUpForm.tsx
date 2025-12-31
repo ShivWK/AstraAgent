@@ -42,7 +42,7 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
   });
 
   const onSubmit = async (data: FormType) => {
-    const response = await fetch('app/api/auth/register', {
+    const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
