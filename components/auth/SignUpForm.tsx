@@ -12,12 +12,18 @@ import { useState } from 'react';
 
 type PropsType = {
   setOpen: (value: boolean) => void;
+  setError: (value: string) => void;
 };
 
 type FormType = z.infer<typeof signUpSchema>;
 
-export function SignUpForm({ setOpen }: PropsType) {
+// let rendered = 0;
+
+export function SignUpForm({ setOpen, setError }: PropsType) {
+  // rendered++;
   const [eyeOpen, setEyeOpen] = useState(false);
+
+  // console.log("rendered", rendered / 2)
 
   const {
     register,
@@ -46,12 +52,11 @@ export function SignUpForm({ setOpen }: PropsType) {
     const result = await response.json();
 
     if (result.error) {
-      console.log('Error occurred', result.error);
+      setError(result.error);
     } else {
       console.log('Success', result.message);
+      setOpen(false);
     }
-
-    setOpen(false);
   };
 
   const onError = (error: FieldErrors<FormType>) => {

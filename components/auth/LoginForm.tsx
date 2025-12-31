@@ -10,10 +10,13 @@ import { loginSchema } from '@/lib/validations/auth.schema';
 import { useState } from 'react';
 import EyeButton from './EyeButton';
 
-type PropsType = { setOpen: (value: boolean) => void };
+type PropsType = {
+  setOpen: (value: boolean) => void;
+  setError: (value: string) => void;
+};
 type FormType = z.infer<typeof loginSchema>;
 
-export function LoginForm({ setOpen }: PropsType) {
+export function LoginForm({ setOpen, setError }: PropsType) {
   const [eyeOpen, setEyeOpen] = useState(false);
 
   const {
@@ -30,10 +33,23 @@ export function LoginForm({ setOpen }: PropsType) {
     },
   });
 
-  const onSubmit = (data: FormType) => {
-    console.log('LogIn');
-    console.log(data);
-    setOpen(false);
+  const onSubmit = async (data: FormType) => {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+      setError(result.error);
+    } else {
+      console.log('Success', result.message);
+      setOpen(false);
+    }
   };
 
   const onError = (error: FieldErrors<FormType>) => {

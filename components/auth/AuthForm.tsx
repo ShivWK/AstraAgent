@@ -1,7 +1,7 @@
 import { Dialog, DialogContent } from '../ui/dialog';
 import { LoginForm } from './LoginForm';
 import { SignUpForm } from './SignUpForm';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type PropType = {
   open: boolean;
@@ -10,6 +10,12 @@ type PropType = {
 
 const AuthForm = ({ open, setOpen }: PropType) => {
   const [isLogIn, setLogin] = useState(true);
+  const [error, setError] = useState<string>('');
+
+  const switchFormHandler = () => {
+    setLogin(!isLogIn);
+    setError('');
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -18,9 +24,9 @@ const AuthForm = ({ open, setOpen }: PropType) => {
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         {isLogIn ? (
-          <LoginForm setOpen={setOpen} />
+          <LoginForm setOpen={setOpen} setError={setError} />
         ) : (
-          <SignUpForm setOpen={setOpen} />
+          <SignUpForm setOpen={setOpen} setError={setError} />
         )}
         <p className="mt-2 flex items-center gap-1">
           <span className="text-gray-300">
@@ -28,12 +34,15 @@ const AuthForm = ({ open, setOpen }: PropType) => {
           </span>
           <button
             type="button"
-            onClick={() => setLogin(!isLogIn)}
+            onClick={switchFormHandler}
             className="cursor-pointer text-white underline underline-offset-2"
           >
             {!isLogIn ? 'Sign in now' : 'Sign up now'}
           </button>
         </p>
+        {error && (
+          <p className="text-center font-medium text-red-500">{error}</p>
+        )}
       </DialogContent>
     </Dialog>
   );
