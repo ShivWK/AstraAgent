@@ -35,7 +35,7 @@ export function LoginForm({ setOpen, setError }: PropsType) {
   });
 
   const onSubmit = async (data: FormType) => {
-    const response = await fetch('app/api/auth/login', {
+    const response = await fetch('api/auth/login', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
