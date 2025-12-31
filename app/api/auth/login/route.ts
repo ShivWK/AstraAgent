@@ -21,9 +21,7 @@ export const POST = async (request: Request) => {
           error: 'Validation failed',
           message: z.flattenError(parsed.error),
         },
-        {
-          status: 400,
-        },
+        { status: 400 },
       );
     }
 
@@ -35,22 +33,15 @@ export const POST = async (request: Request) => {
     if (!user) {
       return Response.json(
         { error: 'Invalid email or password' },
-        {
-          status: 401,
-        },
+        { status: 401 },
       );
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return new Response(
-        JSON.stringify({ error: 'Invalid email or password' }),
-        {
-          status: 401,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
+      return Response.json(
+        { error: 'Invalid email or password' },
+        { status: 401 },
       );
     }
 

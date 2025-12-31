@@ -43,14 +43,22 @@ export function LoginForm({ setOpen, setError }: PropsType) {
       },
     });
 
-    const result = await response.json();
+    let result;
 
-    if (result.error) {
-      setError(result.error);
-    } else {
-      console.log('Success', result.message);
-      setOpen(false);
+    try {
+      result = await response.json();
+    } catch {
+      setError('Server error. Please try again.');
+      return;
     }
+
+    if (!response.ok) {
+      setError(result.error);
+      return;
+    }
+
+    console.log('Success', result.message);
+    setOpen(false);
   };
 
   const onError = (error: FieldErrors<FormType>) => {
