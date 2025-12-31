@@ -10,7 +10,7 @@ export function signCookie(cookie: string) {
   const key = process.env.COOKIE_SECRETE_KEY!;
   const signature = createHmac('sha256', key).update(cookie).digest('hex');
 
-  return `${cookie}${signature}`;
+  return `${cookie}.${signature}`;
 }
 
 export function verifyCookie(signedCookie: string) {

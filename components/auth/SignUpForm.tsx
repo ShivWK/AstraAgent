@@ -8,27 +8,6 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 
-// const signUpSchema = z.object({
-//   name: z
-//     .string()
-//     .min(2, 'Name must be at least 2 characters')
-//     .max(50, 'Name must be at most 50 characters'),
-
-//   email: z
-//     .email('Provide a valid email')
-//     .min(5, 'Email must be at least 5 characters')
-//     .max(254, 'Email must be at most 254 characters'),
-
-//   password: z
-//     .string()
-//     .min(8, 'Password must be at least 8 characters')
-//     .max(65, 'Password must be at most 64 characters')
-//     .regex(
-//       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
-//       'Password must include upper, lower, number, and special character ZOD',
-//     ),
-// });
-
 type PropsType = {
   setOpen: (value: boolean) => void;
 };
@@ -51,9 +30,23 @@ export function SignUpForm({ setOpen }: PropsType) {
     },
   });
 
-  const onSubmit = (data: FormType) => {
-    console.log('SignUp');
-    console.log(data);
+  const onSubmit = async (data: FormType) => {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const result = await response.json();
+
+    if (result.error) {
+      console.log('Error occurred', result.error);
+    } else {
+      console.log('Success', result.message);
+    }
+
     setOpen(false);
   };
 

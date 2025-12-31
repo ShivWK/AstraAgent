@@ -43,7 +43,7 @@ export const POST = async (request: Request) => {
     const user = await UserModel.create({
       name,
       email,
-      hashedPassword,
+      password: hashedPassword,
     });
 
     const cookiesStore = await cookies();
@@ -62,6 +62,7 @@ export const POST = async (request: Request) => {
       },
     );
   } catch (err: unknown) {
+    console.log(err);
     if (err instanceof MongoServerError && err.code === 11000) {
       return Response.json(
         { error: 'User already exist' },

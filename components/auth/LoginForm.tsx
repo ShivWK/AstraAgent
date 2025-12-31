@@ -8,18 +8,6 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { loginSchema } from '@/lib/validations/auth.schema';
 
-// const loginSchema = z.object({
-//   email: z
-//     .email('Provide a valid email')
-//     .min(5, 'Email must be at least 5 characters')
-//     .max(254, 'Email must be at most 254 characters'),
-
-//   password: z
-//     .string()
-//     .min(8, 'Password must be at least 8 characters')
-//     .max(65, 'Password must be at most 64 characters'),
-// });
-
 type PropsType = { setOpen: (value: boolean) => void };
 type FormType = z.infer<typeof loginSchema>;
 
