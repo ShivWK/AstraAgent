@@ -50,11 +50,15 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
       },
     });
 
-    console.log(response);
+    let result;
+    try {
+      result = await response.json();
+    } catch {
+      setError('Server error. Please try again.');
+      return;
+    }
 
-    const result = await response.json();
-
-    if (result.error) {
+    if (!response.ok) {
       setError(result.error);
     } else {
       console.log('Success', result.message);
