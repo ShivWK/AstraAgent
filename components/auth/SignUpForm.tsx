@@ -50,6 +50,8 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
       },
     });
 
+    console.log(response);
+
     const result = await response.json();
 
     if (result.error) {
