@@ -1,7 +1,7 @@
 import { Dialog, DialogContent } from '../ui/dialog';
 import { LoginForm } from './LoginForm';
 import { SignUpForm } from './SignUpForm';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type PropType = {
   open: boolean;

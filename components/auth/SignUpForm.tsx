@@ -17,7 +17,6 @@ type PropsType = {
 };
 
 type FormType = z.infer<typeof signUpSchema>;
-
 // let rendered = 0;
 
 export function SignUpForm({ setOpen, setError }: PropsType) {
@@ -126,6 +125,7 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
       </div>
       <DialogFooter className="w-full">
         <div className="flex w-full justify-between">
+          {/* <SignInWithGoogle /> */}
           <SignInWithGoogle />
           <Button
             type="submit"

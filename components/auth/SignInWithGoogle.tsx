@@ -1,8 +1,17 @@
 import { Button } from '../ui/button';
+import { signInWithGoogleAction } from '@/app/actions/auth';
 
 const SignInWithGoogle = () => {
+  const clickHandler = async () => {
+    await signInWithGoogleAction();
+  };
+
   return (
-    <Button type="button" className="basis-[49%] text-white dark:bg-[#0c2e96]">
+    <Button
+      onClick={clickHandler}
+      type="button"
+      className="basis-[49%] text-white dark:bg-[#0c2e96]"
+    >
       <span className="">Continue with</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
