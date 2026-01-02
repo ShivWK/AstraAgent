@@ -1,12 +1,13 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
+import { LogOut } from 'lucide-react';
 
 const Header = () => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
@@ -47,6 +48,9 @@ const Header = () => {
           </p>
         </div>
         <div className="flex items-center gap-4">
+          <Button variant={'outline'}>
+            <LogOut />
+          </Button>
           <ThemeChanger />
           <Button
             onClick={() => setOpenLoginForm(!openLoginForm)}

@@ -5,6 +5,13 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     required: true,
   },
+
+  provider: {
+    type: String,
+    enum: ['credentials', 'google'],
+    default: 'credentials',
+  },
+
   createdAt: {
     type: Date,
     default: Date.now,

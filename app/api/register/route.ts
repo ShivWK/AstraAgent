@@ -15,12 +15,7 @@ export async function POST(request: Request) {
     console.log(body);
 
     if (!body || Object.keys(body).length === 0) {
-      return Response.json(
-        { error: 'No data provided' },
-        {
-          status: 400,
-        },
-      );
+      return Response.json({ error: 'No data provided' }, { status: 400 });
     }
 
     const parsed = signUpSchema.safeParse(body);
@@ -31,9 +26,7 @@ export async function POST(request: Request) {
           error: 'Validation failed',
           message: z.flattenError(parsed.error),
         },
-        {
-          status: 400,
-        },
+        { status: 400 },
       );
     }
 
@@ -45,10 +38,12 @@ export async function POST(request: Request) {
       name,
       email,
       password: hashedPassword,
+      provider: 'credentials',
     });
 
     const session = await SessionModel.create({
       userId: user._id,
+      provider: 'credentials',
     });
 
     const cookiesStore = await cookies();
@@ -62,26 +57,14 @@ export async function POST(request: Request) {
 
     return Response.json(
       { message: 'User successfully created' },
-      {
-        status: 201,
-      },
+      { status: 201 },
     );
   } catch (err: unknown) {
     console.log(err);
     if (err instanceof MongoServerError && err.code === 11000) {
-      return Response.json(
-        { error: 'User already exist' },
-        {
-          status: 409,
-        },
-      );
+      return Response.json({ error: 'User already exist' }, { status: 409 });
     } else {
-      return Response.json(
-        { error: 'Something went wrong' },
-        {
-          status: 500,
-        },
-      );
+      return Response.json({ error: 'Something went wrong' }, { status: 500 });
     }
   }
 }

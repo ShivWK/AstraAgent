@@ -47,6 +47,7 @@ export async function POST(request: Request) {
 
     const session = await SessionModel.create({
       userId: user._id,
+      provider: 'credentials',
     });
 
     const cookiesStore = await cookies();

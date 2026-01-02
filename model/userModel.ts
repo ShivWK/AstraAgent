@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  provider: {
+    type: String,
+    enum: ['credentials', 'google'],
+    default: 'credentials',
+  },
 });
 
 export const UserModel =
