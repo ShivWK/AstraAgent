@@ -12,14 +12,21 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
 
+  emailVerified: {
+    type: Boolean,
+    default: false,
+  },
+
+  image: {
+    type: String,
+  },
+
   password: {
     type: String,
-    required: true,
   },
 
   provider: {
     type: String,
-    enum: ['credentials', 'google'],
     default: 'credentials',
   },
 });
