@@ -37,6 +37,13 @@ export async function POST(request: Request) {
       );
     }
 
+    if (!user.hasPassword && user.provider === 'google') {
+      return Response.json(
+        { error: 'Use Google sign-in for this email.' },
+        { status: 409 },
+      );
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return Response.json(

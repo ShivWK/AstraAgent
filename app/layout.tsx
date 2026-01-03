@@ -2,6 +2,9 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/common/theme-provider';
 import Header from '@/components/common/Header';
 import './globals.css';
+import { ReactNode } from 'react';
+import { cookies } from 'next/headers';
+import { auth } from '@/auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,11 +30,17 @@ export const metadata = {
   manifest: 'favicon/site.webmanifest',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+type PropsType = {
+  children: ReactNode;
+};
+
+export default async function RootLayout({ children }: PropsType) {
+  const cookieStore = await cookies();
+  const customSession = cookieStore.get('sessionId');
+  const authJSSession = await auth();
+
+  const isLoggedIn = !!customSession || !!authJSSession;
+
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
@@ -43,7 +52,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <Header isLoggedIn={isLoggedIn} />
           {children}
         </ThemeProvider>
       </body>

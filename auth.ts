@@ -5,6 +5,7 @@ import { UserModel } from './model/userModel';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
+  session: { maxAge: 60 * 60 * 24 },
   callbacks: {
     async signIn({ user, account, profile }) {
       try {
@@ -18,6 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             image: user.image,
             provider: account?.provider,
             emailVerified: profile?.email_verified,
+            hasPassword: false,
           });
         }
 
@@ -26,6 +28,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         console.log('Error occurred', err);
         return false;
       }
+    },
+
+    async jwt({ token, account }) {
+      if (account) {
+        token.provider = account.provider;
+      }
+
+      return token;
     },
   },
 });

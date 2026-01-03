@@ -8,9 +8,16 @@ import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
 import { LogOut } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { logoutAction } from '@/app/actions/auth';
 
-const Header = () => {
+type PropsType = {
+  isLoggedIn: boolean;
+};
+
+const Header = ({ isLoggedIn }: PropsType) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme } = useTheme();
   let src = null;
@@ -28,6 +35,15 @@ const Header = () => {
       src = '/logo-transparent.png';
       break;
   }
+
+  const logoutHandler = async () => {
+    const response = await logoutAction();
+    if (response.success) {
+      return router.push('/');
+    }
+  };
+
+  // console.log("Is Logged in", isLoggedIn, pathname)
 
   return (
     <>
@@ -48,9 +64,11 @@ const Header = () => {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant={'outline'}>
-            <LogOut />
-          </Button>
+          {isLoggedIn && (
+            <Button onClick={logoutHandler} variant={'outline'}>
+              <LogOut />
+            </Button>
+          )}
           <ThemeChanger />
           <Button
             onClick={() => setOpenLoginForm(!openLoginForm)}

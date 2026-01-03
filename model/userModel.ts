@@ -23,11 +23,17 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
+    default: 'No password',
   },
 
   provider: {
     type: String,
     default: 'credentials',
+  },
+
+  hasPassword: {
+    type: Boolean,
+    default: true,
   },
 });
 
