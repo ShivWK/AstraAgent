@@ -125,7 +125,6 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
       </div>
       <DialogFooter className="w-full">
         <div className="flex w-full justify-between">
-          {/* <SignInWithGoogle /> */}
           <SignInWithGoogle />
           <Button
             type="submit"

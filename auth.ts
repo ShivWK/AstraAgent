@@ -12,7 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         await connectDB();
         const existingUser = await UserModel.findOne({ email: user.email });
 
-        // If email already present then stop login
         if (!existingUser) {
           await UserModel.create({
             name: user.name,
@@ -31,12 +30,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
 
-    async jwt({ token, account }) {
+    async jwt({ token, account, trigger }) {
       if (account) {
         token.provider = account.provider;
       }
-
+      // console.log(trigger) tells for what request is made signin or signout
       return token;
     },
+  },
+  pages: {
+    error: '',
   },
 });

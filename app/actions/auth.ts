@@ -9,8 +9,6 @@ export async function signInWithGoogleAction() {
   if (!authJSSession) {
     await signIn('google');
   }
-
-  // warn him as he is already logged in
 }
 
 export async function logoutAction() {
@@ -28,7 +26,7 @@ export async function logoutAction() {
     }
 
     if (authJsSession) {
-      await signOut();
+      await signOut({ redirectTo: '/' });
     }
     return { success: true };
   } catch (err) {
