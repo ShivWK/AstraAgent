@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
-import { LogOut } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
+import { Spinner } from '../ui/spinner';
 
 type PropsType = {
   isLoggedIn: boolean;
@@ -17,7 +17,7 @@ type PropsType = {
 
 const Header = ({ isLoggedIn }: PropsType) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme } = useTheme();
@@ -39,11 +39,15 @@ const Header = ({ isLoggedIn }: PropsType) => {
 
   const loginClickHandler = async () => {
     if (isLoggedIn) {
+      setLogoutLoading(true);
       const response = await logoutAction();
       if (response.success) {
-        return router.push('/');
-        setLoggedIn(false);
+        if (pathname !== '/') {
+          router.push('/');
+        }
       }
+
+      setLogoutLoading(false);
     } else {
       setOpenLoginForm(true);
     }
@@ -76,8 +80,16 @@ const Header = ({ isLoggedIn }: PropsType) => {
             variant="secondary"
             size="lg"
             className="text-md tracking-wide"
+            disabled={logoutLoading}
           >
-            {isLoggedIn || loggedIn ? 'Sign Out' : 'Sign In'}
+            {isLoggedIn ? (
+              <span className="flex items-center gap-2">
+                {logoutLoading && <Spinner />}
+                Sign Out
+              </span>
+            ) : (
+              'Sign In'
+            )}
           </Button>
         </div>
       </header>
