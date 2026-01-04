@@ -12,6 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         await connectDB();
         const existingUser = await UserModel.findOne({ email: user.email });
 
+        // If email already present then stop login
         if (!existingUser) {
           await UserModel.create({
             name: user.name,

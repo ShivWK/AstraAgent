@@ -17,6 +17,7 @@ type PropsType = {
 
 const Header = ({ isLoggedIn }: PropsType) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const { resolvedTheme } = useTheme();
@@ -36,10 +37,15 @@ const Header = ({ isLoggedIn }: PropsType) => {
       break;
   }
 
-  const logoutHandler = async () => {
-    const response = await logoutAction();
-    if (response.success) {
-      return router.push('/');
+  const loginClickHandler = async () => {
+    if (isLoggedIn) {
+      const response = await logoutAction();
+      if (response.success) {
+        return router.push('/');
+        setLoggedIn(false);
+      }
+    } else {
+      setOpenLoginForm(true);
     }
   };
 
@@ -64,19 +70,14 @@ const Header = ({ isLoggedIn }: PropsType) => {
           </p>
         </div>
         <div className="flex items-center gap-4">
-          {isLoggedIn && (
-            <Button onClick={logoutHandler} variant={'outline'}>
-              <LogOut />
-            </Button>
-          )}
           <ThemeChanger />
           <Button
-            onClick={() => setOpenLoginForm(!openLoginForm)}
+            onClick={loginClickHandler}
             variant="secondary"
             size="lg"
             className="text-md tracking-wide"
           >
-            Get Started
+            {isLoggedIn || loggedIn ? 'Sign Out' : 'Sign In'}
           </Button>
         </div>
       </header>

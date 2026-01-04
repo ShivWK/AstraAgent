@@ -6,8 +6,17 @@ import { UserModel } from '@/model/userModel';
 import { SessionModel } from '@/model/sessionModel';
 import * as z from 'zod';
 import { signCookie } from '@/lib/utils';
+import { auth } from '@/auth';
 
 export async function POST(request: Request) {
+  const cookiesStore = await cookies();
+  const authJSSession = await auth();
+  const sessionId = cookiesStore.get('sessionId')?.value;
+
+  if (sessionId || authJSSession) {
+    return Response.json({ error: 'Already logged in' }, { status: 409 });
+  }
+
   try {
     const body = await request.json();
     if (!body || Object.keys(body).length === 0) {
@@ -57,7 +66,6 @@ export async function POST(request: Request) {
       provider: 'credentials',
     });
 
-    const cookiesStore = await cookies();
     cookiesStore.set('sessionId', signCookie(session._id.toString()), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
