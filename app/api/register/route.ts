@@ -7,8 +7,17 @@ import { MongoServerError } from 'mongodb';
 import { cookies } from 'next/headers';
 import { signCookie } from '@/lib/utils';
 import bcrypt from 'bcryptjs';
+import { auth } from '@/auth';
 
 export async function POST(request: Request) {
+  const cookiesStore = await cookies();
+  const authJSSession = await auth();
+  const sessionId = cookiesStore.get('sessionId')?.value;
+
+  if (sessionId || authJSSession) {
+    return Response.json({ error: 'Already logged in' }, { status: 409 });
+  }
+
   try {
     const body = await request.json();
 
@@ -46,7 +55,6 @@ export async function POST(request: Request) {
       provider: 'credentials',
     });
 
-    const cookiesStore = await cookies();
     cookiesStore.set('sessionId', signCookie(session._id.toString()), {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
