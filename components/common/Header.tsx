@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
@@ -20,22 +19,6 @@ const Header = ({ isLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { resolvedTheme } = useTheme();
-  let src = null;
-
-  switch (resolvedTheme) {
-    case 'light':
-      src = '/logo-transparent.png';
-      break;
-
-    case 'dark':
-      src = '/logo-solid.jpeg';
-      break;
-
-    default:
-      src = '/logo-transparent.png';
-      break;
-  }
 
   const loginClickHandler = async () => {
     if (isLoggedIn) {
@@ -63,10 +46,10 @@ const Header = ({ isLoggedIn }: PropsType) => {
           onClick={() => router.push('/')}
         >
           <Image
-            src={src}
+            src="/logo-transparent.png"
             alt="Astra agent logo"
-            width={55}
-            height={55}
+            width={60}
+            height={60}
             className="rounded"
           />
           <p className="hidden text-2xl font-semibold tracking-wide lg:block">
