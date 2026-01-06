@@ -53,8 +53,10 @@ export default async function RootLayout({ children }: PropsType) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header isLoggedIn={isLoggedIn} />
-          <Providers>{children}</Providers>
+          <Providers>
+            <Header isLoggedIn={isLoggedIn} />
+            {children}
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

@@ -1,33 +1,38 @@
 import { Dialog, DialogContent } from '../ui/dialog';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
 import { LoginForm } from './LoginForm';
 import { SignUpForm } from './SignUpForm';
 import { useState } from 'react';
+import {
+  selectLoginError,
+  setLoginError,
+  setOpenLoginModel,
+  selectLoginModelOpenState,
+} from '@/features/auth/authSlice';
 
-type PropType = {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-};
-
-const AuthForm = ({ open, setOpen }: PropType) => {
+const AuthForm = () => {
   const [isLogIn, setLogin] = useState(true);
-  const [error, setError] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const open = useAppSelector(selectLoginModelOpenState);
+  const error = useAppSelector(selectLoginError);
 
   const switchFormHandler = () => {
     setLogin(!isLogIn);
-    setError('');
+    dispatch(setLoginError(''));
+  };
+
+  const openChangeHandler = (state: boolean) => {
+    dispatch(setOpenLoginModel(state));
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={openChangeHandler}>
       <DialogContent
         className="sm:max-w-[425px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        {isLogIn ? (
-          <LoginForm setOpen={setOpen} setError={setError} />
-        ) : (
-          <SignUpForm setOpen={setOpen} setError={setError} />
-        )}
+        {isLogIn ? <LoginForm /> : <SignUpForm />}
         <p className="mt-2 flex items-center gap-1">
           <span className="text-gray-300">
             {!isLogIn ? 'Already registered?' : 'New to Astra Agent?'}

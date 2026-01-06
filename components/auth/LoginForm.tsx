@@ -11,16 +11,15 @@ import { loginSchema } from '@/lib/validations/auth.schema';
 import { useState } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
-type PropsType = {
-  setOpen: (value: boolean) => void;
-  setError: (value: string) => void;
-};
 type FormType = z.infer<typeof loginSchema>;
 
-export function LoginForm({ setOpen, setError }: PropsType) {
+export function LoginForm() {
   const [eyeOpen, setEyeOpen] = useState(false);
   const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -54,17 +53,17 @@ export function LoginForm({ setOpen, setError }: PropsType) {
     try {
       result = await response.json();
     } catch {
-      setError('Server error. Please try again.');
+      dispatch(setLoginError('Server error. Please try again.'));
       return;
     }
 
     if (!response.ok) {
-      setError(result.error);
+      dispatch(setLoginError(result.error));
       return;
     }
 
     console.log('Success', result.message);
-    setOpen(false);
+    dispatch(setOpenLoginModel(false));
 
     if (pathname !== callbackUrl) {
       router.push(callbackUrl);

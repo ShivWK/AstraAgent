@@ -11,16 +11,14 @@ import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
 import { useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-
-type PropsType = {
-  setOpen: (value: boolean) => void;
-  setError: (value: string) => void;
-};
+import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 type FormType = z.infer<typeof signUpSchema>;
 
-export function SignUpForm({ setOpen, setError }: PropsType) {
+export function SignUpForm() {
   const [eyeOpen, setEyeOpen] = useState(false);
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -55,15 +53,15 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
     try {
       result = await response.json();
     } catch {
-      setError('Server error. Please try again.');
+      dispatch(setLoginError('Server error. Please try again.'));
       return;
     }
 
     if (!response.ok) {
-      setError(result.error);
+      dispatch(setLoginError(result.error));
     } else {
       console.log('Success', result.message);
-      setOpen(false);
+      dispatch(setOpenLoginModel(false));
 
       if (pathname !== callbackUrl) {
         router.push(callbackUrl);

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/store';
 
 type InitialStateType = {
@@ -9,6 +9,7 @@ type InitialStateType = {
     pic?: string;
   };
   openLoginModel: boolean;
+  loginError: string;
 };
 
 const initialState: InitialStateType = {
@@ -19,22 +20,30 @@ const initialState: InitialStateType = {
     pic: '',
   },
   openLoginModel: false,
+  loginError: '',
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setLogInState: (state, action) => {
+    setLogInState: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
 
-    setOpenLoginModel: (state, action) => {
+    setOpenLoginModel: (state, action: PayloadAction<boolean>) => {
       state.openLoginModel = action.payload;
     },
 
-    setLoggedInUserDetails: (state, action) => {
+    setLoggedInUserDetails: (
+      state,
+      action: PayloadAction<InitialStateType['userDetails']>,
+    ) => {
       state.userDetails = action.payload;
+    },
+
+    setLoginError: (state, action: PayloadAction<string>) => {
+      state.loginError = action.payload;
     },
   },
 });
@@ -45,6 +54,11 @@ export const selectLogInState = (state: RootState) => state.auth.isLoggedIn;
 export const selectUserDetails = (state: RootState) => state.auth.userDetails;
 export const selectLoginModelOpenState = (state: RootState) =>
   state.auth.openLoginModel;
+export const selectLoginError = (state: RootState) => state.auth.loginError;
 
-export const { setLogInState, setOpenLoginModel, setLoggedInUserDetails } =
-  authSlice.actions;
+export const {
+  setLogInState,
+  setOpenLoginModel,
+  setLoggedInUserDetails,
+  setLoginError,
+} = authSlice.actions;

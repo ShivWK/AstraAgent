@@ -9,14 +9,16 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
+import { setOpenLoginModel } from '@/features/auth/authSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 type PropsType = {
   isLoggedIn: boolean;
 };
 
 const Header = ({ isLoggedIn }: PropsType) => {
-  const [openLoginForm, setOpenLoginForm] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -32,11 +34,9 @@ const Header = ({ isLoggedIn }: PropsType) => {
 
       setLogoutLoading(false);
     } else {
-      setOpenLoginForm(true);
+      dispatch(setOpenLoginModel(true));
     }
   };
-
-  // console.log("Is Logged in", isLoggedIn, pathname)
 
   return (
     <>
@@ -76,7 +76,7 @@ const Header = ({ isLoggedIn }: PropsType) => {
           </Button>
         </div>
       </header>
-      <AuthForm open={openLoginForm} setOpen={setOpenLoginForm} />
+      <AuthForm />
     </>
   );
 };
