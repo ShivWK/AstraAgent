@@ -11,7 +11,11 @@ import { loginSchema } from '@/lib/validations/auth.schema';
 import { useState } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import {
+  setLoginError,
+  setLogInState,
+  setOpenLoginModel,
+} from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 
 type FormType = z.infer<typeof loginSchema>;
@@ -63,11 +67,11 @@ export function LoginForm() {
     }
 
     console.log('Success', result.message);
+    dispatch(setLogInState(true));
     dispatch(setOpenLoginModel(false));
 
     if (pathname !== callbackUrl) {
       router.push(callbackUrl);
-      // router.refresh()
     }
   };
 

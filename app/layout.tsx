@@ -56,7 +56,7 @@ export default async function RootLayout({ children }: PropsType) {
         >
           <Providers>
             <AuthIntentHandler />
-            <Header isLoggedIn={isLoggedIn} />
+            <Header isUserLoggedIn={isLoggedIn} />
             {children}
           </Providers>
         </ThemeProvider>

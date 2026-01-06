@@ -12,6 +12,7 @@ export async function signInWithGoogleAction(callbackUrl: string) {
   if (!authJSSession || !customSessionId) {
     await signIn('google', {
       redirectTo: callbackUrl,
+      redirect: true,
     });
   }
 }
@@ -31,7 +32,7 @@ export async function logoutAction() {
     }
 
     if (authJsSession) {
-      await signOut({ redirectTo: '/' });
+      await signOut({ redirect: false });
     }
     return { success: true };
   } catch (err) {

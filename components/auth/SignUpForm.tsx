@@ -11,7 +11,11 @@ import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
 import { useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import {
+  setLoginError,
+  setLogInState,
+  setOpenLoginModel,
+} from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 
 type FormType = z.infer<typeof signUpSchema>;
@@ -61,6 +65,7 @@ export function SignUpForm() {
       dispatch(setLoginError(result.error));
     } else {
       console.log('Success', result.message);
+      dispatch(setLogInState(true));
       dispatch(setOpenLoginModel(false));
 
       if (pathname !== callbackUrl) {

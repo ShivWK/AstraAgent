@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -9,27 +9,42 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
-import { setOpenLoginModel } from '@/features/auth/authSlice';
+import {
+  setOpenLoginModel,
+  selectLogInState,
+  setLogInState,
+} from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type PropsType = {
-  isLoggedIn: boolean;
+  isUserLoggedIn: boolean;
 };
 
-const Header = ({ isLoggedIn }: PropsType) => {
+const Header = ({ isUserLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const isLoggedIn = useAppSelector(selectLogInState);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
-  const loginClickHandler = async () => {
+  useEffect(() => {
+    if (!isUserLoggedIn) return;
+    dispatch(setLogInState(isUserLoggedIn));
+  }, [isUserLoggedIn, dispatch]);
+
+  const authClickHandler = async () => {
     if (isLoggedIn) {
       setLogoutLoading(true);
       const response = await logoutAction();
+
+      console.log(response);
+
       if (response.success) {
         if (pathname !== '/') {
           router.push('/');
         }
+        dispatch(setLogInState(false));
       }
 
       setLogoutLoading(false);
@@ -59,7 +74,7 @@ const Header = ({ isLoggedIn }: PropsType) => {
         <div className="flex items-center gap-4">
           <ThemeChanger />
           <Button
-            onClick={loginClickHandler}
+            onClick={authClickHandler}
             variant="secondary"
             size="lg"
             className="text-md tracking-wide"
