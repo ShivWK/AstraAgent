@@ -1,9 +1,13 @@
 import { Button } from '../ui/button';
 import { signInWithGoogleAction } from '@/app/actions/auth';
+import { useSearchParams } from 'next/navigation';
 
 const SignInWithGoogle = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
   const clickHandler = async () => {
-    await signInWithGoogleAction();
+    await signInWithGoogleAction(callbackUrl);
   };
 
   return (

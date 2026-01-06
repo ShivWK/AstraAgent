@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
 import { useState } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 type PropsType = {
   setOpen: (value: boolean) => void;
@@ -17,13 +18,12 @@ type PropsType = {
 };
 
 type FormType = z.infer<typeof signUpSchema>;
-// let rendered = 0;
 
 export function SignUpForm({ setOpen, setError }: PropsType) {
-  // rendered++;
   const [eyeOpen, setEyeOpen] = useState(false);
-
-  // console.log("rendered", rendered / 2)
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const {
     register,
@@ -41,6 +41,8 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
   });
 
   const onSubmit = async (data: FormType) => {
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
+
     const response = await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -62,6 +64,10 @@ export function SignUpForm({ setOpen, setError }: PropsType) {
     } else {
       console.log('Success', result.message);
       setOpen(false);
+
+      if (pathname !== callbackUrl) {
+        router.push(callbackUrl);
+      }
     }
   };
 

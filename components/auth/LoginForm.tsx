@@ -10,6 +10,7 @@ import { Spinner } from '../ui/spinner';
 import { loginSchema } from '@/lib/validations/auth.schema';
 import { useState } from 'react';
 import EyeButton from './EyeButton';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 type PropsType = {
   setOpen: (value: boolean) => void;
@@ -19,6 +20,9 @@ type FormType = z.infer<typeof loginSchema>;
 
 export function LoginForm({ setOpen, setError }: PropsType) {
   const [eyeOpen, setEyeOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const {
     register,
@@ -35,6 +39,8 @@ export function LoginForm({ setOpen, setError }: PropsType) {
   });
 
   const onSubmit = async (data: FormType) => {
+    const callbackUrl = searchParams.get('callbackUrl') || '/';
+
     const response = await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify(data),
@@ -59,6 +65,11 @@ export function LoginForm({ setOpen, setError }: PropsType) {
 
     console.log('Success', result.message);
     setOpen(false);
+
+    if (pathname !== callbackUrl) {
+      router.push(callbackUrl);
+      // router.refresh()
+    }
   };
 
   const onError = (error: FieldErrors<FormType>) => {

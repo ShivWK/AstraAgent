@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import ThemeProvider from '@/components/common/theme-provider';
+import Providers from './providers';
 import Header from '@/components/common/Header';
 import './globals.css';
 import { ReactNode } from 'react';
@@ -53,7 +54,7 @@ export default async function RootLayout({ children }: PropsType) {
           disableTransitionOnChange
         >
           <Header isLoggedIn={isLoggedIn} />
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>
