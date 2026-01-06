@@ -13,6 +13,8 @@ import {
   setOpenLoginModel,
   selectLogInState,
   setLogInState,
+  selectLoginError,
+  setLoginError,
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
@@ -24,6 +26,7 @@ type PropsType = {
 const Header = ({ isUserLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const isLoggedIn = useAppSelector(selectLogInState);
+  const errorMessage = useAppSelector(selectLoginError);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -49,6 +52,9 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
 
       setLogoutLoading(false);
     } else {
+      if (errorMessage) {
+        dispatch(setLoginError(''));
+      }
       dispatch(setOpenLoginModel(true));
     }
   };
