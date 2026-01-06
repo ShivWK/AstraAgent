@@ -46,7 +46,7 @@ export default async function RootLayout({ children }: PropsType) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased max-lg:px-2`}
       >
         <ThemeProvider
           attribute="class"
