@@ -6,6 +6,7 @@ import './globals.css';
 import { ReactNode } from 'react';
 import { cookies } from 'next/headers';
 import { auth } from '@/auth';
+import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -54,6 +55,7 @@ export default async function RootLayout({ children }: PropsType) {
           disableTransitionOnChange
         >
           <Providers>
+            <AuthIntentHandler />
             <Header isLoggedIn={isLoggedIn} />
             {children}
           </Providers>

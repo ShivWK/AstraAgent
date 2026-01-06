@@ -20,7 +20,7 @@ async function customMiddleware(req: NextRequest) {
     if (!authJsSession?.user && !customSession) {
       const redirectUrl = new URL('/', req.nextUrl.origin);
       redirectUrl.searchParams.set('callbackUrl', pathname);
-      redirectUrl.searchParams.set('openLogin', 'true');
+      redirectUrl.searchParams.set('auth', 'required');
       return NextResponse.redirect(redirectUrl);
     }
   }
