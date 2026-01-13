@@ -22,3 +22,17 @@ export const connectDB = async () => {
     process.exit(1);
   }
 };
+
+export const disconnectDB = async () => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.disconnect();
+      console.log('DB disconnected');
+    } else {
+      console.log('DB already not connected');
+    }
+  } catch (err) {
+    console.log('DB not disconnected');
+    console.log(err);
+  }
+};
