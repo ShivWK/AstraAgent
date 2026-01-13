@@ -22,7 +22,7 @@ export default function Home() {
         <span className="text-center text-xl">Your AI task Force</span>
         <Button
           onClick={() => router.push('/ai-assistant')}
-          className="text-xl font-normal dark:bg-blue-600 dark:text-white"
+          className="text-lg font-normal dark:bg-blue-600 dark:text-white"
         >
           Get Started
           <ArrowRight className="animate-ping" />
