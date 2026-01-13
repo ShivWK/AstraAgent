@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
 
   provider: {
     type: String,
+    enum: ['google', 'credentials', 'github'],
     default: 'credentials',
   },
 

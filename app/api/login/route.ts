@@ -46,7 +46,10 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!user.hasPassword && user.provider === 'google') {
+    if (
+      !user.hasPassword &&
+      (user.provider === 'google' || user.provider === 'github')
+    ) {
       return Response.json(
         { error: 'Use Google sign-in for this email.' },
         { status: 409 },

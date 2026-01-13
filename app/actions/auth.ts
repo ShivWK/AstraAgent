@@ -4,13 +4,16 @@ import { cookies } from 'next/headers';
 import { SessionModel } from '@/model/sessionModel';
 import { connectDB } from '@/lib/db/connectDb';
 
-export async function signInWithGoogleAction(callbackUrl: string) {
+export async function signInWithGoogleAction(
+  callbackUrl: string,
+  provider: string,
+) {
   const cookieStore = await cookies();
   const customSessionId = cookieStore.get('sessionId')?.value;
   const authJSSession = await auth();
 
   if (!authJSSession || !customSessionId) {
-    await signIn('github', {
+    await signIn(provider, {
       redirectTo: callbackUrl,
       redirect: true,
     });

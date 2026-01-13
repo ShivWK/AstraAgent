@@ -1,7 +1,7 @@
 import * as z from 'zod';
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SignInWithGoogle from './SignInWithGoogle';
+import SignInWithProviders from './SignInWithProviders';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { FieldErrors, useForm } from 'react-hook-form';
@@ -119,18 +119,17 @@ export function LoginForm() {
         </div>
       </div>
       <DialogFooter className="w-full">
-        <div className="flex w-full flex-col gap-4">
-          <div className="flex w-full justify-between">
-            <SignInWithGoogle />
-            <Button
-              type="submit"
-              className="basis-[49%] text-white dark:bg-[#0c2e96]"
-              disabled={isSubmitting}
-            >
-              {isSubmitting && <Spinner />}
-              Sign In
-            </Button>
-          </div>
+        <div className="flex w-full flex-col items-center gap-4">
+          <Button
+            type="submit"
+            className="w-full text-white dark:bg-[#0c2e96]"
+            disabled={isSubmitting}
+          >
+            {isSubmitting && <Spinner />}
+            Sign In
+          </Button>
+          <span>------- or -------</span>
+          <SignInWithProviders />
         </div>
       </DialogFooter>
     </form>

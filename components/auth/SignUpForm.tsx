@@ -4,7 +4,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Spinner } from '../ui/spinner';
 import { FieldErrors, useForm } from 'react-hook-form';
-import SignInWithGoogle from './SignInWithGoogle';
+import SignInWithProviders from './SignInWithProviders';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
@@ -133,16 +133,17 @@ export function SignUpForm() {
         </div>
       </div>
       <DialogFooter className="w-full">
-        <div className="flex w-full justify-between">
-          <SignInWithGoogle />
+        <div className="flex w-full flex-col items-center gap-4">
           <Button
             type="submit"
-            className="basis-[49%] text-white dark:bg-[#0c2e96]"
+            className="w-full text-white dark:bg-[#0c2e96]"
             disabled={isSubmitting}
           >
             {isSubmitting && <Spinner />}
             Sign Up
           </Button>
+          <span>------- or -------</span>
+          <SignInWithProviders />
         </div>
       </DialogFooter>
     </form>
