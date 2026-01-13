@@ -10,7 +10,7 @@ export async function signInWithGoogleAction(callbackUrl: string) {
   const authJSSession = await auth();
 
   if (!authJSSession || !customSessionId) {
-    await signIn('google', {
+    await signIn('github', {
       redirectTo: callbackUrl,
       redirect: true,
     });
