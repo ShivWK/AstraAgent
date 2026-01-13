@@ -119,7 +119,7 @@ export function LoginForm() {
         </div>
       </div>
       <DialogFooter className="w-full">
-        <div className="flex w-full flex-col items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-3">
           <Button
             type="submit"
             className="w-full text-white dark:bg-[#0c2e96]"
