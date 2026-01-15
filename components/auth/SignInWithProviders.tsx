@@ -15,7 +15,7 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('google')}
         type="button"
-        className="w-full px-3 text-white dark:bg-[#0c2e96]"
+        className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
         <span className="">Continue with</span>
         <svg
@@ -46,7 +46,7 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('github')}
         type="button"
-        className="w-full px-3 text-white dark:bg-[#0c2e96]"
+        className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
         <span className="">Continue with</span>
 
