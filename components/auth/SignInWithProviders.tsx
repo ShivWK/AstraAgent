@@ -1,12 +1,19 @@
 import { Button } from '../ui/button';
 import { signInWithGoogleAction } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { Spinner } from '../ui/spinner';
 
 const SignInWithProviders = () => {
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [githubLoading, setGithubLoading] = useState(false);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
 
   const clickHandler = async (provider: string) => {
+    if (provider === 'google') setGoogleLoading(true);
+    else setGithubLoading(true);
+
     await signInWithGoogleAction(callbackUrl, provider);
   };
 
@@ -15,8 +22,10 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('google')}
         type="button"
+        disabled={googleLoading}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
+        {googleLoading && <Spinner />}
         <span className="">Continue with</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,8 +55,10 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('github')}
         type="button"
+        disabled={githubLoading}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
+        {githubLoading && <Spinner />}
         <span className="">Continue with</span>
 
         <svg
