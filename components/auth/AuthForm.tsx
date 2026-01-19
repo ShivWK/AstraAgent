@@ -6,7 +6,6 @@ import { SignUpForm } from './SignUpForm';
 import { useState } from 'react';
 import {
   selectLoginError,
-  setLoginError,
   setOpenLoginModel,
   selectLoginModelOpenState,
 } from '@/features/auth/authSlice';
@@ -16,11 +15,6 @@ const AuthForm = () => {
   const dispatch = useAppDispatch();
   const open = useAppSelector(selectLoginModelOpenState);
   const error = useAppSelector(selectLoginError);
-
-  const switchFormHandler = () => {
-    setLogin(!isLogIn);
-    dispatch(setLoginError(''));
-  };
 
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
@@ -39,7 +33,7 @@ const AuthForm = () => {
           </span>
           <button
             type="button"
-            onClick={switchFormHandler}
+            onClick={() => setLogin(!isLogIn)}
             className="cursor-pointer text-white underline underline-offset-2"
           >
             {!isLogIn ? 'Sign in now' : 'Sign up now'}

@@ -13,7 +13,7 @@ const AuthIntentHandler = () => {
 
   useEffect(() => {
     if (searchParams.get('auth') === 'required') {
-      dispatch(setLoginError('Please sign in to continue'));
+      dispatch(setLoginError('Please sign in or sign up to continue'));
       dispatch(setOpenLoginModel(true));
 
       router.replace(`/?callbackUrl=${callbackUrl}`);
