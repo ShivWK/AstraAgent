@@ -61,17 +61,17 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
 
   return (
     <>
-      <header className="fixed flex w-full justify-between px-2 py-2 backdrop-blur-md md:px-2.5 md:py-2">
+      <header className="fixed flex w-full justify-between px-2.5 py-2.5 backdrop-blur-md md:px-2.5 md:py-2">
         <div
           className="flex cursor-pointer items-center gap-2"
           onClick={() => router.push('/')}
         >
           <Image
-            src="/logo-transparent.png"
+            src="/logo-solid.jpeg"
             alt="Astra agent logo"
-            width={60}
-            height={60}
-            className="h-14 w-14 rounded md:h-16 md:w-16"
+            width={50}
+            height={50}
+            className="h-12 w-13 rounded md:h-13 md:w-14"
           />
           <p className="hidden text-2xl font-semibold tracking-wide lg:block">
             Astra Agent
