@@ -12,6 +12,7 @@ import { useState } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
+  setGetStartedLoading,
   setLoginError,
   setLogInState,
   setOpenLoginModel,
@@ -69,6 +70,7 @@ export function LoginForm() {
     console.log('Success', result.message);
     dispatch(setLogInState(true));
     dispatch(setOpenLoginModel(false));
+    dispatch(setGetStartedLoading(false));
 
     if (pathname !== callbackUrl) {
       router.push(callbackUrl);

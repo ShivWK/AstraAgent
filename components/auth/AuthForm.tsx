@@ -8,6 +8,7 @@ import {
   selectLoginError,
   setOpenLoginModel,
   selectLoginModelOpenState,
+  setGetStartedLoading,
 } from '@/features/auth/authSlice';
 
 const AuthForm = () => {
@@ -18,6 +19,7 @@ const AuthForm = () => {
 
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
+    dispatch(setGetStartedLoading(false));
   };
 
   return (

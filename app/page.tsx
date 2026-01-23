@@ -5,9 +5,28 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { Cat } from 'lucide-react';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
+import {
+  selectGetStartedLoading,
+  selectLogInState,
+  setGetStartedLoading,
+} from '@/features/auth/authSlice';
+import { Spinner } from '@/components/ui/spinner';
 
 export default function Home() {
   const router = useRouter();
+  const loading = useAppSelector(selectGetStartedLoading);
+  const isLoggedIn = useAppSelector(selectLogInState);
+  const dispatch = useAppDispatch();
+
+  const getStartedClickHandler = () => {
+    router.push('/ai-assistant');
+
+    if (!isLoggedIn) {
+      dispatch(setGetStartedLoading(true));
+    }
+  };
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center max-md:px-2 md:pt-10">
@@ -23,11 +42,16 @@ export default function Home() {
           Your AI task Force
         </span>
         <Button
-          onClick={() => router.push('/ai-assistant')}
+          onClick={getStartedClickHandler}
           className="py-5.5 text-xl font-normal transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white"
+          disabled={loading}
         >
           Get Started
-          <ArrowRight className="animate-ping" />
+          {loading ? (
+            <Spinner className="size-5" />
+          ) : (
+            <ArrowRight className="animate-ping" />
+          )}
         </Button>
         <span className="text-center">Unlock powerful agents</span>
         <div className="flex flex-wrap gap-3">

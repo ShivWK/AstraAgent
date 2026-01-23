@@ -10,6 +10,7 @@ type InitialStateType = {
   };
   openLoginModel: boolean;
   loginError: string;
+  getStartedLoading: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -21,6 +22,7 @@ const initialState: InitialStateType = {
   },
   openLoginModel: false,
   loginError: '',
+  getStartedLoading: false,
 };
 
 const authSlice = createSlice({
@@ -45,6 +47,10 @@ const authSlice = createSlice({
     setLoginError: (state, action: PayloadAction<string>) => {
       state.loginError = action.payload;
     },
+
+    setGetStartedLoading: (state, action: PayloadAction<boolean>) => {
+      state.getStartedLoading = action.payload;
+    },
   },
 });
 
@@ -55,10 +61,13 @@ export const selectUserDetails = (state: RootState) => state.auth.userDetails;
 export const selectLoginModelOpenState = (state: RootState) =>
   state.auth.openLoginModel;
 export const selectLoginError = (state: RootState) => state.auth.loginError;
+export const selectGetStartedLoading = (state: RootState) =>
+  state.auth.getStartedLoading;
 
 export const {
   setLogInState,
   setOpenLoginModel,
   setLoggedInUserDetails,
   setLoginError,
+  setGetStartedLoading,
 } = authSlice.actions;
