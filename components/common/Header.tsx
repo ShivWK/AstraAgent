@@ -88,7 +88,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           >
             {isLoggedIn ? (
               <span className="flex items-center gap-2">
-                {logoutLoading && <Spinner />}
+                {logoutLoading && <Spinner data-icon="inline-start" />}
                 Sign Out
               </span>
             ) : (

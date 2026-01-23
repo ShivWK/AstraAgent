@@ -48,7 +48,7 @@ export default function Home() {
         >
           Get Started
           {loading ? (
-            <Spinner className="size-5" />
+            <Spinner className="size-5" data-icon="inline-end" />
           ) : (
             <ArrowRight className="animate-ping" />
           )}

@@ -25,7 +25,7 @@ const SignInWithProviders = () => {
         disabled={googleLoading}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
-        {googleLoading && <Spinner />}
+        {googleLoading && <Spinner data-icon="inline-start" />}
         <span className="">Continue with</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ const SignInWithProviders = () => {
         disabled={githubLoading}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
-        {githubLoading && <Spinner />}
+        {githubLoading && <Spinner data-icon="inline-start" />}
         <span className="">Continue with</span>
 
         <svg
