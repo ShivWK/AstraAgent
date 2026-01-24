@@ -1,4 +1,16 @@
-export const assistant = [
+export type Assistant = {
+  id: number;
+  name: string;
+  title: string;
+  icon: string;
+  instruction: string;
+  userInstruction: string;
+  fallbackMessage: string;
+  themeColor: string;
+  sampleQuestions: string[];
+};
+
+export const assistant: Assistant[] = [
   {
     id: 1,
     name: 'jack',
