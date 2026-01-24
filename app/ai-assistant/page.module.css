@@ -1,0 +1,44 @@
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.btn-continue {
+  position: relative;
+  transition: all 0.1s ease;
+
+  &::after,
+  &::before {
+    content: '';
+    position: absolute;
+    padding: 2px;
+    width: 107%;
+    height: 115%;
+    border-radius: inherit;
+    background-image: conic-gradient(
+      from var(--angle),
+      #8b75fe,
+      #5bddfd,
+      #1f58fd,
+      #8b75fe
+    );
+    z-index: -1;
+    animation: borderMove 2s linear infinite;
+  }
+
+  &::before {
+    filter: blur(1.5rem);
+    opacity: 0.8;
+  }
+}
+
+@keyframes borderMove {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
+}

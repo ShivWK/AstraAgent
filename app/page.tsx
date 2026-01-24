@@ -43,7 +43,7 @@ export default function Home() {
         </span>
         <Button
           onClick={getStartedClickHandler}
-          className={`${styles['btn--start']} rounded-full py-5.5 text-xl font-normal transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white`}
+          className={`${styles['btn--start']} rounded-full py-5.5 text-lg font-medium transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white`}
           disabled={loading}
         >
           Get Started

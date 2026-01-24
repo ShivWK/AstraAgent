@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { assistant } from '@/utils/assistants';
 import { CircleCheck } from 'lucide-react';
+import styles from './page.module.css';
 import { type Assistant } from '@/utils/assistants';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -37,7 +38,11 @@ const AiAssistant = () => {
               Choose your AI companion to simplify your task
             </p>
           </div>
-          <Button className="text-lg max-md:hidden">Continue</Button>
+          <Button
+            className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full text-lg max-md:hidden`}
+          >
+            Continue
+          </Button>
         </div>
 
         <div className="my-5 flex flex-wrap gap-5 md:my-6">
@@ -72,7 +77,9 @@ const AiAssistant = () => {
             );
           })}
         </div>
-        <Button className="relative left-1/2 mx-auto mt-2 -translate-x-1/2 transform py-5 text-xl md:hidden">
+        <Button
+          className={`${styles['btn-continue']} left-1/2 mt-2 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
+        >
           Continue
         </Button>
       </section>

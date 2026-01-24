@@ -1,6 +1,6 @@
 .btn--start {
   position: relative;
-  transition: all 0.15s ease-in;
+  transition: all 0.1s ease-in;
 
   &::after {
     content: '';
@@ -22,9 +22,9 @@
   &:hover {
     z-index: 1;
     box-shadow:
-      10px 0 50px 2px #735ddd,
-      0 0 50px 2px #47bad6,
-      -10 0 50px 2px #1749df;
+      10px 0 50px 2px #413096,
+      0 0 50px 2px #288299,
+      -10 0 50px 2px #0b2c91;
   }
 }
 
