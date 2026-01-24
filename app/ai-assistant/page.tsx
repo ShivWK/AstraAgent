@@ -1,25 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { assistant } from '@/utils/assistants';
-import { CircleCheck } from 'lucide-react';
 import styles from './page.module.css';
-import { type Assistant } from '@/utils/assistants';
-import Image from 'next/image';
-import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import {
-  selectSelectedModel,
-  setSelectedModel,
-} from '@/features/agents/agentsSlice';
+import { selectSelectedModel } from '@/features/agents/agentsSlice';
+import ModelCards from '@/components/common/ModelCards';
 
 const AiAssistant = () => {
   const selectedModel = useAppSelector(selectSelectedModel);
-  const dispatch = useAppDispatch();
-
-  const cardClickHandler = (data: Assistant) => {
-    dispatch(setSelectedModel(data));
-  };
 
   return (
     <main className="max-md:px-2">
@@ -39,41 +27,9 @@ const AiAssistant = () => {
             Continue
           </Button>
         </div>
-
-        <div className="my-5 flex flex-wrap gap-5 md:my-6">
-          {assistant.map((ai) => {
-            return (
-              <div
-                onClick={() => cardClickHandler(ai)}
-                key={ai.id}
-                className="flex transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 p-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear hover:scale-105"
-              >
-                <Image
-                  src={ai.icon}
-                  alt={`A ${ai.title} AI assistant`}
-                  height={300}
-                  width={300}
-                  quality={100}
-                  className="h-36 w-36 rounded-full border-2 border-blue-400 object-contain shadow-[0_0_15px_2px_#155dfc]"
-                />
-
-                <p className="mt-2 flex items-center gap-2 text-lg">
-                  <span>{ai.name}</span>
-                  {selectedModel.find((object) => object.id === ai.id) && (
-                    <CircleCheck
-                      size={20}
-                      strokeWidth={2}
-                      className="overflow-hidden rounded-full bg-linear-to-br from-[#8B75FE] via-[#5BDDFD] to-[#1F58FD]"
-                    />
-                  )}
-                </p>
-                <p className="text-lg font-semibold">{ai.title}</p>
-              </div>
-            );
-          })}
-        </div>
+        <ModelCards />
         <Button
-          className={`${styles['btn-continue']} left-1/2 mt-2 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
+          className={`${selectedModel.length !== 0 && styles['btn-continue']} relative left-1/2 mt-2 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
         >
           Continue
         </Button>

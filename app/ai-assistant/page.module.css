@@ -42,3 +42,21 @@
     --angle: 360deg;
   }
 }
+
+.carousel {
+  overflow-x: auto;
+  display: flex;
+  gap: 1.25rem;
+  scrollbar-width: 0;
+  position: relative;
+  padding-inline: 5px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.carousel_group {
+  display: flex;
+  animation: moveCarousel 1s infinite linear;
+}
