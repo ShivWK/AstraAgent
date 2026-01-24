@@ -6,24 +6,19 @@ import { CircleCheck } from 'lucide-react';
 import styles from './page.module.css';
 import { type Assistant } from '@/utils/assistants';
 import Image from 'next/image';
-import { useState } from 'react';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
+import {
+  selectSelectedModel,
+  setSelectedModel,
+} from '@/features/agents/agentsSlice';
 
 const AiAssistant = () => {
-  const [selectedModel, setSelectedModel] = useState<Assistant[]>([]);
-  // use Set instead of an array as find/findIndex will take O(n) in worst case but set will O(1)
+  const selectedModel = useAppSelector(selectSelectedModel);
+  const dispatch = useAppDispatch();
 
   const cardClickHandler = (data: Assistant) => {
-    const index = selectedModel.findIndex((object) => object.id === data.id);
-
-    if (index === -1) {
-      setSelectedModel((prv) => {
-        return [...prv, data];
-      });
-    } else {
-      const currentData = [...selectedModel];
-      currentData.splice(index, 1);
-      setSelectedModel(currentData);
-    }
+    dispatch(setSelectedModel(data));
   };
 
   return (
