@@ -1,0 +1,43 @@
+.btn--start {
+  position: relative;
+  transition: all 0.15s ease-in;
+
+  &::after {
+    content: '';
+    position: absolute;
+    height: 110%;
+    width: 104%;
+    background-image: linear-gradient(
+      to bottom right,
+      #8b75fe 10%,
+      #5bddfd,
+      #1f58fd
+    );
+    background-size: 300% 300%;
+    z-index: -1;
+    border-radius: inherit;
+    animation: BackgroundMove 3s ease infinite;
+  }
+
+  &:hover {
+    z-index: 1;
+    box-shadow:
+      10px 0 50px 2px #735ddd,
+      0 0 50px 2px #47bad6,
+      -10 0 50px 2px #1749df;
+  }
+}
+
+@keyframes BackgroundMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}

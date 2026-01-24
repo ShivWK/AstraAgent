@@ -1,5 +1,5 @@
 'use client';
-
+import styles from './page.module.css';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
@@ -43,7 +43,7 @@ export default function Home() {
         </span>
         <Button
           onClick={getStartedClickHandler}
-          className="py-5.5 text-xl font-normal transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white"
+          className={`${styles['btn--start']} rounded-full py-5.5 text-xl font-normal transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white`}
           disabled={loading}
         >
           Get Started
