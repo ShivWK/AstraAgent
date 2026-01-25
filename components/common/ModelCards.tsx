@@ -65,7 +65,7 @@ const ModelCards = () => {
     <section className="relative h-fit">
       <div ref={containerRef} className={`${styles['carousel']}`}>
         <div
-          className={`${styles['carousel_group']} my-5 gap-5 pr-8 pl-4 text-lg md:my-6`}
+          className={`${styles['carousel_group']} my-5 gap-5 text-lg md:my-6 md:pr-8 md:pl-4`}
         >
           {assistant.map((ai) => {
             return (
@@ -100,10 +100,10 @@ const ModelCards = () => {
       </div>
 
       {isOverflowing && (
-        <div className="absolute -bottom-7 left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3">
+        <div className="absolute left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3 md:-bottom-7">
           <button
             onClick={() => scrollClickHandler(-1)}
-            className="hidden md:block"
+            className="hidden transition-all duration-100 ease-in active:scale-90 md:block"
           >
             <ChevronLeft size={35} strokeWidth={2} />
           </button>
@@ -119,7 +119,7 @@ const ModelCards = () => {
 
           <button
             onClick={() => scrollClickHandler(1)}
-            className="hidden md:block"
+            className="hidden transition-all duration-100 ease-in active:scale-90 md:block"
           >
             <ChevronRight size={35} strokeWidth={2} />
           </button>

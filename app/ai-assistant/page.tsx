@@ -29,7 +29,7 @@ const AiAssistant = () => {
         </div>
         <ModelCards />
         <Button
-          className={`${selectedModel.length !== 0 && styles['btn-continue']} relative left-1/2 mt-2 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
+          className={`${selectedModel.length !== 0 && styles['btn-continue']} relative left-1/2 mt-8 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
         >
           Continue
         </Button>
