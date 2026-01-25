@@ -9,13 +9,19 @@ import { MessagesSquare, Mic } from 'lucide-react';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const ModeSelection = () => {
   const interactionMode = useAppSelector(selectSelectedInteractionMode);
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const selectHandler = (mode: Mode) => {
     dispatch(setSelectedInteractionMode(mode));
+  };
+
+  const continueClickHandler = () => {
+    router.push(`/ai-assistant?mode=${interactionMode}`);
   };
 
   return (
@@ -107,8 +113,9 @@ const ModeSelection = () => {
         </div>
 
         <Button
+          onClick={continueClickHandler}
           disabled={!interactionMode}
-          className="mt-13 flex items-center justify-center px-8 text-xl font-medium tracking-wider transition-all duration-100 ease-in active:scale-95 max-md:mx-auto md:mt-1 md:ml-auto"
+          className="mt-13 flex items-center justify-center px-8 text-xl font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-md:mx-auto md:mt-1 md:ml-auto"
           variant={'secondary'}
         >
           Continue
