@@ -21,7 +21,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   const getStartedClickHandler = () => {
-    router.push('/ai-assistant');
+    router.push('/mode-selection');
 
     if (!isLoggedIn) {
       dispatch(setGetStartedLoading(true));

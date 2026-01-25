@@ -10,7 +10,7 @@ async function customMiddleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  const protectedRoutes = ['/ai-assistant'];
+  const protectedRoutes = ['/ai-assistant', '/mode-selection'];
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route),
