@@ -15,35 +15,47 @@ const ModelCards = () => {
   const selectedModel = useAppSelector(selectSelectedModel);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [scrollPercentage, setScrollPercentage] = useState<number | null>(48);
+  const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
+  const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;
     return totalViewed;
   };
 
+  const scrollClickHandler = (dir: number) => {
+    if (!containerRef.current) return;
+    const ele = containerRef.current;
+
+    ele.scrollBy({
+      left: dir * 150,
+      behavior: 'smooth',
+    });
+  };
+
   useEffect(() => {
     if (!containerRef.current) return;
     const ele = containerRef.current;
-    // const scrollW = ele.scrollWidth;
-    // const scrollL = ele.scrollLeft;
-    // const clientW = ele.clientWidth;
-
-    // const totalViewed = ((scrollL + clientW) / scrollW) * 100;
-    // setScrollPercentage(calPercentage(scrollL, scrollW, clientW));
 
     const scrollHandler = () => {
-      const scrollW = ele.scrollWidth;
-      const scrollL = ele.scrollLeft;
-      const clientW = ele.clientWidth;
-
-      console.log('scrollW', scrollW, 'scrollL', scrollL, 'clientW', clientW);
-      // console.log("scroll %", calPercentage(scrollL, scrollW, clientW))
+      const {
+        scrollWidth: scrollW,
+        scrollLeft: scrollL,
+        clientWidth: clientW,
+      } = ele;
+      if (clientW < scrollW) setIsOverFlowing(true);
       setScrollPercentage(calPercentage(scrollL, scrollW, clientW));
     };
 
+    scrollHandler();
+
     ele.addEventListener('scroll', scrollHandler);
-    return () => ele.removeEventListener('scroll', scrollHandler);
+    ele.addEventListener('resize', scrollHandler);
+
+    return () => {
+      ele.removeEventListener('scroll', scrollHandler);
+      ele.removeEventListener('resize', scrollHandler);
+    };
   }, []);
 
   const cardClickHandler = (data: Assistant) => {
@@ -87,24 +99,32 @@ const ModelCards = () => {
         </div>
       </div>
 
-      <div className="absolute -bottom-7 left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3">
-        <button className="hidden md:block">
-          <ChevronLeft size={35} strokeWidth={2} />
-        </button>
+      {isOverflowing && (
+        <div className="absolute -bottom-7 left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3">
+          <button
+            onClick={() => scrollClickHandler(-1)}
+            className="hidden md:block"
+          >
+            <ChevronLeft size={35} strokeWidth={2} />
+          </button>
 
-        <div className="h-2 w-full rounded-2xl border border-blue-400">
-          <div
-            className={`h-full rounded-2xl bg-blue-400`}
-            style={{
-              width: `${scrollPercentage}%`,
-            }}
-          ></div>
+          <div className="h-2 w-full rounded-2xl border border-blue-400">
+            <div
+              className={`h-full rounded-2xl bg-blue-400 transition-all duration-200 ease-linear`}
+              style={{
+                width: `${scrollPercentage}%`,
+              }}
+            ></div>
+          </div>
+
+          <button
+            onClick={() => scrollClickHandler(1)}
+            className="hidden md:block"
+          >
+            <ChevronRight size={35} strokeWidth={2} />
+          </button>
         </div>
-
-        <button className="hidden md:block">
-          <ChevronRight size={35} strokeWidth={2} />
-        </button>
-      </div>
+      )}
     </section>
   );
 };
