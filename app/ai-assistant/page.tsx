@@ -3,11 +3,32 @@
 import { Button } from '@/components/ui/button';
 import styles from './page.module.css';
 import useAppSelector from '@/hooks/useAppSelector';
-import { selectSelectedModel } from '@/features/agents/agentsSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import {
+  selectSelectedModel,
+  selectSelectedInteractionMode,
+  setSelectedInteractionMode,
+} from '@/features/agents/agentsSlice';
 import ModelCards from '@/components/common/ModelCards';
+import { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { type Mode } from '@/features/agents/agentsSlice';
 
 const AiAssistant = () => {
   const selectedModel = useAppSelector(selectSelectedModel);
+  const mode1 = useAppSelector(selectSelectedInteractionMode);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const mode2 = searchParams.get('mode');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!mode1 && mode2) {
+      dispatch(setSelectedInteractionMode(mode2 as Mode));
+    } else if (!mode1 && !mode2) {
+      router.push('/mode-selection');
+    }
+  }, [dispatch, mode1, mode2, router]);
 
   return (
     <main className="max-md:px-2">
