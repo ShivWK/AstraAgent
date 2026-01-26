@@ -80,6 +80,8 @@ const ModelCards = () => {
                   height={300}
                   width={300}
                   quality={100}
+                  placeholder="blur"
+                  blurDataURL="/blurImage.png"
                   className="h-34 w-34 rounded-full border-2 border-blue-400 object-contain shadow-[0_0_15px_2px_#155dfc]"
                 />
                 {selectedModel.find((object) => object.id === ai.id) && (
