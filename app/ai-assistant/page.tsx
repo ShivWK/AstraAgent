@@ -43,14 +43,16 @@ const AiAssistant = () => {
             </p>
           </div>
           <Button
-            className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full text-lg max-md:hidden`}
+            variant={'secondary'}
+            className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full text-lg hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
           >
             Continue
           </Button>
         </div>
         <ModelCards />
         <Button
-          className={`${selectedModel.length !== 0 && styles['btn-continue']} relative left-1/2 mt-8 -translate-x-1/2 transform rounded-full py-5 text-xl md:hidden`}
+          variant={'secondary'}
+          className={`${selectedModel.length !== 0 && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-5 text-xl active:scale-95 md:hidden`}
         >
           Continue
         </Button>

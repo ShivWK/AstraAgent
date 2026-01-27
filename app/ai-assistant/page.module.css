@@ -1,14 +1,15 @@
-@property --angle {
+/* @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
-}
+} */
 
 .btn-continue {
   position: relative;
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
+  border-radius: 1000px;
 
-  &::after,
+  /* &::after,
   &::before {
     content: '';
     position: absolute;
@@ -16,30 +17,64 @@
     width: 107%;
     height: 115%;
     border-radius: inherit;
-    background-image: conic-gradient(
-      from var(--angle),
-      #8b75fe,
-      #5bddfd,
-      #1f58fd,
-      #8b75fe
-    );
+    background-image: conic-gradient(from var(--angle),
+        #8b75fe,
+        #5bddfd,
+        #1f58fd,
+        #8b75fe);
     z-index: -1;
     animation: borderMove 2s linear infinite;
+  } */
+
+  &::after,
+  &::before {
+    content: '';
+    position: absolute;
+    height: 115%;
+    width: 107%;
+    background-image: linear-gradient(
+      to bottom right,
+      #8b75fe 10%,
+      #5bddfd,
+      #1f58fd
+    );
+    background-size: 300% 300%;
+    z-index: -1;
+    border-radius: inherit;
+    animation: BackgroundMove 3s ease infinite;
   }
 
   &::before {
     filter: blur(1.5rem);
     opacity: 0.8;
   }
+
+  &:hover {
+    z-index: 1;
+  }
 }
 
-@keyframes borderMove {
+/* @keyframes borderMove {
   from {
     --angle: 0deg;
   }
 
   to {
     --angle: 360deg;
+  }
+} */
+
+@keyframes BackgroundMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
   }
 }
 
