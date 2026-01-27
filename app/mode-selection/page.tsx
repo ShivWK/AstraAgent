@@ -26,7 +26,7 @@ const ModeSelection = () => {
 
   return (
     <main className="max-md:px-2">
-      <section className="mx-auto max-w-[1200px] pt-24 pb-6 md:pt-22">
+      <section className="mx-auto max-w-[1200px] pt-24 pb-6 md:pt-20">
         <div className="text-center">
           <p className="text-3xl">
             Choose how you <strong>want</strong> to interact today
@@ -37,7 +37,7 @@ const ModeSelection = () => {
           </p>
         </div>
 
-        <div className="mx-auto mt-6 flex w-fit flex-col items-center gap-6 max-md:px-4 md:mt-10 md:flex-row md:gap-10">
+        <div className="mx-auto mt-6 flex w-fit flex-col items-center gap-6 max-md:px-4 md:mt-5 md:flex-row md:gap-10">
           <div
             role="button"
             tabIndex={0}
@@ -67,7 +67,7 @@ const ModeSelection = () => {
                   selectHandler('text');
                 }}
                 variant={'secondary'}
-                className="mt-4 hidden px-6 text-lg font-medium tracking-wider transition-all duration-100 ease-in active:scale-95 md:flex"
+                className="mt-2 hidden px-6 text-lg font-medium tracking-wider transition-all duration-100 ease-in hover:-translate-y-0.5 active:translate-y-0 md:flex"
               >
                 {interactionMode === 'text' ? 'Selected' : 'Select'}
               </Button>
@@ -104,7 +104,7 @@ const ModeSelection = () => {
                   selectHandler('speech');
                 }}
                 variant={'secondary'}
-                className="mt-4 hidden px-6 text-lg font-medium tracking-wider transition-all duration-100 ease-in active:scale-95 md:flex"
+                className="mt-2 hidden px-6 text-lg font-medium tracking-wider transition-all duration-100 ease-in hover:-translate-y-0.5 active:translate-y-0 md:flex"
               >
                 {interactionMode === 'speech' ? 'Selected' : 'Select'}
               </Button>
@@ -115,7 +115,7 @@ const ModeSelection = () => {
         <Button
           onClick={continueClickHandler}
           disabled={!interactionMode}
-          className="mt-13 flex items-center justify-center px-8 text-xl font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-md:mx-auto md:mt-1 md:ml-auto"
+          className="mt-13 flex items-center justify-center px-5 text-lg font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-lg:mx-auto md:mt-4 md:ml-auto"
           variant={'secondary'}
         >
           Continue
