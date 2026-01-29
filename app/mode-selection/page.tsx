@@ -25,7 +25,7 @@ const ModeSelection = () => {
   };
 
   return (
-    <main className="max-md:px-2">
+    <main>
       <section className="mx-auto max-w-[1200px] pt-24 pb-6 md:pt-20">
         <div className="text-center">
           <p className="text-3xl">

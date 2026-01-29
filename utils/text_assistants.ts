@@ -1,4 +1,4 @@
-export type Assistant = {
+export type Text_assistant = {
   id: number;
   name: string;
   title: string;
@@ -10,7 +10,7 @@ export type Assistant = {
   sampleQuestions: string[];
 };
 
-export const assistant: Assistant[] = [
+export const text_assistant: Text_assistant[] = [
   {
     id: 1,
     name: 'jack',

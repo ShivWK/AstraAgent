@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { type Assistant } from '@/utils/assistants';
+import { type Assistant } from '@/utils/text_assistants';
 import { RootState } from '@/lib/store';
 
 export type Mode = 'text' | 'speech' | '';

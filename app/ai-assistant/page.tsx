@@ -13,6 +13,8 @@ import ModelCards from '@/components/common/ModelCards';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
+import { voice_assistant } from '@/utils/voice_assistants';
+import { text_assistant } from '@/utils/text_assistants';
 
 const AiAssistant = () => {
   const selectedModel = useAppSelector(selectSelectedModel);
@@ -31,7 +33,7 @@ const AiAssistant = () => {
   }, [dispatch, mode1, mode2, router]);
 
   return (
-    <main className="max-md:px-2">
+    <main>
       <section className="mx-auto max-w-[1200px] pt-22 pb-18 md:pt-25">
         <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
           <div>
@@ -49,7 +51,9 @@ const AiAssistant = () => {
             Continue
           </Button>
         </div>
-        <ModelCards />
+        <ModelCards
+          assistants={mode2 === 'speech' ? voice_assistant : text_assistant}
+        />
         <Button
           variant={'secondary'}
           className={`${selectedModel.length !== 0 && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-5 text-xl active:scale-95 md:hidden`}
@@ -57,6 +61,7 @@ const AiAssistant = () => {
           Continue
         </Button>
       </section>
+      <section className="section__history"></section>
     </main>
   );
 };

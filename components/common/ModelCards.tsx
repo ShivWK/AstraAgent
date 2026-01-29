@@ -3,15 +3,19 @@ import {
   setSelectedModel,
 } from '@/features/agents/agentsSlice';
 import styles from '../../app/ai-assistant/page.module.css';
-import { type Assistant } from '@/utils/assistants';
+import { type Text_assistant } from '@/utils/text_assistants';
+import { type Voice_assistant } from '@/utils/voice_assistants';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { CircleCheck, ChevronLeft, ChevronRight } from 'lucide-react';
-import { assistant } from '@/utils/assistants';
+import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-const ModelCards = () => {
+type PropsType = {
+  assistants: Text_assistant[] | Voice_assistant[];
+};
+
+const ModelCards = ({ assistants }: PropsType) => {
   const selectedModel = useAppSelector(selectSelectedModel);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -58,16 +62,16 @@ const ModelCards = () => {
     };
   }, []);
 
-  const cardClickHandler = (data: Assistant) => {
+  const cardClickHandler = (data: Text_assistant | Voice_assistant) => {
     dispatch(setSelectedModel(data));
   };
   return (
     <section className="relative h-fit">
       <div ref={containerRef} className={`${styles['carousel']}`}>
         <div
-          className={`${styles['carousel_group']} my-5 gap-5 text-lg md:my-6 md:pr-8 md:pl-4`}
+          className={`${styles['carousel_group']} my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4`}
         >
-          {assistant.map((ai) => {
+          {assistants.map((ai) => {
             return (
               <div
                 onClick={() => cardClickHandler(ai)}
@@ -85,10 +89,10 @@ const ModelCards = () => {
                   className="h-34 w-34 rounded-full border-2 border-blue-400 object-contain shadow-[0_0_15px_2px_#155dfc]"
                 />
                 {selectedModel.find((object) => object.id === ai.id) && (
-                  <CircleCheck
+                  <Check
                     size={20}
-                    strokeWidth={2}
-                    className="absolute top-2 right-2 overflow-hidden rounded-full bg-linear-to-br from-[#8B75FE] via-[#5BDDFD] to-[#1F58FD]"
+                    strokeWidth={3}
+                    className="absolute top-2 right-2 overflow-hidden rounded-full bg-linear-to-br from-[#8B75FE] via-[#5BDDFD] to-[#1F58FD] p-1"
                   />
                 )}
                 <p className="mt-2 w-[99%] truncate text-center">{ai.name}</p>
@@ -107,7 +111,7 @@ const ModelCards = () => {
             onClick={() => scrollClickHandler(-1)}
             className="hidden transition-all duration-100 ease-in active:scale-90 md:block"
           >
-            <ChevronLeft size={35} strokeWidth={2} />
+            <ChevronLeft size={35} strokeWidth={2} className="text-blue-400" />
           </button>
 
           <div className="h-2 w-full rounded-2xl border border-blue-400">
@@ -123,7 +127,7 @@ const ModelCards = () => {
             onClick={() => scrollClickHandler(1)}
             className="hidden transition-all duration-100 ease-in active:scale-90 md:block"
           >
-            <ChevronRight size={35} strokeWidth={2} />
+            <ChevronRight size={35} strokeWidth={2} className="text-blue-400" />
           </button>
         </div>
       )}

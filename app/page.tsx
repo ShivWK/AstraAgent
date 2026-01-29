@@ -29,7 +29,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center max-md:px-2 md:pt-10">
+    <main className="flex min-h-screen w-full items-center justify-center md:pt-10">
       <section className="flex flex-col items-center gap-3.5 p-2">
         <Image
           src="/logo-transparent.png"
