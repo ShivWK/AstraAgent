@@ -52,6 +52,7 @@ const AiAssistant = () => {
           </Button>
         </div>
         <ModelCards
+          mode={mode2}
           assistants={mode2 === 'speech' ? voice_assistant : text_assistant}
         />
         <Button
