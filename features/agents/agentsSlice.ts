@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { type Assistant } from '@/utils/text_assistants';
+import { type Text_assistant } from '@/utils/text_assistants';
 import { RootState } from '@/lib/store';
+import { type Voice_assistant } from '@/utils/voice_assistants';
 
 export type Mode = 'text' | 'speech' | '';
+type Assistant = Text_assistant | Voice_assistant;
 
 type InitialState = {
-  selectedModels: Assistant[];
   selectedInteractionMode: Mode;
+  selectedModels: Assistant[];
 };
 
 const initialState: InitialState = {
-  selectedModels: [],
   selectedInteractionMode: '',
+  selectedModels: [],
 };
 
 // use Set instead of an array as find/findIndex will take O(n) in worst case but set will O(1)
@@ -20,7 +22,10 @@ const agentsSlice = createSlice({
   name: 'agents',
   initialState,
   reducers: {
-    setSelectedModel: (state, action: PayloadAction<Assistant>) => {
+    setSelectedModel: (
+      state,
+      action: PayloadAction<Text_assistant | Voice_assistant>,
+    ) => {
       const index = state.selectedModels.findIndex(
         (model) => model.id === action.payload.id,
       );
@@ -33,12 +38,8 @@ const agentsSlice = createSlice({
     },
 
     setSelectedInteractionMode: (state, action: PayloadAction<Mode>) => {
-      const value = state.selectedInteractionMode;
-      if (value == action.payload) {
-        state.selectedInteractionMode = '';
-      } else {
-        state.selectedInteractionMode = action.payload;
-      }
+      state.selectedInteractionMode = action.payload;
+      state.selectedModels = [];
     },
   },
 });
