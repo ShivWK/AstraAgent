@@ -3,6 +3,7 @@ export type Voice_assistant = {
   name: string;
   title: string;
   icon: string;
+  description: string;
 };
 
 export const voice_assistant: Voice_assistant[] = [
@@ -11,6 +12,8 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Astra Interviewer',
     title: 'Interviewer',
     icon: '/assistants/interviewer.png',
+    description:
+      'Conducts realistic interviews based on your chosen topic, and experience level.',
   },
 
   {
@@ -18,6 +21,8 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'LingoMentor',
     title: 'Language Master',
     icon: '/assistants/language_master.png',
+    description:
+      'Helps you learn and practice a new language through structured, conversational lessons.',
   },
 
   {
@@ -25,6 +30,8 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Dhyan',
     title: 'Yog Guru',
     icon: '/assistants/yog_guru.png',
+    description:
+      'Guides you through yoga, pranayama, and meditation sessions tailored to your goals.',
   },
 
   {
@@ -32,5 +39,7 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Nova Scholar',
     title: 'Lecture on topic',
     icon: '/assistants/lecturer.png',
+    description:
+      'Delivers clear, focused lectures on any topic you want to learn or revise.',
   },
 ];

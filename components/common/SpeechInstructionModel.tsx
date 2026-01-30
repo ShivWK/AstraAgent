@@ -1,4 +1,4 @@
-import { Dialog } from '../ui/dialog';
+import { Dialog, DialogHeader, DialogFooter, DialogTitle } from '../ui/dialog';
 import { DialogContent } from '../ui/dialog';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
@@ -18,30 +18,42 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="flex flex-col gap-4 sm:max-w-[425px]"
+        className="sm:max-w-[425px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        <div className="flex flex-col items-center gap-4">
-          <Image
-            src={agent.icon}
-            alt={`A ${agent.title} AI assistant`}
-            height={300}
-            width={300}
-            quality={100}
-            placeholder="blur"
-            blurDataURL="/blurImage.png"
-            className="h-34 w-34 self-center rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
-          />
-          <p className="">{agent.name}</p>
-          <p className="-mt-4 text-lg font-medium">{agent.title}</p>
-        </div>
+        <form className="flex flex-col gap-5">
+          <DialogHeader className="mb-1">
+            <DialogTitle>Configure Your Session</DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center gap-5">
+            <Image
+              src={agent.icon}
+              alt={`A ${agent.title} AI assistant`}
+              height={300}
+              width={300}
+              quality={100}
+              placeholder="blur"
+              blurDataURL="/blurImage.png"
+              className="h-34 w-34 self-center rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+            />
+            <div className="flex flex-col gap-1">
+              <p className="text-lg font-medium">{agent.title}</p>
+              <p className="leading-4.5 tracking-wide">{agent.description}</p>
+            </div>
+          </div>
 
-        <Label htmlFor="instruction">Give Instruction</Label>
-        <Input id="instruction" type="text" />
+          <Label htmlFor="instruction">Give Instruction</Label>
+          <Input id="instruction" type="text" />
 
-        <Button variant={'secondary'} className="">
-          Continue
-        </Button>
+          <DialogFooter className="ml-auto flex items-center gap-2">
+            <Button variant={'outline'} className="">
+              Cancel
+            </Button>
+            <Button variant={'secondary'} className="">
+              Continue
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
