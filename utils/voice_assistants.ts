@@ -4,6 +4,7 @@ export type Voice_assistant = {
   title: string;
   icon: string;
   description: string;
+  subHeading: string;
 };
 
 export const voice_assistant: Voice_assistant[] = [
@@ -12,8 +13,9 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Astra Interviewer',
     title: 'Interviewer',
     icon: '/assistants/interviewer.png',
-    description:
-      'Conducts realistic interviews based on your chosen topic, and experience level.',
+    description: 'Conducts professional interviews and evaluates answers.',
+    subHeading:
+      'Describe the role, topic, experience level, and how challenging you want the interview to be.',
   },
 
   {
@@ -21,8 +23,9 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'LingoMentor',
     title: 'Language Master',
     icon: '/assistants/language_master.png',
-    description:
-      'Helps you learn and practice a new language through structured, conversational lessons.',
+    description: 'Helps you practice speaking and corrects your language.',
+    subHeading:
+      'Mention the language, your current level, and what you want to focus on (speaking, grammar, or fluency).',
   },
 
   {
@@ -30,8 +33,9 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Dhyan',
     title: 'Yog Guru',
     icon: '/assistants/yog_guru.png',
-    description:
-      'Guides you through yoga, pranayama, and meditation sessions tailored to your goals.',
+    description: 'Leads guided meditation, breathing, and focus sessions.',
+    subHeading:
+      'Tell us your goal, preferred practice (yoga, pranayama, meditation), and how you want the session to feel.',
   },
 
   {
@@ -39,7 +43,8 @@ export const voice_assistant: Voice_assistant[] = [
     name: 'Nova Scholar',
     title: 'Lecture on topic',
     icon: '/assistants/lecturer.png',
-    description:
-      'Delivers clear, focused lectures on any topic you want to learn or revise.',
+    description: 'Gives clear lectures on chosen topics.',
+    subHeading:
+      'Share the topic, how deep you want the explanation, and your preferred learning style.',
   },
 ];

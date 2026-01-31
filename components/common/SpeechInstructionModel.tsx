@@ -1,6 +1,6 @@
 import { Dialog, DialogHeader, DialogFooter, DialogTitle } from '../ui/dialog';
 import { DialogContent } from '../ui/dialog';
-import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import Image from 'next/image';
@@ -25,7 +25,7 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
           <DialogHeader className="mb-1">
             <DialogTitle>Configure Your Session</DialogTitle>
           </DialogHeader>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-col items-center gap-5 md:flex-row">
             <Image
               src={agent.icon}
               alt={`A ${agent.title} AI assistant`}
@@ -36,22 +36,27 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
               blurDataURL="/blurImage.png"
               className="h-34 w-34 self-center rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
             />
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 text-center">
               <p className="text-lg font-medium">{agent.title}</p>
               <p className="leading-4.5 tracking-wide">{agent.description}</p>
             </div>
           </div>
 
-          <Label htmlFor="instruction">Give Instruction</Label>
-          <Input id="instruction" type="text" />
+          <p className="text-sm leading-5 tracking-wide">{agent.subHeading}</p>
+          <Textarea
+            className="max-h-30 min-h-24 break-after-all overflow-auto"
+            placeholder="Give instructions"
+          ></Textarea>
 
-          <DialogFooter className="ml-auto flex items-center gap-2">
-            <Button variant={'outline'} className="">
-              Cancel
-            </Button>
-            <Button variant={'secondary'} className="">
-              Continue
-            </Button>
+          <DialogFooter>
+            <div className="ml-auto flex items-center gap-2">
+              <Button variant={'outline'} className="">
+                Cancel
+              </Button>
+              <Button variant={'secondary'} className="">
+                Start Session
+              </Button>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>
