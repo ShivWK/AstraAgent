@@ -1,7 +1,12 @@
-import { Dialog, DialogHeader, DialogFooter, DialogTitle } from '../ui/dialog';
+import {
+  Dialog,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogClose,
+} from '../ui/dialog';
 import { DialogContent } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
-import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { voice_assistant } from '@/utils/voice_assistants';
@@ -10,6 +15,10 @@ type PropsType = {
   currentAgent: number;
   open: boolean;
   setOpen: (val: boolean) => void;
+};
+
+const continueClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  e.preventDefault();
 };
 
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
@@ -25,7 +34,7 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
           <DialogHeader className="mb-1">
             <DialogTitle>Configure Your Session</DialogTitle>
           </DialogHeader>
-          <div className="flex flex-col items-center gap-5 md:flex-row">
+          <div className="flex flex-col items-center gap-4 md:flex-row">
             <Image
               src={agent.icon}
               alt={`A ${agent.title} AI assistant`}
@@ -42,19 +51,28 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
             </div>
           </div>
 
-          <p className="text-sm leading-5 tracking-wide">{agent.subHeading}</p>
+          <p className="text-sm leading-4.5 tracking-wide">
+            {agent.subHeading}
+          </p>
           <Textarea
-            className="max-h-30 min-h-24 break-after-all overflow-auto"
-            placeholder="Give instructions"
+            className="max-h-36 min-h-24 break-after-all overflow-auto"
+            placeholder={agent.placeHolder}
           ></Textarea>
 
           <DialogFooter>
             <div className="ml-auto flex items-center gap-2">
-              <Button variant={'outline'} className="">
-                Cancel
-              </Button>
-              <Button variant={'secondary'} className="">
-                Start Session
+              <DialogClose type="button" asChild>
+                <Button variant={'outline'} className="">
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button
+                onClick={continueClickHandler}
+                type="button"
+                variant={'secondary'}
+                className=""
+              >
+                Continue
               </Button>
             </div>
           </DialogFooter>
