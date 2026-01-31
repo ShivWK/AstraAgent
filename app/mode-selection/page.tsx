@@ -115,7 +115,7 @@ const ModeSelection = () => {
         <Button
           onClick={continueClickHandler}
           disabled={!interactionMode}
-          className="mt-13 flex items-center justify-center rounded-full px-5 text-lg font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-lg:mx-auto md:mt-4 md:ml-auto"
+          className="mt-13 flex items-center justify-center rounded-full px-5 py-6 text-lg font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-lg:mx-auto md:mt-4 md:ml-auto md:py-5"
           variant={'secondary'}
         >
           Continue

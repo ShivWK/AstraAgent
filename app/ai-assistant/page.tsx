@@ -47,7 +47,7 @@ const AiAssistant = () => {
           <Button
             variant={'secondary'}
             disabled={selectedModel.length === 0}
-            className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
+            className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
           >
             Start Session
           </Button>
@@ -59,7 +59,7 @@ const AiAssistant = () => {
         <Button
           variant={'secondary'}
           disabled={selectedModel.length === 0}
-          className={`${selectedModel.length !== 0 && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-5 text-xl active:scale-95 md:hidden`}
+          className={`${selectedModel.length !== 0 && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
         >
           Start Session
         </Button>
