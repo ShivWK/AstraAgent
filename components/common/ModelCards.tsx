@@ -86,7 +86,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
                 <div
                   onClick={() => cardClickHandler(ai)}
                   key={ai.id}
-                  className="relative flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 p-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
+                  className="relative flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
                 >
                   <Image
                     src={ai.icon}
