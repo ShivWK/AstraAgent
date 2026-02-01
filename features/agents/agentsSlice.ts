@@ -4,16 +4,16 @@ import { RootState } from '@/lib/store';
 import { type Voice_assistant } from '@/utils/voice_assistants';
 
 export type Mode = 'text' | 'speech' | '';
-type Assistant = Text_assistant | Voice_assistant;
+type Assistant = Text_assistant | Voice_assistant | null;
 
 type InitialState = {
   selectedInteractionMode: Mode;
-  selectedModels: Assistant[];
+  selectedAgent: Assistant;
 };
 
 const initialState: InitialState = {
   selectedInteractionMode: '',
-  selectedModels: [],
+  selectedAgent: null,
 };
 
 // use Set instead of an array as find/findIndex will take O(n) in worst case but set will O(1)
@@ -22,34 +22,30 @@ const agentsSlice = createSlice({
   name: 'agents',
   initialState,
   reducers: {
-    setSelectedModel: (
+    setSelectedAgent: (
       state,
       action: PayloadAction<Text_assistant | Voice_assistant>,
     ) => {
-      const index = state.selectedModels.findIndex(
-        (model) => model.id === action.payload.id,
-      );
-
-      if (index === -1) {
-        state.selectedModels.push(action.payload);
+      if (state.selectedAgent?.id === action.payload.id) {
+        state.selectedAgent = null;
       } else {
-        state.selectedModels.splice(index, 1);
+        state.selectedAgent = action.payload;
       }
     },
 
     setSelectedInteractionMode: (state, action: PayloadAction<Mode>) => {
       state.selectedInteractionMode = action.payload;
-      state.selectedModels = [];
+      state.selectedAgent = null;
     },
   },
 });
 
 export default agentsSlice.reducer;
 
-export const selectSelectedModel = (state: RootState) =>
-  state.agents.selectedModels;
+export const selectSelectedAgent = (state: RootState) =>
+  state.agents.selectedAgent;
 export const selectSelectedInteractionMode = (state: RootState) =>
   state.agents.selectedInteractionMode;
 
-export const { setSelectedModel, setSelectedInteractionMode } =
+export const { setSelectedAgent, setSelectedInteractionMode } =
   agentsSlice.actions;

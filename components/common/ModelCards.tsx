@@ -1,24 +1,25 @@
 import {
-  selectSelectedModel,
-  setSelectedModel,
+  selectSelectedAgent,
+  setSelectedAgent,
 } from '@/features/agents/agentsSlice';
 import styles from '../../app/ai-assistant/page.module.css';
 import { type Text_assistant } from '@/utils/text_assistants';
 import { type Voice_assistant } from '@/utils/voice_assistants';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import SpeechInstructionModel from './SpeechInstructionModel';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
+import { type Mode } from '@/features/agents/agentsSlice';
 
 type PropsType = {
   assistants: Text_assistant[] | Voice_assistant[];
-  mode: string | null;
+  mode: Mode;
 };
 
 const ModelCards = ({ mode, assistants }: PropsType) => {
-  const selectedModel = useAppSelector(selectSelectedModel);
+  const selectedAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
@@ -71,7 +72,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
       setCurrentVoiceAgent(data.id);
       setOpenInstructionModel(true);
     } else {
-      dispatch(setSelectedModel(data));
+      dispatch(setSelectedAgent(data));
     }
   };
   return (
@@ -81,12 +82,43 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
           <div
             className={`${styles['carousel_group']} my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4`}
           >
+            <div
+              onClick={() => {}}
+              className={`${mode === 'speech' && 'hidden'} flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
+            >
+              <div className="relative overflow-hidden rounded-full">
+                <div className="absolute h-full w-full bg-blue-400/65">
+                  &nbsp;
+                </div>
+                <Image
+                  src="/assistants/general_ai.png"
+                  alt={`A general AI assistant`}
+                  height={300}
+                  width={300}
+                  quality={100}
+                  placeholder="blur"
+                  blurDataURL="/blurImage.png"
+                  className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+                />
+                <CirclePlus
+                  size={60}
+                  strokeWidth={1}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white"
+                />
+              </div>
+
+              <p className="mt-2 w-[99%] truncate text-center">Your Agent</p>
+              <p className="w-[99%] truncate text-center font-medium">
+                Create New
+              </p>
+            </div>
+
             {assistants.map((ai) => {
               return (
                 <div
                   onClick={() => cardClickHandler(ai)}
                   key={ai.id}
-                  className="relative flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
+                  className="flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
                 >
                   <Image
                     src={ai.icon}
@@ -98,7 +130,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
                     blurDataURL="/blurImage.png"
                     className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
                   />
-                  {selectedModel.find((object) => object.id === ai.id) && (
+                  {selectedAgent?.id === ai.id && (
                     <Check
                       size={20}
                       strokeWidth={3}

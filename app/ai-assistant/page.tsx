@@ -5,7 +5,7 @@ import styles from './page.module.css';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import {
-  selectSelectedModel,
+  selectSelectedAgent,
   selectSelectedInteractionMode,
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
@@ -17,11 +17,11 @@ import { voice_assistant } from '@/utils/voice_assistants';
 import { text_assistant } from '@/utils/text_assistants';
 
 const AiAssistant = () => {
-  const selectedModel = useAppSelector(selectSelectedModel);
+  const selectedAgent = useAppSelector(selectSelectedAgent);
   const mode1 = useAppSelector(selectSelectedInteractionMode);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const mode2 = searchParams.get('mode');
+  const mode2 = searchParams.get('mode') as Mode;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -47,8 +47,8 @@ const AiAssistant = () => {
             </div>
             <Button
               variant={'secondary'}
-              disabled={selectedModel.length === 0}
-              className={`${selectedModel.length !== 0 && styles['btn-continue']} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
+              disabled={selectedAgent === null}
+              className={`${selectedAgent !== null && styles['btn-continue']} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
             >
               Start Session
             </Button>
@@ -59,8 +59,8 @@ const AiAssistant = () => {
           />
           <Button
             variant={'secondary'}
-            disabled={selectedModel.length === 0}
-            className={`${selectedModel.length !== 0 && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
+            disabled={selectedAgent === null}
+            className={`${selectedAgent !== null && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
           >
             Start Session
           </Button>
