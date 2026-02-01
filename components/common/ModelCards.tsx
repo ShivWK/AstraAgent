@@ -12,6 +12,7 @@ import SpeechInstructionModel from './SpeechInstructionModel';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
+import NewAgentCreationModel from './NewAgentCreationModel';
 
 type PropsType = {
   assistants: Text_assistant[] | Voice_assistant[];
@@ -25,6 +26,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
   const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
   const [openInstructionModel, setOpenInstructionModel] = useState(false);
+  const [openCreationModel, setOpenCreationModel] = useState(false);
   const [currentVoiceAgent, setCurrentVoiceAgent] = useState<number>(1);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
@@ -75,6 +77,10 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
       dispatch(setSelectedAgent(data));
     }
   };
+
+  const newAgentCreationClickHandler = () => {
+    setOpenCreationModel(true);
+  };
   return (
     <>
       <section className="relative h-fit">
@@ -83,7 +89,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
             className={`${styles['carousel_group']} my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4`}
           >
             <div
-              onClick={() => {}}
+              onClick={newAgentCreationClickHandler}
               className={`${mode === 'speech' && 'hidden'} flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 rounded-2xl border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
             >
               <div className="relative overflow-hidden rounded-full">
@@ -186,6 +192,11 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
         open={openInstructionModel}
         setOpen={setOpenInstructionModel}
         currentAgent={currentVoiceAgent}
+      />
+
+      <NewAgentCreationModel
+        open={openCreationModel}
+        setOpen={setOpenCreationModel}
       />
     </>
   );
