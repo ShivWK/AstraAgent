@@ -102,10 +102,10 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
 
           <div className="mt-1 flex flex-col gap-3 text-center">
             <Label htmlFor="role">Agent Role / Purpose</Label>
-            <Textarea id="role" className="max-h-30 break-after-all"></Textarea>
+            <Textarea id="role" className="max-h-32 break-after-all"></Textarea>
           </div>
 
-          <div className="mt-1 flex gap-5">
+          <div className="mt-1 flex gap-4">
             <Label>
               <span className="hidden md:inline">Your</span> Comfort Level
             </Label>
