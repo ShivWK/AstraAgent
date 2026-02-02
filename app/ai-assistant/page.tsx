@@ -32,9 +32,13 @@ const AiAssistant = () => {
     }
   }, [dispatch, mode1, mode2, router]);
 
+  const startSessionClickHandler = () => {
+    router.push('/text-workspace');
+  };
+
   return (
     <main className="pb-18">
-      <div className="mx-auto max-w-[1200px] pt-22 md:pt-25">
+      <div className="mx-auto max-w-[1200px]">
         <section className="w-full">
           <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
             <div>
@@ -47,6 +51,7 @@ const AiAssistant = () => {
             </div>
             <Button
               variant={'secondary'}
+              onClick={startSessionClickHandler}
               disabled={selectedAgent === null}
               className={`${selectedAgent !== null && styles['btn-continue']} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
             >
@@ -59,6 +64,7 @@ const AiAssistant = () => {
           />
           <Button
             variant={'secondary'}
+            onClick={startSessionClickHandler}
             disabled={selectedAgent === null}
             className={`${selectedAgent !== null && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
           >

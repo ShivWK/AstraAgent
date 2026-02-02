@@ -29,8 +29,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center md:pt-10">
-      <section className="flex flex-col items-center gap-3.5 p-2">
+    <main className="flex min-h-screen w-full items-center justify-center">
+      <section className="-mt-30 flex flex-col items-center gap-3.5">
         <Image
           src="/logo-transparent.png"
           alt="Astra agent site logo, an start in blue shade"

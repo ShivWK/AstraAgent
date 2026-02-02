@@ -57,7 +57,7 @@ export default async function RootLayout({ children }: PropsType) {
           <Providers>
             <AuthIntentHandler />
             <Header isUserLoggedIn={isLoggedIn} />
-            <div className="max-md:px-2">{children}</div>
+            <div className="pt-22 max-md:px-2 md:pt-25">{children}</div>
           </Providers>
         </ThemeProvider>
       </body>

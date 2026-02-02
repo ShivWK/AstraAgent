@@ -26,7 +26,7 @@ const ModeSelection = () => {
 
   return (
     <main>
-      <section className="mx-auto max-w-[1200px] pt-24 pb-6 md:pt-20">
+      <section className="mx-auto max-w-[1200px] pb-6">
         <div className="text-center">
           <p className="text-3xl">
             Choose how you <strong>want</strong> to interact today
@@ -37,7 +37,7 @@ const ModeSelection = () => {
           </p>
         </div>
 
-        <div className="mx-auto mt-6 flex w-fit flex-col items-center gap-6 max-md:px-4 md:mt-5 md:flex-row md:gap-10">
+        <div className="mx-auto mt-6 flex w-fit flex-col items-center gap-8 max-md:px-4 md:mt-5 md:flex-row md:gap-10">
           <div
             role="button"
             tabIndex={0}
