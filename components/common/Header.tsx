@@ -61,7 +61,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
 
   return (
     <>
-      <header className="fixed z-50 flex w-full justify-between border px-2.5 py-3 backdrop-blur-md">
+      <header className="fixed z-50 flex w-full justify-between px-2.5 py-3 backdrop-blur-md">
         <div
           className="flex cursor-pointer items-center gap-5"
           onClick={() => router.push('/')}

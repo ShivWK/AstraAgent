@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center">
-      <section className="-mt-30 flex flex-col items-center gap-3.5">
+      <section className="-mt-36 flex flex-col items-center gap-3.5">
         <Image
           src="/logo-transparent.png"
           alt="Astra agent site logo, an start in blue shade"
