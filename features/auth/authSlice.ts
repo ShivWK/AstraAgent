@@ -11,6 +11,7 @@ type InitialStateType = {
   openLoginModel: boolean;
   loginError: string;
   getStartedLoading: boolean;
+  globalAuthLoader: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -23,6 +24,7 @@ const initialState: InitialStateType = {
   openLoginModel: false,
   loginError: '',
   getStartedLoading: false,
+  globalAuthLoader: false,
 };
 
 const authSlice = createSlice({
@@ -51,6 +53,10 @@ const authSlice = createSlice({
     setGetStartedLoading: (state, action: PayloadAction<boolean>) => {
       state.getStartedLoading = action.payload;
     },
+
+    setGlobalAuthLoader: (state, action: PayloadAction<boolean>) => {
+      state.globalAuthLoader = action.payload;
+    },
   },
 });
 
@@ -63,6 +69,8 @@ export const selectLoginModelOpenState = (state: RootState) =>
 export const selectLoginError = (state: RootState) => state.auth.loginError;
 export const selectGetStartedLoading = (state: RootState) =>
   state.auth.getStartedLoading;
+export const selectGlobalAuthLoader = (state: RootState) =>
+  state.auth.globalAuthLoader;
 
 export const {
   setLogInState,
@@ -70,4 +78,5 @@ export const {
   setLoggedInUserDetails,
   setLoginError,
   setGetStartedLoading,
+  setGlobalAuthLoader,
 } = authSlice.actions;

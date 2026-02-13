@@ -3,17 +3,26 @@ import { signInWithGoogleAction } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Spinner } from '../ui/spinner';
+import {
+  setGlobalAuthLoader,
+  selectGlobalAuthLoader,
+} from '@/features/auth/authSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
 
 const SignInWithProviders = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [githubLoading, setGithubLoading] = useState(false);
+  const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const dispatch = useAppDispatch();
 
   const clickHandler = async (provider: string) => {
     if (provider === 'google') setGoogleLoading(true);
     else setGithubLoading(true);
 
+    dispatch(setGlobalAuthLoader(true));
     await signInWithGoogleAction(callbackUrl, provider);
   };
 
@@ -22,7 +31,7 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('google')}
         type="button"
-        disabled={googleLoading}
+        disabled={googleLoading || githubLoading || globalAuthLoader}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
         {googleLoading && <Spinner data-icon="inline-start" />}
@@ -32,6 +41,7 @@ const SignInWithProviders = () => {
           height="24"
           viewBox="0 0 24 24"
           width="24"
+          aria-hidden="true"
         >
           <path
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -55,7 +65,7 @@ const SignInWithProviders = () => {
       <Button
         onClick={() => clickHandler('github')}
         type="button"
-        disabled={githubLoading}
+        disabled={githubLoading || googleLoading || globalAuthLoader}
         className="w-full px-3 text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
       >
         {githubLoading && <Spinner data-icon="inline-start" />}
@@ -68,9 +78,9 @@ const SignInWithProviders = () => {
           aria-hidden="true"
         >
           <path
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.455-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.833.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.094.39-1.988 1.029-2.688-.103-.253-.446-1.27.098-2.646 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.57 9.57 0 0 1 2.504.337c1.909-1.296 2.748-1.026 2.748-1.026.546 1.376.203 2.393.1 2.646.64.7 1.028 1.594 1.028 2.688 0 3.848-2.338 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.481A10.02 10.02 0 0 0 22 12.017C22 6.484 17.523 2 12 2Z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           />
         </svg>
       </Button>

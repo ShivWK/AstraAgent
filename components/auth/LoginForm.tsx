@@ -8,7 +8,7 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Spinner } from '../ui/spinner';
 import { loginSchema } from '@/lib/validations/auth.schema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
@@ -16,14 +16,18 @@ import {
   setLoginError,
   setLogInState,
   setOpenLoginModel,
+  setGlobalAuthLoader,
+  selectGlobalAuthLoader,
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type FormType = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const [eyeOpen, setEyeOpen] = useState(false);
   const searchParams = useSearchParams();
+  const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -41,6 +45,12 @@ export function LoginForm() {
       password: '',
     },
   });
+
+  useEffect(() => {
+    console.log('Ran');
+
+    dispatch(setGlobalAuthLoader(isSubmitting));
+  }, [isSubmitting, dispatch]);
 
   const onSubmit = async (data: FormType) => {
     const callbackUrl = searchParams.get('callbackUrl') || '/';
@@ -125,7 +135,7 @@ export function LoginForm() {
           <Button
             type="submit"
             className="w-full text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
-            disabled={isSubmitting}
+            disabled={isSubmitting || globalAuthLoader}
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}
             Sign In

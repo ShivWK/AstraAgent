@@ -33,7 +33,7 @@ export const signUpSchema = z.object({
     .max(65, 'Password must be at most 64 characters')
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
-      'Password must include upper, lower, number, and special character ZOD',
+      'Password must include upper, lower, number, and special character',
     )
     .trim(),
 });

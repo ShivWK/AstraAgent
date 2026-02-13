@@ -9,20 +9,24 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   setGetStartedLoading,
   setLoginError,
   setLogInState,
   setOpenLoginModel,
+  setGlobalAuthLoader,
+  selectGlobalAuthLoader,
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type FormType = z.infer<typeof signUpSchema>;
 
 export function SignUpForm() {
   const [eyeOpen, setEyeOpen] = useState(false);
+  const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -42,6 +46,11 @@ export function SignUpForm() {
       password: '',
     },
   });
+
+  useEffect(() => {
+    console.log('Ran');
+    dispatch(setGlobalAuthLoader(isSubmitting));
+  }, [isSubmitting, dispatch]);
 
   const onSubmit = async (data: FormType) => {
     const callbackUrl = searchParams.get('callbackUrl') || '/';
@@ -139,7 +148,7 @@ export function SignUpForm() {
           <Button
             type="submit"
             className="w-full text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
-            disabled={isSubmitting}
+            disabled={isSubmitting || globalAuthLoader}
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}
             Sign Up
