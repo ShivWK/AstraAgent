@@ -1,9 +1,44 @@
+import Image from 'next/image';
+
 const pages = () => {
   return (
     <main className="md:px-2">
-      <div className="-mt-2 flex items-center gap-2">
-        <section className="section__agent h-screen w-96 border"></section>
-        <section className="section__chat h-full w-full border"></section>
+      <div className="-mt-2 flex items-center gap-2 md:-mt-6">
+        <section className="section__agent rounded-primary hidden h-[85vh] w-104 border p-2 md:block">
+          <div className="section__agent-card rounded-primary dark:bg-primary-dark-bg flex items-center gap-3 p-2">
+            <Image
+              src="/assistants/general_ai.png"
+              alt="General Ai agent"
+              height={300}
+              width={300}
+              quality={100}
+              placeholder="blur"
+              blurDataURL="/blurImage.png"
+              className="h-28 w-28 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+            />
+
+            <div>
+              <p className="font-medium">Your Current Agent</p>
+              <p className="line-clamp-1 italic">Geography Teacher</p>
+              <p className="line-clamp-1">Atlas</p>
+            </div>
+          </div>
+
+          <h2 className="my-3 text-lg font-medium tracking-wide">
+            Your Chats with this agent
+          </h2>
+
+          <div className="flex flex-col gap-1 overflow-y-auto">
+            <p className="rounded-primary dark:bg-primary-dark-bg/70 cursor-pointer px-2 py-1">
+              Your current chat...
+            </p>
+            <p className="rounded-primary line-clamp-1 cursor-pointer px-2 py-1">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+              consequuntur!
+            </p>
+          </div>
+        </section>
+        <section className="section__chat rounded-primary dark:bg-primary-dark-bg h-[85vh] w-full"></section>
       </div>
     </main>
   );
