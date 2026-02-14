@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
 const conversationSchema = new mongoose.Schema({
-  userID: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
 
-  agentID: {
+  agentId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
