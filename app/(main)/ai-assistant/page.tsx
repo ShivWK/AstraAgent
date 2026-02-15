@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import styles from './page.module.css';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import {
@@ -53,7 +52,7 @@ const AiAssistant = () => {
               variant={'secondary'}
               onClick={startSessionClickHandler}
               disabled={selectedAgent === null}
-              className={`${selectedAgent !== null && styles['btn-continue']} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
+              className={`${selectedAgent !== null && 'btn-continue'} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
             >
               Start Session
             </Button>
@@ -66,20 +65,20 @@ const AiAssistant = () => {
             variant={'secondary'}
             onClick={startSessionClickHandler}
             disabled={selectedAgent === null}
-            className={`${selectedAgent !== null && styles['btn-continue']} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
+            className={`${selectedAgent !== null && 'btn-continue'} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
           >
             Start Session
           </Button>
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
-          <div className="rounded-xl bg-blue-900 px-3 py-2 max-md:text-center md:basis-1/2">
+          <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
             <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
               Previous Conversations
             </h2>
             <p>No previous conversations</p>
           </div>
 
-          <div className="rounded-xl bg-blue-900 px-3 py-2 max-md:text-center md:basis-1/2">
+          <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
             <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
               Feedback of Conversations
             </h2>

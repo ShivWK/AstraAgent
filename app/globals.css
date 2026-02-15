@@ -5,6 +5,72 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer components {
+  .btn-continue {
+    position: relative;
+    transition: all 0.2s ease;
+    border-radius: 1000px;
+
+    &::after,
+    &::before {
+      content: '';
+      position: absolute;
+      height: 115%;
+      width: 106%;
+      background-image: linear-gradient(
+        to bottom right,
+        #8b75fe 10%,
+        #5bddfd,
+        #1f58fd
+      );
+      background-size: 300% 300%;
+      z-index: -1;
+      border-radius: inherit;
+      animation: BackgroundMove 3s ease infinite;
+    }
+
+    &::before {
+      filter: blur(1.5rem);
+      opacity: 0.8;
+    }
+
+    &:hover {
+      z-index: 1;
+    }
+  }
+
+  @keyframes BackgroundMove {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .carousel {
+    overflow-x: auto;
+    display: flex;
+    gap: 1.25rem;
+    scrollbar-width: 0;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .carousel_group {
+    display: flex;
+    animation: moveCarousel 1s infinite linear;
+  }
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(84.991% 0.00219 14.769);
@@ -75,10 +141,15 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-primary-dark-bg: var(--color-blue-900);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+@theme {
+  --radius-primary: 3px;
 }
 
 .dark {
