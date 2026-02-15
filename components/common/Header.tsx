@@ -9,6 +9,7 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
+import { Menu } from 'lucide-react';
 import {
   setOpenLoginModel,
   selectLogInState,
@@ -25,6 +26,7 @@ type PropsType = {
 
 const Header = ({ isUserLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const [showSideMenu, setShowSideMenu] = useState(false);
   const isLoggedIn = useAppSelector(selectLogInState);
   const errorMessage = useAppSelector(selectLoginError);
   const dispatch = useAppDispatch();
@@ -66,12 +68,18 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           className="flex cursor-pointer items-center gap-5"
           onClick={() => router.push('/')}
         >
+          <button
+            onClick={() => setShowSideMenu(!showSideMenu)}
+            className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-2`}
+          >
+            <Menu size={26} />
+          </button>
           <Image
             src="/logo-solid.jpeg"
             alt="Astra agent logo"
             width={50}
             height={50}
-            className="h-13 w-14 rounded md:h-13 md:w-14"
+            className={`${pathname === '/text-workspace' ? 'hidden md:block' : 'block'} h-13 w-14 rounded md:h-13 md:w-14`}
           />
           <p className="hidden text-2xl font-semibold tracking-wide lg:block">
             Astra Agent
