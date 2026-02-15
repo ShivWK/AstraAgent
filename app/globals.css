@@ -59,15 +59,35 @@
     gap: 1.25rem;
     scrollbar-width: 0;
     position: relative;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   .carousel_group {
     display: flex;
     animation: moveCarousel 1s infinite linear;
+  }
+
+  .pretty-scrollbar {
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+      background-color: rgba(116, 114, 114, 0.911);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 2rem;
+      border-radius: 5px;
+      background-color: var(--color-primary-dark-bg);
+    }
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
