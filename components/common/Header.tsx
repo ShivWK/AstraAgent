@@ -9,7 +9,7 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
-import { Menu } from 'lucide-react';
+import { Menu, XIcon } from 'lucide-react';
 import {
   setOpenLoginModel,
   selectLogInState,
@@ -19,6 +19,7 @@ import {
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
+import TextAISideBar from './TextAISideBar';
 
 type PropsType = {
   isUserLoggedIn: boolean;
@@ -64,16 +65,16 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
   return (
     <>
       <header className="fixed z-50 flex w-full justify-between px-2.5 py-3 backdrop-blur-md">
+        <button
+          onClick={() => setShowSideMenu(true)}
+          className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
+        >
+          <Menu size={26} />
+        </button>
         <div
           className="flex cursor-pointer items-center gap-5"
           onClick={() => router.push('/')}
         >
-          <button
-            onClick={() => setShowSideMenu(!showSideMenu)}
-            className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-2`}
-          >
-            <Menu size={26} />
-          </button>
           <Image
             src="/logo-solid.jpeg"
             alt="Astra agent logo"
@@ -106,6 +107,17 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         </div>
       </header>
       <AuthForm />
+      <aside
+        className={`absolute top-0 left-0 z-50 h-screen w-3/4 transform py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <button
+          className="mt-2 mb-2 ml-3 rounded-full bg-blue-900 p-2"
+          onClick={() => setShowSideMenu(false)}
+        >
+          <XIcon size={26} />
+        </button>
+        <TextAISideBar />
+      </aside>
     </>
   );
 };
