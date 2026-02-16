@@ -9,11 +9,13 @@ type Assistant = Text_assistant | Voice_assistant | null;
 type InitialState = {
   selectedInteractionMode: Mode;
   selectedAgent: Assistant;
+  openSidebar: boolean;
 };
 
 const initialState: InitialState = {
   selectedInteractionMode: '',
   selectedAgent: null,
+  openSidebar: false,
 };
 
 // use Set instead of an array as find/findIndex will take O(n) in worst case but set will O(1)
@@ -37,6 +39,10 @@ const agentsSlice = createSlice({
       state.selectedInteractionMode = action.payload;
       state.selectedAgent = null;
     },
+
+    setOpenSidebar: (state, action: PayloadAction<boolean>) => {
+      state.openSidebar = action.payload;
+    },
   },
 });
 
@@ -46,6 +52,7 @@ export const selectSelectedAgent = (state: RootState) =>
   state.agents.selectedAgent;
 export const selectSelectedInteractionMode = (state: RootState) =>
   state.agents.selectedInteractionMode;
+export const selectOpenSidebar = (state: RootState) => state.agents.openSidebar;
 
-export const { setSelectedAgent, setSelectedInteractionMode } =
+export const { setSelectedAgent, setSelectedInteractionMode, setOpenSidebar } =
   agentsSlice.actions;

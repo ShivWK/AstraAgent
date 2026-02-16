@@ -1,7 +1,22 @@
+'use client';
+
 import { ArrowUpFromDot } from 'lucide-react';
 import TextAISideBar from '@/components/common/TextAISideBar';
+import {
+  selectOpenSidebar,
+  setOpenSidebar,
+} from '@/features/agents/agentsSlice';
+import useAppSelector from '@/hooks/useAppSelector';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
-const pages = () => {
+const Pages = () => {
+  const isSidebarOpen = useAppSelector(selectOpenSidebar);
+  const dispatch = useAppDispatch();
+
+  const overlayClickHandler = () => {
+    dispatch(setOpenSidebar(false));
+  };
+
   return (
     <main className="md:px-2">
       <div className="flex items-center gap-2">
@@ -24,8 +39,12 @@ const pages = () => {
           </form>
         </section>
       </div>
+      <div
+        onClick={overlayClickHandler}
+        className={`absolute top-0 left-0 z-50 h-screen w-full bg-black/65 ${isSidebarOpen ? 'block' : 'hidden'}`}
+      ></div>
     </main>
   );
 };
 
-export default pages;
+export default Pages;

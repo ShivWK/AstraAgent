@@ -17,6 +17,10 @@ import {
   selectLoginError,
   setLoginError,
 } from '@/features/auth/authSlice';
+import {
+  selectOpenSidebar,
+  setOpenSidebar,
+} from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import TextAISideBar from './TextAISideBar';
@@ -27,8 +31,8 @@ type PropsType = {
 
 const Header = ({ isUserLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
-  const [showSideMenu, setShowSideMenu] = useState(false);
   const isLoggedIn = useAppSelector(selectLogInState);
+  const showSideMenu = useAppSelector(selectOpenSidebar);
   const errorMessage = useAppSelector(selectLoginError);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
@@ -66,7 +70,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
     <>
       <header className="fixed z-50 flex w-full justify-between px-2.5 py-3 backdrop-blur-md">
         <button
-          onClick={() => setShowSideMenu(true)}
+          onClick={() => dispatch(setOpenSidebar(true))}
           className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
         >
           <Menu size={26} />
@@ -108,11 +112,11 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
       </header>
       <AuthForm />
       <aside
-        className={`absolute top-0 left-0 z-50 h-screen w-3/4 transform py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`absolute top-0 left-0 z-60 h-screen w-3/4 transform py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <button
           className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-          onClick={() => setShowSideMenu(false)}
+          onClick={() => dispatch(setOpenSidebar(false))}
         >
           <XIcon size={26} />
         </button>
