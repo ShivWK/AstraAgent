@@ -9,7 +9,7 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
-import { Menu, XIcon } from 'lucide-react';
+import { Kanban, ChevronLeft } from 'lucide-react';
 import {
   setOpenLoginModel,
   selectLogInState,
@@ -48,8 +48,6 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
       setLogoutLoading(true);
       const response = await logoutAction();
 
-      console.log(response);
-
       if (response.success) {
         if (pathname !== '/') {
           router.push('/');
@@ -73,7 +71,11 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           onClick={() => dispatch(setOpenSidebar(true))}
           className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
         >
-          <Menu size={27} />
+          <Kanban
+            className="-rotate-90 transform"
+            size={27}
+            aria-hidden="true"
+          />
         </button>
         <div
           className="flex cursor-pointer items-center gap-5"
@@ -118,7 +120,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
           onClick={() => dispatch(setOpenSidebar(false))}
         >
-          <XIcon size={26} />
+          <ChevronLeft size={27} aria-hidden="true" />
         </button>
         <div className="h-[92%] w-full pb-2">
           <TextAISideBar />
