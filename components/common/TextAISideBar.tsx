@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import PreviousChat from './PreviousChat';
 
 const TextAISideBar = () => {
   return (
@@ -34,78 +35,31 @@ const TextAISideBar = () => {
 
       <ul className="section__previous-chats pretty-scrollbar flex min-h-0 grow-0 basis-full list-none flex-col gap-1 overflow-auto">
         <li className="rounded-primary dark:bg-primary-dark-bg/70 shrink-0 cursor-pointer px-2 py-1">
-          Your current chat...
+          New chat...
         </li>
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        {/* <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' />
 
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
-
-        <li className="rounded-primary line-clamp-1 shrink-0 cursor-pointer px-2 py-1">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!
-        </li>
+        <PreviousChat chat='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!' /> */}
       </ul>
     </section>
   );

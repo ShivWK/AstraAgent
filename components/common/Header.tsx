@@ -114,7 +114,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
       </header>
       <AuthForm />
       <aside
-        className={`absolute top-0 left-0 z-60 h-screen w-3/4 transform py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`absolute top-0 left-0 z-60 h-screen w-3/4 transform overflow-x-visible py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <button
           className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
@@ -122,7 +122,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         >
           <ChevronLeft size={27} aria-hidden="true" />
         </button>
-        <div className="h-[92%] w-full p-2">
+        <div className="h-[92%] w-full overflow-x-visible p-2">
           <TextAISideBar />
         </div>
       </aside>

@@ -20,7 +20,7 @@ const Pages = () => {
   return (
     <main className="md:px-2">
       <div className="flex items-center gap-2">
-        <aside className="hidden h-screen w-104 pt-20 pb-0.5 md:block">
+        <aside className="hidden h-screen w-104 overflow-x-visible pt-20 pb-0.5 md:block">
           <TextAISideBar />
         </aside>
         <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center p-2 pb-5">
