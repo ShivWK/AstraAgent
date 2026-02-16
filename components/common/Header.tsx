@@ -111,12 +111,14 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         className={`absolute top-0 left-0 z-50 h-screen w-3/4 transform py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <button
-          className="mt-2 mb-2 ml-3 rounded-full bg-blue-900 p-2"
+          className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
           onClick={() => setShowSideMenu(false)}
         >
           <XIcon size={26} />
         </button>
-        <TextAISideBar />
+        <div className="h-[90%] w-full pb-2">
+          <TextAISideBar />
+        </div>
       </aside>
     </>
   );

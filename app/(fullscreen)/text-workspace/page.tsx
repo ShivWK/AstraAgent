@@ -10,7 +10,7 @@ const pages = () => {
         </aside>
         <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center p-2 pb-5">
           <div className="section__chat-box basis-full"></div>
-          <form className="flex w-[95%] items-end rounded-2xl border-2 border-blue-900 py-2 pr-2 pl-3 md:w-[90%]">
+          <form className="flex w-[95%] items-end rounded-2xl border-2 border-blue-900 py-2 pr-2 pl-4 md:w-[90%]">
             <textarea
               rows={1}
               className="wrap-break-words field-sizing-content flex-1 resize-none self-center overflow-hidden border-none text-lg outline-none"
