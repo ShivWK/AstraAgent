@@ -16,11 +16,13 @@ const TextAISideBar = () => {
         />
 
         <div>
-          <p className="line-clamp-1 text-lg font-semibold max-md:text-center">
+          <p className="line-clamp-1 text-lg font-semibold max-md:text-center max-md:text-xl">
             Atlas
           </p>
-          <p className="font-medium max-md:text-center">Your Current Agent</p>
-          <p className="line-clamp-1 italic max-md:text-center">
+          <p className="mt-1 font-medium max-md:text-center max-md:text-lg">
+            Your Current Agent
+          </p>
+          <p className="-mt-1 line-clamp-1 italic max-md:text-center max-md:text-lg">
             Geography Teacher
           </p>
         </div>
