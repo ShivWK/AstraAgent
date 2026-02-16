@@ -73,7 +73,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           onClick={() => dispatch(setOpenSidebar(true))}
           className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
         >
-          <Menu size={26} />
+          <Menu size={27} />
         </button>
         <div
           className="flex cursor-pointer items-center gap-5"
