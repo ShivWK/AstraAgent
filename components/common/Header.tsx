@@ -116,7 +116,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         >
           <XIcon size={26} />
         </button>
-        <div className="h-[90%] w-full pb-2">
+        <div className="h-[92%] w-full pb-2">
           <TextAISideBar />
         </div>
       </aside>
