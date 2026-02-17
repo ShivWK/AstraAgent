@@ -3,8 +3,11 @@ import PreviousChat from './PreviousChat';
 
 const TextAISideBar = () => {
   return (
-    <section className="section__agent rounded-primary flex h-full w-full flex-col">
-      <div className="section__agent-card rounded-primary dark:bg-primary-dark-bg flex flex-col items-center gap-3 p-2 max-md:pt-3 md:flex-row">
+    <div className="section__agent rounded-primary flex h-full w-full flex-col pb-2">
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="section__agent-card rounded-primary dark:bg-primary-dark-bg flex flex-col items-center gap-3 p-2 max-md:pt-3 md:flex-row"
+      >
         <Image
           src="/assistants/general_ai.png"
           alt="General Ai agent"
@@ -72,8 +75,48 @@ const TextAISideBar = () => {
           chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
           consequuntur!"
         />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
+
+        <PreviousChat
+          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
+          consequuntur!"
+        />
       </ul>
-    </section>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUpFromDot } from 'lucide-react';
+import { ArrowUpFromDot, ChevronLeft } from 'lucide-react';
 import TextAISideBar from '@/components/common/TextAISideBar';
 import {
   selectOpenSidebar,
@@ -9,13 +9,15 @@ import {
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/common/Chatbox';
+import Drawer from '@/components/common/Modal';
 
 const Pages = () => {
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
   const dispatch = useAppDispatch();
 
-  const overlayClickHandler = () => {
+  const closeHandler = () => {
     dispatch(setOpenSidebar(false));
+    // window.history.back();
   };
 
   return (
@@ -29,6 +31,36 @@ const Pages = () => {
             <ChatBox
               writer="agent"
               chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="agent"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="agent"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="agent"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
             />
 
             <ChatBox
@@ -65,10 +97,25 @@ const Pages = () => {
           </form>
         </section>
       </div>
-      <div
-        onClick={overlayClickHandler}
-        className={`absolute top-0 left-0 z-50 h-screen w-full bg-black/65 ${isSidebarOpen ? 'block' : 'hidden'}`}
-      ></div>
+      <Drawer
+        open={isSidebarOpen}
+        onClose={closeHandler}
+        showClasses="translate-x-0"
+        hideClasses="-translate-x-full"
+        className="relative top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
+      >
+        <>
+          <button
+            className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
+            onClick={() => dispatch(setOpenSidebar(false))}
+          >
+            <ChevronLeft size={27} aria-hidden="true" />
+          </button>
+          <div className="h-[92%] w-full p-2">
+            <TextAISideBar />
+          </div>
+        </>
+      </Drawer>
     </main>
   );
 };

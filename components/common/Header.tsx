@@ -9,7 +9,7 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
-import { Kanban, ChevronLeft } from 'lucide-react';
+import { Kanban } from 'lucide-react';
 import {
   setOpenLoginModel,
   selectLogInState,
@@ -17,13 +17,9 @@ import {
   selectLoginError,
   setLoginError,
 } from '@/features/auth/authSlice';
-import {
-  selectOpenSidebar,
-  setOpenSidebar,
-} from '@/features/agents/agentsSlice';
+import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import TextAISideBar from './TextAISideBar';
 
 type PropsType = {
   isUserLoggedIn: boolean;
@@ -32,7 +28,6 @@ type PropsType = {
 const Header = ({ isUserLoggedIn }: PropsType) => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const isLoggedIn = useAppSelector(selectLogInState);
-  const showSideMenu = useAppSelector(selectOpenSidebar);
   const errorMessage = useAppSelector(selectLoginError);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
@@ -113,19 +108,6 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         </div>
       </header>
       <AuthForm />
-      <aside
-        className={`absolute top-0 left-0 z-60 h-screen w-3/4 transform overflow-x-visible py-2 backdrop-blur-xl transition-all duration-150 ease-in-out ${showSideMenu ? 'translate-x-0' : '-translate-x-full'}`}
-      >
-        <button
-          className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-          onClick={() => dispatch(setOpenSidebar(false))}
-        >
-          <ChevronLeft size={27} aria-hidden="true" />
-        </button>
-        <div className="h-[92%] w-full overflow-x-visible p-2">
-          <TextAISideBar />
-        </div>
-      </aside>
     </>
   );
 };

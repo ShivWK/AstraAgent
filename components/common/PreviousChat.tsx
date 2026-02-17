@@ -8,11 +8,16 @@ type PropsType = {
 const PreviousChat = ({ chat }: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
+  const moreOptionsClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setOpenDropdown(!openDropdown);
+  };
+
   return (
     <li className="rounded-primary relative flex shrink-0 cursor-pointer items-center px-2 py-1">
       <button className="line-clamp-1 text-start">{chat}</button>
       <button
-        onClick={() => setOpenDropdown(!openDropdown)}
+        onClick={moreOptionsClickHandler}
         aria-haspopup="menu"
         aria-controls="chat-menu"
         aria-label="More options"
