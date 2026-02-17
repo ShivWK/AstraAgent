@@ -8,6 +8,7 @@ import {
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import ChatBox from '@/components/common/Chatbox';
 
 const Pages = () => {
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
@@ -23,8 +24,33 @@ const Pages = () => {
         <aside className="hidden h-screen w-104 overflow-x-visible pt-20 pb-0.5 md:block">
           <TextAISideBar />
         </aside>
-        <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center p-2 pb-5">
-          <div className="section__chat-box basis-full"></div>
+        <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center gap-4 p-2 pb-5">
+          <div className="section__chat-box pretty-scrollbar basis-full overflow-auto px-4 pt-20 pb-2">
+            <ChatBox
+              writer="agent"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+          </div>
           <form className="flex w-[95%] items-end rounded-2xl border-2 border-blue-900 py-2 pr-2 pl-4 md:w-[90%]">
             <textarea
               rows={1}
