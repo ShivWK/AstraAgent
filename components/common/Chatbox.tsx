@@ -1,4 +1,4 @@
-import { CopyPlus } from 'lucide-react';
+import { Copy, CheckCheck } from 'lucide-react';
 
 type PropsType = {
   writer: string;
@@ -14,9 +14,9 @@ const ChatBox = ({ writer, chat }: PropsType) => {
       <button
         aria-label="Copy"
         title="copy"
-        className={`mt-3 ${writer === 'agent' ? 'float-end' : 'float-start'} cursor-pointer`}
+        className={`mt-3 ${writer === 'agent' ? 'float-end' : 'float-start'} transform cursor-pointer transition-all duration-150 ease-linear active:scale-95`}
       >
-        <CopyPlus aria-hidden="true" strokeWidth={1.5} size={18} />
+        <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
       </button>
     </div>
   );

@@ -25,7 +25,17 @@ const Pages = () => {
           <TextAISideBar />
         </aside>
         <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center gap-4 p-2 pb-5">
-          <div className="section__chat-box pretty-scrollbar basis-full overflow-auto px-4 pt-20 pb-2">
+          <div className="section__chat-box pretty-scrollbar basis-full overflow-auto px-4 pt-20 pb-1">
+            <ChatBox
+              writer="agent"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
+            <ChatBox
+              writer="user"
+              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+            />
+
             <ChatBox
               writer="agent"
               chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
@@ -37,17 +47,7 @@ const Pages = () => {
             />
 
             <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="user"
+              writer="agent"
               chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
             />
           </div>
