@@ -68,7 +68,7 @@
 
   .pretty-scrollbar {
     &::-webkit-scrollbar {
-      width: 0.4rem;
+      @apply w-[0.2rem] md:w-[0.4rem];
       border-radius: 5px;
     }
 
