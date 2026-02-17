@@ -17,7 +17,7 @@ const Pages = () => {
 
   const closeHandler = () => {
     dispatch(setOpenSidebar(false));
-    // window.history.back();
+    window.history.back();
   };
 
   return (
@@ -107,7 +107,7 @@ const Pages = () => {
         <>
           <button
             className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-            onClick={() => dispatch(setOpenSidebar(false))}
+            onClick={closeHandler}
           >
             <ChevronLeft size={27} aria-hidden="true" />
           </button>

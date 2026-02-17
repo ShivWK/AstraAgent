@@ -39,21 +39,22 @@ const Modal = ({
   useEffect(() => {
     if (!open) return;
 
-    // window.history.pushState({ drawer: true }, "")
+    window.history.pushState({ drawer: true }, '');
 
-    // const handlePopState = () => {
-    //   onClose();
-    // }
+    const handlePopState = () => {
+      console.log('pop state');
+      onClose();
+    };
 
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
 
     document.addEventListener('keydown', handleKeyPress);
-    // document.addEventListener("popstate", handlePopState)
+    window.addEventListener('popstate', handlePopState);
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
-      // document.removeEventListener("popstate", handlePopState);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [open, onClose]);
 
