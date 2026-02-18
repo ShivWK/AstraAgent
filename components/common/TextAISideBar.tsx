@@ -32,7 +32,7 @@ const TextAISideBar = () => {
         </div>
       </div>
 
-      <h2 className="my-3 text-lg font-medium tracking-wide">
+      <h2 className="mt-5 mb-3 text-lg font-medium tracking-wide">
         Your Chats with this agent
       </h2>
 
