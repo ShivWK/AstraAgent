@@ -5,6 +5,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer base {
+  body {
+    margin: 0;
+  }
+}
+
 @layer components {
   .btn-continue {
     position: relative;
