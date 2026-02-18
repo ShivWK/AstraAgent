@@ -62,7 +62,7 @@ const Modal = ({
     <div
       onClick={onClose}
       aria-hidden="true"
-      className={`absolute inset-0 z-80 bg-black/70 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+      className={`absolute inset-0 z-80 bg-black/50 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
