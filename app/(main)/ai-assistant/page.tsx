@@ -32,7 +32,7 @@ const AiAssistant = () => {
   }, [dispatch, mode1, mode2, router]);
 
   const startSessionClickHandler = () => {
-    router.push('/text-workspace');
+    router.push('/ai-workspace');
   };
 
   return (

@@ -1,18 +1,22 @@
 'use client';
 
-import { ArrowUpFromDot, ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import TextAISideBar from '@/components/common/TextAISideBar';
 import {
   selectOpenSidebar,
   setOpenSidebar,
+  selectSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/common/Chatbox';
 import Drawer from '@/components/common/Modal';
+import TextInputMethod from '@/components/common/TextInputMethod';
+import AudioInputMethod from '@/components/common/AudioInputMenthod';
 
 const Pages = () => {
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
+  const interactionMode = useAppSelector(selectSelectedInteractionMode);
   const dispatch = useAppDispatch();
 
   const closeHandler = () => {
@@ -34,41 +38,6 @@ const Pages = () => {
             />
 
             <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
-
-            <ChatBox
               writer="agent"
               chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
             />
@@ -83,18 +52,11 @@ const Pages = () => {
               chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
             />
           </div>
-          <form className="flex w-[95%] items-end rounded-2xl border-2 border-blue-900 py-2 pr-2 pl-4 md:w-[90%]">
-            <textarea
-              rows={1}
-              className="wrap-break-words field-sizing-content flex-1 resize-none self-center overflow-hidden border-none text-lg outline-none"
-              aria-label="Enter Query"
-              placeholder="Enter query"
-            />
-
-            <button className="rounded-lg bg-blue-900 p-2.5">
-              <ArrowUpFromDot aria-hidden="true" />
-            </button>
-          </form>
+          {interactionMode !== 'text' ? (
+            <TextInputMethod />
+          ) : (
+            <AudioInputMethod />
+          )}
         </section>
       </div>
       <Drawer
