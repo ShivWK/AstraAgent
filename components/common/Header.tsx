@@ -64,7 +64,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
       <header className="fixed z-50 flex w-full justify-between px-2.5 py-3 backdrop-blur-md">
         <button
           onClick={() => dispatch(setOpenSidebar(true))}
-          className={`${pathname === '/text-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
+          className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
         >
           <Kanban
             className="-rotate-90 transform"

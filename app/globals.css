@@ -46,6 +46,10 @@
     &:hover {
       z-index: 1;
     }
+
+    &.no-hover:hover {
+      z-index: auto;
+    }
   }
 
   @keyframes BackgroundMove {

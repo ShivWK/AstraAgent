@@ -17,12 +17,12 @@ const ChatBox = ({ writer, chat }: PropsType) => {
 
   return (
     <div
-      className={`${writer === 'agent' ? 'float-start' : 'float-end'} mb-5 max-w-[85%] rounded-xl bg-blue-900 p-3 text-lg text-white after:clear-both after:table md:max-w-2/3`}
+      className={`${writer === 'agent' ? 'float-start' : 'float-end'} mb-5 max-w-[85%] rounded-xl bg-blue-900 p-2.5 text-lg text-white after:clear-both after:table md:max-w-2/3`}
     >
       <p>{chat}</p>
       {copied ? (
         <CheckCheck
-          className={`mt-3 ${writer === 'agent' ? 'float-end' : 'float-start'}`}
+          className={`mt-3.5 ${writer === 'agent' ? 'float-end' : 'float-start'}`}
           aria-hidden="true"
           strokeWidth={1.5}
           size={18}
@@ -32,7 +32,7 @@ const ChatBox = ({ writer, chat }: PropsType) => {
           aria-label="Copy"
           title="copy"
           onClick={() => handleCopyClick(chat)}
-          className={`mt-3 ${writer === 'agent' ? 'float-end' : 'float-start'} transform cursor-pointer transition-all duration-150 ease-linear active:scale-95`}
+          className={`mt-1.5 ${writer === 'agent' ? 'float-end' : 'float-start'} transform cursor-pointer rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95`}
         >
           <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
         </button>
