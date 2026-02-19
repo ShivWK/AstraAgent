@@ -22,6 +22,7 @@ const AudioInputMethod = () => {
     let source: MediaStreamAudioSourceNode | null = null;
     let rafId: number | null = null;
     let stream: MediaStream | null = null;
+    const NOISE_THRESHOLD = 30;
 
     async function init() {
       stream = await navigator.mediaDevices.getUserMedia({
@@ -49,7 +50,9 @@ const AudioInputMethod = () => {
         }
 
         const avg = sum / dataArray.length;
-        setLevel(avg);
+        if (avg > NOISE_THRESHOLD) {
+          setLevel(avg - NOISE_THRESHOLD);
+        }
 
         rafId = requestAnimationFrame(update);
       }
@@ -74,11 +77,12 @@ const AudioInputMethod = () => {
     if (listening) {
       SpeechRecognition.stopListening();
     } else {
+      resetTranscript();
       SpeechRecognition.startListening({ continuous: true });
     }
   };
 
-  console.log('level', level);
+  console.log('level', level, transcript);
 
   return (
     <div className="rounded-primary relative flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-9">
@@ -89,7 +93,7 @@ const AudioInputMethod = () => {
           boxShadow: `0 0 ${level / 2}px rgba(59,130,246,0.8)`,
           transform: listening ? `scale(${1 + level / 200})` : '',
         }}
-        className={`${listening && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-75 ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
+        className={`${listening && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-[0.05s] ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
       >
         {listening ? (
           <CircleStop aria-hidden="true" size={70} strokeWidth={1} />
