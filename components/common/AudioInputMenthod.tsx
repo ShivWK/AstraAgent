@@ -69,6 +69,21 @@ const AudioInputMethod = () => {
     };
   }, [listening]);
 
+  useEffect(() => {
+    const recognition = SpeechRecognition.getRecognition();
+
+    if (!recognition) return;
+    recognition.onend = () => {
+      if (listening) {
+        SpeechRecognition.startListening({
+          continuous: true,
+          language: 'en-IN',
+          interimResults: true,
+        });
+      }
+    };
+  }, [listening]);
+
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doe not support speech recognition.</span>;
   }
