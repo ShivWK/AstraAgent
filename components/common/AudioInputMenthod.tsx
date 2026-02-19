@@ -78,7 +78,11 @@ const AudioInputMethod = () => {
       SpeechRecognition.stopListening();
     } else {
       resetTranscript();
-      SpeechRecognition.startListening({ continuous: true });
+      SpeechRecognition.startListening({
+        continuous: true,
+        language: 'en-IN',
+        interimResults: true,
+      });
     }
   };
 
