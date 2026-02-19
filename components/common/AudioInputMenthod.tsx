@@ -85,7 +85,11 @@ const AudioInputMethod = () => {
       <button
         aria-label="microphone"
         onClick={startListening}
-        className={`${listening && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-150 ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
+        style={{
+          boxShadow: `0 0 ${level / 2}px rgba(59,130,246,0.8)`,
+          transform: listening ? `scale(${1 + level / 200})` : '',
+        }}
+        className={`${listening && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-75 ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
       >
         <Mic aria-hidden="true" size={70} strokeWidth={1} />
       </button>
