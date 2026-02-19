@@ -30,26 +30,33 @@ const Pages = () => {
         <aside className="hidden h-screen w-104 overflow-x-visible pt-20 pb-0.5 md:block">
           <TextAISideBar />
         </aside>
-        <section className="section__chat rounded-primary flex h-screen w-full flex-col items-center gap-4 p-2 pb-5">
-          <div className="section__chat-box pretty-scrollbar basis-full overflow-auto px-1 pt-20 pb-1 md:px-4">
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
+        <section
+          className={`section__chat rounded-primary flex h-screen w-full flex-col items-center ${interactionMode === 'text' && 'gap-2 pb-5'}`}
+        >
+          <div className="section__chat-box relative basis-full overflow-auto">
+            <div className="pretty-scrollbar h-full overflow-auto px-1 pt-20 pb-1 md:px-4">
+              <ChatBox
+                writer="agent"
+                chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+              />
 
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
+              <ChatBox
+                writer="agent"
+                chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+              />
 
-            <ChatBox
-              writer="user"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
-            />
+              <ChatBox
+                writer="user"
+                chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+              />
 
-            <ChatBox
-              writer="agent"
-              chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+              <ChatBox
+                writer="agent"
+                chat="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consequuntur necessitatibus, cupiditate suscipit corporis neque nam quisquam quaerat expedita voluptas mollitia!"
+              />
+            </div>
+            <div
+              className={`${interactionMode === 'text' ? 'hidden' : 'block'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-20 bg-linear-to-t from-black to-transparent to-40%`}
             />
           </div>
           {interactionMode !== 'text' ? (
