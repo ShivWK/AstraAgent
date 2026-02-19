@@ -4,7 +4,11 @@ import SpeechRecognition, {
 import { useEffect, useState } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
 
-const AudioInputMethod = () => {
+type PropType = {
+  setMessage: (val: string) => void;
+};
+
+const AudioInputMethod = ({ setMessage }: PropType) => {
   const [level, setLevel] = useState(0);
   const {
     transcript,
@@ -68,6 +72,10 @@ const AudioInputMethod = () => {
       audioContext?.close();
     };
   }, [listening]);
+
+  useEffect(() => {
+    setMessage(transcript);
+  }, [transcript, setMessage]);
 
   useEffect(() => {
     const recognition = SpeechRecognition.getRecognition();
