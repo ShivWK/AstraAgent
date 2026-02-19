@@ -22,7 +22,7 @@ const AudioInputMethod = () => {
     let source: MediaStreamAudioSourceNode | null = null;
     let rafId: number | null = null;
     let stream: MediaStream | null = null;
-    const NOISE_THRESHOLD = 30;
+    const NOISE_THRESHOLD = 15;
 
     async function init() {
       stream = await navigator.mediaDevices.getUserMedia({
