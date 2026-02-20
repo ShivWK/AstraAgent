@@ -1,3 +1,4 @@
+import { TEXT_AGENT_DOMAINS, type domainType } from '@/utils/text_assistants';
 import {
   Dialog,
   DialogClose,
@@ -16,6 +17,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  SelectLabel,
+  SelectSeparator,
 } from '@/components/ui/select';
 import Image from 'next/image';
 import { Textarea } from '../ui/textarea';
@@ -55,22 +58,21 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                     <SelectValue placeholder="Select Domain" />
                   </SelectTrigger>
                   <SelectContent position="popper">
-                    <SelectGroup>
-                      <SelectItem value="Interview">Interview</SelectItem>
-                      <SelectItem value="Education">Education</SelectItem>
-                      <SelectItem value="Language Learning">
-                        Language Learning
-                      </SelectItem>
-                      <SelectItem value="Meditation & Wellness">
-                        Meditation & Wellness
-                      </SelectItem>
-                      <SelectItem value="Fitness">Fitness</SelectItem>
-                      <SelectItem value="Career">Career</SelectItem>
-                      <SelectItem value="General Knowledge">
-                        General Knowledge
-                      </SelectItem>
-                      <SelectItem value="Custom">Custom</SelectItem>
-                    </SelectGroup>
+                    {TEXT_AGENT_DOMAINS.map(({ category, domains }, index) => {
+                      return (
+                        <div key={index}>
+                          <SelectGroup key={index}>
+                            <SelectLabel>{category}</SelectLabel>
+                            {domains.map((domain) => (
+                              <SelectItem key={domain.id} value={domain.name}>
+                                {domain.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                          <SelectSeparator />
+                        </div>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
               </div>

@@ -1,3 +1,174 @@
+export type domainType = {
+  category: string;
+  domains: {
+    id: number;
+    category: string;
+    name: string;
+    work: string;
+    warning: string;
+  }[];
+}[];
+
+export const TEXT_AGENT_DOMAINS: domainType = [
+  {
+    category: 'Learning & Growth',
+    domains: [
+      {
+        id: 1,
+        category: 'Learning & Growth',
+        name: 'Language Learning',
+        work: 'Speaking practice, correction, pronunciation, vocabulary building.',
+        warning:
+          'Does not provide translation of copyrighted content or non-language related advice.',
+      },
+      {
+        id: 2,
+        category: 'Learning & Growth',
+        name: 'Education / Study',
+        work: 'Explaining topics, concepts, exam preparation, academic guidance.',
+        warning:
+          'Does not complete graded assignments dishonestly or engage in academic misconduct.',
+      },
+      {
+        id: 3,
+        category: 'Learning & Growth',
+        name: 'Career Guidance',
+        work: 'Resume help, interview preparation, skill roadmap, career planning.',
+        warning:
+          'Does not guarantee jobs or provide false professional claims.',
+      },
+      {
+        id: 4,
+        category: 'Learning & Growth',
+        name: 'Productivity',
+        work: 'Planning, habit building, focus improvement, routine optimization.',
+        warning: 'Does not provide medical or psychological diagnosis.',
+      },
+    ],
+  },
+
+  {
+    category: 'Work & Professional',
+    domains: [
+      {
+        id: 5,
+        category: 'Work & Professional',
+        name: 'Interview Practice',
+        work: 'Mock interviews, structured questions, response feedback.',
+        warning: 'Does not impersonate real companies or guarantee selection.',
+      },
+      {
+        id: 6,
+        category: 'Work & Professional',
+        name: 'Communication Skills',
+        work: 'Public speaking practice, confidence building, clarity improvement.',
+        warning: 'Does not provide psychological therapy or diagnosis.',
+      },
+      {
+        id: 7,
+        category: 'Work & Professional',
+        name: 'Writing Assistance',
+        work: 'Email drafting, summaries, clarity improvement, structured writing help.',
+        warning: 'Does not create deceptive, harmful, or illegal content.',
+      },
+      {
+        id: 8,
+        category: 'Work & Professional',
+        name: 'Tech & Programming',
+        work: 'Coding help, debugging guidance, concept explanations for learning.',
+        warning: 'For learning purposes only. Does not provide malicious code.',
+      },
+    ],
+  },
+  {
+    category: 'Health, Wellness & Mind',
+    domains: [
+      {
+        id: 9,
+        category: 'Health, Wellness & Mind',
+        name: 'Fitness & Exercise',
+        work: 'Workout routines, general fitness advice, healthy lifestyle tips.',
+        warning:
+          'Not a medical professional. Does not provide medical diagnosis or treatment.',
+      },
+      {
+        id: 10,
+        category: 'Health, Wellness & Mind',
+        name: 'Meditation & Yoga',
+        work: 'Breathing exercises, mindfulness sessions, focus practices.',
+        warning: 'Not a substitute for medical or psychological treatment.',
+      },
+      {
+        id: 11,
+        category: 'Health, Wellness & Mind',
+        name: 'Mental Wellness',
+        work: 'Stress management, journaling prompts, calm supportive conversations.',
+        warning:
+          'Not therapy. Does not diagnose or treat mental health conditions.',
+      },
+    ],
+  },
+  {
+    category: 'Life & Personal',
+    domains: [
+      {
+        id: 12,
+        category: 'Life & Personal',
+        name: 'Life Coaching',
+        work: 'Goal setting, self-improvement strategies, motivation guidance.',
+        warning: 'Does not replace professional counseling or licensed advice.',
+      },
+      {
+        id: 13,
+        category: 'Life & Personal',
+        name: 'Relationship',
+        work: 'Communication guidance, understanding boundaries, relationship improvement.',
+        warning: 'No legal, medical, or sexual therapy advice.',
+      },
+      {
+        id: 14,
+        category: 'Life & Personal',
+        name: 'Personal Finance',
+        work: 'Budgeting tips, saving strategies, money management basics.',
+        warning: 'No investment, trading, or financial advisory services.',
+      },
+    ],
+  },
+  {
+    category: 'Creative & Fun',
+    domains: [
+      {
+        id: 15,
+        category: 'Creative & Fun',
+        name: 'Creative Writing',
+        work: 'Story ideas, character development, creative brainstorming.',
+        warning: 'Does not generate plagiarized or copyrighted content.',
+      },
+      {
+        id: 16,
+        category: 'Creative & Fun',
+        name: 'Content Creation',
+        work: 'Social media ideas, scripts, content structuring.',
+        warning:
+          'Does not create misleading, harmful, or illegal promotional content.',
+      },
+    ],
+  },
+  {
+    category: 'Custom',
+    domains: [
+      {
+        id: 17,
+        category: 'Custom',
+        name: 'Custom Assistant',
+        work: 'Handles uncommon or specific user-defined tasks within safe boundaries.',
+        warning:
+          'Restricted from medical, legal, financial, or harmful activities.',
+      },
+    ],
+  },
+];
+
 export type Text_assistant = {
   id: number;
   name: string;
