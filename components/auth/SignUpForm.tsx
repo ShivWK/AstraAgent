@@ -128,7 +128,11 @@ export function SignUpForm() {
         <div className="grid gap-3">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <EyeButton eyeOpen={eyeOpen} setEyeOpen={setEyeOpen} />
+            <EyeButton
+              aria-hidden="true"
+              eyeOpen={eyeOpen}
+              setEyeOpen={setEyeOpen}
+            />
           </div>
           <Input
             type={eyeOpen ? 'text' : 'password'}

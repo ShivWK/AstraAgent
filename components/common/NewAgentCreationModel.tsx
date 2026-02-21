@@ -1,4 +1,8 @@
-import { TEXT_AGENT_DOMAINS, type domainType } from '@/utils/text_assistants';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, FieldErrors, Controller } from 'react-hook-form';
+import { TEXT_AGENT_DOMAINS } from '@/utils/text_assistants';
+import { agentCreationSchema } from '@/lib/validations/agents.schema';
 import {
   Dialog,
   DialogClose,
@@ -28,7 +32,21 @@ type PropsType = {
   setOpen: (val: boolean) => void;
 };
 
+type FromType = z.infer<typeof agentCreationSchema>;
+
 const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
+  const {
+    register,
+    watch,
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FromType>({
+    resolver: zodResolver(agentCreationSchema),
+    mode: 'onBlur',
+    shouldUnregister: true,
+  });
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -53,58 +71,99 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
             <div className="flex flex-col gap-4 text-center">
               <div className="flex flex-col gap-2 text-center">
                 <Label>Agent Domain</Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]" aria-invalid>
-                    <SelectValue placeholder="Select Domain" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    {TEXT_AGENT_DOMAINS.map(({ category, domains }, index) => {
-                      return (
-                        <div key={index}>
-                          <SelectGroup key={index}>
-                            <SelectLabel>{category}</SelectLabel>
-                            {domains.map((domain) => (
-                              <SelectItem key={domain.id} value={domain.name}>
-                                {domain.name}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                          <SelectSeparator />
-                        </div>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="domain"
+                  control={control}
+                  rules={{ required: 'Agent domain is required' }}
+                  render={({ field }) => (
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Select Domain" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        {TEXT_AGENT_DOMAINS.map(
+                          ({ category, domains }, index) => {
+                            return (
+                              <div key={index}>
+                                <SelectGroup key={index}>
+                                  <SelectLabel>{category}</SelectLabel>
+                                  {domains.map((domain) => (
+                                    <SelectItem
+                                      key={domain.id}
+                                      value={domain.name}
+                                    >
+                                      {domain.name}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                                <SelectSeparator />
+                              </div>
+                            );
+                          },
+                        )}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
 
               <div className="flex flex-col gap-2 text-center">
                 <Label>Interaction Style</Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]" aria-invalid>
-                    <SelectValue placeholder="Select Style" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectGroup>
-                      <SelectItem value="Professional">Professional</SelectItem>
-                      <SelectItem value="Friendly">Friendly</SelectItem>
-                      <SelectItem value="Strict">Strict</SelectItem>
-                      <SelectItem value="Calm">Calm</SelectItem>
-                      <SelectItem value="Motivational">Motivational</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="style"
+                  control={control}
+                  rules={{ required: 'Style is required' }}
+                  render={({ field }) => (
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-[180px]" aria-invalid>
+                        <SelectValue placeholder="Select Style" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectGroup>
+                          <SelectItem value="Professional">
+                            Professional
+                          </SelectItem>
+                          <SelectItem value="Friendly">Friendly</SelectItem>
+                          <SelectItem value="Strict">Strict</SelectItem>
+                          <SelectItem value="Calm">Calm</SelectItem>
+                          <SelectItem value="Motivational">
+                            Motivational
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
               </div>
             </div>
           </div>
 
           <div className="mt-1 flex flex-col gap-3 text-center">
             <Label htmlFor="name">Agent Name</Label>
-            <Input id="name" type="text" />
+            <Input
+              id="name"
+              type="text"
+              {...register('name', {
+                required: 'Name is required',
+              })}
+            />
           </div>
 
           <div className="mt-1 flex flex-col gap-3 text-center">
             <Label htmlFor="role">Agent Role / Purpose</Label>
-            <Textarea id="role" className="max-h-32 break-after-all"></Textarea>
+            <Textarea
+              id="role"
+              className="max-h-32 break-after-all"
+              {...register('purpose', {
+                required: 'Role / Purpose is required',
+              })}
+            ></Textarea>
           </div>
 
           <div className="mt-1 flex gap-4">
