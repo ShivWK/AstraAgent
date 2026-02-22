@@ -3,7 +3,7 @@ import * as z from 'zod';
 export const agentCreationSchema = z.object({
   domain: z.string(),
 
-  style: z.string(),
+  style: z.string().optional(),
 
   name: z
     .string()
@@ -17,7 +17,7 @@ export const agentCreationSchema = z.object({
     .max(150, 'Role description must be under 150 characters.')
     .optional(),
 
-  level: z.string(),
+  level: z.string().optional(),
 });
 
 export const voiceAgentInstructionSchema = z.object({

@@ -50,14 +50,31 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     mode: 'onBlur',
     shouldUnregister: true,
     defaultValues: {
+      style: 'Friendly',
       level: 'Beginner',
     },
   });
+
+  console.log(errors);
 
   const selectedDomain = watch('domain');
   const dynamicPlaceholder =
     agentCreationPlaceholders[selectedDomain] ||
     'e.g. Describe the role you want this assistant to play';
+
+  const submitHandler = (data: FromType) => {
+    console.log('Submit data:', data);
+
+    const image = logoForAgents[selectedDomain] || '/assistants/general_ai.png';
+
+    const finalPayload = {
+      ...data,
+      image,
+    };
+
+    console.log('final data', finalPayload);
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -65,7 +82,10 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
         className="sm:max-w-[425px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        <form className="flex flex-col gap-5">
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(submitHandler)}
+        >
           <DialogHeader className="mb-1">
             <DialogTitle>Create Your New AI Companion</DialogTitle>
           </DialogHeader>
@@ -94,7 +114,10 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger
+                        className="w-[180px]"
+                        aria-invalid={!!errors.domain}
+                      >
                         <SelectValue placeholder="Select Domain" />
                       </SelectTrigger>
                       <SelectContent position="popper">
@@ -129,7 +152,6 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                 <Controller
                   name="style"
                   control={control}
-                  rules={{ required: 'Style is required' }}
                   render={({ field }) => (
                     <Select
                       onValueChange={field.onChange}
@@ -163,6 +185,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
             <Input
               id="name"
               type="text"
+              aria-invalid={!!errors.name}
               {...register('name', {
                 required: 'Name is required',
               })}
@@ -218,7 +241,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
               </DialogClose>
               <Button
                 onClick={() => {}}
-                type="button"
+                type="submit"
                 variant={'secondary'}
                 className=""
               >
