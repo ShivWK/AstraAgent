@@ -81,7 +81,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
             alt="Astra agent logo"
             width={50}
             height={50}
-            className={`${pathname === '/text-workspace' ? 'hidden md:block' : 'block'} h-13 w-14 rounded md:h-13 md:w-14`}
+            className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-13 w-14 rounded md:h-13 md:w-14`}
           />
           <p className="hidden text-2xl font-semibold tracking-wide lg:block">
             Astra Agent
