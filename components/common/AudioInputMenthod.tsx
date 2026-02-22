@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
 import useAudioRecorder from '@/hooks/useAudioRecorder';
+import useMicLevel from '@/hooks/useMicLevel';
 
 type PropType = {
   setMessage: (val: string) => void;
@@ -8,65 +9,8 @@ type PropType = {
 
 const AudioInputMethod = ({ setMessage }: PropType) => {
   const { startRecording, stopRecording, recording } = useAudioRecorder();
+  const level = useMicLevel(recording);
   const [audio, setAudio] = useState<Blob | null>(null);
-
-  const [level, setLevel] = useState(0);
-
-  useEffect(() => {
-    if (!recording) return;
-
-    let audioContext: AudioContext | null = null;
-    let analyser: AnalyserNode | null = null;
-    let dataArray: Uint8Array<ArrayBuffer> | null = null;
-    let source: MediaStreamAudioSourceNode | null = null;
-    let rafId: number | null = null;
-    let stream: MediaStream | null = null;
-    const NOISE_THRESHOLD = 0;
-
-    async function init() {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
-
-      audioContext = new AudioContext();
-      analyser = audioContext.createAnalyser();
-
-      source = audioContext.createMediaStreamSource(stream);
-      source.connect(analyser);
-
-      analyser.fftSize = 256;
-      dataArray = new Uint8Array(
-        analyser.frequencyBinCount,
-      ) as Uint8Array<ArrayBuffer>;
-
-      function update() {
-        if (!analyser || !dataArray) return;
-        analyser.getByteFrequencyData(dataArray);
-
-        let sum = 0;
-        for (let i = 0; i < dataArray.length; i++) {
-          sum += dataArray[i];
-        }
-
-        const avg = sum / dataArray.length;
-        if (avg > NOISE_THRESHOLD) {
-          setLevel(avg - NOISE_THRESHOLD);
-        }
-
-        rafId = requestAnimationFrame(update);
-      }
-
-      update();
-    }
-
-    init();
-
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      stream?.getTracks().forEach((track) => track.stop());
-      audioContext?.close();
-    };
-  }, [recording]);
 
   const micClickHandler = async () => {
     if (recording) {
@@ -84,7 +28,7 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
   };
 
   return (
-    <div className="rounded-primary relative flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-9">
+    <div className="rounded-primary relative z-40 flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-12 md:p-9">
       <button
         aria-label="microphone"
         onClick={micClickHandler}
