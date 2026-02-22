@@ -45,6 +45,9 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     resolver: zodResolver(agentCreationSchema),
     mode: 'onBlur',
     shouldUnregister: true,
+    defaultValues: {
+      level: 'Beginner',
+    },
   });
 
   return (
@@ -121,7 +124,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[180px]" aria-invalid>
+                      <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Select Style" />
                       </SelectTrigger>
                       <SelectContent position="popper">
@@ -170,19 +173,28 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
             <Label>
               <span className="hidden md:inline">Your</span> Comfort Level
             </Label>
-            <Select defaultValue="Beginner">
-              <SelectTrigger className="w-[180px]" aria-invalid>
-                <SelectValue placeholder="Select Level" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectGroup>
-                  <SelectItem value="Beginner">Beginner</SelectItem>
-                  <SelectItem value="Intermediate">Intermediate</SelectItem>
-                  <SelectItem value="Advanced">Advanced</SelectItem>
-                  <SelectItem value="Mixed">Mixed</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Controller
+              name="level"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Level" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectGroup>
+                      <SelectItem value="Beginner">Beginner</SelectItem>
+                      <SelectItem value="Intermediate">Intermediate</SelectItem>
+                      <SelectItem value="Advanced">Advanced</SelectItem>
+                      <SelectItem value="Mixed">Mixed</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
 
           <DialogFooter>
