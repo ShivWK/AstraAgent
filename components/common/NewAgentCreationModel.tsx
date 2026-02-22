@@ -1,5 +1,9 @@
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  agentCreationPlaceholders,
+  logoForAgents,
+} from '@/utils/text_assistants';
 import { useForm, FieldErrors, Controller } from 'react-hook-form';
 import { TEXT_AGENT_DOMAINS } from '@/utils/text_assistants';
 import { agentCreationSchema } from '@/lib/validations/agents.schema';
@@ -50,6 +54,11 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     },
   });
 
+  const selectedDomain = watch('domain');
+  const dynamicPlaceholder =
+    agentCreationPlaceholders[selectedDomain] ||
+    'e.g. Describe the role you want this assistant to play';
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -62,7 +71,9 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
           </DialogHeader>
           <div className="flex flex-row items-center gap-4 md:gap-8">
             <Image
-              src="/assistants/general_ai.png"
+              src={
+                logoForAgents[selectedDomain] || '/assistants/general_ai.png'
+              }
               alt={`A general AI assistant`}
               height={300}
               width={300}
@@ -162,6 +173,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
             <Label htmlFor="role">Agent Role / Purpose</Label>
             <Textarea
               id="role"
+              placeholder={dynamicPlaceholder}
               className="max-h-32 break-after-all"
               {...register('purpose', {
                 required: 'Role / Purpose is required',

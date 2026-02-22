@@ -10,6 +10,29 @@ export type domainType = {
   }[];
 }[];
 
+export const logoForAgents: Record<string, string> = {
+  'Language Learning': '/assistants/language_master.png',
+  'Education / Study': '/assistants/personal_tutor.png',
+  'Career Guidance': '/assistants/career_guidance.png',
+  Productivity: '/assistants/productivity.png',
+  'Interview Practice': '/assistants/interviewer.png',
+  'Communication Skills': '/assistants/communication_skills.png',
+  'Writing Assistance': '/assistants/grammar_fixer.png',
+  'Tech & Programming': '/assistants/tech_programming.png',
+  'Fitness & Exercise': '/assistants/fitness.png',
+  'Meditation & Yoga': '/assistants/yog_guru.png',
+  'Mental Wellness': '/assistants/mental_wellness.png',
+  'Life Coaching': '/assistants/life_coaching.png',
+  Relationship: '/assistants/relationship.png',
+  'Personal Finance': '/assistants/finance_assistant.png',
+  'Creative Writing': '/assistants/creative_writing.png',
+  'Content Creation': '/assistants/content_creator.png',
+  'Travel Planning': '/assistants/travel_planner.png',
+  'Virtual Boyfriend': '/assistants/virtual_boy.png',
+  'Virtual Girlfriend': '/assistants/virtual_girl.png',
+  'Custom Assistant': '/assistants/general_ai.png',
+};
+
 export const TEXT_AGENT_DOMAINS: domainType = [
   {
     category: 'Learning & Growth',
@@ -178,7 +201,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
     domains: [
       {
         id: 20,
-        logo: '/assistant/',
+        logo: '/assistant/general_ai',
         category: 'Custom',
         name: 'Custom Assistant',
         work: 'Handles uncommon or specific user-defined tasks within safe boundaries.',
@@ -782,3 +805,27 @@ export const agentsConfiguration = [
     ],
   },
 ];
+
+export const agentCreationPlaceholders: Record<string, string> = {
+  'Language Learning': 'e.g. Friendly English Speaking Practice Partner',
+  'Education / Study': 'e.g. Patient Math Tutor for Class 10',
+  'Career Guidance': 'e.g. Software Engineering Career Mentor',
+  Productivity: 'e.g. Daily Focus & Habit Building Coach',
+  'Interview Practice': 'e.g. Senior React Interviewer for Product Companies',
+  'Communication Skills': 'e.g. Public Speaking Confidence Coach',
+  'Writing Assistance': 'e.g. Professional Email & Content Editor',
+  'Tech & Programming': 'e.g. Senior Full Stack Development Mentor',
+  'Fitness & Exercise': 'e.g. Certified Fat Loss & Strength Coach',
+  'Meditation & Yoga': 'e.g. Calm Mindfulness & Breathing Guide',
+  'Mental Wellness': 'e.g. Supportive Stress Management Companion',
+  'Life Coaching': 'e.g. Goal-Oriented Personal Growth Strategist',
+  Relationship: 'e.g. Healthy Communication Relationship Advisor',
+  'Personal Finance': 'e.g. Smart Budgeting & Money Discipline Guide',
+  'Creative Writing': 'e.g. Imaginative Storytelling Mentor',
+  'Content Creation': 'e.g. Viral Social Media Content Strategist',
+  'Travel Planning': 'e.g. Budget-Friendly Trip Planning Expert',
+  'Virtual Boyfriend': 'e.g. Caring & Romantic Daily Companion',
+  'Virtual Girlfriend': 'e.g. Sweet & Supportive Virtual Partner',
+  'Custom Assistant':
+    'e.g. Describe the exact role you want this assistant to play',
+};
