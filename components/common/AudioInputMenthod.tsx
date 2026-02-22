@@ -3,22 +3,27 @@ import SpeechRecognition, {
 } from 'react-speech-recognition';
 import { useEffect, useState } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
+import useAudioRecorder from '@/hooks/useAudioRecorder';
 
 type PropType = {
   setMessage: (val: string) => void;
 };
 
 const AudioInputMethod = ({ setMessage }: PropType) => {
+  const { startRecording, stopRecording, recording } = useAudioRecorder();
+  const [audio, setAudio] = useState<Blob | null>(null);
+
   const [level, setLevel] = useState(0);
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+
+  // const {
+  //   transcript,
+  //   listening,
+  //   resetTranscript,
+  //   browserSupportsSpeechRecognition,
+  // } = useSpeechRecognition();
 
   useEffect(() => {
-    if (!listening) return;
+    if (!recording) return;
 
     let audioContext: AudioContext | null = null;
     let analyser: AnalyserNode | null = null;
@@ -71,45 +76,45 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
       stream?.getTracks().forEach((track) => track.stop());
       audioContext?.close();
     };
-  }, [listening]);
+  }, [recording]);
 
-  useEffect(() => {
-    setMessage(transcript);
-  }, [transcript, setMessage]);
+  // useEffect(() => {
+  //   setMessage(transcript);
+  // }, [transcript, setMessage]);
 
-  useEffect(() => {
-    const recognition = SpeechRecognition.getRecognition();
+  // useEffect(() => {
+  //   const recognition = SpeechRecognition.getRecognition();
 
-    if (!recognition) return;
-    recognition.onend = () => {
-      if (listening) {
-        SpeechRecognition.startListening({
-          continuous: true,
-          language: 'en-IN',
-          interimResults: true,
-        });
-      }
-    };
-  }, [listening]);
+  //   if (!recognition) return;
+  //   recognition.onend = () => {
+  //     if (listening) {
+  //       SpeechRecognition.startListening({
+  //         continuous: true,
+  //         language: 'en-IN',
+  //         interimResults: true,
+  //       });
+  //     }
+  //   };
+  // }, [recording]);
 
-  if (!browserSupportsSpeechRecognition) {
-    return <span>Browser doe not support speech recognition.</span>;
-  }
+  // if (!browserSupportsSpeechRecognition) {
+  //   return <span>Browser doe not support speech recognition.</span>;
+  // }
 
-  const micClickHandler = () => {
-    if (listening) {
-      SpeechRecognition.stopListening();
+  const micClickHandler = async () => {
+    if (recording) {
+      const audioData = await stopRecording();
+      console.log('Audio recoding', audioData);
+
+      setAudio(audioData);
+
+      const audioURL = URL.createObjectURL(audioData);
+      const audio = new Audio(audioURL);
+      audio.play();
     } else {
-      resetTranscript();
-      SpeechRecognition.startListening({
-        continuous: true,
-        language: 'en-IN',
-        interimResults: true,
-      });
+      startRecording();
     }
   };
-
-  console.log('level', level, transcript);
 
   return (
     <div className="rounded-primary relative flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-9">
@@ -118,11 +123,11 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
         onClick={micClickHandler}
         style={{
           boxShadow: `0 0 ${level / 2}px rgba(59,130,246,0.8)`,
-          transform: listening ? `scale(${1 + level / 200})` : '',
+          transform: recording ? `scale(${1 + level / 200})` : '',
         }}
-        className={`${listening && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-[0.05s] ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
+        className={`${recording && 'btn-continue'} btn-continue no-hover transform rounded-full bg-blue-900 p-3 transition-transform duration-[0.05s] ease-in-out before:h-[108%] before:w-[108%] after:h-[108%] after:w-[108%] active:scale-95 md:p-4 md:before:h-[110%] md:before:w-[110%] md:after:h-[110%] md:after:w-[110%]`}
       >
-        {listening ? (
+        {recording ? (
           <CircleStop aria-hidden="true" size={70} strokeWidth={1} />
         ) : (
           <Mic aria-hidden="true" size={70} strokeWidth={1} />

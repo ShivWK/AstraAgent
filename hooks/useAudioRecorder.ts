@@ -1,0 +1,45 @@
+import { useState, useRef } from 'react';
+
+const useAudioRecorder = () => {
+  const [recording, setRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunk = useRef<Blob[]>([]);
+
+  const startRecording = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
+
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorderRef.current = mediaRecorder;
+
+    mediaRecorder.ondataavailable = (event) => {
+      chunk.current.push(event.data);
+    };
+
+    mediaRecorder.start();
+    setRecording(true);
+  };
+
+  const stopRecording = (): Promise<Blob> => {
+    return new Promise((resolve) => {
+      if (!mediaRecorderRef.current) return;
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioData = new Blob(chunk.current, {
+          type: 'audio/webm',
+        });
+
+        chunk.current = [];
+        setRecording(false);
+        resolve(audioData);
+      };
+
+      mediaRecorderRef.current.stop();
+    });
+  };
+
+  return { startRecording, stopRecording, recording };
+};
+
+export default useAudioRecorder;
