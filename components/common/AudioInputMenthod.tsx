@@ -1,6 +1,3 @@
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from 'react-speech-recognition';
 import { useEffect, useState } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
 import useAudioRecorder from '@/hooks/useAudioRecorder';
@@ -14,13 +11,6 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
   const [audio, setAudio] = useState<Blob | null>(null);
 
   const [level, setLevel] = useState(0);
-
-  // const {
-  //   transcript,
-  //   listening,
-  //   resetTranscript,
-  //   browserSupportsSpeechRecognition,
-  // } = useSpeechRecognition();
 
   useEffect(() => {
     if (!recording) return;
@@ -77,29 +67,6 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
       audioContext?.close();
     };
   }, [recording]);
-
-  // useEffect(() => {
-  //   setMessage(transcript);
-  // }, [transcript, setMessage]);
-
-  // useEffect(() => {
-  //   const recognition = SpeechRecognition.getRecognition();
-
-  //   if (!recognition) return;
-  //   recognition.onend = () => {
-  //     if (listening) {
-  //       SpeechRecognition.startListening({
-  //         continuous: true,
-  //         language: 'en-IN',
-  //         interimResults: true,
-  //       });
-  //     }
-  //   };
-  // }, [recording]);
-
-  // if (!browserSupportsSpeechRecognition) {
-  //   return <span>Browser doe not support speech recognition.</span>;
-  // }
 
   const micClickHandler = async () => {
     if (recording) {
