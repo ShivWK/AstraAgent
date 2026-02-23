@@ -13,7 +13,7 @@ export const voice_assistant: Voice_assistant[] = [
     id: 1,
     name: 'Astra Interviewer',
     title: 'Interviewer',
-    icon: '/assistants/interviewer.png',
+    icon: '/assistants/recruiter.png',
     description: 'Conducts professional interviews and evaluates answers.',
     subHeading:
       'Describe the role, topic, experience level, and how challenging you want the interview to be.',

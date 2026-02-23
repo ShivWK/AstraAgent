@@ -21,10 +21,6 @@ type PropsType = {
   setOpen: (val: boolean) => void;
 };
 
-const continueClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-};
-
 type FormType = z.infer<typeof voiceAgentInstructionSchema>;
 
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
@@ -46,8 +42,6 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
       instruction: '',
     },
   });
-
-  // console.log(errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -105,7 +99,6 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
                 </Button>
               </DialogClose>
               <Button
-                // onClick={continueClickHandler}
                 type="submit"
                 variant={'secondary'}
                 className="transition-all duration-100 ease-linear active:translate-y-0.5"

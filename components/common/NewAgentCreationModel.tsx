@@ -50,12 +50,13 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     mode: 'onBlur',
     shouldUnregister: true,
     defaultValues: {
+      domain: '',
+      name: '',
+      purpose: '',
       style: 'Friendly',
       level: 'Beginner',
     },
   });
-
-  // console.log(errors);
 
   const selectedDomain = watch('domain');
   const dynamicPlaceholder =
@@ -72,7 +73,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
       image,
     };
 
-    console.log('final data', finalPayload);
+    // console.log('final data', finalPayload);
     setOpen(false);
   };
 
