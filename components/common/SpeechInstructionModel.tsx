@@ -2,6 +2,7 @@ import { voiceAgentInstructionSchema } from '@/lib/validations/agents.schema';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import {
   Dialog,
   DialogHeader,
@@ -25,9 +26,11 @@ type FormType = z.infer<typeof voiceAgentInstructionSchema>;
 
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
   const agent = voice_assistant.find((agent) => agent.id === currentAgent)!;
+  const router = useRouter();
 
   const submitHandler = (data: FormType) => {
     console.log(data);
+    router.push('/ai-workspace');
   };
 
   const {
@@ -102,6 +105,11 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
               </Button>
             </div>
           </DialogFooter>
+          {errors.instruction && (
+            <p className="text-center font-medium text-red-500">
+              {errors.instruction.message}
+            </p>
+          )}
         </form>
       </DialogContent>
     </Dialog>
