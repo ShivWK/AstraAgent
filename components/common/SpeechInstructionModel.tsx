@@ -47,7 +47,7 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
     },
   });
 
-  console.log(errors);
+  // console.log(errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
