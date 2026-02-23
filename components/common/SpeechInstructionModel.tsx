@@ -1,3 +1,7 @@
+import { voiceAgentInstructionSchema } from '@/lib/validations/agents.schema';
+import * as z from 'zod';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Dialog,
   DialogHeader,
@@ -21,8 +25,24 @@ const continueClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
 };
 
+type FormType = z.infer<typeof voiceAgentInstructionSchema>;
+
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
   const agent = voice_assistant.find((agent) => agent.id === currentAgent)!;
+
+  const submitHandler = (data: FormType) => {
+    console.log(data);
+  };
+
+  const {
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    control,
+  } = useForm<FormType>({
+    resolver: zodResolver(voiceAgentInstructionSchema),
+    shouldUnregister: true,
+    mode: 'onBlur',
+  });
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -30,7 +50,10 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
         className="sm:max-w-[425px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        <form className="flex flex-col gap-5">
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(submitHandler)}
+        >
           <DialogHeader className="mb-1">
             <DialogTitle>Configure Your Session</DialogTitle>
           </DialogHeader>
@@ -54,10 +77,20 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
           <p className="text-sm leading-4.5 tracking-wide">
             {agent.subHeading}
           </p>
-          <Textarea
-            className="max-h-36 min-h-24 break-after-all overflow-auto"
-            placeholder={agent.placeHolder}
-          ></Textarea>
+
+          <Controller
+            name="instruction"
+            control={control}
+            rules={{ required: 'Instruction for agent is required' }}
+            render={({ field }) => (
+              <Textarea
+                aria-invalid={!!errors.instruction}
+                {...field}
+                className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
+                placeholder={agent.placeHolder}
+              ></Textarea>
+            )}
+          />
 
           <DialogFooter>
             <div className="ml-auto flex items-center gap-2">

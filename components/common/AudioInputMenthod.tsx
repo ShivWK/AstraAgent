@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
 import useAudioRecorder from '@/hooks/useAudioRecorder';
 import useMicLevel from '@/hooks/useMicLevel';

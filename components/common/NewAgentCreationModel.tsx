@@ -4,7 +4,7 @@ import {
   agentCreationPlaceholders,
   logoForAgents,
 } from '@/utils/text_assistants';
-import { useForm, FieldErrors, Controller } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { TEXT_AGENT_DOMAINS } from '@/utils/text_assistants';
 import { agentCreationSchema } from '@/lib/validations/agents.schema';
 import {
@@ -55,7 +55,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     },
   });
 
-  console.log(errors);
+  // console.log(errors);
 
   const selectedDomain = watch('domain');
   const dynamicPlaceholder =
