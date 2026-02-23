@@ -36,11 +36,36 @@ const Pages = () => {
           className={`section__chat rounded-primary flex h-screen w-full flex-col items-center ${interactionMode !== 'text' && 'gap-2 pb-5'}`}
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
-            <div className="pretty-scrollbar h-full w-full overflow-auto px-1 pt-20 pb-1 md:px-4">
+            <div className="max-md:hide-scrollbar pretty-scrollbar h-full w-full overflow-auto px-2 pt-20 pb-1 md:px-4">
               {chat && <ChatBox writer="agent" chat={chat} />}
+              <ChatBox
+                writer="user"
+                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
+              />
+
+              <ChatBox
+                writer="agent"
+                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
+              />
+
+              <ChatBox
+                writer="user"
+                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
+              />
+
+              <ChatBox
+                writer="agent"
+                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
+              />
+
+              <ChatBox
+                writer="user"
+                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
+              />
             </div>
+
             <div
-              className={`${interactionMode !== 'text' ? 'hidden' : 'block'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-20 bg-linear-to-t from-black to-transparent to-40%`}
+              className={`${interactionMode !== 'text' ? 'hidden' : 'block'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-20 bg-linear-to-t from-black to-transparent to-70%`}
             />
           </div>
           {interactionMode !== 'text' ? (
