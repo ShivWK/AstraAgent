@@ -198,7 +198,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
             <Textarea
               id="role"
               placeholder={dynamicPlaceholder}
-              className="max-h-32 break-after-all"
+              className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
               {...register('purpose', {
                 required: 'Role / Purpose is required',
               })}
