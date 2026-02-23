@@ -15,7 +15,7 @@ export const logoForAgents: Record<string, string> = {
   'Education / Study': '/assistants/personal_tutor.png',
   'Career Guidance': '/assistants/career_guidance.png',
   Productivity: '/assistants/productivity.png',
-  'Interview Practice': '/assistants/recruiter.png',
+  'Interview Practice': '/assistants/take_interview.png',
   'Communication Skills': '/assistants/communication_skills.png',
   'Writing Assistance': '/assistants/grammar_fixer.png',
   'Tech & Programming': '/assistants/tech_programming.png',
