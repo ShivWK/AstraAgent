@@ -36,7 +36,7 @@ const useAudioRecorder = () => {
         chunk.current = [];
         setRecording(false);
 
-        stream?.getTracks().forEach((tracks) => tracks.stop);
+        stream?.getTracks().forEach((tracks) => tracks.stop());
         setStream(null);
         resolve(audioData);
       };
