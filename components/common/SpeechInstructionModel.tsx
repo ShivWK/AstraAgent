@@ -42,7 +42,12 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
     resolver: zodResolver(voiceAgentInstructionSchema),
     shouldUnregister: true,
     mode: 'onBlur',
+    defaultValues: {
+      instruction: '',
+    },
   });
+
+  console.log(errors);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -100,10 +105,10 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
                 </Button>
               </DialogClose>
               <Button
-                onClick={continueClickHandler}
-                type="button"
+                // onClick={continueClickHandler}
+                type="submit"
                 variant={'secondary'}
-                className=""
+                className="transition-all duration-100 ease-linear active:translate-y-0.5"
               >
                 Continue
               </Button>

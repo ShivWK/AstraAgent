@@ -24,6 +24,6 @@ export const voiceAgentInstructionSchema = z.object({
   instruction: z
     .string()
     .trim()
-    .min(10, 'Please describe your purpose clearly.')
-    .max(200, 'Purpose must be under 200 characters.'),
+    .min(10, 'Please describe your instruction clearly.')
+    .max(200, 'Instruction must be under 200 characters.'),
 });
