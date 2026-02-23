@@ -8,8 +8,9 @@ type PropType = {
 };
 
 const AudioInputMethod = ({ setMessage }: PropType) => {
-  const { startRecording, stopRecording, recording } = useAudioRecorder();
-  const level = useMicLevel(recording);
+  const { startRecording, stopRecording, recording, stream } =
+    useAudioRecorder();
+  const level = useMicLevel(stream);
   const [audio, setAudio] = useState<Blob | null>(null);
 
   const micClickHandler = async () => {

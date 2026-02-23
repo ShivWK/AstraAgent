@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 
 const useAudioRecorder = () => {
   const [recording, setRecording] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunk = useRef<Blob[]>([]);
 
@@ -9,6 +10,8 @@ const useAudioRecorder = () => {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
     });
+
+    setStream(stream);
 
     const mediaRecorder = new MediaRecorder(stream);
     mediaRecorderRef.current = mediaRecorder;
@@ -32,6 +35,9 @@ const useAudioRecorder = () => {
 
         chunk.current = [];
         setRecording(false);
+
+        stream?.getTracks().forEach((tracks) => tracks.stop);
+        setStream(null);
         resolve(audioData);
       };
 
@@ -39,7 +45,7 @@ const useAudioRecorder = () => {
     });
   };
 
-  return { startRecording, stopRecording, recording };
+  return { startRecording, stopRecording, recording, stream: stream };
 };
 
 export default useAudioRecorder;
