@@ -61,7 +61,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
 
   return (
     <>
-      <header className="fixed z-50 flex w-full justify-between px-2.5 py-3 backdrop-blur-md">
+      <header className="fixed z-50 flex w-full justify-between px-2.5 py-1.5 backdrop-blur-md">
         <button
           onClick={() => dispatch(setOpenSidebar(true))}
           className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
