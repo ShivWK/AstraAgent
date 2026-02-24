@@ -29,11 +29,11 @@ const Pages = () => {
   return (
     <main className="md:px-2">
       <div className="flex items-center gap-2">
-        <aside className="hidden h-screen w-104 overflow-x-visible pt-20 pb-0.5 md:block">
+        <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
           <AISideBar />
         </aside>
         <section
-          className={`section__chat rounded-primary flex h-screen w-full flex-col items-center ${interactionMode === 'text' && 'gap-1 pb-5'}`}
+          className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center ${interactionMode === 'text' && ''}`}
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div className="max-md:hide-scrollbar pretty-scrollbar h-full w-full overflow-auto px-2 pt-20 pb-1 md:px-4">
@@ -65,7 +65,7 @@ const Pages = () => {
             </div>
 
             <div
-              className={`${interactionMode === 'text' ? 'hidden' : 'block'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-20 bg-linear-to-t from-black to-transparent to-60%`}
+              className={`${interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black to-transparent to-70%`}
             />
           </div>
           {interactionMode === 'text' ? (
@@ -80,7 +80,7 @@ const Pages = () => {
         onClose={closeHandler}
         showClasses="translate-x-0"
         hideClasses="-translate-x-full"
-        className="relative top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
+        className="fixed top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
       >
         <>
           <button
