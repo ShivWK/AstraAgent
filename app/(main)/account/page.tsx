@@ -37,7 +37,7 @@ const Page = () => {
           <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2">
             <p className="text-lg font-medium">Current Balance</p>
             <p className="-mt-2 text-xl font-medium">$900</p>
-            <button className="w-full rounded-md bg-blue-700 py-1">
+            <button className="w-full rounded-md bg-blue-700 py-1 text-lg tracking-wider">
               Recharge
             </button>
           </div>
