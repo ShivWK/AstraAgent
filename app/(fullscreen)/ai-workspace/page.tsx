@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeft } from 'lucide-react';
-import TextAISideBar from '@/components/common/TextAISideBar';
+import AISideBar from '@/components/common/AISideBar';
 import {
   selectOpenSidebar,
   setOpenSidebar,
@@ -12,7 +12,7 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/common/Chatbox';
 import Drawer from '@/components/common/Modal';
 import TextInputMethod from '@/components/common/TextInputMethod';
-import AudioInputMethod from '@/components/common/AudioInputMenthod';
+import AudioInputMethod from '@/components/common/AudioInputMethod';
 import { useState } from 'react';
 
 const Pages = () => {
@@ -30,7 +30,7 @@ const Pages = () => {
     <main className="md:px-2">
       <div className="flex items-center gap-2">
         <aside className="hidden h-screen w-104 overflow-x-visible pt-20 pb-0.5 md:block">
-          <TextAISideBar />
+          <AISideBar />
         </aside>
         <section
           className={`section__chat rounded-primary flex h-screen w-full flex-col items-center ${interactionMode === 'text' && 'gap-1 pb-5'}`}
@@ -90,7 +90,7 @@ const Pages = () => {
             <ChevronLeft size={27} aria-hidden="true" />
           </button>
           <div className="h-[92%] w-full p-2">
-            <TextAISideBar />
+            <AISideBar />
           </div>
         </>
       </Drawer>

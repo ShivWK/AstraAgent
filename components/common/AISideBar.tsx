@@ -1,7 +1,16 @@
+import useAppSelector from '@/hooks/useAppSelector';
+import { selectSelectedAgent } from '@/features/agents/agentsSlice';
 import Image from 'next/image';
 import PreviousChat from './PreviousChat';
+import { type Voice_assistant } from '@/utils/voice_assistants';
+import { type Text_assistant } from '@/utils/text_assistants';
 
-const TextAISideBar = () => {
+const AISideBar = () => {
+  type agent = Voice_assistant | Text_assistant | null;
+  const selectedAgent: agent = useAppSelector(selectSelectedAgent);
+
+  if (!selectedAgent) return null;
+
   return (
     <div className="section__agent rounded-primary flex h-full w-full flex-col pb-2">
       <div
@@ -9,7 +18,7 @@ const TextAISideBar = () => {
         className="section__agent-card rounded-primary dark:bg-primary-dark-bg flex flex-col items-center gap-3 p-2 max-md:pt-3 md:flex-row"
       >
         <Image
-          src="/assistants/general_ai.png"
+          src={selectedAgent?.icon || '/assistants/general_ai.png'}
           alt="General Ai agent"
           height={300}
           width={300}
@@ -21,13 +30,14 @@ const TextAISideBar = () => {
 
         <div>
           <p className="line-clamp-1 text-lg font-semibold max-md:text-center max-md:text-xl">
-            Atlas
+            {selectedAgent?.name[0].toUpperCase() +
+              selectedAgent?.name.slice(1)}
           </p>
           <p className="mt-1 font-medium max-md:text-center max-md:text-lg">
             Your Current Agent
           </p>
           <p className="-mt-1 line-clamp-1 italic max-md:text-center max-md:text-lg">
-            Geography Teacher
+            {selectedAgent?.title}
           </p>
         </div>
       </div>
@@ -90,34 +100,9 @@ const TextAISideBar = () => {
           chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
           consequuntur!"
         />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
       </ul>
     </div>
   );
 };
 
-export default TextAISideBar;
+export default AISideBar;
