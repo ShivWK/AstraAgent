@@ -222,12 +222,17 @@ export type Text_assistant = {
   sampleQuestions: string[];
 };
 
-export const text_assistant = [
+export const text_assistant: Text_assistant[] = [
   {
     id: 1,
     name: 'jack',
     title: 'Fitness Coach',
     icon: '/assistants/fitness.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -235,6 +240,11 @@ export const text_assistant = [
     name: 'devon',
     title: 'Coder',
     icon: '/assistants/coder.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -242,6 +252,11 @@ export const text_assistant = [
     name: 'atlas',
     title: 'Travel Planner',
     icon: '/assistants/travel_planner.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -249,6 +264,11 @@ export const text_assistant = [
     name: 'luna',
     title: 'Grammar Fixer',
     icon: '/assistants/grammar_fixer.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -256,6 +276,11 @@ export const text_assistant = [
     name: 'ledger',
     title: 'Finance Assistant',
     icon: '/assistants/finance_assistant.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -263,6 +288,11 @@ export const text_assistant = [
     name: 'leo',
     title: 'Virtual Boyfriend',
     icon: '/assistants/virtual_boy.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -270,6 +300,11 @@ export const text_assistant = [
     name: 'maya',
     title: 'Virtual Girlfriend',
     icon: '/assistants/virtual_girl.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 
   {
@@ -277,6 +312,11 @@ export const text_assistant = [
     name: 'ivy',
     title: 'Personal Tutor',
     icon: '/assistants/personal_tutor.png',
+    instruction: '',
+    userInstruction: '',
+    fallbackMessage: '',
+    themeColor: '',
+    sampleQuestions: [],
   },
 ];
 
