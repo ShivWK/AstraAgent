@@ -2,7 +2,12 @@ import { voiceAgentInstructionSchema } from '@/lib/validations/agents.schema';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import {
+  setSelectedAgent,
+  setVoiceAgentInstruction,
+} from '@/features/agents/agentsSlice';
+
 import {
   Dialog,
   DialogHeader,
@@ -14,10 +19,10 @@ import { DialogContent } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import Image from 'next/image';
-import { voice_assistant } from '@/utils/voice_assistants';
+import { type Voice_assistant } from '@/utils/voice_assistants';
 
 type PropsType = {
-  currentAgent: number;
+  currentAgent: Voice_assistant | null;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
@@ -25,17 +30,19 @@ type PropsType = {
 type FormType = z.infer<typeof voiceAgentInstructionSchema>;
 
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
-  const agent = voice_assistant.find((agent) => agent.id === currentAgent)!;
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const agent = currentAgent!;
+  console.log(agent);
 
   const submitHandler = (data: FormType) => {
-    console.log(data);
-    router.push('/ai-workspace');
+    dispatch(setVoiceAgentInstruction(data.instruction));
+    dispatch(setSelectedAgent(agent));
+    setOpen(false);
   };
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     handleSubmit,
   } = useForm<FormType>({
     resolver: zodResolver(voiceAgentInstructionSchema),
@@ -45,6 +52,8 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
       instruction: '',
     },
   });
+
+  if (agent === null) return null;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

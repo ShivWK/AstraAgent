@@ -26,7 +26,8 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
   const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
   const [openInstructionModel, setOpenInstructionModel] = useState(false);
   const [openCreationModel, setOpenCreationModel] = useState(false);
-  const [currentVoiceAgent, setCurrentVoiceAgent] = useState<number>(1);
+  const [currentVoiceAgent, setCurrentVoiceAgent] =
+    useState<Voice_assistant | null>(null);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;
@@ -70,7 +71,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
 
   const cardClickHandler = (data: Text_assistant | Voice_assistant) => {
     if (mode === 'speech') {
-      setCurrentVoiceAgent(data.id);
+      setCurrentVoiceAgent(data as Voice_assistant);
       setOpenInstructionModel(true);
     } else {
       dispatch(setSelectedAgent(data));
