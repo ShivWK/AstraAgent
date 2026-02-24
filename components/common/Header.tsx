@@ -9,7 +9,7 @@ import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
 import { Spinner } from '../ui/spinner';
-import { Kanban } from 'lucide-react';
+import { Kanban, CircleUserRound } from 'lucide-react';
 import {
   setOpenLoginModel,
   selectLogInState,
@@ -89,22 +89,21 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         </div>
         <div className="flex items-center gap-4">
           <ThemeChanger />
-          <Button
-            onClick={authClickHandler}
-            variant="secondary"
-            size="lg"
-            className="text-md text-lg tracking-wide transition-all duration-75 active:scale-95"
-            disabled={logoutLoading}
-          >
-            {isLoggedIn ? (
-              <span className="flex items-center gap-2">
-                {logoutLoading && <Spinner data-icon="inline-start" />}
-                Sign Out
-              </span>
-            ) : (
-              'Sign In'
-            )}
-          </Button>
+          {!isLoggedIn ? (
+            <Button
+              onClick={authClickHandler}
+              variant="secondary"
+              size="lg"
+              className={`text-md text-lg tracking-wide transition-all duration-75 active:scale-95 ${isLoggedIn && 'rounded-full'}`}
+              disabled={logoutLoading}
+            >
+              Sign In
+            </Button>
+          ) : (
+            <button onClick={() => router.push('/account')}>
+              <CircleUserRound size={48} strokeWidth={1} />
+            </button>
+          )}
         </div>
       </header>
       <AuthForm />

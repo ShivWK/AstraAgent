@@ -33,7 +33,7 @@ const Pages = () => {
 
     if (ele.scrollHeight > ele.clientHeight) {
       ele.scrollBy({
-        top: ele.scrollHeight - ele.scrollTop,
+        top: ele.scrollHeight,
         behavior: 'smooth',
       });
     }
