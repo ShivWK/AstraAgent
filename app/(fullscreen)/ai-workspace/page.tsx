@@ -81,7 +81,7 @@ const Pages = () => {
             </div>
 
             <div
-              className={`${interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black to-transparent to-70%`}
+              className={`${interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
             />
           </div>
           {interactionMode === 'text' ? (
