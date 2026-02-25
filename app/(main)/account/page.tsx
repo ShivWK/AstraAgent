@@ -27,7 +27,7 @@ const Page = () => {
   };
 
   return (
-    <main className="-mt-2">
+    <main className="max-md:-mt-4">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
         <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 md:basis-[35%]">
           <CircleUserRound size={120} strokeWidth={0.5} />
