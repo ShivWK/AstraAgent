@@ -25,8 +25,8 @@ const ModeSelection = () => {
   };
 
   return (
-    <main>
-      <section className="mx-auto max-w-[1200px] pb-6">
+    <main className="flex h-screen items-center justify-center md:pt-8">
+      <section className="mx-auto h-fit max-w-[1200px]">
         <div className="text-center">
           <p className="text-3xl">
             Choose how you <strong>want</strong> to interact today
@@ -115,7 +115,7 @@ const ModeSelection = () => {
         <Button
           onClick={continueClickHandler}
           disabled={!interactionMode}
-          className="mt-13 flex items-center justify-center rounded-full px-5 py-6 text-lg font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 max-lg:mx-auto md:mt-4 md:ml-auto md:py-5"
+          className="mx-auto mt-13 flex items-center justify-center rounded-full px-5 py-6 text-lg font-normal tracking-wider transition-all duration-100 ease-in active:scale-95 md:mt-6 md:py-5"
           variant={'secondary'}
         >
           Continue

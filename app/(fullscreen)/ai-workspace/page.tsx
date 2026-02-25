@@ -40,7 +40,7 @@ const Pages = () => {
   }, []);
 
   return (
-    <main className="md:px-2">
+    <main className="md:pr-1 md:pl-2">
       <div className="flex items-center gap-2">
         <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
           <AISideBar />
