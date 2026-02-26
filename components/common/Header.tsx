@@ -8,7 +8,6 @@ import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { logoutAction } from '@/app/actions/auth';
-import { Spinner } from '../ui/spinner';
 import { Kanban, CircleUserRound } from 'lucide-react';
 import {
   setOpenLoginModel,

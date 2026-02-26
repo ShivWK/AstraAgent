@@ -29,7 +29,7 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
   };
 
   return (
-    <div className="rounded-primary relative z-40 flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-12 md:p-9">
+    <div className="relative z-40 flex w-full items-center justify-center bg-linear-to-b from-black via-blue-600/30 to-black p-12 md:p-9">
       <button
         aria-label="microphone"
         onClick={micClickHandler}

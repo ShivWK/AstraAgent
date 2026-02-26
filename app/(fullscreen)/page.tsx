@@ -31,12 +31,13 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center">
-      <section className="flex flex-col items-center gap-3.5">
+      <section className="flex flex-col items-center gap-4 md:gap-3.5">
         <Image
           src="/logo-transparent.png"
           alt="Astra agent site logo, an start in blue shade"
-          width={250}
-          height={250}
+          width={300}
+          height={300}
+          quality={100}
           className="rounded"
         ></Image>
         <span className="font-primary text-center text-5xl font-extrabold">

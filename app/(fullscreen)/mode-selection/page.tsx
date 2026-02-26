@@ -37,7 +37,7 @@ const ModeSelection = () => {
           </p>
         </div>
 
-        <div className="mx-auto mt-6 flex w-fit flex-col items-center gap-8 max-md:px-4 md:mt-5 md:flex-row md:gap-10">
+        <div className="mx-auto mt-8 flex w-fit flex-col items-center gap-8 max-md:px-4 md:mt-5 md:flex-row md:gap-10">
           <div
             role="button"
             tabIndex={0}
