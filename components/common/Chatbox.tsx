@@ -17,9 +17,9 @@ const ChatBox = ({ writer, chat }: PropsType) => {
 
   return (
     <div
-      className={`${writer === 'agent' ? 'float-start' : 'float-end'} mb-5 max-w-[85%] rounded-xl bg-blue-900 p-2.5 text-lg text-white after:clear-both after:table md:max-w-2/3`}
+      className={`${writer === 'agent' ? 'float-start' : 'float-end'} mb-5 max-w-[85%] rounded-xl bg-blue-900 p-2 text-lg text-white after:clear-both after:table md:max-w-2/3`}
     >
-      <p>{chat}</p>
+      <p className="leading-6">{chat}</p>
       {copied ? (
         <CheckCheck
           className={`mt-3.5 ${writer === 'agent' ? 'float-end' : 'float-start'}`}

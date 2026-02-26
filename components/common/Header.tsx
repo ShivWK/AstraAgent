@@ -61,14 +61,14 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
 
   return (
     <>
-      <header className="fixed z-50 flex w-full justify-between px-2.5 py-1.5 backdrop-blur-md">
+      <header className="fixed z-50 flex w-full justify-between px-2.5 pt-2 pb-1.5 backdrop-blur-md">
         <button
           onClick={() => dispatch(setOpenSidebar(true))}
           className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
         >
           <Kanban
             className="-rotate-90 transform"
-            size={27}
+            size={24}
             aria-hidden="true"
           />
         </button>
@@ -79,9 +79,10 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
           <Image
             src="/logo-solid.jpeg"
             alt="Astra agent logo"
-            width={50}
-            height={50}
-            className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-13 w-14 rounded md:h-13 md:w-14`}
+            width={300}
+            height={300}
+            quality={100}
+            className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-13 rounded`}
           />
           <p className="hidden text-2xl font-semibold tracking-wide lg:block">
             Astra Agent

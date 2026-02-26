@@ -46,12 +46,12 @@ const Pages = () => {
           <AISideBar />
         </aside>
         <section
-          className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center ${interactionMode === 'text' && ''}`}
+          className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div
               ref={chatContainerRef}
-              className={`max-md:hide-scrollbar pretty-scrollbar h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-20' : 'pb-1'} md:px-4`}
+              className={`pretty-scrollbar h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-20' : 'pb-8'} md:px-4`}
             >
               {chat && <ChatBox writer="agent" chat={chat} />}
               <ChatBox
