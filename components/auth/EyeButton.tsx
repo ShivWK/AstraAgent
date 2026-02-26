@@ -7,8 +7,18 @@ type PropsType = {
 
 const EyeButton = ({ eyeOpen, setEyeOpen }: PropsType) => {
   return (
-    <button onClick={() => setEyeOpen(!eyeOpen)} type="button">
-      {eyeOpen ? <Eye size={16} /> : <EyeOff size={16} />}
+    <button
+      onClick={() => setEyeOpen(!eyeOpen)}
+      type="button"
+      aria-label={eyeOpen ? 'Hide password' : 'Show password'}
+      aria-pressed={eyeOpen}
+      aria-controls="password"
+    >
+      {eyeOpen ? (
+        <Eye aria-hidden="true" size={16} />
+      ) : (
+        <EyeOff aria-hidden="true" size={16} />
+      )}
     </button>
   );
 };

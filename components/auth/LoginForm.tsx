@@ -102,6 +102,7 @@ export function LoginForm() {
           <Input
             type="text"
             id="email"
+            disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Email"
             {...register('email')}
           />
@@ -120,6 +121,7 @@ export function LoginForm() {
           <Input
             type={eyeOpen ? 'text' : 'password'}
             id="password"
+            disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Password"
             {...register('password')}
           />

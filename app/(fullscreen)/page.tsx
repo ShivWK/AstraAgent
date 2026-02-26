@@ -3,7 +3,7 @@
 import styles from './page.module.css';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { ArrowRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { Cat } from 'lucide-react';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -31,14 +31,14 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center">
-      <section className="flex flex-col items-center gap-4 md:gap-3.5">
+      <section className="flex flex-col items-center gap-4">
         <Image
           src="/logo-transparent.png"
           alt="Astra agent site logo, an start in blue shade"
           width={300}
           height={300}
           quality={100}
-          className="rounded"
+          className="h-50 w-52 md:h-60 md:w-62"
         ></Image>
         <span className="font-primary text-center text-5xl font-extrabold">
           Your AI task Force
@@ -52,10 +52,10 @@ export default function Home() {
           {loading ? (
             <Spinner className="size-5" data-icon="inline-end" />
           ) : (
-            <ArrowRight className="animate-ping" />
+            <ChevronRight className="animate-ping" />
           )}
         </Button>
-        <span className="text-center">Unlock powerful agents</span>
+        <span className="text-center text-xl">Unlock powerful agents</span>
         <div className="flex flex-wrap gap-3">
           <div className="flex flex-col items-center gap-1 rounded border border-blue-400 p-2">
             <Cat />

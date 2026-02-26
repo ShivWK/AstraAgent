@@ -100,6 +100,7 @@ export function SignUpForm() {
           <Input
             type="text"
             id="name"
+            disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Name"
             {...register('name')}
           />
@@ -115,6 +116,7 @@ export function SignUpForm() {
           <Input
             type="text"
             id="email"
+            disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Email"
             {...register('email')}
           />
@@ -128,15 +130,12 @@ export function SignUpForm() {
         <div className="grid gap-3">
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
-            <EyeButton
-              aria-hidden="true"
-              eyeOpen={eyeOpen}
-              setEyeOpen={setEyeOpen}
-            />
+            <EyeButton eyeOpen={eyeOpen} setEyeOpen={setEyeOpen} />
           </div>
           <Input
             type={eyeOpen ? 'text' : 'password'}
             id="password"
+            disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Password"
             {...register('password')}
           />
