@@ -38,24 +38,10 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
   }, [isUserLoggedIn, dispatch]);
 
   const authClickHandler = async () => {
-    if (isLoggedIn) {
-      setLogoutLoading(true);
-      const response = await logoutAction();
-
-      if (response.success) {
-        if (pathname !== '/') {
-          router.push('/');
-        }
-        dispatch(setLogInState(false));
-      }
-
-      setLogoutLoading(false);
-    } else {
-      if (errorMessage) {
-        dispatch(setLoginError(''));
-      }
-      dispatch(setOpenLoginModel(true));
+    if (errorMessage) {
+      dispatch(setLoginError(''));
     }
+    dispatch(setOpenLoginModel(true));
   };
 
   return (
