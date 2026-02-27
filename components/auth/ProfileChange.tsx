@@ -43,7 +43,7 @@ const ProfileChange = () => {
           height={300}
           width={300}
           quality={100}
-          className="h-32 w-32 rounded-full"
+          className="h-32 w-32 rounded-full shadow-2xl"
         />
         {profileValue?.name ? (
           <button
@@ -73,7 +73,6 @@ const ProfileChange = () => {
         <input
           {...register('profileImage')}
           type="file"
-          name="profile"
           id="profile"
           className="hidden"
           onChange={(e) => {
