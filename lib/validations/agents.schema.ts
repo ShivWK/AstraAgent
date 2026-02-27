@@ -27,3 +27,17 @@ export const voiceAgentInstructionSchema = z.object({
     .min(10, 'Please describe your instruction clearly.')
     .max(200, 'Instruction must be under 200 characters.'),
 });
+
+export const profileFormSchema = z.object({
+  profileImage: z
+    .instanceof(File)
+    .refine((file) => file.size > 0, 'Image is required')
+    .refine((file) => file.size <= 2 * 1024 * 1024, 'Max 2MB allowed')
+    .refine(
+      (file) =>
+        ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'].includes(
+          file.type,
+        ),
+      'Only JPG, PNG, WEBP allowed',
+    ),
+});

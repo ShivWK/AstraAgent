@@ -5,9 +5,10 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import { setLogInState } from '@/features/auth/authSlice';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { CircleUserRound, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
+import ProfileChange from '@/components/auth/ProfileChange';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -36,8 +37,8 @@ const Page = () => {
   return (
     <main className="max-md:-mt-4">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
-        <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 md:basis-[35%]">
-          <CircleUserRound size={120} strokeWidth={0.5} />
+        <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+          <ProfileChange />
           <p className="text-lg">Shivendra Dwivedi</p>
           <p className="-mt-2 text-lg">shivendrawk@gmail.com</p>
 
