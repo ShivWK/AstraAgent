@@ -17,12 +17,12 @@ export const verifySession = async () => {
     const session = await SessionModel.findById(session_id);
     if (!session) return false;
 
-    if (session.createdAt > Date.now()) {
-      return true;
-    } else {
+    if (session.expiresAt < Date.now()) {
       await SessionModel.findByIdAndDelete(session_id);
       return false;
     }
+
+    return true;
   } catch {
     return false;
   }

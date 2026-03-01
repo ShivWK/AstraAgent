@@ -50,9 +50,12 @@ export async function POST(request: Request) {
       provider: 'credentials',
     });
 
+    const SESSION_DURATION = 60 * 60 * 24 * 1000;
+
     const session = await SessionModel.create({
       userId: user._id,
       provider: 'credentials',
+      expiresAt: new Date(Date.now() + SESSION_DURATION),
     });
 
     cookiesStore.set('sessionId', signCookie(session._id.toString()), {
