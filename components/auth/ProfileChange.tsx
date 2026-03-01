@@ -6,16 +6,17 @@ import * as z from 'zod';
 import { profileFormSchema } from '@/lib/validations/agents.schema';
 import { Spinner } from '../ui/spinner';
 import { useEffect, useState } from 'react';
+import useAppSelector from '@/hooks/useAppSelector';
+import { selectUserDetails } from '@/features/auth/authSlice';
 
 const ProfileChange = () => {
+  const userDetails = useAppSelector(selectUserDetails);
+
   type FormType = z.infer<typeof profileFormSchema>;
-  const [previewURL, setPreviewURl] = useState<string>(
-    '/assistants/general_ai.png',
-  );
+  const [previewURL, setPreviewURl] = useState<string | null>(null);
 
   const {
     register,
-    watch,
     formState: { errors, isSubmitting },
     handleSubmit,
     setValue,
@@ -36,6 +37,7 @@ const ProfileChange = () => {
   }, [previewURL]);
 
   const submitHandler = (data: FormType) => {
+    // after successful clean th previewURL
     console.log(data);
   };
 
@@ -43,7 +45,13 @@ const ProfileChange = () => {
     <form onSubmit={handleSubmit(submitHandler)}>
       <div className="relative">
         <Image
-          src={previewURL}
+          src={
+            previewURL
+              ? previewURL
+              : userDetails.image
+                ? userDetails.image
+                : '/assistants/general_ai.png'
+          }
           alt="Profile picture"
           height={300}
           width={300}
@@ -78,7 +86,7 @@ const ProfileChange = () => {
         />
 
         <div
-          className={`w-full transition-all duration-150 ease-linear ${previewURL !== '/assistants/general_ai.png' ? 'h-13' : 'h-0'} overflow-hidden`}
+          className={`w-full transition-all duration-150 ease-linear ${previewURL ? 'h-13' : 'h-0'} overflow-hidden`}
         >
           <button
             type="submit"

@@ -15,6 +15,7 @@ import {
   setLogInState,
   selectLoginError,
   setLoginError,
+  selectUserDetails,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -25,9 +26,9 @@ type PropsType = {
 };
 
 const Header = ({ isUserLoggedIn }: PropsType) => {
-  const [logoutLoading, setLogoutLoading] = useState(false);
   const isLoggedIn = useAppSelector(selectLogInState);
   const errorMessage = useAppSelector(selectLoginError);
+  const userDetails = useAppSelector(selectUserDetails);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -81,7 +82,6 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
               variant="secondary"
               size="lg"
               className={`text-md text-lg tracking-wide transition-all duration-75 active:scale-90 ${isLoggedIn && 'rounded-full'}`}
-              disabled={logoutLoading}
             >
               Sign In
             </Button>
@@ -91,14 +91,22 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
               onClick={() => router.push('/account')}
               className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
             >
-              <Image
-                src="/assistants/general_ai.png"
-                alt="Profile picture"
-                width={300}
-                height={300}
-                quality={100}
-                className={`h-12 w-12 rounded-full`}
-              />
+              {userDetails.image ? (
+                <Image
+                  src={userDetails.image!}
+                  alt="Profile picture"
+                  width={300}
+                  height={300}
+                  quality={100}
+                  className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
+                />
+              ) : (
+                <CircleUserRound
+                  size={48}
+                  strokeWidth={1}
+                  className="rounded-full text-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]"
+                />
+              )}
             </button>
           )}
         </div>

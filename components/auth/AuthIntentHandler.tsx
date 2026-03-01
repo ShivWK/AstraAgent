@@ -17,15 +17,17 @@ const AuthIntentHandler = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  if (status === 'authenticated') {
-    const userDetails = {
-      name: session.user?.name,
-      email: session.user?.email,
-      image: session.user?.image,
-    };
+  useEffect(() => {
+    if (status === 'authenticated') {
+      const userDetails = {
+        name: session.user?.name,
+        email: session.user?.email,
+        image: session.user?.image,
+      };
 
-    dispatch(setLoggedInUserDetails(userDetails));
-  }
+      dispatch(setLoggedInUserDetails(userDetails));
+    }
+  }, [status, session, dispatch]);
 
   useEffect(() => {
     if (searchParams.get('auth') === 'required') {
