@@ -18,7 +18,7 @@ export function verifyCookie(signedCookie: string) {
 
   const newSignature = signCookie(cookie).split('.')[1];
   if (signature === newSignature) {
-    return cookie;
+    return true;
   }
 
   return false;

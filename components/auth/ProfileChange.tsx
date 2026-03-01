@@ -23,9 +23,9 @@ const ProfileChange = () => {
   } = useForm<FormType>({
     resolver: zodResolver(profileFormSchema),
     mode: 'onBlur',
-    // defaultValues: {
-    //     profileImage: ""
-    // }
+    defaultValues: {
+      profileImage: null,
+    },
   });
 
   useEffect(() => {
@@ -38,9 +38,12 @@ const ProfileChange = () => {
 
   const submitHandler = (data: FormType) => {
     // after successful clean th previewURL
+    const formData = new FormData();
 
     console.log(data);
   };
+
+  console.log('Eror', errors);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -103,7 +106,7 @@ const ProfileChange = () => {
               <Spinner
                 aria-hidden="true"
                 data-icon="inline-start"
-                className="size-6"
+                className="size-5"
               />
             ) : (
               <Save aria-hidden="true" strokeWidth={1.5} size={20} />

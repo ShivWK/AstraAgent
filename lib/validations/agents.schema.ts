@@ -28,16 +28,17 @@ export const voiceAgentInstructionSchema = z.object({
     .max(200, 'Instruction must be under 200 characters.'),
 });
 
+const MAX_SIZE = 2 * 1024 * 1024;
+const ACCEPTED_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+
 export const profileFormSchema = z.object({
   profileImage: z
-    .instanceof(File)
+    .any()
+    .refine((file) => file instanceof File, 'Image is required')
     .refine((file) => file.size > 0, 'Image is required')
-    .refine((file) => file.size <= 2 * 1024 * 1024, 'Max 2MB allowed')
+    .refine((file) => file.size <= MAX_SIZE, 'Max 2MB allowed')
     .refine(
-      (file) =>
-        ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'].includes(
-          file.type,
-        ),
+      (file) => ACCEPTED_TYPES.includes(file.type),
       'Only JPG, PNG, WEBP allowed',
     ),
 });
