@@ -66,6 +66,7 @@ export function SignUpForm() {
     let result;
     try {
       result = await response.json();
+      console.log('signup details', result);
     } catch {
       dispatch(setLoginError('Server error. Please try again.'));
       return;

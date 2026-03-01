@@ -1,5 +1,5 @@
 import { Button } from '../ui/button';
-import { signInWithGoogleAction } from '@/app/actions/auth';
+import { signInWithProviderAction } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Spinner } from '../ui/spinner';
@@ -23,7 +23,7 @@ const SignInWithProviders = () => {
     else setGithubLoading(true);
 
     dispatch(setGlobalAuthLoader(true));
-    await signInWithGoogleAction(callbackUrl, provider);
+    await signInWithProviderAction(callbackUrl, provider);
   };
 
   return (

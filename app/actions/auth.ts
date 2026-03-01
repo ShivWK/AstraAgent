@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { SessionModel } from '@/model/sessionModel';
 import { connectDB } from '@/lib/db/connectDb';
 
-export async function signInWithGoogleAction(
+export async function signInWithProviderAction(
   callbackUrl: string,
   provider: string,
 ) {

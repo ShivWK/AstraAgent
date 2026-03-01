@@ -9,9 +9,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: { maxAge: 60 * 60 * 24 },
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(user, account, profile);
       try {
-        if (account?.provider === 'google') {
+        if (account?.provider === 'google' || account?.provider === 'github') {
           await connectDB();
           const existingUser = await UserModel.findOne({ email: user.email });
 

@@ -80,14 +80,25 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
               onClick={authClickHandler}
               variant="secondary"
               size="lg"
-              className={`text-md text-lg tracking-wide transition-all duration-75 active:scale-95 ${isLoggedIn && 'rounded-full'}`}
+              className={`text-md text-lg tracking-wide transition-all duration-75 active:scale-90 ${isLoggedIn && 'rounded-full'}`}
               disabled={logoutLoading}
             >
               Sign In
             </Button>
           ) : (
-            <button onClick={() => router.push('/account')}>
-              <CircleUserRound size={48} strokeWidth={1} />
+            <button
+              aria-label="Account"
+              onClick={() => router.push('/account')}
+              className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
+            >
+              <Image
+                src="/assistants/general_ai.png"
+                alt="Profile picture"
+                width={300}
+                height={300}
+                quality={100}
+                className={`h-12 w-12 rounded-full`}
+              />
             </button>
           )}
         </div>

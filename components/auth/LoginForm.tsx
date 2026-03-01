@@ -47,8 +47,6 @@ export function LoginForm() {
   });
 
   useEffect(() => {
-    console.log('Ran');
-
     dispatch(setGlobalAuthLoader(isSubmitting));
   }, [isSubmitting, dispatch]);
 
@@ -67,6 +65,7 @@ export function LoginForm() {
 
     try {
       result = await response.json();
+      console.log('login details', result);
     } catch {
       dispatch(setLoginError('Server error. Please try again.'));
       return;
