@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 import { cookies } from 'next/headers';
 import { auth } from '@/auth';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
+import SessionProviders from '@/components/auth/SessionProviders';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,18 +49,20 @@ export default async function RootLayout({ children }: PropsType) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Providers>
-            <AuthIntentHandler />
-            <Header isUserLoggedIn={isLoggedIn} />
-            {children}
-          </Providers>
-        </ThemeProvider>
+        <SessionProviders>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Providers>
+              <AuthIntentHandler />
+              <Header isUserLoggedIn={isLoggedIn} />
+              {children}
+            </Providers>
+          </ThemeProvider>
+        </SessionProviders>
       </body>
     </html>
   );

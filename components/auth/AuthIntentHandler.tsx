@@ -1,7 +1,12 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import {
+  setLoginError,
+  setOpenLoginModel,
+  setLoggedInUserDetails,
+} from '@/features/auth/authSlice';
+import { useSession } from 'next-auth/react';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { useEffect } from 'react';
 
@@ -9,7 +14,18 @@ const AuthIntentHandler = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl');
   const dispatch = useAppDispatch();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  if (status === 'authenticated') {
+    const userDetails = {
+      name: session.user?.name,
+      email: session.user?.email,
+      image: session.user?.image,
+    };
+
+    dispatch(setLoggedInUserDetails(userDetails));
+  }
 
   useEffect(() => {
     if (searchParams.get('auth') === 'required') {

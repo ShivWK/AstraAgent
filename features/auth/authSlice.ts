@@ -4,9 +4,9 @@ import { RootState } from '@/lib/store';
 type InitialStateType = {
   isLoggedIn: boolean;
   userDetails: {
-    name: string;
-    email: string;
-    pic?: string;
+    name: string | null | undefined;
+    email: string | null | undefined;
+    image?: string | null | undefined;
   };
   openLoginModel: boolean;
   loginError: string;
@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
   userDetails: {
     name: '',
     email: '',
-    pic: '',
+    image: '',
   },
   openLoginModel: false,
   loginError: '',
