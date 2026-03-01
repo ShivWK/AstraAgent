@@ -38,32 +38,38 @@ const ProfileChange = () => {
 
   const submitHandler = (data: FormType) => {
     // after successful clean th previewURL
+
     console.log(data);
   };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <div className="relative">
-        <Image
-          src={
-            previewURL
-              ? previewURL
-              : userDetails.image
-                ? userDetails.image
-                : '/assistants/general_ai.png'
-          }
-          alt="Profile picture"
-          height={300}
-          width={300}
-          quality={100}
-          className="h-32 w-32 rounded-full shadow-2xl"
-        />
+        <div
+          role="img"
+          className="rounded-full border bg-linear-to-br from-[#1f58fd] via-[#5bddfd] to-[#1f58fd] p-1"
+        >
+          <Image
+            src={
+              previewURL
+                ? previewURL
+                : userDetails.image
+                  ? userDetails.image
+                  : '/assistants/general_ai.png'
+            }
+            alt="Profile picture"
+            height={300}
+            width={300}
+            quality={100}
+            className="h-32 w-32 rounded-full"
+          />
+        </div>
         <label
           htmlFor="profile"
           aria-label="Upload profile picture"
           className="cursor-pointer"
         >
-          <div className="absolute top-24 left-22 inline-block rounded-full bg-gray-900 p-2 transition-all duration-150 ease-linear active:scale-90">
+          <div className="absolute top-25 left-23 inline-block rounded-full bg-gray-900 p-2 transition-all duration-150 ease-linear active:scale-90">
             <Pencil aria-hidden="true" strokeWidth={1.5} size={20} />
           </div>
         </label>
