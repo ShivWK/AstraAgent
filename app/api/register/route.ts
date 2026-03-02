@@ -8,6 +8,7 @@ import { cookies } from 'next/headers';
 import { signCookie } from '@/lib/utils';
 import bcrypt from 'bcryptjs';
 import { auth } from '@/auth';
+import { AccountsModel } from '@/model/accountsModel';
 
 export async function POST(request: Request) {
   const cookiesStore = await cookies();
@@ -20,8 +21,6 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-
-    console.log(body);
 
     if (!body || Object.keys(body).length === 0) {
       return Response.json({ error: 'No data provided' }, { status: 400 });
@@ -47,7 +46,12 @@ export async function POST(request: Request) {
       name,
       email,
       password: hashedPassword,
+    });
+
+    await AccountsModel.create({
+      userId: user._id,
       provider: 'credentials',
+      providerAccountId: user._id.toString(),
     });
 
     const SESSION_DURATION = 60 * 60 * 24 * 1000;
@@ -67,7 +71,15 @@ export async function POST(request: Request) {
     });
 
     return Response.json(
-      { message: 'User successfully created' },
+      {
+        message: 'User successfully created',
+        data: {
+          name: user.name,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          image: user.image,
+        },
+      },
       { status: 201 },
     );
   } catch (err: unknown) {

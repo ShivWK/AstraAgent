@@ -46,12 +46,9 @@ export async function POST(request: Request) {
       );
     }
 
-    if (
-      !user.hasPassword &&
-      (user.provider === 'google' || user.provider === 'github')
-    ) {
+    if (!user.hasPassword) {
       return Response.json(
-        { error: 'Use Google sign-in for this email.' },
+        { error: 'Use Google or Github sign-in for this email.' },
         { status: 409 },
       );
     }
@@ -80,7 +77,18 @@ export async function POST(request: Request) {
       sameSite: 'lax',
     });
 
-    return Response.json({ message: 'Login successful' }, { status: 200 });
+    return Response.json(
+      {
+        message: 'Login successful',
+        data: {
+          name: user.name,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          image: user.image,
+        },
+      },
+      { status: 200 },
+    );
   } catch (err: unknown) {
     return Response.json(
       { error: 'Something went wrong' },

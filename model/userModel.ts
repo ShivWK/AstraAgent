@@ -26,12 +26,6 @@ const userSchema = new mongoose.Schema({
     default: 'No password',
   },
 
-  provider: {
-    type: String,
-    enum: ['google', 'credentials', 'github'],
-    default: 'credentials',
-  },
-
   hasPassword: {
     type: Boolean,
     default: true,
