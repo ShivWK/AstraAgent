@@ -42,3 +42,13 @@ export const profileFormSchema = z.object({
       'Only JPG, PNG, WEBP allowed',
     ),
 });
+
+export const fileSchema = z.object({
+  size: z.number().max(MAX_SIZE, 'Max 2MB is allowed'),
+  type: z
+    .string()
+    .refine(
+      (fileType) => ACCEPTED_TYPES.includes(fileType),
+      'Only JPG, PNG, WEBP is allowed',
+    ),
+});
