@@ -36,6 +36,16 @@ const ProfileChange = () => {
     };
   }, [previewURL]);
 
+  useEffect(() => {
+    const call = async () => {
+      const result = await fetch('/api/upload');
+      const response = await result.json();
+      console.log(response);
+    };
+
+    call();
+  }, []);
+
   const submitHandler = (data: FormType) => {
     // after successful clean th previewURL
     const formData = new FormData();
