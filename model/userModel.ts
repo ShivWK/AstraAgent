@@ -12,23 +12,19 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
 
+  password: {
+    type: String,
+    default: null,
+  },
+
   emailVerified: {
-    type: Boolean,
-    default: false,
+    type: Date,
+    default: null,
   },
 
   image: {
     type: String,
-  },
-
-  password: {
-    type: String,
-    default: 'No password',
-  },
-
-  hasPassword: {
-    type: Boolean,
-    default: true,
+    default: null,
   },
 });
 

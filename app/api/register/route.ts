@@ -48,27 +48,21 @@ export async function POST(request: Request) {
       password: hashedPassword,
     });
 
-    await AccountsModel.create({
-      userId: user._id,
-      provider: 'credentials',
-      providerAccountId: user._id.toString(),
-    });
+    // const SESSION_DURATION = 60 * 60 * 24 * 1000;
 
-    const SESSION_DURATION = 60 * 60 * 24 * 1000;
+    // const session = await SessionModel.create({
+    //   userId: user._id,
+    //   provider: 'credentials',
+    //   expiresAt: new Date(Date.now() + SESSION_DURATION),
+    // });
 
-    const session = await SessionModel.create({
-      userId: user._id,
-      provider: 'credentials',
-      expiresAt: new Date(Date.now() + SESSION_DURATION),
-    });
-
-    cookiesStore.set('sessionId', signCookie(session._id.toString()), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24,
-      path: '/',
-      sameSite: 'lax',
-    });
+    // cookiesStore.set('sessionId', signCookie(session._id.toString()), {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   maxAge: 60 * 60 * 24,
+    //   path: '/',
+    //   sameSite: 'lax',
+    // });
 
     return Response.json(
       {

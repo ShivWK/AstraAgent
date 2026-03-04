@@ -21,6 +21,7 @@ import {
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
+import { signIn } from 'next-auth/react';
 
 type FormType = z.infer<typeof loginSchema>;
 
@@ -52,37 +53,26 @@ export function LoginForm() {
 
   const onSubmit = async (data: FormType) => {
     const callbackUrl = searchParams.get('callbackUrl') || '/';
+    dispatch(setLoginError(null));
 
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const result = await signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
     });
 
-    let result;
-
-    try {
-      result = await response.json();
-      console.log('login details', result);
-    } catch {
-      dispatch(setLoginError('Server error. Please try again.'));
-      return;
-    }
-
-    if (!response.ok) {
+    if (result.error) {
       dispatch(setLoginError(result.error));
       return;
     }
 
-    console.log('Success', result.message);
+    console.log('Success');
     dispatch(setLogInState(true));
     dispatch(setOpenLoginModel(false));
     dispatch(setGetStartedLoading(false));
 
     if (pathname !== callbackUrl) {
-      router.push(callbackUrl);
+      router.replace(callbackUrl);
     }
   };
 

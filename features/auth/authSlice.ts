@@ -9,7 +9,7 @@ type InitialStateType = {
     image?: string | null | undefined;
   };
   openLoginModel: boolean;
-  loginError: string;
+  loginError: string | null;
   getStartedLoading: boolean;
   globalAuthLoader: boolean;
 };
@@ -46,7 +46,7 @@ const authSlice = createSlice({
       state.userDetails = action.payload;
     },
 
-    setLoginError: (state, action: PayloadAction<string>) => {
+    setLoginError: (state, action: PayloadAction<string | null>) => {
       state.loginError = action.payload;
     },
 
