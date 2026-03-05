@@ -1,29 +1,29 @@
-import { cookies } from 'next/headers';
-import { verifyCookie } from './utils';
-import { SessionModel } from '@/model/sessionModel';
+// import { cookies } from 'next/headers';
+// import { verifyCookie } from './utils';
+// import { SessionModel } from '@/model/sessionModel';
 
-export const verifySession = async () => {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('sessionId');
+// export const verifySession = async () => {
+//   const cookieStore = await cookies();
+//   const sessionCookie = cookieStore.get('sessionId');
 
-  if (!sessionCookie) return false;
+//   if (!sessionCookie) return false;
 
-  const isSignatureValid = verifyCookie(sessionCookie.value);
-  if (!isSignatureValid) return false;
+//   const isSignatureValid = verifyCookie(sessionCookie.value);
+//   if (!isSignatureValid) return false;
 
-  const [session_id] = sessionCookie.value.split('.');
+//   const [session_id] = sessionCookie.value.split('.');
 
-  try {
-    const session = await SessionModel.findById(session_id);
-    if (!session) return false;
+//   try {
+//     const session = await SessionModel.findById(session_id);
+//     if (!session) return false;
 
-    if (session.expiresAt < Date.now()) {
-      await SessionModel.findByIdAndDelete(session_id);
-      return false;
-    }
+//     if (session.expiresAt < Date.now()) {
+//       await SessionModel.findByIdAndDelete(session_id);
+//       return false;
+//     }
 
-    return true;
-  } catch {
-    return false;
-  }
-};
+//     return true;
+//   } catch {
+//     return false;
+//   }
+// };
