@@ -2,13 +2,13 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import Github from 'next-auth/providers/github';
 import Credentials from 'next-auth/providers/credentials';
-import { connectDB } from './lib/db/connectDb';
-import { UserModel } from './model/userModel';
-import { AccountsModel } from './model/accountsModel';
 import { loginSchema } from './lib/validations/auth.schema';
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import client from './lib/mongodb';
 import bcrypt from 'bcryptjs';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: MongoDBAdapter(client),
   providers: [
     Google,
     Github,
@@ -18,86 +18,63 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       async authorize(credentials) {
-        const parsed = loginSchema.safeParse(credentials);
-        if (!parsed.success) {
-          throw new Error('Invalid email or password');
+        try {
+          const parsed = loginSchema.safeParse(credentials);
+          if (!parsed.success) {
+            console.log('Validation failed:', parsed.error);
+            return null;
+          }
+
+          const { email, password } = parsed.data;
+
+          const db = client.db();
+          const user = await db.collection('users').findOne({ email });
+
+          if (!user) {
+            console.log('User not found:', email);
+            return null;
+          }
+
+          if (!user.password) {
+            console.log('User has no password (maybe OAuth user?):', email);
+            return null;
+          }
+
+          const isMatch = await bcrypt.compare(password, user.password);
+          if (!isMatch) {
+            console.log('Password mismatch for:', email);
+            return null;
+          }
+
+          const userToReturn = {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            image: user.image ?? null,
+            emailVerified: user.emailVerified ?? null,
+          };
+
+          console.log('Authorization successful for:', email, userToReturn);
+          return userToReturn;
+        } catch (err) {
+          console.error('Authorization error:', err);
+          return null;
         }
-
-        const { email, password } = parsed.data;
-
-        await connectDB();
-        const user = await UserModel.findOne({ email });
-
-        if (!user || !user.password) {
-          throw new Error('Invalid email or password');
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-          throw new Error('Invalid email or password');
-        }
-
-        return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          image: user.image,
-        };
       },
     }),
   ],
-  session: { maxAge: 60 * 60 * 24 },
+
+  session: {
+    maxAge: 60 * 60 * 24,
+  },
+
   callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log(user.email, account?.provider, account?.providerAccountId);
-
-      try {
-        if (account?.provider === 'google' || account?.provider === 'github') {
-          await connectDB();
-          let existingUser = await UserModel.findOne({ email: user.email });
-
-          if (!existingUser) {
-            existingUser = await UserModel.create({
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              emailVerified: profile?.email_verified,
-              hasPassword: false,
-            });
-          }
-
-          const existingAccount = await AccountsModel.findOne({
-            provider: account?.provider,
-            providerAccountId: account?.providerAccountId,
-          });
-
-          if (!existingAccount) {
-            await AccountsModel.create({
-              userId: existingUser._id,
-              provider: account?.provider,
-              providerAccountId: account?.providerAccountId,
-            });
-          }
-
-          if (
-            existingUser &&
-            !existingUser.emailVerified &&
-            profile?.email_verified
-          ) {
-            existingUser.emailVerified = true;
-            await existingUser.save();
-          }
-        }
-        return true;
-      } catch (err) {
-        console.log('Error occurred', err);
-        return false;
-      }
+    async session({ session, user }) {
+      session.user.id = user.id;
+      session.user.emailVerified = user.emailVerified;
+      return session;
     },
   },
-
-  pages: {
-    error: '',
-  },
 });
+
+export default auth;

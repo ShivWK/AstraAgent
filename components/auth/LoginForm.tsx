@@ -62,7 +62,7 @@ export function LoginForm() {
     });
 
     if (result.error) {
-      dispatch(setLoginError(result.error));
+      dispatch(setLoginError('Invalid email or password'));
       return;
     }
 

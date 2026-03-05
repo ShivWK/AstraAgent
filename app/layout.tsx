@@ -38,11 +38,7 @@ type PropsType = {
 };
 
 export default async function RootLayout({ children }: PropsType) {
-  const cookieStore = await cookies();
-  const customSession = cookieStore.get('sessionId');
   const authJSSession = await auth();
-
-  const isLoggedIn = !!customSession || !!authJSSession;
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
@@ -58,7 +54,7 @@ export default async function RootLayout({ children }: PropsType) {
           >
             <Providers>
               <AuthIntentHandler />
-              <Header isUserLoggedIn={isLoggedIn} />
+              <Header isUserLoggedIn={!!authJSSession} />
               {children}
             </Providers>
           </ThemeProvider>

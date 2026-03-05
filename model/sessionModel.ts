@@ -24,5 +24,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export const SessionModel =
-  mongoose.models.Session || mongoose.model('Session', userSchema);
+// export const SessionModel =
+//   mongoose.models.Session || mongoose.model('Session', userSchema);

@@ -1,28 +1,24 @@
-import { cookies } from 'next/headers';
 import { auth } from './auth';
 import { NextResponse } from 'next/server';
 import { NextRequest } from 'next/server';
-import { verifyCookie } from './lib/utils';
 
 async function customMiddleware(req: NextRequest) {
-  const cookieStore = await cookies();
-  const authJsSession = await auth();
-  const customSession = cookieStore.get('sessionId');
-  let isCustomCookieValid = false;
-
-  if (customSession) {
-    isCustomCookieValid = verifyCookie(customSession.value);
-  }
+  const session = await auth();
 
   const { pathname } = req.nextUrl;
-  const protectedRoutes = ['/ai-assistant', '/mode-selection'];
+  const protectedRoutes = [
+    '/ai-assistant',
+    '/mode-selection',
+    '/account',
+    '/ai-workspace',
+  ];
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route),
   );
 
   if (isProtected) {
-    if (!authJsSession?.user && !isCustomCookieValid) {
+    if (!session?.user) {
       const redirectUrl = new URL('/', req.nextUrl.origin);
       redirectUrl.searchParams.set('callbackUrl', pathname);
       redirectUrl.searchParams.set('auth', 'required');

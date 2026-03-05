@@ -76,7 +76,6 @@ export function SignUpForm() {
       dispatch(setLoginError(result.error));
     } else {
       console.log('Success', result.message);
-      dispatch(setLogInState(true));
       dispatch(setOpenLoginModel(false));
       dispatch(setGetStartedLoading(false));
 

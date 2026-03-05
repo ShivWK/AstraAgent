@@ -12,9 +12,7 @@ export const connectDB = async () => {
       return;
     }
 
-    await mongoose.connect(DB_URI, {
-      dbName: 'AstraDB',
-    });
+    await mongoose.connect(DB_URI);
     console.log('DB connected');
   } catch (err) {
     console.log('DB not connected');

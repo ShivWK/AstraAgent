@@ -19,7 +19,7 @@ const AccountsSchema = new mongoose.Schema({
   },
 });
 
-export const AccountsModel =
-  mongoose.models.Accounts || mongoose.model('Accounts', AccountsSchema);
+// export const AccountsModel =
+//   mongoose.models.Accounts || mongoose.model('Accounts', AccountsSchema);
 
-AccountsSchema.index({ provider: 1, providerAccountId: 1 }, { unique: true });
+// AccountsSchema.index({ provider: 1, providerAccountId: 1 }, { unique: true });

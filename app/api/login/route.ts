@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
-import { SessionModel } from '@/model/sessionModel';
+// import { SessionModel } from '@/model/sessionModel';
 import * as z from 'zod';
 import { signCookie } from '@/lib/utils';
 import { auth } from '@/auth';
@@ -61,21 +61,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const SESSION_DURATION = 60 * 60 * 24 * 1000;
+    // const SESSION_DURATION = 60 * 60 * 24 * 1000;
 
-    const session = await SessionModel.create({
-      userId: user._id,
-      provider: 'credentials',
-      expiresAt: new Date(Date.now() + SESSION_DURATION),
-    });
+    // const session = await SessionModel.create({
+    //   userId: user._id,
+    //   provider: 'credentials',
+    //   expiresAt: new Date(Date.now() + SESSION_DURATION),
+    // });
 
-    cookiesStore.set('sessionId', signCookie(session._id.toString()), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      path: '/',
-      maxAge: 60 * 60 * 24,
-      sameSite: 'lax',
-    });
+    // cookiesStore.set('sessionId', signCookie(session._id.toString()), {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === 'production',
+    //   path: '/',
+    //   maxAge: 60 * 60 * 24,
+    //   sameSite: 'lax',
+    // });
 
     return Response.json(
       {

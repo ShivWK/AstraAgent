@@ -2,18 +2,18 @@
 
 import { logoutAction } from '@/app/actions/auth';
 import useAppDispatch from '@/hooks/useAppDispatch';
-import { selectUserDetails, setLogInState } from '@/features/auth/authSlice';
+import { setLogInState } from '@/features/auth/authSlice';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
 import ProfileChange from '@/components/auth/ProfileChange';
-import useAppSelector from '@/hooks/useAppSelector';
+import { useSession } from 'next-auth/react';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
-  const userDetails = useAppSelector(selectUserDetails);
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -41,9 +41,9 @@ const Page = () => {
       <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
         <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
           <ProfileChange />
-          <p className="text-lg">{userDetails.name || 'User Name'}</p>
+          <p className="text-lg">{session?.user?.name || 'User Name'}</p>
           <p className="-mt-2 text-lg">
-            {userDetails.email || 'User email address'}
+            {session?.user?.email || 'User email address'}
           </p>
 
           <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">

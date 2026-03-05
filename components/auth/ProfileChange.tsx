@@ -8,9 +8,11 @@ import { Spinner } from '../ui/spinner';
 import { useEffect, useState } from 'react';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectUserDetails } from '@/features/auth/authSlice';
+import { useSession } from 'next-auth/react';
 
 const ProfileChange = () => {
   const userDetails = useAppSelector(selectUserDetails);
+  const { data: session, status } = useSession();
 
   type FormType = z.infer<typeof profileFormSchema>;
   const [previewURL, setPreviewURl] = useState<string | null>(null);
@@ -66,8 +68,8 @@ const ProfileChange = () => {
             src={
               previewURL
                 ? previewURL
-                : userDetails.image
-                  ? userDetails.image
+                : session?.user?.image
+                  ? session.user.image
                   : '/assistants/general_ai.png'
             }
             alt="Profile picture"

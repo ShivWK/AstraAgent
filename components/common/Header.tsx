@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
-import { logoutAction } from '@/app/actions/auth';
 import { Kanban, CircleUserRound } from 'lucide-react';
 import {
   setOpenLoginModel,
@@ -15,11 +14,11 @@ import {
   setLogInState,
   selectLoginError,
   setLoginError,
-  selectUserDetails,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
+import { useSession } from 'next-auth/react';
 
 type PropsType = {
   isUserLoggedIn: boolean;
@@ -28,7 +27,7 @@ type PropsType = {
 const Header = ({ isUserLoggedIn }: PropsType) => {
   const isLoggedIn = useAppSelector(selectLogInState);
   const errorMessage = useAppSelector(selectLoginError);
-  const userDetails = useAppSelector(selectUserDetails);
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -76,7 +75,7 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         </div>
         <div className="flex items-center gap-4">
           <ThemeChanger />
-          {!isLoggedIn ? (
+          {!isUserLoggedIn ? (
             <Button
               onClick={authClickHandler}
               variant="secondary"
@@ -91,9 +90,9 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
               onClick={() => router.push('/account')}
               className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
             >
-              {userDetails.image ? (
+              {session?.user?.image ? (
                 <Image
-                  src={userDetails.image!}
+                  src={session.user.image!}
                   alt="Profile picture"
                   width={300}
                   height={300}
