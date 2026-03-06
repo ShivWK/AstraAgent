@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen w-full items-center justify-center">
+    <main className="flex min-h-screen w-full items-center justify-center md:pt-3">
       <section className="flex flex-col items-center gap-4">
         <Image
           src="/logo-transparent.png"
