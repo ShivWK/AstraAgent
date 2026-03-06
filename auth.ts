@@ -70,9 +70,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async session({ session, user }) {
-      session.user.id = user.id;
-      session.user.emailVerified = user.emailVerified;
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+          emailVerified: user.emailVerified,
+        },
+      };
     },
   },
 });

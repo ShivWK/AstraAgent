@@ -10,9 +10,12 @@ import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
 import ProfileChange from '@/components/auth/ProfileChange';
 import { useSession } from 'next-auth/react';
+import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
+  const [openEmailVerificationModal, setOpenEmailVerificationModal] =
+    useState(false);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -36,68 +39,91 @@ const Page = () => {
     if (logoutLoading) return;
   };
 
+  const handleEmailVerificationClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.stopPropagation();
+    setOpenEmailVerificationModal(true);
+  };
+
   return (
-    <main className="max-md:-mt-4">
-      <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
-        <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
-          <ProfileChange />
-          <p className="text-lg">{session?.user?.name || 'User Name'}</p>
-          <p className="-mt-2 flex items-center gap-2 text-lg">
-            <button>
-              <TriangleAlert size={21} className="text-red-600" />
-            </button>
-            <span>{session?.user?.email || 'User email address'}</span>
-          </p>
-
-          <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
-            <p className="text-lg font-medium">Current Balance</p>
-            <p className="-mt-2 text-xl font-medium">$900</p>
-            <button
-              onClick={handleRechargeClick}
-              disabled={logoutLoading}
-              className="w-full rounded-md bg-blue-700 py-1 text-lg tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
-            >
-              Recharge
-            </button>
-          </div>
-
-          <button
-            onClick={authClickHandler}
-            disabled={logoutLoading}
-            className="mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
-          >
-            <p className="mx-auto flex items-center gap-2 text-lg font-medium">
-              {logoutLoading ? (
-                <Spinner data-icon="inline-start" className="size-6" />
-              ) : (
-                <LogOut />
+    <>
+      <main className="max-md:-mt-4">
+        <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
+          <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+            <ProfileChange />
+            <p className="text-lg">{session?.user?.name || 'User Name'}</p>
+            <p className="-mt-2 flex items-center gap-2 text-lg">
+              {!session?.user?.emailVerified && (
+                <button
+                  onClick={handleEmailVerificationClick}
+                  aria-label="Verify Email"
+                >
+                  <TriangleAlert
+                    aria-hidden="true"
+                    size={21}
+                    className="text-red-600"
+                  />
+                </button>
               )}
-              Sign Out
+              <span>{session?.user?.email || 'User email address'}</span>
             </p>
-          </button>
-        </aside>
-        <section className="basis-full self-start p-2">
-          <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
-          <div className="flex flex-col gap-3">
-            <Chats
-              name="Agent Name"
-              chat="The first chat heading..."
-              date="12/02/26"
-            />
-            <Chats
-              name="Agent Name"
-              chat="The first chat heading..."
-              date="12/02/26"
-            />
-            <Chats
-              name="Agent Name"
-              chat="The first chat heading..."
-              date="12/02/26"
-            />
-          </div>
-        </section>
-      </div>
-    </main>
+
+            <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
+              <p className="text-lg font-medium">Current Balance</p>
+              <p className="-mt-2 text-xl font-medium">$900</p>
+              <button
+                onClick={handleRechargeClick}
+                disabled={logoutLoading}
+                className="w-full rounded-md bg-blue-700 py-1 text-lg tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+              >
+                Recharge
+              </button>
+            </div>
+
+            <button
+              onClick={authClickHandler}
+              disabled={logoutLoading}
+              className="mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+            >
+              <p className="mx-auto flex items-center gap-2 text-lg font-medium">
+                {logoutLoading ? (
+                  <Spinner data-icon="inline-start" className="size-6" />
+                ) : (
+                  <LogOut />
+                )}
+                Sign Out
+              </p>
+            </button>
+          </aside>
+          <section className="basis-full self-start p-2">
+            <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
+            <div className="flex flex-col gap-3">
+              <Chats
+                name="Agent Name"
+                chat="The first chat heading..."
+                date="12/02/26"
+              />
+              <Chats
+                name="Agent Name"
+                chat="The first chat heading..."
+                date="12/02/26"
+              />
+              <Chats
+                name="Agent Name"
+                chat="The first chat heading..."
+                date="12/02/26"
+              />
+            </div>
+          </section>
+        </div>
+      </main>
+      <EmailVerificationModal
+        email={session?.user?.email}
+        open={openEmailVerificationModal}
+        setOpen={setOpenEmailVerificationModal}
+      />
+    </>
   );
 };
 

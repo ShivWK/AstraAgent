@@ -71,7 +71,7 @@ const Modal = ({
         aria-hidden={!open}
         role="dialog"
         tabIndex={-1}
-        className={`${className} ${open ? showClasses : hideClasses} z-60 transform transition-all duration-200 ease-linear`}
+        className={`${className} ${open ? showClasses : hideClasses} z-60 transform transition-all duration-150 ease-linear`}
       >
         {children}
       </div>
