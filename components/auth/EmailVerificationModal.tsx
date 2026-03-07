@@ -31,7 +31,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
         },
         body: JSON.stringify({
           link: emailVerificationLink,
-          purpose: 'password_reset',
+          purpose: 'email_verification',
           email: 'shivendrawk@gmail.com',
         }),
       });

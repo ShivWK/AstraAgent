@@ -5,6 +5,9 @@ import { emailSchema } from '@/lib/validations/auth.schema';
 import sendEmail from '@/utils/sendEmail';
 import { emailVerificationTemplate } from '@/lib/utils';
 import { passwordResetTemplate } from '@/lib/utils';
+import crypto from 'crypto';
+import { VerificationModel } from '@/model/verificationTokenModel';
+import { connectDB } from '@/lib/db/connectDb';
 
 export const POST = auth(async function POST(req) {
   if (!req.auth) {
@@ -15,6 +18,8 @@ export const POST = auth(async function POST(req) {
       { status: 401 },
     );
   }
+
+  console.log('SEssion', req.auth);
 
   try {
     const body = await req.json();
@@ -32,7 +37,24 @@ export const POST = auth(async function POST(req) {
       );
     }
 
-    const { link, purpose, email } = parsed.data;
+    const { purpose, email } = parsed.data;
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    connectDB();
+    await VerificationModel.create({
+      userId: req.auth.user.id,
+      email,
+      token: hashedToken,
+      type: purpose,
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+    });
+
+    const EMAIL_LINK = `${process.env.PUBLIC_SITE_URL}/email-verification?purpose=email_verification&token=${token}`;
+    const PASSWORD_LINK = `${process.env.PUBLIC_SITE_URL}/reset-password?purpose=reset_password&token=${token}`;
+
+    const link = purpose === 'email_verification' ? EMAIL_LINK : PASSWORD_LINK;
 
     await sendEmail({
       to: email,
