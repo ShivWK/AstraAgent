@@ -37,3 +37,34 @@ export const signUpSchema = z.object({
     )
     .trim(),
 });
+
+const MAX_SIZE = 2 * 1024 * 1024;
+const ACCEPTED_TYPES = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+
+export const profileFormSchema = z.object({
+  profileImage: z
+    .any()
+    .refine((file) => file instanceof File, 'Image is required')
+    .refine((file) => file.size > 0, 'Image is required')
+    .refine((file) => file.size <= MAX_SIZE, 'Max 2MB allowed')
+    .refine(
+      (file) => ACCEPTED_TYPES.includes(file.type),
+      'Only JPG, PNG, WEBP allowed',
+    ),
+});
+
+export const fileSchema = z.object({
+  size: z.number().max(MAX_SIZE, 'Max 2MB is allowed'),
+  type: z
+    .string()
+    .refine(
+      (fileType) => ACCEPTED_TYPES.includes(fileType),
+      'Only JPG, PNG, WEBP is allowed',
+    ),
+});
+
+export const emailSchema = z.object({
+  link: z.string(),
+  purpose: z.string(),
+  email: z.email(),
+});

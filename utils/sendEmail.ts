@@ -7,14 +7,16 @@ type emailArgument = {
 };
 
 const sendEmail = async ({ to, subject, template }: emailArgument) => {
-  const resend = new Resend(`${process.env.RESEND_API_KEY}`);
+  const resend = new Resend('re_evihpP2X_ES6gTRjXZQzhaS81o9nD2V3Z');
 
-  await resend.emails.send({
-    from: 'astraagent.ai@shivendra.site',
+  const result = await resend.emails.send({
+    from: 'Astra Agent <auth@astraagent.shivendra.site>',
     to,
     subject,
     html: template,
   });
+
+  console.log(result);
 };
 
 export default sendEmail;

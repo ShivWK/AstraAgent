@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { Pencil, Save } from 'lucide-react';
 import * as z from 'zod';
-import { profileFormSchema } from '@/lib/validations/agents.schema';
+import { profileFormSchema } from '@/lib/validations/auth.schema';
 import { Spinner } from '../ui/spinner';
 import { useEffect, useState } from 'react';
 import useAppSelector from '@/hooks/useAppSelector';

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import Modal from '../common/Modal';
-import { emailTemplate } from '@/lib/utils';
-import sendEmail from '@/utils/sendEmail';
 
 type PropsType = {
   open: boolean;
@@ -23,10 +21,19 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const EmailSendClickHandler = async () => {
     try {
       setEmailLoading(true);
-      await sendEmail({
-        to: 'shivendrawk@gmail.com',
-        subject: 'Verify Email',
-        template: emailTemplate({ link: '-------' }),
+
+      const emailVerificationLink = 'https://astraagent.shivendra.site';
+
+      await fetch('api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          link: emailVerificationLink,
+          purpose: 'password_reset',
+          email: 'shivendrawk@gmail.com',
+        }),
       });
 
       setEmailSend(true);
