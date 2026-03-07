@@ -23,3 +23,51 @@ export function verifyCookie(signedCookie: string) {
 
   return false;
 }
+
+export const emailTemplate = ({ link }: { link: string }) => {
+  return `<div style="font-family: Arial, sans-serif; background:#f6f9fc; padding:40px 20px;">
+  <div style="max-width:500px; margin:auto; background:white; padding:30px; border-radius:10px; text-align:center;">
+
+    <h2 style="color:#1f2937; margin-bottom:10px;">
+      Verify your email
+    </h2>
+
+    <p style="color:#4b5563; font-size:14px; line-height:1.5;">
+      Thanks for signing up for <strong>Astra Agent</strong>.  
+      Please verify your email address to activate your account.
+    </p>
+
+    <div style="margin:30px 0;">
+      <a 
+        href=${link}
+        style="
+          background:#2563eb;
+          color:white;
+          padding:12px 22px;
+          text-decoration:none;
+          border-radius:6px;
+          font-weight:600;
+          display:inline-block;
+        "
+      >
+        Verify Email
+      </a>
+    </div>
+
+    <p style="font-size:12px;">
+      If the button doesn't work, click this link:
+      <br/>
+      <a href="${link}">${link}</a>
+    </p>
+
+    <p style="color:#6b7280; font-size:12px;">
+      If you didn’t create an account with Astra Agent, you can safely ignore this email.
+    </p>
+
+  </div>
+
+  <p style="text-align:center; font-size:12px; color:#9ca3af; margin-top:20px;">
+    © Astra Agent
+  </p>
+</div>`;
+};

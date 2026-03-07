@@ -55,7 +55,7 @@ const ProfileChange = () => {
     console.log(data);
   };
 
-  console.log('Eror', errors);
+  // console.log('Eror', errors);
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import Modal from '../common/Modal';
+import { emailTemplate } from '@/lib/utils';
+import sendEmail from '@/utils/sendEmail';
 
 type PropsType = {
   open: boolean;
@@ -9,6 +11,7 @@ type PropsType = {
 };
 
 const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
+  const [emailLoading, setEmailLoading] = useState(false);
   const [emailSend, setEmailSend] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
@@ -17,9 +20,22 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
     window.history.back();
   };
 
-  const EmailSendClickHandler = () => {
-    setEmailSend(!emailSend);
-    setSeconds(30);
+  const EmailSendClickHandler = async () => {
+    try {
+      setEmailLoading(true);
+      await sendEmail({
+        to: 'shivendrawk@gmail.com',
+        subject: 'Verify Email',
+        template: emailTemplate({ link: '-------' }),
+      });
+
+      setEmailSend(true);
+      setSeconds(30);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setEmailLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -64,11 +80,23 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
 
         <button
           onClick={EmailSendClickHandler}
-          disabled={emailSend}
+          disabled={emailSend || emailLoading}
           id="sendVerificationBtn"
-          className="w-full rounded-md bg-blue-600 py-2.5 font-medium text-white transition hover:bg-blue-700"
+          className={`flex w-full items-center justify-center gap-2 rounded-md py-2.5 font-medium text-white transition ${
+            emailSend
+              ? 'cursor-not-allowed bg-gray-500'
+              : 'bg-blue-600 hover:bg-blue-700'
+          } ${emailLoading ? 'cursor-wait opacity-80' : ''} `}
         >
-          {emailSend ? 'Email Sent' : 'Send Verification Email'}
+          {emailLoading && (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+          )}
+
+          {emailLoading
+            ? 'Sending...'
+            : emailSend
+              ? 'Email Sent'
+              : 'Send Verification Email'}
         </button>
 
         {emailSend && (
