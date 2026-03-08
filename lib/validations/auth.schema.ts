@@ -64,7 +64,6 @@ export const fileSchema = z.object({
 });
 
 export const emailSchema = z.object({
-  link: z.string(),
   purpose: z.string(),
   email: z.email(),
 });

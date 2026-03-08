@@ -66,6 +66,10 @@ export const emailVerificationTemplate = ({ link }: { link: string }) => {
 
   </div>
 
+  <p style="font-size:12px; color:#6b7280; text-align:center">
+    This password reset link will expire in 15 minutes for security reasons.
+  </p>
+
   <p style="text-align:center; font-size:12px; color:#9ca3af; margin-top:20px;">
     © Astra Agent
   </p>

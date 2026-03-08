@@ -22,16 +22,13 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
     try {
       setEmailLoading(true);
 
-      const emailVerificationLink = 'https://astraagent.shivendra.site';
-
       await fetch('api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          link: emailVerificationLink,
-          purpose: 'email_verification',
+          purpose: 'reset_password',
           email: 'shivendrawk@gmail.com',
         }),
       });

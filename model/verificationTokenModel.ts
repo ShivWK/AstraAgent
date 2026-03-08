@@ -8,7 +8,7 @@ const verificationSchema = new Schema({
 
   type: {
     type: String,
-    enum: ['email_verification', 'password_reset'],
+    enum: ['email_verification', 'reset_password'],
     required: true,
   },
 

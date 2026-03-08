@@ -19,8 +19,6 @@ export const POST = auth(async function POST(req) {
     );
   }
 
-  console.log('SEssion', req.auth);
-
   try {
     const body = await req.json();
     const parsed = emailSchema.safeParse(body);
@@ -43,6 +41,11 @@ export const POST = auth(async function POST(req) {
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
     connectDB();
+    await VerificationModel.findOneAndDelete({
+      email,
+      type: purpose,
+    });
+
     await VerificationModel.create({
       userId: req.auth.user.id,
       email,
