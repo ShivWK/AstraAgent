@@ -85,7 +85,7 @@ export default function VerifyEmailPage() {
           </>
         )}
 
-        {status !== 'error' && (
+        {status === 'error' && (
           <>
             <h2 className="text-2xl font-semibold text-red-500">
               Verification Failed
