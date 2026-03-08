@@ -40,7 +40,7 @@ export const POST = auth(async function POST(req) {
     const token = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-    connectDB();
+    await connectDB();
     await VerificationModel.findOneAndDelete({
       email,
       type: purpose,

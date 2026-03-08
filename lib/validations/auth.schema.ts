@@ -76,6 +76,15 @@ const emailVerificationSchema = z.object({
 const passwordResetSchema = z.object({
   token: z.string(),
   purpose: z.literal('reset_password'),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .max(65, 'Password must be at most 64 characters')
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,64}$/,
+      'Password must include upper, lower, number, and special character',
+    )
+    .trim(),
 });
 
 export const verifyActionSchema = z.discriminatedUnion('purpose', [

@@ -7,9 +7,9 @@ export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
 
   const token = searchParams.get('token');
-  const email = searchParams.get('email');
+  const purpose = searchParams.get('purpose');
 
-  const hasParam = Boolean(token && email);
+  const hasParam = Boolean(token && purpose);
 
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
     hasParam ? 'loading' : 'error',
@@ -20,14 +20,14 @@ export default function VerifyEmailPage() {
 
     const verifyEmail = async () => {
       try {
-        const res = await fetch('/api/auth/verify-email', {
+        const res = await fetch('/api/verification-action', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             token,
-            email,
+            purpose,
           }),
         });
 
@@ -44,7 +44,7 @@ export default function VerifyEmailPage() {
     };
 
     verifyEmail();
-  }, [token, email, hasParam]);
+  }, [token, purpose, hasParam]);
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-100 p-6">
