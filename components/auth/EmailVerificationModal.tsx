@@ -10,6 +10,7 @@ type PropsType = {
 
 const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const [emailLoading, setEmailLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [emailSend, setEmailSend] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
@@ -22,7 +23,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
     try {
       setEmailLoading(true);
 
-      await fetch('api/send-email', {
+      const result = await fetch('api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,6 +33,10 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
           email: 'shivendrawk@gmail.com',
         }),
       });
+
+      if (!result.ok) {
+        return setError(true);
+      }
 
       setEmailSend(true);
       setSeconds(30);
@@ -103,10 +108,16 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
               : 'Send Verification Email'}
         </button>
 
-        {emailSend && (
-          <p className="mt-4 text-sm text-green-400 select-none">
-            Verification email sent. Check your inbox to verify your account. If
-            not found, check spam or promotions.
+        {!error ? (
+          emailSend && (
+            <p className="mt-4 text-sm text-green-400 select-none">
+              Verification email sent. Check your inbox to verify your account.
+              If not found, check spam or promotions.
+            </p>
+          )
+        ) : (
+          <p className="mt-4 text-sm text-red-400 select-none">
+            Something went wrong. Please try again!
           </p>
         )}
 

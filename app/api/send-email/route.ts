@@ -46,12 +46,15 @@ export const POST = auth(async function POST(req) {
       type: purpose,
     });
 
+    const expiry =
+      purpose === 'email_verification' ? 60 * 60 * 24 * 1000 : 60 * 10 * 1000;
+
     await VerificationModel.create({
       userId: req.auth.user.id,
       email,
       token: hashedToken,
       type: purpose,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
+      expiresAt: new Date(Date.now() + expiry),
     });
 
     const EMAIL_LINK = `${process.env.PUBLIC_SITE_URL}/email-verification?purpose=email_verification&token=${token}`;
