@@ -4,7 +4,6 @@ import Providers from './providers';
 import Header from '@/components/common/Header';
 import './globals.css';
 import { ReactNode } from 'react';
-import { cookies } from 'next/headers';
 import { auth } from '@/auth';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 import SessionProviders from '@/components/auth/SessionProviders';

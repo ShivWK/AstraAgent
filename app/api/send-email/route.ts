@@ -36,7 +36,6 @@ export const POST = auth(async function POST(req) {
     }
 
     const { purpose, email } = parsed.data;
-
     const token = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
@@ -59,9 +58,6 @@ export const POST = auth(async function POST(req) {
 
     const EMAIL_LINK = `${process.env.PUBLIC_SITE_URL}/email-verification?purpose=email_verification&token=${token}`;
     const PASSWORD_LINK = `${process.env.PUBLIC_SITE_URL}/reset-password?purpose=reset_password&token=${token}`;
-
-    console.log('Link', EMAIL_LINK);
-
     const link = purpose === 'email_verification' ? EMAIL_LINK : PASSWORD_LINK;
 
     await sendEmail({
