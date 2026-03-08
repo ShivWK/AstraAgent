@@ -3,6 +3,7 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { LoginForm } from './LoginForm';
 import { SignUpForm } from './SignUpForm';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { useState } from 'react';
 import {
   selectLoginError,
@@ -12,7 +13,9 @@ import {
 } from '@/features/auth/authSlice';
 
 const AuthForm = () => {
-  const [isLogIn, setLogin] = useState(true);
+  const [isLogIn, setLogin] = useState<'login' | 'signup' | 'reset_password'>(
+    'login',
+  );
   const dispatch = useAppDispatch();
   const open = useAppSelector(selectLoginModelOpenState);
   const error = useAppSelector(selectLoginError);
@@ -22,23 +25,36 @@ const AuthForm = () => {
     dispatch(setGetStartedLoading(false));
   };
 
+  const formChangeClickHandler = () => {
+    setLogin((prv) => {
+      if (prv === 'login') return 'signup';
+      else return 'login';
+    });
+  };
+
   return (
     <Dialog open={open} onOpenChange={openChangeHandler}>
       <DialogContent
         className="sm:max-w-[425px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
-        {isLogIn ? <LoginForm /> : <SignUpForm />}
+        {isLogIn === 'login' ? (
+          <LoginForm setLogin={setLogin} />
+        ) : isLogIn === 'signup' ? (
+          <SignUpForm />
+        ) : (
+          <ForgotPasswordForm />
+        )}
         <p className="mt-2 flex items-center gap-1">
           <span className="text-gray-300">
             {!isLogIn ? 'Already registered?' : 'New to Astra Agent?'}
           </span>
           <button
             type="button"
-            onClick={() => setLogin(!isLogIn)}
+            onClick={formChangeClickHandler}
             className="cursor-pointer text-white underline underline-offset-2"
           >
-            {!isLogIn ? 'Sign in now' : 'Sign up now'}
+            {isLogIn === 'signup' ? 'Sign in now' : 'Sign up now'}
           </button>
         </p>
         {error && (

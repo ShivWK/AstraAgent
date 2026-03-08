@@ -25,7 +25,11 @@ import { signIn } from 'next-auth/react';
 
 type FormType = z.infer<typeof loginSchema>;
 
-export function LoginForm() {
+type PropsType = {
+  setLogin: (value: 'login' | 'signup' | 'reset_password') => void;
+};
+
+export function LoginForm({ setLogin }: PropsType) {
   const [eyeOpen, setEyeOpen] = useState(false);
   const searchParams = useSearchParams();
   const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
@@ -135,6 +139,14 @@ export function LoginForm() {
             {isSubmitting && <Spinner data-icon="inline-start" />}
             Sign In
           </Button>
+
+          <button
+            onClick={() => setLogin('reset_password')}
+            type="button"
+            className="mt-1 text-sm underline underline-offset-2 transition-all duration-75 ease-out active:text-gray-300"
+          >
+            forgot password
+          </button>
           <span>------- or -------</span>
           <SignInWithProviders />
         </div>

@@ -30,7 +30,8 @@ const Page = () => {
         router.push('/');
         dispatch(setLogInState(false));
       }
-    } finally {
+    } catch (err) {
+      console.log(err);
       setLogoutLoading(false);
     }
   };
@@ -54,7 +55,7 @@ const Page = () => {
             <ProfileChange />
             <p className="text-lg">{session?.user?.name || 'User Name'}</p>
             <p className="-mt-2 flex items-center gap-2 text-lg">
-              {!session?.user?.emailVerified && (
+              {session?.user?.emailVerified === null && (
                 <button
                   onClick={handleEmailVerificationClick}
                   aria-label="Verify Email"
@@ -66,7 +67,7 @@ const Page = () => {
                   />
                 </button>
               )}
-              <span>{session?.user?.email || 'User email address'}</span>
+              <span>{session?.user?.email || 'User Email Address'}</span>
             </p>
 
             <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">

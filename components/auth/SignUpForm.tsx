@@ -14,7 +14,6 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   setGetStartedLoading,
   setLoginError,
-  setLogInState,
   setOpenLoginModel,
   setGlobalAuthLoader,
   selectGlobalAuthLoader,
