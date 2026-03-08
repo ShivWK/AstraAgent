@@ -107,7 +107,7 @@ export function ForgotPasswordForm() {
           <Button
             type="submit"
             disabled={isSubmitting || emailSent}
-            className="w-full text-white transition-all duration-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full text-white transition-all duration-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-[#0c2e96]"
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}
             Send Reset Link

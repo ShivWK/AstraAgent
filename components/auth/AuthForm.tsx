@@ -54,7 +54,9 @@ const AuthForm = () => {
             onClick={formChangeClickHandler}
             className="cursor-pointer text-white underline underline-offset-2"
           >
-            {isLogIn === 'signup' ? 'Sign in now' : 'Sign up now'}
+            {isLogIn === 'signup' || isLogIn === 'reset_password'
+              ? 'Sign in now'
+              : 'Sign up now'}
           </button>
         </p>
         {error && (
