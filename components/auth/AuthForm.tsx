@@ -23,7 +23,7 @@ const AuthForm = () => {
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
     dispatch(setGetStartedLoading(false));
-    setLogin('login');
+    setTimeout(() => setLogin('login'), 150);
   };
 
   const formChangeClickHandler = () => {
