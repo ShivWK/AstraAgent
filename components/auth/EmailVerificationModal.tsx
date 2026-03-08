@@ -29,8 +29,8 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          purpose: 'reset_password',
-          email: 'shivendrawk@gmail.com',
+          purpose: 'email_verification',
+          email,
         }),
       });
 

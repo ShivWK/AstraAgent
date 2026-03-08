@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import { connectDB } from '@/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
 
-export const Post = async (req: Request) => {
+export const POST = async (req: Request) => {
   try {
     const body = await req.json();
     const parsed = verifyActionSchema.safeParse(body);
