@@ -63,7 +63,17 @@ export const fileSchema = z.object({
     ),
 });
 
-export const emailSchema = z.object({
+const emailVerificationSchema = z.object({
   purpose: z.string(),
   email: z.email(),
 });
+
+const passwordResetSchema = z.object({
+  token: z.string(),
+  purpose: z.literal('email_verification'),
+});
+
+export const verifyActionSchema = z.discriminatedUnion('purpose', [
+  emailVerificationSchema,
+  passwordResetSchema,
+]);
