@@ -23,6 +23,7 @@ const AuthForm = () => {
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
     dispatch(setGetStartedLoading(false));
+    setLogin('login');
   };
 
   const formChangeClickHandler = () => {
@@ -47,7 +48,11 @@ const AuthForm = () => {
         )}
         <p className="mt-2 flex items-center gap-1">
           <span className="text-gray-300">
-            {!isLogIn ? 'Already registered?' : 'New to Astra Agent?'}
+            {isLogIn === 'signup'
+              ? 'Already registered?'
+              : isLogIn === 'login'
+                ? 'New to Astra Agent?'
+                : 'Remember your password?'}
           </span>
           <button
             type="button"

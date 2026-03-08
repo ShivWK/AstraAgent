@@ -44,19 +44,21 @@ export const POST = async (req: Request) => {
       return NextResponse.json({ message: 'Token expired' }, { status: 400 });
     }
 
-    if (parsed.data.purpose === 'email_verification') {
+    if (purpose === 'email_verification') {
       await UserModel.findByIdAndUpdate(verificationDoc.userId, {
         emailVerified: new Date(),
       });
     }
 
-    if (parsed.data.purpose === 'reset_password') {
+    if (purpose === 'reset_password') {
       const { password } = parsed.data;
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      await UserModel.findByIdAndUpdate(verificationDoc.userId, {
-        password: hashedPassword,
-      });
+      await UserModel.findOneAndUpdate(
+        { email: verificationDoc.email },
+        { password: hashedPassword },
+        { runValidators: true },
+      );
     }
 
     await VerificationModel.deleteOne({
@@ -64,12 +66,8 @@ export const POST = async (req: Request) => {
     });
 
     return NextResponse.json(
-      {
-        message: 'Action completed successfully',
-      },
-      {
-        status: 200,
-      },
+      { message: 'Action completed successfully' },
+      { status: 200 },
     );
   } catch (err) {
     console.log(err);

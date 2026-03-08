@@ -3,7 +3,6 @@ import mongoose, { Schema, models } from 'mongoose';
 const verificationSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
-    required: true,
   },
 
   type: {
@@ -34,6 +33,7 @@ const verificationSchema = new Schema({
 });
 
 verificationSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+verificationSchema.index({ email: 1, type: 1 }, { unique: true });
 
 export const VerificationModel =
   models.VerificationModel ||

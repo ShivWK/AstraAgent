@@ -8,7 +8,7 @@ import { Spinner } from '../ui/spinner';
 import { useForm, FieldErrors } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { setLoginError } from '@/features/auth/authSlice';
 
@@ -20,7 +20,20 @@ type FormType = z.infer<typeof forgotPasswordSchema>;
 
 export function ForgotPasswordForm() {
   const [emailSent, setEmailSent] = useState(false);
+  const [seconds, setSeconds] = useState(0);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (seconds === 0) return;
+
+    const timer = setInterval(() => {
+      setSeconds((prv) => prv - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [seconds]);
 
   const {
     register,
@@ -60,6 +73,7 @@ export function ForgotPasswordForm() {
       dispatch(setLoginError(result.error));
     } else {
       setEmailSent(true);
+      setSeconds(30);
     }
   };
 
@@ -114,6 +128,19 @@ export function ForgotPasswordForm() {
           </Button>
         </div>
       </DialogFooter>
+      {emailSent && (
+        <button
+          onClick={() => {}}
+          disabled={seconds > 0}
+          className={`mx-auto mt-4 block text-sm font-medium underline-offset-3 transition select-none ${
+            seconds > 0
+              ? 'cursor-not-allowed text-white/50'
+              : 'text-white hover:underline'
+          }`}
+        >
+          {seconds > 0 ? `Resend in ${seconds}s` : 'Resend Link'}
+        </button>
+      )}
     </form>
   );
 }
