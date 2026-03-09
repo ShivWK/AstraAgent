@@ -5,15 +5,12 @@ import { Pencil, Save } from 'lucide-react';
 import * as z from 'zod';
 import { profileFormSchema } from '@/lib/validations/auth.schema';
 import { Spinner } from '../ui/spinner';
-import { useEffect, useState } from 'react';
-import useAppSelector from '@/hooks/useAppSelector';
-import { selectUserDetails } from '@/features/auth/authSlice';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 const ProfileChange = () => {
-  const userDetails = useAppSelector(selectUserDetails);
-  const { data: session, status } = useSession();
-
+  const { data: session } = useSession();
+  const [profilePic, setProfilePic] = useState(session?.user.image);
   type FormType = z.infer<typeof profileFormSchema>;
   const [previewURL, setPreviewURl] = useState<string | null>(null);
 
@@ -38,24 +35,43 @@ const ProfileChange = () => {
     };
   }, [previewURL]);
 
-  useEffect(() => {
-    const call = async () => {
-      const result = await fetch('/api/upload');
-      const response = await result.json();
-      console.log(response);
-    };
-
-    call();
-  }, []);
-
-  const submitHandler = (data: FormType) => {
-    // after successful clean th previewURL
+  const submitHandler = async (data: FormType) => {
     const formData = new FormData();
+    formData.append('file', data.profileImage);
 
-    console.log(data);
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Error');
+      }
+
+      const result = await response.json();
+      console.log(result.message);
+
+      setProfilePic(result.data.fileUrl);
+      setPreviewURl(null);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  // console.log('Eror', errors);
+  console.log('Validation Error', errors);
+
+  const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue('profileImage', file, {
+        shouldValidate: true,
+      });
+
+      const objectURl = URL.createObjectURL(file);
+      setPreviewURl(objectURl);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
@@ -68,8 +84,8 @@ const ProfileChange = () => {
             src={
               previewURL
                 ? previewURL
-                : session?.user?.image
-                  ? session.user.image
+                : profilePic
+                  ? profilePic
                   : '/assistants/general_ai.png'
             }
             alt="Profile picture"
@@ -93,17 +109,7 @@ const ProfileChange = () => {
           type="file"
           id="profile"
           className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-              setValue('profileImage', file, {
-                shouldValidate: true,
-              });
-
-              const objectURl = URL.createObjectURL(file);
-              setPreviewURl(objectURl);
-            }
-          }}
+          onChange={inputChangeHandler}
         />
 
         <div

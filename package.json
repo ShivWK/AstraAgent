@@ -38,6 +38,7 @@
     "react-hook-form": "^7.69.0",
     "react-redux": "^9.2.0",
     "resend": "^6.9.3",
+    "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.2.1"
   },
