@@ -20,6 +20,7 @@ type FormType = z.infer<typeof forgotPasswordSchema>;
 
 export function ForgotPasswordForm() {
   const [emailSent, setEmailSent] = useState(false);
+  const [resendLinkClicked, setResendLinkClicked] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const dispatch = useAppDispatch();
 
@@ -48,7 +49,7 @@ export function ForgotPasswordForm() {
     },
   });
 
-  const onSubmit = async (data: FormType) => {
+  async function sendLink(data: FormType) {
     const response = await fetch('/api/send-email', {
       method: 'POST',
       body: JSON.stringify({
@@ -59,6 +60,13 @@ export function ForgotPasswordForm() {
         'Content-Type': 'application/json',
       },
     });
+
+    return response;
+  }
+
+  const onSubmit = async (data: FormType) => {
+    if (isSubmitting) return;
+    const response = await sendLink(data);
 
     let result;
 
@@ -88,27 +96,24 @@ export function ForgotPasswordForm() {
       </DialogHeader>
 
       <div className="mb-5 grid gap-4">
-        {!emailSent ? (
-          <>
-            <div className="grid gap-3">
-              <Label htmlFor="email">Email</Label>
+        <div className="grid gap-3">
+          <Label htmlFor="email">Email</Label>
 
-              <Input
-                type="text"
-                id="email"
-                placeholder="Enter your email"
-                disabled={isSubmitting}
-                {...register('email')}
-              />
+          <Input
+            type="text"
+            id="email"
+            placeholder="Enter your email"
+            disabled={isSubmitting}
+            {...register('email')}
+          />
 
-              {errors.email && (
-                <p className="-mt-0.5 text-sm text-red-400">
-                  {errors.email.message}
-                </p>
-              )}
-            </div>
-          </>
-        ) : (
+          {errors.email && (
+            <p className="-mt-0.5 text-sm text-red-400">
+              {errors.email.message}
+            </p>
+          )}
+        </div>
+        {emailSent && (
           <p className="text-center text-sm text-gray-500">
             If an account with this email exists, we’ve sent a password reset
             link. Please check your inbox or spam folder.
@@ -120,25 +125,29 @@ export function ForgotPasswordForm() {
         <div className="flex w-full flex-col items-center gap-3">
           <Button
             type="submit"
+            onClick={() => setResendLinkClicked(false)}
             disabled={isSubmitting || emailSent}
             className="w-full text-white transition-all duration-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-[#0c2e96]"
           >
-            {isSubmitting && <Spinner data-icon="inline-start" />}
+            {isSubmitting && !resendLinkClicked && (
+              <Spinner data-icon="inline-start" />
+            )}
             {emailSent ? 'Link Sent' : 'Send Reset Link'}
           </Button>
         </div>
       </DialogFooter>
       {emailSent && (
         <button
-          onClick={() => {}}
-          disabled={seconds > 0}
-          className={`mx-auto mt-4 block text-sm font-medium underline-offset-3 transition select-none ${
-            seconds > 0
-              ? 'cursor-not-allowed text-white/50'
-              : 'text-white hover:underline'
-          }`}
+          type="submit"
+          onClick={() => setResendLinkClicked(true)}
+          disabled={seconds > 0 || isSubmitting}
+          className={`mx-auto mt-4 block text-sm font-medium text-white underline-offset-3 transition-all duration-75 ease-linear select-none disabled:cursor-not-allowed disabled:text-gray-400 ${!isSubmitting && seconds === 0 && 'hover:underline'} active:text-gray-40`}
         >
-          {seconds > 0 ? `Resend in ${seconds}s` : 'Resend Link'}
+          {seconds > 0
+            ? `Resend in ${seconds}s`
+            : isSubmitting
+              ? 'Resending Link...'
+              : 'Resend Link'}
         </button>
       )}
     </form>
