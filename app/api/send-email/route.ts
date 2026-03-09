@@ -8,6 +8,7 @@ import { passwordResetTemplate } from '@/lib/utils';
 import crypto from 'crypto';
 import { VerificationModel } from '@/model/verificationTokenModel';
 import { connectDB } from '@/lib/db/connectDb';
+import { UserModel } from '@/model/userModel';
 
 export const POST = auth(async function POST(req) {
   try {
@@ -32,10 +33,20 @@ export const POST = auth(async function POST(req) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
+    await connectDB();
+    if (purpose === 'reset_password') {
+      const user = await UserModel.findOne({ email });
+      if (!user) {
+        return NextResponse.json(
+          { message: 'If the email exists, a reset link has been sent' },
+          { status: 200 },
+        );
+      }
+    }
+
     const token = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
 
-    await connectDB();
     await VerificationModel.findOneAndDelete({
       email,
       type: purpose,

@@ -110,8 +110,8 @@ export function ForgotPasswordForm() {
           </>
         ) : (
           <p className="text-center text-sm text-gray-500">
-            If an account exists for this email, a password reset link has been
-            sent.
+            If an account with this email exists, we’ve sent a password reset
+            link. Please check your inbox or spam folder.
           </p>
         )}
       </div>
@@ -124,7 +124,7 @@ export function ForgotPasswordForm() {
             className="w-full text-white transition-all duration-75 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-[#0c2e96]"
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}
-            Send Reset Link
+            {emailSent ? 'Link Sent' : 'Send Reset Link'}
           </Button>
         </div>
       </DialogFooter>
