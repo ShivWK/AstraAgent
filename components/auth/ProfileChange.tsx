@@ -14,6 +14,10 @@ const ProfileChange = () => {
   type FormType = z.infer<typeof profileFormSchema>;
   const [previewURL, setPreviewURl] = useState<string | null>(null);
 
+  useEffect(() => {
+    setProfilePic(session?.user.image);
+  }, [session?.user.image]);
+
   const {
     register,
     formState: { errors, isSubmitting },
