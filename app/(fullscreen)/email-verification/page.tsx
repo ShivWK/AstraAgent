@@ -42,7 +42,7 @@ export default function VerifyEmailPage() {
         setStatus('success');
         timer = setTimeout(() => {
           router.replace('/');
-        }, 2500);
+        }, 3000);
       } catch (err) {
         console.log(err);
         setStatus('error');
@@ -80,7 +80,7 @@ export default function VerifyEmailPage() {
             </p>
 
             <p className="mt-2 text-gray-200">
-              You will be redirected to the home page in 2 seconds
+              You will be redirected to the home page in 3 seconds
             </p>
           </>
         )}
