@@ -10,6 +10,7 @@ type PropsType = {
 
 const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const [emailLoading, setEmailLoading] = useState(false);
+  const [resendBtnClicked, setResendBtnClicked] = useState(false);
   const [error, setError] = useState(false);
   const [emailSend, setEmailSend] = useState(false);
   const [seconds, setSeconds] = useState(0);
@@ -19,7 +20,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
     window.history.back();
   };
 
-  const EmailSendClickHandler = async () => {
+  const sendEmail = async () => {
     try {
       setEmailLoading(true);
 
@@ -45,6 +46,16 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
     } finally {
       setEmailLoading(false);
     }
+  };
+
+  const sendLinkClickHandler = () => {
+    setResendBtnClicked(false);
+    sendEmail();
+  };
+
+  const resendLinkClickHandler = () => {
+    setResendBtnClicked(true);
+    sendEmail();
   };
 
   useEffect(() => {
@@ -88,20 +99,20 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
         </div>
 
         <button
-          onClick={EmailSendClickHandler}
+          onClick={sendLinkClickHandler}
           disabled={emailSend || emailLoading}
           id="sendVerificationBtn"
           className={`flex w-full items-center justify-center gap-2 rounded-md py-2.5 font-medium text-white transition ${
             emailSend
               ? 'cursor-not-allowed bg-gray-500'
               : 'bg-blue-600 hover:bg-blue-700'
-          } ${emailLoading ? 'cursor-wait opacity-80' : ''} `}
+          } ${emailLoading && !resendBtnClicked ? 'cursor-wait opacity-80' : ''} `}
         >
-          {emailLoading && (
+          {emailLoading && !resendBtnClicked && (
             <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
           )}
 
-          {emailLoading
+          {emailLoading && !resendBtnClicked
             ? 'Sending...'
             : emailSend
               ? 'Email Sent'
@@ -123,19 +134,15 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
 
         {emailSend && (
           <button
-            onClick={() => {}}
-            disabled={seconds > 0}
-            className={`mt-3 text-sm font-medium underline-offset-3 transition select-none ${
-              seconds > 0
-                ? 'cursor-not-allowed text-white/50'
-                : 'text-white hover:underline'
-            }`}
+            onClick={resendLinkClickHandler}
+            disabled={seconds > 0 || emailLoading}
+            className={`mx-auto mt-4 block text-sm font-medium text-white underline-offset-3 transition-all duration-75 ease-linear select-none disabled:cursor-not-allowed disabled:text-gray-400 ${!emailLoading && seconds === 0 && 'hover:underline'} active:text-gray-40`}
           >
             {seconds > 0
               ? `Resend in ${seconds}s`
-              : emailSend
-                ? 'Resend Email'
-                : 'Send Verification Email'}
+              : emailLoading
+                ? 'Resending Link...'
+                : 'Resend Link'}
           </button>
         )}
       </>
