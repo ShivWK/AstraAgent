@@ -54,7 +54,11 @@ export const POST = auth(async function GET(req) {
       (resolve, reject) => {
         cloudinary.uploader
           .upload_stream(
-            { folder: 'profile_pictures' },
+            {
+              folder: 'profile_pictures',
+              public_id: req.auth?.user.id,
+              overwrite: true,
+            },
             (error, uploadResult) => {
               if (error) {
                 return reject(error);

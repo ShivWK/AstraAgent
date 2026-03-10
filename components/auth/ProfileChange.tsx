@@ -19,7 +19,7 @@ const ProfileChange = () => {
 
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     handleSubmit,
     setValue,
   } = useForm<FormType>({
