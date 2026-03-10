@@ -8,7 +8,7 @@ import {
   selectSelectedInteractionMode,
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
-import ModelCards from '@/components/common/ModelCards';
+import AgentCards from '@/components/common/AgentCards';
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
@@ -57,7 +57,7 @@ const AiAssistant = () => {
               Start Session
             </Button>
           </div>
-          <ModelCards
+          <AgentCards
             mode={mode2}
             assistants={mode2 === 'speech' ? voice_assistant : text_assistant}
           />

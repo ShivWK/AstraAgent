@@ -3,11 +3,6 @@ import { RootState } from '@/lib/store';
 
 type InitialStateType = {
   isLoggedIn: boolean;
-  userDetails: {
-    name: string | null | undefined;
-    email: string | null | undefined;
-    image?: string | null | undefined;
-  };
   openLoginModel: boolean;
   loginError: string | null;
   getStartedLoading: boolean;
@@ -16,11 +11,6 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
   isLoggedIn: false,
-  userDetails: {
-    name: '',
-    email: '',
-    image: '',
-  },
   openLoginModel: false,
   loginError: '',
   getStartedLoading: false,
@@ -39,13 +29,6 @@ const authSlice = createSlice({
       state.openLoginModel = action.payload;
     },
 
-    setLoggedInUserDetails: (
-      state,
-      action: PayloadAction<InitialStateType['userDetails']>,
-    ) => {
-      state.userDetails = action.payload;
-    },
-
     setLoginError: (state, action: PayloadAction<string | null>) => {
       state.loginError = action.payload;
     },
@@ -57,13 +40,14 @@ const authSlice = createSlice({
     setGlobalAuthLoader: (state, action: PayloadAction<boolean>) => {
       state.globalAuthLoader = action.payload;
     },
+
+    setAuthStatus: () => {},
   },
 });
 
 export default authSlice.reducer;
 
 export const selectLogInState = (state: RootState) => state.auth.isLoggedIn;
-export const selectUserDetails = (state: RootState) => state.auth.userDetails;
 export const selectLoginModelOpenState = (state: RootState) =>
   state.auth.openLoginModel;
 export const selectLoginError = (state: RootState) => state.auth.loginError;
@@ -75,7 +59,6 @@ export const selectGlobalAuthLoader = (state: RootState) =>
 export const {
   setLogInState,
   setOpenLoginModel,
-  setLoggedInUserDetails,
   setLoginError,
   setGetStartedLoading,
   setGlobalAuthLoader,

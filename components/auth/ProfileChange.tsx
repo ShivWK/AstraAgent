@@ -9,14 +9,13 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 const ProfileChange = () => {
-  const { data: session } = useSession();
-  const [profilePic, setProfilePic] = useState(session?.user.image);
-  type FormType = z.infer<typeof profileFormSchema>;
+  const { data: session, status, update } = useSession();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
+  type FormType = z.infer<typeof profileFormSchema>;
 
   useEffect(() => {
-    setProfilePic(session?.user.image);
-  }, [session?.user.image]);
+    console.log('Status', status);
+  }, [status]);
 
   const {
     register,
@@ -56,14 +55,16 @@ const ProfileChange = () => {
       const result = await response.json();
       console.log(result.message);
 
-      setProfilePic(result.data.fileUrl);
+      await update({
+        image: result.data.fileUrl,
+      });
       setPreviewURl(null);
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log('Validation Error', errors);
+  // console.log('Validation Error', errors);
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,8 +89,8 @@ const ProfileChange = () => {
             src={
               previewURL
                 ? previewURL
-                : profilePic
-                  ? profilePic
+                : session?.user?.image
+                  ? session?.user?.image
                   : '/assistants/general_ai.png'
             }
             alt="Profile picture"
