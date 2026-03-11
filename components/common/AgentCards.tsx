@@ -103,6 +103,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
                   placeholder="blur"
                   blurDataURL="/blurImage.png"
                   className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+                  loading="lazy"
                 />
                 <CirclePlus
                   size={60}

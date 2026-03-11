@@ -3,8 +3,22 @@ import { signUpSchema } from '@/lib/validations/auth.schema';
 import client from '@/lib/mongodb';
 import bcrypt from 'bcryptjs';
 import { auth } from '@/auth';
+import { RateLimit } from '@/lib/rate_limit';
 
 export async function POST(request: Request) {
+  const ip = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
+  const { success, reset } = await RateLimit.signup.limit(ip);
+
+  if (!success) {
+    const retryAfter = Math.ceil((reset - Date.now()) / 1000);
+    return Response.json(
+      { message: 'Too many signup attempts', retryAfter },
+      {
+        status: 429,
+      },
+    );
+  }
+
   const session = await auth();
 
   if (session) {
@@ -23,8 +37,7 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return Response.json(
         {
-          error: 'Validation failed',
-          message: z.flattenError(parsed.error),
+          error: z.flattenError(parsed.error),
         },
         { status: 400 },
       );
