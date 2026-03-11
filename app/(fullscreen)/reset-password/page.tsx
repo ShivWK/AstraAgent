@@ -12,6 +12,7 @@ import {
 
 export default function ResetPasswordPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   const token = searchParams.get('token');
@@ -39,9 +40,19 @@ export default function ResetPasswordPage() {
       });
 
       const result = await res.json();
+      if (res.status === 429) {
+        const data = await res.json();
+        const retryAfter = data.retryAfter;
+        const minutes = Math.floor(retryAfter / 60);
+        const seconds = retryAfter % 60;
+
+        setError(`Too many requests. Try again in ${minutes}m ${seconds}s`);
+        return;
+      }
 
       if (!res.ok) {
-        throw new Error(result.message || 'Something went wrong');
+        setError(result.error || 'Something went wrong');
+        return;
       }
 
       alert('Password reset successful');
@@ -96,7 +107,6 @@ export default function ResetPasswordPage() {
             )}
           </div>
 
-          {/* Confirm Password */}
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Confirm Password
@@ -116,7 +126,6 @@ export default function ResetPasswordPage() {
             )}
           </div>
 
-          {/* Submit */}
           <button
             disabled={isSubmitting}
             type="submit"
@@ -124,6 +133,10 @@ export default function ResetPasswordPage() {
           >
             {isSubmitting ? 'Resetting...' : 'Reset Password'}
           </button>
+
+          <p className="mt-4 text-center text-sm text-red-400 select-none">
+            {error}
+          </p>
         </form>
       </div>
     </main>

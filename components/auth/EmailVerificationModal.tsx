@@ -11,7 +11,7 @@ type PropsType = {
 const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const [emailLoading, setEmailLoading] = useState(false);
   const [resendBtnClicked, setResendBtnClicked] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [emailSend, setEmailSend] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
@@ -23,8 +23,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const sendEmail = async () => {
     try {
       setEmailLoading(true);
-
-      const result = await fetch('api/send-email', {
+      const response = await fetch('api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,14 +34,27 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
         }),
       });
 
-      if (!result.ok) {
-        return setError(true);
+      const result = await response.json();
+
+      if (response.status === 429) {
+        const data = await response.json();
+        const retryAfter = data.retryAfter;
+        const minutes = Math.floor(retryAfter / 60);
+        const seconds = retryAfter % 60;
+
+        setError(`Too many requests. Try again in ${minutes}m ${seconds}s`);
+        return;
+      }
+
+      if (!response.ok) {
+        return setError(result.error);
       }
 
       setEmailSend(true);
       setSeconds(30);
     } catch (err) {
       console.log(err);
+      setError('Something went wrong. Please try again!');
     } finally {
       setEmailLoading(false);
     }
@@ -127,9 +139,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
             </p>
           )
         ) : (
-          <p className="mt-4 text-sm text-red-400 select-none">
-            Something went wrong. Please try again!
-          </p>
+          <p className="mt-4 text-sm text-red-400 select-none">{error}</p>
         )}
 
         {emailSend && (

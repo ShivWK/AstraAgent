@@ -7,6 +7,7 @@ import cloudinary from '@/lib/cloudinary';
 import { type UploadApiResponse } from 'cloudinary';
 import { auth } from '@/auth';
 import sharp from 'sharp';
+import { RateLimit } from '@/lib/rate_limit';
 
 export const POST = auth(async function GET(req) {
   if (!req.auth) {
@@ -14,6 +15,18 @@ export const POST = auth(async function GET(req) {
   }
 
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.0';
+    const { success, reset } = await RateLimit.upload.limit(ip);
+
+    if (!success) {
+      const retryAfter = Math.ceil((reset - Date.now()) / 1000);
+
+      return NextResponse.json(
+        { message: 'Too many upload request', retryAfter },
+        { status: 429 },
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get('file') as File;
 

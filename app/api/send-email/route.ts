@@ -9,9 +9,26 @@ import crypto from 'crypto';
 import { VerificationModel } from '@/model/verificationTokenModel';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
+import { RateLimit } from '@/lib/rate_limit';
 
 export const POST = auth(async function POST(req) {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
+    const { success, reset } = await RateLimit.emailSend.limit(ip);
+
+    if (!success) {
+      const retryAfter = Math.ceil((reset - Date.now()) / 1000);
+      return NextResponse.json(
+        {
+          message: 'Too many requests',
+          retryAfter,
+        },
+        {
+          status: 429,
+        },
+      );
+    }
+
     const body = await req.json();
     const parsed = emailSchema.safeParse(body);
 

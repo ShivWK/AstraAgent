@@ -77,6 +77,20 @@ export function ForgotPasswordForm() {
       return;
     }
 
+    if (response.status === 429) {
+      const data = await response.json();
+      const retryAfter = data.retryAfter;
+      const minutes = Math.floor(retryAfter / 60);
+      const seconds = retryAfter % 60;
+
+      dispatch(
+        setLoginError(
+          `Too many requests. Try again in ${minutes}m ${seconds}s`,
+        ),
+      );
+      return;
+    }
+
     if (!response.ok) {
       dispatch(setLoginError(result.error));
     } else {

@@ -49,7 +49,10 @@ export async function POST(request: Request) {
     const existingUser = await db.collection('users').findOne({ email });
 
     if (existingUser) {
-      return Response.json({ error: 'Validation failed' }, { status: 400 });
+      return Response.json(
+        { error: 'An account with this email already exists.' },
+        { status: 400 },
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);

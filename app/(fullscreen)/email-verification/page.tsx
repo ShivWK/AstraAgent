@@ -7,15 +7,14 @@ import { Spinner } from '@/components/ui/spinner';
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-
   const token = searchParams.get('token');
   const purpose = searchParams.get('purpose');
 
   const hasParam = Boolean(token && purpose);
 
-  const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
-    hasParam ? 'loading' : 'error',
-  );
+  const [status, setStatus] = useState<
+    'loading' | 'success' | 'error' | 'TooManyRequests'
+  >(hasParam ? 'loading' : 'error');
 
   useEffect(() => {
     if (!hasParam) return;
@@ -37,6 +36,10 @@ export default function VerifyEmailPage() {
         if (!res.ok) {
           setStatus('error');
           return;
+        }
+
+        if (res.status === 429) {
+          setStatus('TooManyRequests');
         }
 
         setStatus('success');
@@ -92,6 +95,14 @@ export default function VerifyEmailPage() {
             </h2>
             <p className="mt-2 text-gray-200">
               This verification link is invalid or expired.
+            </p>
+          </>
+        )}
+
+        {status === 'TooManyRequests' && (
+          <>
+            <p className="mt-2 text-gray-200">
+              Too many requests. Try again after some time.
             </p>
           </>
         )}

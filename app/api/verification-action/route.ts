@@ -6,21 +6,30 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { connectDB } from '@/lib/db/connectDb';
 import bcrypt from 'bcryptjs';
+import { RateLimit } from '@/lib/rate_limit';
 
 export const POST = async (req: Request) => {
   try {
+    const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
+    const { success, reset } = await RateLimit.verification.limit(ip);
+
+    if (!success) {
+      const retryAfter = Math.ceil((reset - Date.now()) / 1000);
+      return Response.json(
+        { message: 'Too many verification attempts', retryAfter },
+        {
+          status: 429,
+        },
+      );
+    }
+
     const body = await req.json();
     const parsed = verifyActionSchema.safeParse(body);
 
     if (!parsed.success) {
       return NextResponse.json(
-        {
-          error: 'Validation Failed',
-          message: z.flattenError(parsed.error),
-        },
-        {
-          status: 400,
-        },
+        { error: z.flattenError(parsed.error) },
+        { status: 400 },
       );
     }
 
@@ -35,13 +44,13 @@ export const POST = async (req: Request) => {
 
     if (!verificationDoc) {
       return NextResponse.json(
-        { message: 'Invalid or expired token' },
+        { error: 'Invalid or expired token' },
         { status: 400 },
       );
     }
 
     if (verificationDoc.expiresAt < new Date()) {
-      return NextResponse.json({ message: 'Token expired' }, { status: 400 });
+      return NextResponse.json({ error: 'Token expired' }, { status: 400 });
     }
 
     if (purpose === 'email_verification') {
@@ -73,7 +82,7 @@ export const POST = async (req: Request) => {
     console.log(err);
 
     return NextResponse.json(
-      { message: 'Something went wrong' },
+      { error: 'Something went wrong' },
       { status: 500 },
     );
   }
