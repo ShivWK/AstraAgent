@@ -85,7 +85,7 @@ const ProfileChange = () => {
     const toast: ArgumentsType = {
       message: 'HI this is new App',
       animation: 'slide',
-      type: 'warning',
+      type: 'info',
       duration: 3000,
     };
 

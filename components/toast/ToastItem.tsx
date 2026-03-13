@@ -56,7 +56,7 @@ const ToastItem = ({
     <div
       onMouseEnter={pauseTimer}
       onMouseLeave={resumeTimer}
-      className={`${styles['toast']} ${styles[type]} ${styles[animation]}}`}
+      className={`${styles['toast']} ${styles[type]} ${styles[animation]}`}
       role={type === 'success' || type === 'info' ? 'status' : 'alert'}
     >
       {icons[type]}
