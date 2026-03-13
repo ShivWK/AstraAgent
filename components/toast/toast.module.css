@@ -1,0 +1,178 @@
+.toast {
+  position: relative;
+  padding-block: 15px;
+  padding-inline: 12px;
+  margin-block: 15px;
+  color: white;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  overflow: hidden;
+}
+
+.toast-msg {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  width: 100%;
+  background-color: white;
+  animation: progress linear forwards;
+}
+
+.toast:hover .progress {
+  animation-play-state: paused;
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+.slide {
+  animation: slide forwards ease 0.3s;
+}
+
+@keyframes slide {
+  from {
+    transform: translateY(25px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.pop {
+  animation: pop forwards ease 0.3s;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success {
+  background-color: #16a34a;
+
+  .progress {
+    background-color: #bbf7d0;
+  }
+}
+
+.info {
+  background-color: #2563eb;
+
+  .progress {
+    background-color: #bfdbfe;
+  }
+}
+
+.warning {
+  background-color: #f59e0b;
+  color: #1f2937;
+
+  .progress {
+    background-color: #fde68a;
+  }
+}
+
+.error {
+  background-color: #dc2626;
+
+  .progress {
+    background-color: #fecaca;
+  }
+}
+
+.closeBtn {
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  border-radius: 100%;
+  padding: 4px;
+  transition: background-color 0.15s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: #6160608f;
+  }
+}
+
+.icon {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.toast-portal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.top-right {
+  position: fixed;
+  top: 4rem;
+  right: 20px;
+}
+
+.bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.top-left {
+  position: fixed;
+  top: 4rem;
+  left: 20px;
+}
+
+.bottom-left {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+.top-mid {
+  position: fixed;
+  top: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom-mid {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}

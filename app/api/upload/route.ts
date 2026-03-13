@@ -90,7 +90,7 @@ export const POST = auth(async function GET(req) {
 
     return NextResponse.json(
       {
-        message: 'Image valid',
+        message: 'Image uploaded successfully',
         data: {
           fileUrl: uploadResponse.secure_url,
         },
