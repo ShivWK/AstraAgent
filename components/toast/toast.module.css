@@ -147,7 +147,7 @@
 
 .bottom-right {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   right: 20px;
 }
 
@@ -159,7 +159,7 @@
 
 .bottom-left {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   left: 20px;
 }
 
@@ -172,7 +172,7 @@
 
 .bottom-mid {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
 }

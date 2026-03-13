@@ -13,7 +13,7 @@ import { type ArgumentsType } from '@/hooks/useToast';
 const ProfileChange = () => {
   const { data: session, status, update } = useSession();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
-  const { ToastContainer, triggerToast } = useToast();
+  const { ToastContainer, triggerToast } = useToast('bottom-mid');
 
   type FormType = z.infer<typeof profileFormSchema>;
 
@@ -57,6 +57,15 @@ const ProfileChange = () => {
       }
 
       const result = await response.json();
+
+      const toast: ArgumentsType = {
+        message: 'Profile picture updated successfully',
+        animation: 'slide',
+        type: 'success',
+        duration: 3000,
+      };
+
+      triggerToast(toast);
 
       await update({
         image: result.data.fileUrl,
