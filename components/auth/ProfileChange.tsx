@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, FieldErrors } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { Pencil, Save } from 'lucide-react';
@@ -11,24 +11,20 @@ import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 
 const ProfileChange = () => {
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
 
   type FormType = z.infer<typeof profileFormSchema>;
 
-  useEffect(() => {
-    console.log('Status', status);
-  }, [status]);
-
   const {
     register,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
     handleSubmit,
     setValue,
   } = useForm<FormType>({
     resolver: zodResolver(profileFormSchema),
-    mode: 'onBlur',
+    mode: 'onSubmit',
     defaultValues: {
       profileImage: null,
     },
@@ -55,8 +51,7 @@ const ProfileChange = () => {
       const result = await response.json();
 
       if (response.status === 429) {
-        const data = await response.json();
-        const retryAfter = data.retryAfter;
+        const retryAfter = result.retryAfter;
         const minutes = Math.floor(retryAfter / 60);
         const seconds = retryAfter % 60;
 
@@ -96,7 +91,19 @@ const ProfileChange = () => {
     }
   };
 
-  // console.log('Validation Error', errors);
+  const onInvalid = (errors: FieldErrors<FormType>) => {
+    const firstError = Object.values(errors)[0];
+
+    if (firstError?.message) {
+      showToast({
+        message: firstError.message as string,
+        type: 'error',
+        trigger: triggerToast,
+      });
+    }
+  };
+
+  console.log('Validation Error', errors);
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -110,20 +117,9 @@ const ProfileChange = () => {
     }
   };
 
-  // const clickHandler = () => {
-  //   const toast: ArgumentsType = {
-  //     message: 'HI this is new App',
-  //     animation: 'slide',
-  //     type: 'info',
-  //     duration: 3000,
-  //   };
-
-  //   triggerToast(toast);
-  // };
-
   return (
     <>
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form onSubmit={handleSubmit(submitHandler, onInvalid)}>
         <div className="relative">
           <div
             role="img"
