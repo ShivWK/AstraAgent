@@ -3,7 +3,7 @@ import ToastItem from '@/components/toast/ToastItem';
 import { createPortal } from 'react-dom';
 import styles from '../components/toast/toast.module.css';
 
-export type ArgumentsType = {
+export type TriggerToastArgumentsType = {
   type: 'info' | 'success' | 'error' | 'warning';
   animation: 'slide' | 'pop';
   message: string;
@@ -34,9 +34,9 @@ const useToast = (position: PropsType = 'bottom-right') => {
     type,
     duration,
     animation,
-  }: ArgumentsType) => {
-    // const isDuplicate = toasts.some(t => t.message === message);
-    // if (isDuplicate) return;
+  }: TriggerToastArgumentsType) => {
+    const isDuplicate = toasts.some((t) => t.message === message);
+    if (isDuplicate) return;
     const id = crypto.randomUUID();
     const newToast = {
       id,

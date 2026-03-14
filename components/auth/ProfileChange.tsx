@@ -8,7 +8,7 @@ import { Spinner } from '../ui/spinner';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import useToast from '@/hooks/useToast';
-import { type ArgumentsType } from '@/hooks/useToast';
+import { showToast } from '@/utils/showToast';
 
 const ProfileChange = () => {
   const { data: session, status, update } = useSession();
@@ -52,20 +52,35 @@ const ProfileChange = () => {
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Error');
-      }
-
       const result = await response.json();
 
-      const toast: ArgumentsType = {
-        message: 'Profile picture updated successfully',
-        animation: 'slide',
-        type: 'success',
-        duration: 3000,
-      };
+      if (response.status === 429) {
+        const data = await response.json();
+        const retryAfter = data.retryAfter;
+        const minutes = Math.floor(retryAfter / 60);
+        const seconds = retryAfter % 60;
 
-      triggerToast(toast);
+        showToast({
+          message: `Too many requests. Try again in ${minutes}m ${seconds}s`,
+          type: 'warning',
+          trigger: triggerToast,
+        });
+        return;
+      }
+
+      if (!response.ok) {
+        showToast({
+          message: result.error,
+          type: 'error',
+          trigger: triggerToast,
+        });
+      }
+
+      showToast({
+        message: 'Profile picture updated successfully',
+        type: 'success',
+        trigger: triggerToast,
+      });
 
       await update({
         image: result.data.fileUrl,
@@ -73,6 +88,11 @@ const ProfileChange = () => {
       setPreviewURl(null);
     } catch (err) {
       console.log(err);
+      showToast({
+        message: 'Something went wrong. Please try again later.',
+        type: 'error',
+        trigger: triggerToast,
+      });
     }
   };
 
@@ -90,16 +110,16 @@ const ProfileChange = () => {
     }
   };
 
-  const clickHandler = () => {
-    const toast: ArgumentsType = {
-      message: 'HI this is new App',
-      animation: 'slide',
-      type: 'info',
-      duration: 3000,
-    };
+  // const clickHandler = () => {
+  //   const toast: ArgumentsType = {
+  //     message: 'HI this is new App',
+  //     animation: 'slide',
+  //     type: 'info',
+  //     duration: 3000,
+  //   };
 
-    triggerToast(toast);
-  };
+  //   triggerToast(toast);
+  // };
 
   return (
     <>
@@ -140,9 +160,6 @@ const ProfileChange = () => {
             className="hidden"
             onChange={inputChangeHandler}
           />
-          <button onClick={clickHandler} type="button">
-            Click
-          </button>
           <div
             className={`w-full transition-all duration-150 ease-linear ${previewURL ? 'h-13' : 'h-0'} overflow-hidden`}
           >
