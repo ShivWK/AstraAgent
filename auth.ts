@@ -10,12 +10,20 @@ import bcrypt from 'bcryptjs';
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: MongoDBAdapter(client),
   providers: [
-    Google,
-    Github,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+
+    Github({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
+
     Credentials({
       credentials: {
-        email: {},
-        password: {},
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         try {
@@ -65,19 +73,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
 
   session: {
+    strategy: 'jwt',
     maxAge: 60 * 60 * 24,
   },
 
   callbacks: {
-    async session({ session, user }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: user.id,
-          emailVerified: user.emailVerified,
-        },
-      };
+    async jwt({ user, token }) {
+      if (user) {
+        token.id = user.id;
+        token.emailVerified = user.emailVerified;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.emailVerified = token.emailVerified as Date | null;
+      }
+
+      return session;
     },
   },
 });

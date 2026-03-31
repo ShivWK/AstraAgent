@@ -103,8 +103,6 @@ const ProfileChange = () => {
     }
   };
 
-  console.log('Validation Error', errors);
-
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
