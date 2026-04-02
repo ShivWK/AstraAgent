@@ -1,5 +1,4 @@
 import { Button } from '../ui/button';
-import { signInWithProviderAction } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Spinner } from '../ui/spinner';
