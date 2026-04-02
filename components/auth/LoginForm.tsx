@@ -14,7 +14,6 @@ import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   setGetStartedLoading,
   setLoginError,
-  setLogInState,
   setOpenLoginModel,
   setGlobalAuthLoader,
   selectGlobalAuthLoader,
@@ -71,7 +70,6 @@ export function LoginForm({ setLogin }: PropsType) {
     }
 
     console.log('Success');
-    dispatch(setLogInState(true));
     dispatch(setOpenLoginModel(false));
     dispatch(setGetStartedLoading(false));
 

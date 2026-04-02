@@ -36,7 +36,7 @@ const Page = () => {
   const authClickHandler = async () => {
     if (logoutLoading) return;
     setLogoutLoading(true);
-    signOut({ callbackUrl: '/' });
+    await signOut({ callbackUrl: '/' });
 
     setLogoutLoading(false);
   };

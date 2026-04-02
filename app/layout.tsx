@@ -6,8 +6,6 @@ import './globals.css';
 import { ReactNode } from 'react';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 import SessionProviders from '@/components/auth/SessionProviders';
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/options';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -38,8 +36,6 @@ type PropsType = {
 };
 
 export default async function RootLayout({ children }: PropsType) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
@@ -54,7 +50,7 @@ export default async function RootLayout({ children }: PropsType) {
           >
             <Providers>
               <AuthIntentHandler />
-              <Header isUserLoggedIn={!!session} />
+              <Header />
               {children}
             </Providers>
           </ThemeProvider>

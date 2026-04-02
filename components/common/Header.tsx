@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -10,8 +9,6 @@ import { usePathname } from 'next/navigation';
 import { Kanban, CircleUserRound } from 'lucide-react';
 import {
   setOpenLoginModel,
-  selectLogInState,
-  setLogInState,
   selectLoginError,
   setLoginError,
 } from '@/features/auth/authSlice';
@@ -20,22 +17,12 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
 
-type PropsType = {
-  isUserLoggedIn: boolean;
-};
-
-const Header = ({ isUserLoggedIn }: PropsType) => {
-  const isLoggedIn = useAppSelector(selectLogInState);
+const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!isUserLoggedIn) return;
-    dispatch(setLogInState(isUserLoggedIn));
-  }, [isUserLoggedIn, dispatch]);
 
   const authClickHandler = async () => {
     if (errorMessage) {
@@ -75,12 +62,12 @@ const Header = ({ isUserLoggedIn }: PropsType) => {
         </div>
         <div className="flex items-center gap-4">
           <ThemeChanger />
-          {!isUserLoggedIn ? (
+          {status !== 'authenticated' ? (
             <Button
               onClick={authClickHandler}
               variant="secondary"
               size="lg"
-              className={`text-md text-lg tracking-wide transition-all duration-75 active:scale-90 ${isLoggedIn && 'rounded-full'}`}
+              className="text-md text-lg tracking-wide transition-all duration-75 active:scale-90"
             >
               Sign In
             </Button>

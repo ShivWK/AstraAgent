@@ -10,21 +10,21 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import {
   selectGetStartedLoading,
-  selectLogInState,
   setGetStartedLoading,
 } from '@/features/auth/authSlice';
 import { Spinner } from '@/components/ui/spinner';
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
+  const { status } = useSession();
   const router = useRouter();
   const loading = useAppSelector(selectGetStartedLoading);
-  const isLoggedIn = useAppSelector(selectLogInState);
   const dispatch = useAppDispatch();
 
   const getStartedClickHandler = () => {
     router.push('/mode-selection');
 
-    if (!isLoggedIn) {
+    if (status !== 'authenticated') {
       dispatch(setGetStartedLoading(true));
     }
   };
