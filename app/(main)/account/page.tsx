@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LogOut, TriangleAlert } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
@@ -15,7 +15,23 @@ const Page = () => {
   const data1 = useSession();
   console.log('Got session data', data1);
 
-  const { data: session } = data1;
+  const { data: session, update } = data1;
+
+  useEffect(() => {
+    if (session?.user.emailVerified) return;
+
+    const interval = setInterval(async () => {
+      const res = await fetch('/api/check_emailVerification');
+      const data = await res.json();
+
+      if (data.emailVerified) {
+        await update(); // 🔥 refresh session
+        clearInterval(interval);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [update, session?.user.emailVerified]);
 
   const authClickHandler = async () => {
     if (logoutLoading) return;

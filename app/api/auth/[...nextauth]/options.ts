@@ -81,20 +81,37 @@ export const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, user }) {
-      if (token) {
+    async jwt({ token, user, trigger }) {
+      if (user) {
         await connectDB();
-        const dbUSer = await UserModel.findOne({ email: token.email });
+        const dbUser = await UserModel.findOne({ email: user.email });
+        console.log('dbUser', dbUser);
 
-        token.id = dbUSer._id.toString();
-        token.emailVerified = dbUSer.emailVerified;
+        if (dbUser) {
+          token.image = dbUser.image;
+          token.id = dbUser._id.toString();
+          token.emailVerified = dbUser.emailVerified;
+        }
       }
-      console.log('JWT', token, 'User', user);
+
+      if (trigger === 'update') {
+        await connectDB();
+        const dbUser = await UserModel.findById(token.id);
+        console.log('DBUser', dbUser);
+
+        if (dbUser) {
+          token.image = dbUser.image;
+          token.id = dbUser._id.toString();
+          token.emailVerified = dbUser.emailVerified;
+        }
+      }
+      console.log('JWT', token);
       return token;
     },
 
     async session({ session, token }) {
       if (token) {
+        session.user.image = token.image as string;
         session.user.id = token.id as string;
         session.user.emailVerified = token.emailVerified as Date | null;
       }

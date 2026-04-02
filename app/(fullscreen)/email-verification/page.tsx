@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
+import { useSession } from 'next-auth/react';
 
 export default function VerifyEmailPage() {
+  const { update } = useSession();
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get('token');
@@ -43,6 +45,7 @@ export default function VerifyEmailPage() {
         }
 
         setStatus('success');
+        await update();
         timer = setTimeout(() => {
           router.replace('/');
         }, 3000);
@@ -57,7 +60,7 @@ export default function VerifyEmailPage() {
     return () => {
       clearTimeout(timer);
     };
-  }, [token, purpose, hasParam, router]);
+  }, [token, purpose, hasParam, router, update]);
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
