@@ -1,9 +1,11 @@
 import * as z from 'zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
-import client from '@/lib/mongodb';
 import bcrypt from 'bcryptjs';
-import { auth } from '@/auth';
 import { RateLimit } from '@/lib/rate_limit';
+import { connectDB } from '@/lib/db/connectDb';
+import { UserModel } from '@/model/userModel';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/options';
 
 export async function POST(request: Request) {
   const ip = request.headers.get('x-forwarded-for') ?? '127.0.0.1';
@@ -19,7 +21,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
   if (session) {
     return Response.json({ error: 'Already logged in' }, { status: 409 });
@@ -45,8 +47,8 @@ export async function POST(request: Request) {
 
     const { name, email, password } = parsed.data;
 
-    const db = client.db();
-    const existingUser = await db.collection('users').findOne({ email });
+    await connectDB();
+    const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
       return Response.json(
@@ -65,13 +67,13 @@ export async function POST(request: Request) {
       image: null,
     };
 
-    const result = await db.collection('users').insertOne(user);
+    const result = await UserModel.create(user);
 
     return Response.json(
       {
         message: 'User successfully created',
         data: {
-          id: result.insertedId.toString(),
+          id: result._id.toString(),
           name: user.name,
           email: user.email,
           emailVerified: user.emailVerified,

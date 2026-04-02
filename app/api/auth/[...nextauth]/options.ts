@@ -1,26 +1,28 @@
-import NextAuth from 'next-auth';
-import Google from 'next-auth/providers/google';
-import Github from 'next-auth/providers/github';
-import Credentials from 'next-auth/providers/credentials';
-import { loginSchema } from './lib/validations/auth.schema';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
-import client from './lib/mongodb';
+import { NextAuthOptions } from 'next-auth';
+import GitHubProvider from 'next-auth/providers/github';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { connectDB } from '@/lib/db/connectDb';
+import GoogleProvider from 'next-auth/providers/google';
+import { UserModel } from '@/model/userModel';
+import { loginSchema } from '@/lib/validations/auth.schema';
 import bcrypt from 'bcryptjs';
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import clientPromise from '@/lib/mongodb';
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: MongoDBAdapter(client),
+export const authOptions: NextAuthOptions = {
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
-    Google({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID!,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
 
-    Github({
-      clientId: process.env.AUTH_GITHUB_ID,
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    GitHubProvider({
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
     }),
 
-    Credentials({
+    CredentialsProvider({
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
@@ -35,8 +37,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const { email, password } = parsed.data;
 
-          const db = client.db();
-          const user = await db.collection('users').findOne({ email });
+          await connectDB();
+          const user = await UserModel.findOne({ email });
 
           if (!user) {
             console.log('User not found:', email);
@@ -75,27 +77,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: 'jwt',
     maxAge: 60 * 60 * 24,
+    updateAge: 24 * 60 * 60,
   },
 
   callbacks: {
-    async jwt({ user, token }) {
-      if (user) {
-        token.id = user.id;
-        token.emailVerified = user.emailVerified;
-      }
+    async jwt({ token, user }) {
+      if (token) {
+        await connectDB();
+        const dbUSer = await UserModel.findOne({ email: token.email });
 
+        token.id = dbUSer._id.toString();
+        token.emailVerified = dbUSer.emailVerified;
+      }
+      console.log('JWT', token, 'User', user);
       return token;
     },
 
     async session({ session, token }) {
-      if (session.user) {
+      if (token) {
         session.user.id = token.id as string;
         session.user.emailVerified = token.emailVerified as Date | null;
       }
 
+      console.log('Session', session);
       return session;
     },
   },
-});
 
-export default auth;
+  debug: process.env.NODE_ENV === 'development',
+  secret: process.env.NEXTAUTH_SECRET,
+};

@@ -9,6 +9,7 @@ import {
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
+import { signIn } from 'next-auth/react';
 
 const SignInWithProviders = () => {
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -23,7 +24,9 @@ const SignInWithProviders = () => {
     else setGithubLoading(true);
 
     dispatch(setGlobalAuthLoader(true));
-    await signInWithProviderAction(callbackUrl, provider);
+    signIn(provider, {
+      callbackUrl,
+    });
   };
 
   return (

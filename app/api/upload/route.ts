@@ -5,12 +5,14 @@ import { UserModel } from '@/model/userModel';
 import { connectDB } from '@/lib/db/connectDb';
 import cloudinary from '@/lib/cloudinary';
 import { type UploadApiResponse } from 'cloudinary';
-import { auth } from '@/auth';
 import sharp from 'sharp';
 import { RateLimit } from '@/lib/rate_limit';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/options';
 
-export const POST = auth(async function GET(req) {
-  if (!req.auth) {
+export const POST = async function GET(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -69,7 +71,7 @@ export const POST = auth(async function GET(req) {
           .upload_stream(
             {
               folder: 'profile_pictures',
-              public_id: req.auth?.user.id,
+              public_id: session.user.id,
               overwrite: true,
             },
             (error, uploadResult) => {
@@ -84,7 +86,7 @@ export const POST = auth(async function GET(req) {
     );
 
     await connectDB();
-    await UserModel.findByIdAndUpdate(req.auth.user.id, {
+    await UserModel.findByIdAndUpdate(session.user.id, {
       image: uploadResponse.secure_url,
     });
 
@@ -106,4 +108,4 @@ export const POST = auth(async function GET(req) {
       { status: 500 },
     );
   }
-});
+};

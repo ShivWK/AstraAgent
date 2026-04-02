@@ -1,39 +1,28 @@
 'use client';
 
-import { logoutAction } from '@/app/actions/auth';
-import useAppDispatch from '@/hooks/useAppDispatch';
-import { setLogInState } from '@/features/auth/authSlice';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { LogOut, TriangleAlert } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
 import ProfileChange from '@/components/auth/ProfileChange';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
-  const { data: session } = useSession();
-  const dispatch = useAppDispatch();
-  const router = useRouter();
+  const data1 = useSession();
+  console.log('Got session data', data1);
+
+  const { data: session } = data1;
 
   const authClickHandler = async () => {
     if (logoutLoading) return;
-    try {
-      setLogoutLoading(true);
-      const response = await logoutAction();
+    setLogoutLoading(true);
+    signOut({ callbackUrl: '/' });
 
-      if (response.success) {
-        router.push('/');
-        dispatch(setLogInState(false));
-      }
-    } catch (err) {
-      console.log(err);
-      setLogoutLoading(false);
-    }
+    setLogoutLoading(false);
   };
 
   const handleRechargeClick = () => {
@@ -50,7 +39,7 @@ const Page = () => {
   return (
     <>
       <main className="max-md:-mt-4">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
+        <div className="mx-auto flex max-w-300 flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
           <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
             <ProfileChange />
             <p className="text-lg">{session?.user?.name || 'User Name'}</p>

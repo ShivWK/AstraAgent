@@ -65,7 +65,7 @@ export function LoginForm({ setLogin }: PropsType) {
       redirect: false,
     });
 
-    if (result.error) {
+    if (!result?.ok) {
       dispatch(setLoginError('Invalid email or password'));
       return;
     }

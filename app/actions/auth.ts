@@ -1,11 +1,13 @@
 'use server';
-import { signIn, signOut, auth } from '@/auth';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/options';
+import { signIn, signOut } from 'next-auth/react';
 
 export async function signInWithProviderAction(
   callbackUrl: string,
   provider: string,
 ) {
-  const authJSSession = await auth();
+  const authJSSession = await getServerSession(authOptions);
 
   if (!authJSSession) {
     await signIn(provider, {
@@ -15,16 +17,16 @@ export async function signInWithProviderAction(
   }
 }
 
-export async function logoutAction() {
-  const authJsSession = await auth();
+// export async function logoutAction() {
+//   const authJsSession = await getServerSession(authOptions);
 
-  try {
-    if (authJsSession) {
-      await signOut({ redirect: false });
-    }
-    return { success: true };
-  } catch (err) {
-    console.log('Error occurred', err);
-    throw err;
-  }
-}
+//   try {
+//     if (authJsSession) {
+//       await signOut({ redirect: false });
+//     }
+//     return { success: true };
+//   } catch (err) {
+//     console.log('Error occurred', err);
+//     throw err;
+//   }
+// }

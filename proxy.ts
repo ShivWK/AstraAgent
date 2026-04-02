@@ -1,42 +1,34 @@
-import { auth } from './auth';
 import { NextResponse } from 'next/server';
-import { NextRequest } from 'next/server';
+import { withAuth } from 'next-auth/middleware';
 
-async function customMiddleware(req: NextRequest) {
-  const session = await auth();
+export default withAuth(
+  function middleware(req) {
+    const { pathname } = req.nextUrl;
 
-  const { pathname } = req.nextUrl;
-  const protectedRoutes = [
-    '/ai-assistant',
-    '/mode-selection',
-    '/account',
-    '/ai-workspace',
-  ];
+    const protectedRoutes = [
+      '/ai-assistant',
+      '/mode-selection',
+      '/account',
+      '/ai-workspace',
+    ];
 
-  const isProtected = protectedRoutes.some((route) =>
-    pathname.startsWith(route),
-  );
+    const isProtected = protectedRoutes.some((route) =>
+      pathname.startsWith(route),
+    );
 
-  if (isProtected) {
-    if (!session?.user) {
+    if (isProtected && !req.nextauth.token) {
       const redirectUrl = new URL('/', req.nextUrl.origin);
       redirectUrl.searchParams.set('callbackUrl', pathname);
       redirectUrl.searchParams.set('auth', 'required');
+
       return NextResponse.redirect(redirectUrl);
     }
-  }
 
-  return NextResponse.next();
-}
-
-export default auth(async function proxy(request) {
-  const middlewareResponse = await customMiddleware(request);
-
-  if (middlewareResponse) {
-    return middlewareResponse;
-  }
-
-  return NextResponse.next();
-});
-
-// Confirm that is the session is updating or not, authjs session
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: () => true, // we handle logic manually
+    },
+  },
+);

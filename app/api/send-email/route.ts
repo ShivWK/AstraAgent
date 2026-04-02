@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import auth from '@/auth';
 import * as z from 'zod';
 import { emailSchema } from '@/lib/validations/auth.schema';
 import sendEmail from '@/utils/sendEmail';
@@ -10,11 +9,14 @@ import { VerificationModel } from '@/model/verificationTokenModel';
 import { connectDB } from '@/lib/db/connectDb';
 import { UserModel } from '@/model/userModel';
 import { RateLimit } from '@/lib/rate_limit';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]/options';
 
-export const POST = auth(async function POST(req) {
+export const POST = async function POST(req: Request) {
   try {
     const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
     const { success, reset } = await RateLimit.emailSend.limit(ip);
+    const session = await getServerSession(authOptions);
 
     if (!success) {
       const retryAfter = Math.ceil((reset - Date.now()) / 1000);
@@ -46,7 +48,7 @@ export const POST = auth(async function POST(req) {
 
     const { purpose, email } = parsed.data;
 
-    if (purpose === 'email_verification' && !req.auth) {
+    if (purpose === 'email_verification' && !session) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
@@ -73,7 +75,7 @@ export const POST = auth(async function POST(req) {
       purpose === 'email_verification' ? 60 * 60 * 24 * 1000 : 60 * 10 * 1000;
 
     await VerificationModel.create({
-      userId: req?.auth?.user?.id ?? null,
+      userId: session?.user?.id ?? null,
       email,
       token: hashedToken,
       type: purpose,
@@ -106,4 +108,4 @@ export const POST = auth(async function POST(req) {
       { status: 500 },
     );
   }
-});
+};

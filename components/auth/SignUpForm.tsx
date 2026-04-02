@@ -20,6 +20,7 @@ import {
 } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
+import { signIn } from 'next-auth/react';
 
 type FormType = z.infer<typeof signUpSchema>;
 
@@ -88,6 +89,12 @@ export function SignUpForm() {
     if (!response.ok) {
       dispatch(setLoginError(result.error));
     } else {
+      await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+
       dispatch(setOpenLoginModel(false));
       dispatch(setGetStartedLoading(false));
 
