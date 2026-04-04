@@ -1,28 +1,66 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
-import useAudioRecorder from '@/hooks/useAudioRecorder';
 import useMicLevel from '@/hooks/useMicLevel';
+import hark from 'hark';
+import usePCMRecorder from '@/hooks/usePcmRecorder';
 
 type PropType = {
   setMessage: (val: string) => void;
 };
 
 const AudioInputMethod = ({ setMessage }: PropType) => {
+  const socketRef = useRef<WebSocket | null>(null);
   const { startRecording, stopRecording, recording, stream } =
-    useAudioRecorder();
+    usePCMRecorder(socketRef);
   const level = useMicLevel(stream);
-  const [audio, setAudio] = useState<Blob | null>(null);
+
+  // console.log("level", level)
+
+  useEffect(() => {
+    socketRef.current = new WebSocket(process.env.NEXT_PUBLIC_WS_URL as string);
+
+    socketRef.current.onopen = () => {
+      console.log('Connected');
+    };
+
+    socketRef.current.onmessage = (msg) => {
+      const parsed = JSON.parse(msg.data);
+
+      if (parsed.type === 'live_text') {
+        console.log('Received live text', parsed.data);
+        setMessage(parsed.data);
+      }
+    };
+
+    return () => {
+      socketRef.current?.close();
+    };
+  }, [setMessage]);
+
+  useEffect(() => {
+    if (!stream) return;
+
+    const speechEvents = hark(stream);
+
+    speechEvents.on('speaking', () => {
+      console.log('Speaking');
+    });
+
+    speechEvents.on('stopped_speaking', () => {
+      console.log('Stopped Speaking');
+
+      socketRef.current?.send(JSON.stringify({ type: 'end_of_speech' }));
+    });
+
+    return () => {
+      speechEvents.stop();
+    };
+  }, [stream]);
 
   const micClickHandler = async () => {
     if (recording) {
-      const audioData = await stopRecording();
-      console.log('Audio recoding', audioData);
-
-      setAudio(audioData);
-
-      // const audioURL = URL.createObjectURL(audioData);
-      // const audio = new Audio(audioURL);
-      // audio.play();
+      stopRecording();
+      console.log('Audio recoding stop');
     } else {
       startRecording();
     }

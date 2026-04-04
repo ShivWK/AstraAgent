@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 
-const useAudioRecorder = () => {
+const useAudioRecorder = (socketRef: React.RefObject<WebSocket | null>) => {
   const [recording, setRecording] = useState(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunk = useRef<Blob[]>([]);
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -17,32 +16,37 @@ const useAudioRecorder = () => {
     mediaRecorderRef.current = mediaRecorder;
 
     mediaRecorder.ondataavailable = (event) => {
-      chunk.current.push(event.data);
+      if (event.data.size > 0 && socketRef.current?.readyState === 1) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          const base64 = (reader.result as string).split(',')[1];
+          console.log('Sending chunk...');
+
+          socketRef.current?.send(
+            JSON.stringify({
+              type: 'audio_chunk',
+              data: base64,
+            }),
+          );
+        };
+
+        reader.readAsDataURL(event.data);
+      }
     };
 
-    mediaRecorder.start();
+    mediaRecorder.start(250);
     setRecording(true);
   };
 
-  const stopRecording = (): Promise<Blob> => {
-    return new Promise((resolve) => {
-      if (!mediaRecorderRef.current) return;
+  const stopRecording = () => {
+    if (!mediaRecorderRef.current) return;
 
-      mediaRecorderRef.current.onstop = () => {
-        const audioData = new Blob(chunk.current, {
-          type: 'audio/webm',
-        });
+    mediaRecorderRef.current.stop();
+    setRecording(false);
 
-        chunk.current = [];
-        setRecording(false);
-
-        stream?.getTracks().forEach((tracks) => tracks.stop());
-        setStream(null);
-        resolve(audioData);
-      };
-
-      mediaRecorderRef.current.stop();
-    });
+    stream?.getTracks().forEach((tracks) => tracks.stop());
+    setStream(null);
   };
 
   return { startRecording, stopRecording, recording, stream: stream };
