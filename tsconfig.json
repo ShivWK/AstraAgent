@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "app/(fullscreen)/reset-password"
+    "app/(fullscreen)/reset-password",
+    "server/ws_server.js"
   ],
   "exclude": ["node_modules"]
 }

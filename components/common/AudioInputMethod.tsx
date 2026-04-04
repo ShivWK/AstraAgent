@@ -14,8 +14,6 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
     usePCMRecorder(socketRef);
   const level = useMicLevel(stream);
 
-  // console.log("level", level)
-
   useEffect(() => {
     socketRef.current = new WebSocket(process.env.NEXT_PUBLIC_WS_URL as string);
 
@@ -40,7 +38,7 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
   useEffect(() => {
     if (!stream) return;
 
-    const speechEvents = hark(stream);
+    const speechEvents = hark(stream, { threshold: -63 });
 
     speechEvents.on('speaking', () => {
       console.log('Speaking');

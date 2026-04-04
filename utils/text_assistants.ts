@@ -10,6 +10,38 @@ export type domainType = {
   }[];
 }[];
 
+export const aiModels = {
+  SMART: {
+    name: 'Gemma 3 12B',
+    modelId: 'google/gemma-3-12b-it:free',
+  },
+
+  POWERFUL: {
+    name: 'Gemma 3 27B',
+    modelId: 'google/gemma-3-27b-it:free',
+  },
+
+  FAST: {
+    name: 'Llama 3.2 3B',
+    modelId: 'meta-llama/llama-3.2-3b-instruct:free',
+  },
+
+  RANDOM: {
+    name: 'Random',
+    modelId: 'openrouter/free',
+  },
+
+  CODING: {
+    name: 'Qwen 3.6 Plus',
+    modelId: 'qwen/qwen3.6-plus:free',
+  },
+
+  ROLEPLAY: {
+    name: 'Trinity Large Preview',
+    modelId: 'arcee-ai/trinity-large-preview:free',
+  },
+};
+
 export const logoForAgents: Record<string, string> = {
   'Language Learning': '/assistants/language_master.png',
   'Education / Study': '/assistants/personal_tutor.png',

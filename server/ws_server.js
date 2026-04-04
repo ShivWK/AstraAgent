@@ -5,11 +5,14 @@ const wss = new WebSocketServer({ port: 8080 });
 
 const SARVAM_API_KEY = 'sk_pw92ouxh_K9lKGaMYYTeDhHRyWFOBms1S';
 
+let transcription = '';
+let silenceTimer = null;
+
 wss.on('connection', (ws) => {
   console.log('🟢 Client connected');
 
   const sarvamConnection = new WebSocket(
-    'wss://api.sarvam.ai/speech-to-text/ws?model=saaras:v3&language-code=unknown&vad_signals=true',
+    'wss://api.sarvam.ai/speech-to-text/ws?model=saaras:v3&language-code=unknown',
     {
       headers: {
         'Api-Subscription-Key': SARVAM_API_KEY,
@@ -28,15 +31,25 @@ wss.on('connection', (ws) => {
   sarvamConnection.on('message', (data) => {
     const parsed = JSON.parse(data.toString());
 
-    console.log('Received message from Sarvam', parsed);
-
     if (parsed.type === 'data') {
-      ws.send(
-        JSON.stringify({
-          type: 'live_text',
-          data: parsed.data.transcript,
-        }),
-      );
+      const text = parsed.data.transcript;
+      transcription += text + ' ';
+
+      if (silenceTimer) clearTimeout(silenceTimer);
+
+      silenceTimer = setTimeout(() => {
+        console.log(
+          'No speech detected for 1.5 seconds, sending transcription to client',
+        );
+        ws.send(
+          JSON.stringify({
+            type: 'live_text',
+            data: transcription.trim(),
+          }),
+        );
+
+        transcription = '';
+      }, 2500);
     }
   });
 
