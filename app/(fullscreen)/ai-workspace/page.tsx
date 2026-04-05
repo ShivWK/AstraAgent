@@ -105,7 +105,7 @@ const Pages = () => {
           >
             <ChevronLeft size={27} aria-hidden="true" />
           </button>
-          <div className="h-[92%] w-full p-2">
+          <div className="h-[92%] w-full p-1">
             <AISideBar />
           </div>
         </>
