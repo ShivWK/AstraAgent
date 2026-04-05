@@ -3,9 +3,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   agentCreationPlaceholders,
   logoForAgents,
+  TEXT_AGENT_DOMAINS,
 } from '@/utils/text_assistants';
 import { useForm, Controller } from 'react-hook-form';
-import { TEXT_AGENT_DOMAINS } from '@/utils/text_assistants';
 import { agentCreationSchema } from '@/lib/validations/agents.schema';
 import {
   Dialog,
@@ -73,7 +73,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
       image,
     };
 
-    // console.log('final data', finalPayload);
+    console.log('final data', finalPayload);
     setOpen(false);
   };
 

@@ -11,11 +11,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { BrainCircuit } from 'lucide-react';
+import { BrainCircuit, ChevronDown } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const AgentDetails = () => {
   type agent = Voice_assistant | Text_assistant | null;
   const selectedAgent: agent = useAppSelector(selectSelectedAgent);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
+  const [openDropdown, setOpenDropdown] = useState(false);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      if (openDropdown) {
+        setHeight(containerRef.current.scrollHeight);
+      } else {
+        setHeight(0);
+      }
+    }
+  }, [openDropdown]);
 
   if (!selectedAgent) return null;
 
@@ -51,42 +65,61 @@ const AgentDetails = () => {
         </div>
       </div>
 
-      <div className="mt-3 rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 p-2 backdrop-blur-md">
-        <div className="rounded-primary w-full">
-          <div className="mb-2 flex items-center gap-1">
-            <BrainCircuit
-              className="text-green-400"
-              size={22}
-              strokeWidth={2.5}
-            />
-            <p className="text-lg font-medium">Model Details</p>
+      <div
+        className="mt-3 w-full overflow-hidden rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 backdrop-blur-md"
+        style={{
+          height: height === 0 ? '3.5rem' : `${height}px`,
+          transition: 'height 0.25s linear',
+        }}
+      >
+        <div ref={containerRef} className="relative p-2">
+          <button
+            className={`absolute top-2 right-2 transform transition-all duration-250 ease-linear ${openDropdown ? '-rotate-180' : ''}`}
+            aria-label="Open Drop Down"
+            onClick={() => setOpenDropdown(!openDropdown)}
+          >
+            <ChevronDown aria-hidden="true" size={20} />
+          </button>
+          <div className="rounded-primary w-full">
+            <div
+              className={`mb-2 flex items-center gap-1 ${openDropdown ? 'block' : 'hidden'}`}
+            >
+              <BrainCircuit
+                className="text-green-400"
+                size={22}
+                strokeWidth={2.5}
+              />
+              <p className="text-lg font-medium">Model Details</p>
+            </div>
+
+            <p className="text-sm">Current Model:</p>
+
+            <p className="text-md -mt-0.5 font-medium">
+              Trinity Large Preview (Default)
+            </p>
+            <p className="my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-300/20 to-[rgba(236,72,153,0.3)] px-2 py-0.5 font-medium">
+              🎭 CONVERSATIONAL
+            </p>
+
+            <p className="line-clamp-2 leading-4.5 text-white">
+              Best for chat, emotions, storytelling
+            </p>
           </div>
-          <p className="text-sm">Current Model:</p>
-          <p className="text-md -mt-0.5 font-medium">
-            Trinity Large Preview (Default)
-          </p>
-          <p className="my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-200/20 to-green-400/50 px-2 py-0.5 font-medium">
-            🎭 Conversational
-          </p>
 
-          <p className="line-clamp-2 leading-4.5 text-white">
-            Best for chat, emotions, storytelling
-          </p>
-        </div>
-
-        <div>
-          <Select>
-            <SelectTrigger className="mt-4 w-full rounded-md px-3 py-2 shadow-[0_0_10px_0px_#05df72] placeholder:text-gray-400 hover:bg-gray-600/50 dark:bg-gray-700">
-              <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="light">Light</SelectItem>
-                <SelectItem value="dark">Dark</SelectItem>
-                <SelectItem value="system">System</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div className="z-80">
+            <Select>
+              <SelectTrigger className="mt-4 w-full rounded-md px-3 py-2 shadow-[0_0_10px_0px_#05df72] placeholder:text-gray-400 hover:bg-gray-600/50 dark:bg-gray-700">
+                <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
     </div>

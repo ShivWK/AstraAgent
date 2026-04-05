@@ -15,6 +15,7 @@ export const modelOptions = [
     id: 'fast',
     label: '⚡ FAST',
     name: 'LLaMA 3.2 3B Instruct',
+    color: 'rgba(255,193,7,0.3)',
     value: 'meta-llama/llama-3.2-3b-instruct:free',
     description: 'Quick responses, lower intelligence',
   },
@@ -22,6 +23,7 @@ export const modelOptions = [
     id: 'smart',
     label: '🧠 SMART',
     name: 'Gemma 3 12B',
+    color: 'rgba(59,130,246,0.3)',
     value: 'google/gemma-3-12b-it:free',
     description: 'Balanced speed and intelligence',
   },
@@ -29,6 +31,7 @@ export const modelOptions = [
     id: 'powerful',
     label: '🔥 POWERFUL',
     name: 'Gemma 3 27B',
+    color: 'rgba(239,68,68,0.3)',
     value: 'google/gemma-3-27b-it:free',
     description: 'Best reasoning, slower',
   },
@@ -36,6 +39,7 @@ export const modelOptions = [
     id: 'logic',
     label: '🧩 LOGIC EXPERT',
     name: 'Qwen 3.6 Plus',
+    color: 'rgba(139,92,246,0.3)',
     value: 'qwen/qwen3.6-plus:free',
     description: 'Best for programming & logic',
   },
@@ -43,6 +47,7 @@ export const modelOptions = [
     id: 'conversational',
     label: '🎭 CONVERSATIONAL',
     name: 'Trinity Large Preview',
+    color: 'rgba(236,72,153,0.3)',
     value: 'arcee-ai/trinity-large-preview:free',
     description: 'Best for chat, emotions, storytelling',
   },
@@ -253,11 +258,6 @@ export type Text_assistant = {
   name: string;
   title: string;
   icon: string;
-  instruction: string;
-  userInstruction: string;
-  fallbackMessage: string;
-  themeColor: string;
-  sampleQuestions: string[];
 };
 
 export const text_assistant: Text_assistant[] = [
@@ -266,11 +266,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'jack',
     title: 'Fitness Coach',
     icon: '/assistants/fitness.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -278,11 +273,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'devon',
     title: 'Coder',
     icon: '/assistants/coder.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -290,11 +280,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'atlas',
     title: 'Travel Planner',
     icon: '/assistants/travel_planner.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -302,11 +287,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'luna',
     title: 'Grammar Fixer',
     icon: '/assistants/grammar_fixer.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -314,11 +294,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'ledger',
     title: 'Finance Assistant',
     icon: '/assistants/finance_assistant.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -326,11 +301,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'leo',
     title: 'Virtual Boyfriend',
     icon: '/assistants/virtual_boy.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -338,11 +308,6 @@ export const text_assistant: Text_assistant[] = [
     name: 'maya',
     title: 'Virtual Girlfriend',
     icon: '/assistants/virtual_girl.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 
   {
@@ -350,17 +315,13 @@ export const text_assistant: Text_assistant[] = [
     name: 'ivy',
     title: 'Personal Tutor',
     icon: '/assistants/personal_tutor.png',
-    instruction: '',
-    userInstruction: '',
-    fallbackMessage: '',
-    themeColor: '',
-    sampleQuestions: [],
   },
 ];
 
 export const agentsConfiguration = [
   {
     title: 'Language Learning',
+
     placeholder: 'e.g. Friendly English Speaking Practice Partner',
     instruction:
       'You are a language learning assistant. Answer only questions related to speaking practice, grammar correction, pronunciation, vocabulary, and language improvement. Politely refuse unrelated topics.',
