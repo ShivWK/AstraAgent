@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '../ui/button';
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Input } from '../ui/input';
@@ -9,7 +11,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   setGetStartedLoading,
@@ -180,7 +182,9 @@ export function SignUpForm() {
             Sign Up
           </Button>
           <span>------- or -------</span>
-          <SignInWithProviders />
+          <Suspense fallback={null}>
+            <SignInWithProviders />
+          </Suspense>
         </div>
       </DialogFooter>
     </form>

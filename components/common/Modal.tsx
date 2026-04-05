@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type DrawerProps = {
@@ -20,6 +20,15 @@ const Modal = ({
 }: DrawerProps) => {
   const drawer = useRef<HTMLDivElement>(null);
   const lastFocusedElement = useRef<HTMLElement | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const call = async () => {
+      setMounted(true);
+    };
+
+    call();
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -57,6 +66,8 @@ const Modal = ({
       window.removeEventListener('popstate', handlePopState);
     };
   }, [open, onClose]);
+
+  if (!mounted) return null;
 
   return createPortal(
     <div

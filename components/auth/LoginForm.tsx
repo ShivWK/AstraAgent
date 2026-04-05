@@ -1,3 +1,5 @@
+'use client';
+
 import * as z from 'zod';
 import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,9 +10,10 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Spinner } from '../ui/spinner';
 import { loginSchema } from '@/lib/validations/auth.schema';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+
 import {
   setGetStartedLoading,
   setLoginError,
@@ -146,7 +149,9 @@ export function LoginForm({ setLogin }: PropsType) {
             forgot password
           </button>
           <span>------- or -------</span>
-          <SignInWithProviders />
+          <Suspense fallback={null}>
+            <SignInWithProviders />
+          </Suspense>
         </div>
       </DialogFooter>
     </form>

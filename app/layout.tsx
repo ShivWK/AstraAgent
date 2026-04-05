@@ -3,7 +3,7 @@ import ThemeProvider from '@/components/common/theme-provider';
 import Providers from './providers';
 import Header from '@/components/common/Header';
 import './globals.css';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 import SessionProviders from '@/components/auth/SessionProviders';
 
@@ -49,7 +49,9 @@ export default async function RootLayout({ children }: PropsType) {
             disableTransitionOnChange
           >
             <Providers>
-              <AuthIntentHandler />
+              <Suspense fallback={null}>
+                <AuthIntentHandler />
+              </Suspense>
               <Header />
               {children}
             </Providers>

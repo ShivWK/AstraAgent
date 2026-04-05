@@ -4,7 +4,8 @@ import useAppSelector from '@/hooks/useAppSelector';
 import { LoginForm } from './LoginForm';
 import { SignUpForm } from './SignUpForm';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
+
 import {
   selectLoginError,
   setOpenLoginModel,
@@ -36,13 +37,17 @@ const AuthForm = () => {
   return (
     <Dialog open={open} onOpenChange={openChangeHandler}>
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         {isLogIn === 'login' ? (
-          <LoginForm setLogin={setLogin} />
+          <Suspense fallback={null}>
+            <LoginForm setLogin={setLogin} />
+          </Suspense>
         ) : isLogIn === 'signup' ? (
-          <SignUpForm />
+          <Suspense fallback={null}>
+            <SignUpForm />
+          </Suspense>
         ) : (
           <ForgotPasswordForm />
         )}
