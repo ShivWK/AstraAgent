@@ -15,7 +15,9 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
   const level = useMicLevel(stream);
 
   useEffect(() => {
-    socketRef.current = new WebSocket(process.env.NEXT_PUBLIC_WS_URL as string);
+    socketRef.current = new WebSocket(
+      process.env.NEXT_PUBLIC_WS_SERVER_URL as string,
+    );
 
     socketRef.current.onopen = () => {
       console.log('Connected');
