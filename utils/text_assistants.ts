@@ -1,3 +1,5 @@
+import { model } from 'mongoose';
+
 export type domainType = {
   category: string;
 
@@ -9,49 +11,6 @@ export type domainType = {
     work: string;
   }[];
 }[];
-
-export const modelOptions = [
-  {
-    id: 'fast',
-    label: '⚡ FAST',
-    name: 'LLaMA 3.2 3B Instruct',
-    color: 'rgba(255,193,7,0.3)',
-    value: 'meta-llama/llama-3.2-3b-instruct:free',
-    description: 'Quick responses, lower intelligence',
-  },
-  {
-    id: 'smart',
-    label: '🧠 SMART',
-    name: 'Gemma 3 12B',
-    color: 'rgba(59,130,246,0.3)',
-    value: 'google/gemma-3-12b-it:free',
-    description: 'Balanced speed and intelligence',
-  },
-  {
-    id: 'powerful',
-    label: '🔥 POWERFUL',
-    name: 'Gemma 3 27B',
-    color: 'rgba(239,68,68,0.3)',
-    value: 'google/gemma-3-27b-it:free',
-    description: 'Best reasoning, slower',
-  },
-  {
-    id: 'logic',
-    label: '🧩 LOGIC EXPERT',
-    name: 'Qwen 3.6 Plus',
-    color: 'rgba(139,92,246,0.3)',
-    value: 'qwen/qwen3.6-plus:free',
-    description: 'Best for programming & logic',
-  },
-  {
-    id: 'conversational',
-    label: '🎭 CONVERSATIONAL',
-    name: 'Trinity Large Preview',
-    color: 'rgba(236,72,153,0.3)',
-    value: 'arcee-ai/trinity-large-preview:free',
-    description: 'Best for chat, emotions, storytelling',
-  },
-];
 
 export const logoForAgents: Record<string, string> = {
   'Language Learning': '/assistants/language_master.png',
@@ -318,10 +277,52 @@ export const text_assistant: Text_assistant[] = [
   },
 ];
 
+export const modelOptions = {
+  fast: {
+    label: '⚡ FAST',
+    name: 'LLaMA 3.2 3B Instruct',
+    color: 'rgba(255,193,7,0.3)',
+    value: 'meta-llama/llama-3.2-3b-instruct:free',
+    description: 'Quick responses, lower intelligence',
+  },
+
+  smart: {
+    label: '🧠 SMART',
+    name: 'Gemma 3 12B',
+    color: 'rgba(59,130,246,0.3)',
+    value: 'google/gemma-3-12b-it:free',
+    description: 'Balanced speed and intelligence',
+  },
+
+  powerful: {
+    label: '🔥 POWERFUL',
+    name: 'Gemma 3 27B',
+    color: 'rgba(239,68,68,0.3)',
+    value: 'google/gemma-3-27b-it:free',
+    description: 'Best reasoning, slower',
+  },
+
+  logic: {
+    label: '🧩 LOGIC EXPERT',
+    name: 'Qwen 3.6 Plus',
+    color: 'rgba(139,92,246,0.3)',
+    value: 'qwen/qwen3.6-plus:free',
+    description: 'Best for programming & logic',
+  },
+
+  conversational: {
+    label: '🎭 CONVERSATIONAL',
+    name: 'Trinity Large Preview',
+    color: 'rgba(236,72,153,0.3)',
+    value: 'arcee-ai/trinity-large-preview:free',
+    description: 'Best for chat, emotions, storytelling',
+  },
+};
+
 export const agentsConfiguration = [
   {
     title: 'Language Learning',
-
+    model: 'smart',
     placeholder: 'e.g. Friendly English Speaking Practice Partner',
     instruction:
       'You are a language learning assistant. Answer only questions related to speaking practice, grammar correction, pronunciation, vocabulary, and language improvement. Politely refuse unrelated topics.',
@@ -345,6 +346,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Education / Study',
+    model: 'smart',
     placeholder: 'e.g. Patient Math Tutor for Class 10',
     instruction:
       'You are an academic study assistant. Explain topics, concepts, and exam preparation strategies. Do not complete graded assignments dishonestly.',
@@ -368,7 +370,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Career Guidance',
-
+    model: 'powerful',
     placeholder: 'e.g. Software Engineering Career Mentor',
 
     instruction:
@@ -393,7 +395,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Productivity',
-
+    model: 'fast',
     placeholder: 'e.g. Daily Focus & Habit Building Coach',
 
     instruction:
@@ -417,7 +419,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Interview Practice',
-
+    model: 'logic',
     placeholder: 'e.g. Senior React Interviewer for Product Companies',
 
     instruction:
@@ -442,7 +444,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Communication SKills',
-
+    model: 'smart',
     placeholder: 'e.g. Public Speaking Confidence Coach',
 
     instruction:
@@ -466,7 +468,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Writing Assistance',
-
+    model: 'smart',
     placeholder: 'e.g. Professional Email & Content Editor',
 
     instruction:
@@ -490,6 +492,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Tech & Programming',
+    model: 'logic',
     placeholder: 'e.g. Senior Full Stack Development Mentor',
     instruction:
       'You are a programming mentor. Provide coding help and explanations for learning purposes only. Do not provide malicious code.',
@@ -512,7 +515,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Fitness & Exercise',
-
+    model: 'smart',
     placeholder: 'e.g. Certified Fat Loss & Strength Coach',
 
     instruction:
@@ -533,7 +536,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Meditation & Yoga',
-
+    model: 'conversational',
     placeholder: 'e.g. Calm Mindfulness & Breathing Guide',
     instruction:
       'You are a mindfulness assistant. Provide meditation and breathing guidance. Not a substitute for medical treatment.',
@@ -556,6 +559,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Mental Wellness',
+    model: 'conversational',
     placeholder: 'e.g. Supportive Stress Management Companion',
     instruction:
       'You provide non-clinical emotional support and stress management guidance. Not therapy. Do not diagnose.',
@@ -578,7 +582,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Life Coaching',
-
+    model: 'conversational',
     placeholder: 'e.g. Goal-Oriented Personal Growth Strategist',
 
     instruction:
@@ -601,7 +605,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Relationship',
-
+    model: 'conversational',
     placeholder: 'e.g. Healthy Communication Relationship Advisor',
 
     instruction:
@@ -625,6 +629,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Personal Finance',
+    model: 'smart',
     placeholder: 'e.g. Smart Budgeting & Money Discipline Guide',
     instruction:
       'Provide basic financial education like budgeting and saving. No investment or trading advice.',
@@ -647,7 +652,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Travel Planner',
-
+    model: 'smart',
     placeholder: 'e.g. Budget-Friendly Trip Planning Expert',
     instruction:
       'You are a travel planning assistant. Help users plan trips, create itineraries, suggest destinations, and manage budgets. Do not provide visa/legal advice or booking services.',
@@ -670,7 +675,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Virtual Boyfriend',
-
+    model: 'conversational',
     placeholder: 'e.g. Caring & Romantic Daily Companion',
 
     instruction:
@@ -691,7 +696,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Virtual Girlfriend',
-
+    model: 'conversational',
     placeholder: 'e.g. Sweet & Supportive Virtual Partner',
 
     instruction:
@@ -712,6 +717,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Creative Writing',
+    model: 'conversational',
     placeholder: 'e.g. Imaginative Storytelling Mentor',
     instruction:
       'You are a creative writing assistant. Help with stories and ideas. Do not generate plagiarized content.',
@@ -733,7 +739,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Content Creation',
-
+    model: 'smart',
     placeholder: 'e.g. Viral Social Media Content Strategist',
 
     instruction:
@@ -756,6 +762,7 @@ export const agentsConfiguration = [
 
   {
     title: 'Custom Assistant',
+    model: 'smart',
     placeholder: 'e.g. Describe the exact role you want this assistant to play',
     instruction:
       'Handle user-defined tasks within safe boundaries. Reject medical, legal, financial advisory, or harmful requests.',
