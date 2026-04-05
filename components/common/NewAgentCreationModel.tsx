@@ -80,7 +80,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <form
@@ -116,7 +116,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger
-                        className="w-[180px]"
+                        className="w-45"
                         aria-invalid={!!errors.domain}
                       >
                         <SelectValue placeholder="Select Domain" />

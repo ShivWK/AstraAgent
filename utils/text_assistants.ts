@@ -10,37 +10,43 @@ export type domainType = {
   }[];
 }[];
 
-export const aiModels = {
-  SMART: {
+export const modelOptions = [
+  {
+    id: 'fast',
+    label: '⚡ FAST',
+    name: 'LLaMA 3.2 3B Instruct',
+    value: 'meta-llama/llama-3.2-3b-instruct:free',
+    description: 'Quick responses, lower intelligence',
+  },
+  {
+    id: 'smart',
+    label: '🧠 SMART',
     name: 'Gemma 3 12B',
-    modelId: 'google/gemma-3-12b-it:free',
+    value: 'google/gemma-3-12b-it:free',
+    description: 'Balanced speed and intelligence',
   },
-
-  POWERFUL: {
+  {
+    id: 'powerful',
+    label: '🔥 POWERFUL',
     name: 'Gemma 3 27B',
-    modelId: 'google/gemma-3-27b-it:free',
+    value: 'google/gemma-3-27b-it:free',
+    description: 'Best reasoning, slower',
   },
-
-  FAST: {
-    name: 'Llama 3.2 3B',
-    modelId: 'meta-llama/llama-3.2-3b-instruct:free',
-  },
-
-  RANDOM: {
-    name: 'Random',
-    modelId: 'openrouter/free',
-  },
-
-  CODING: {
+  {
+    id: 'logic',
+    label: '🧩 LOGIC EXPERT',
     name: 'Qwen 3.6 Plus',
-    modelId: 'qwen/qwen3.6-plus:free',
+    value: 'qwen/qwen3.6-plus:free',
+    description: 'Best for programming & logic',
   },
-
-  ROLEPLAY: {
+  {
+    id: 'conversational',
+    label: '🎭 CONVERSATIONAL',
     name: 'Trinity Large Preview',
-    modelId: 'arcee-ai/trinity-large-preview:free',
+    value: 'arcee-ai/trinity-large-preview:free',
+    description: 'Best for chat, emotions, storytelling',
   },
-};
+];
 
 export const logoForAgents: Record<string, string> = {
   'Language Learning': '/assistants/language_master.png',
