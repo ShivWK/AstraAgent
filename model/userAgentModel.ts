@@ -11,6 +11,11 @@ const agentsSchema = new mongoose.Schema({
     required: true,
   },
 
+  subHeading: {
+    type: String,
+    required: true,
+  },
+
   title: {
     type: String,
     required: true,
@@ -78,4 +83,4 @@ const agentsSchema = new mongoose.Schema({
 });
 
 export const UserAgentsModel =
-  mongoose.models.UserAgents || mongoose.model('User Agents', agentsSchema);
+  mongoose.models.UserAgents || mongoose.model('UserAgents', agentsSchema);

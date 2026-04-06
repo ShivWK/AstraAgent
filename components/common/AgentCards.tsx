@@ -2,8 +2,7 @@ import {
   selectSelectedAgent,
   setSelectedAgent,
 } from '@/features/agents/agentsSlice';
-import { type Text_assistant } from '@/utils/text_assistants';
-import { type Voice_assistant } from '@/utils/voice_assistants';
+
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { Check, ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
@@ -12,9 +11,10 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
 import NewAgentCreationModel from './NewAgentCreationModel';
+import { type Agent } from '@/types/agents';
 
 type PropsType = {
-  assistants: Text_assistant[] | Voice_assistant[];
+  assistants: Agent[];
   mode: Mode;
 };
 
@@ -26,8 +26,9 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
   const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
   const [openInstructionModel, setOpenInstructionModel] = useState(false);
   const [openCreationModel, setOpenCreationModel] = useState(false);
-  const [currentVoiceAgent, setCurrentVoiceAgent] =
-    useState<Voice_assistant | null>(null);
+  const [currentVoiceAgent, setCurrentVoiceAgent] = useState<Agent | null>(
+    null,
+  );
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;
@@ -69,9 +70,9 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
     };
   }, []);
 
-  const cardClickHandler = (data: Text_assistant | Voice_assistant) => {
+  const cardClickHandler = (data: Agent) => {
     if (mode === 'speech') {
-      setCurrentVoiceAgent(data as Voice_assistant);
+      setCurrentVoiceAgent(data);
       setOpenInstructionModel(true);
     } else {
       dispatch(setSelectedAgent(data));
@@ -122,7 +123,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
               return (
                 <div
                   onClick={() => cardClickHandler(ai)}
-                  key={ai.id}
+                  key={ai._id}
                   className="rounded-primary flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
                 >
                   <Image
@@ -135,7 +136,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
                     blurDataURL="/blurImage.png"
                     className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
                   />
-                  {selectedAgent?.id === ai.id && (
+                  {selectedAgent?._id === ai._id && (
                     <Check
                       size={20}
                       strokeWidth={3}

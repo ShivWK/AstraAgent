@@ -19,10 +19,10 @@ import { DialogContent } from '../ui/dialog';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import Image from 'next/image';
-import { type Voice_assistant } from '@/utils/voice_assistants';
+import { Agent } from '@/types/agents';
 
 type PropsType = {
-  currentAgent: Voice_assistant | null;
+  currentAgent: Agent | null;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
@@ -58,7 +58,7 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="sm:max-w-[425px]"
+        className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <form
@@ -95,7 +95,7 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
             })}
             aria-invalid={!!errors.instruction}
             className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
-            placeholder={agent.placeHolder}
+            placeholder={agent.placeholder}
           ></Textarea>
 
           <DialogFooter>

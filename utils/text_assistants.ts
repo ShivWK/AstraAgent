@@ -309,6 +309,8 @@ export const agentsConfiguration = [
     icon: '/assistants/language_master.png',
     description:
       'Best for speaking practice, correction, pronunciation, vocabulary building.',
+    subHeading:
+      'Mention the language, your current level, and what you want to focus on (speaking, grammar, or fluency).',
     model: 'smart',
     placeholder: 'e.g. Friendly English Speaking Practice Partner',
     instruction:
@@ -336,6 +338,8 @@ export const agentsConfiguration = [
     icon: '/assistants/personal_tutor.png',
     description:
       'Best for explaining topics, concepts, exam preparation, and academic guidance.',
+    subHeading:
+      'Mention the subject, grade level, and specific areas you need help with.',
     model: 'smart',
     placeholder: 'e.g. Patient Math Tutor for Class 10',
     instruction:
@@ -363,6 +367,8 @@ export const agentsConfiguration = [
     icon: '/assistants/career_guidance.png',
     description:
       'Best for resume help, interview preparation, skill roadmap, and career planning.',
+    subHeading:
+      'Mention your current role, desired position, and specific areas you need guidance with.',
     model: 'powerful',
     placeholder: 'e.g. Software Engineering Career Mentor',
 
@@ -391,6 +397,8 @@ export const agentsConfiguration = [
     icon: '/assistants/productivity.png',
     description:
       'Best for planning, habit building, focus improvement, and routine optimization.',
+    subHeading:
+      'Describe your productivity goals, current challenges, and what you want to improve (planning, habits, focus, or routines).',
     model: 'fast',
     placeholder: 'e.g. Daily Focus & Habit Building Coach',
 
@@ -418,6 +426,8 @@ export const agentsConfiguration = [
     icon: '/assistants/take_interview.png',
     description:
       'Best for mock interviews, structured questions, and response feedback.',
+    subHeading:
+      'Describe the role, topic, experience level, and how challenging you want the interview to be.',
     model: 'logic',
     placeholder: 'e.g. Senior React Interviewer for Product Companies',
 
@@ -446,6 +456,8 @@ export const agentsConfiguration = [
     icon: '/assistants/communication_skills.png',
     description:
       'Best for public speaking practice, confidence building, and clarity improvement.',
+    subHeading:
+      'Describe the communication skill you want to improve, your current challenges, and the context (e.g., public speaking, meetings, social situations).',
     model: 'smart',
     placeholder: 'e.g. Public Speaking Confidence Coach',
 
@@ -473,6 +485,9 @@ export const agentsConfiguration = [
     icon: '/assistants/grammar_fixer.png',
     description:
       'Best for email drafting, summaries, clarity improvement, and structured writing help.',
+    subHeading:
+      'Describe the type of writing you need help with and any specific requirements.',
+
     model: 'smart',
     placeholder: 'e.g. Professional Email & Content Editor',
 
@@ -500,6 +515,8 @@ export const agentsConfiguration = [
     icon: '/assistants/tech_programming.png',
     description:
       'Best for coding help, debugging guidance, and concept explanations for learning.',
+    subHeading:
+      'Mention the programming language, your experience level, and specific areas you need help with.',
     model: 'logic',
     placeholder: 'e.g. Senior Full Stack Development Mentor',
     instruction:
@@ -526,6 +543,8 @@ export const agentsConfiguration = [
     icon: '/assistants/fitness.png',
     description:
       'Best for workout routines, general fitness advice, and healthy lifestyle tips.',
+    subHeading:
+      'Describe your fitness goals, current activity level, and any specific areas you want to focus on.',
     model: 'smart',
     placeholder: 'e.g. Certified Fat Loss & Strength Coach',
 
@@ -550,6 +569,8 @@ export const agentsConfiguration = [
     icon: '/assistants/yog_guru.png',
     description:
       'Best for breathing exercises, mindfulness sessions, and focus practices.',
+    subHeading:
+      'Tell us your goal, preferred practice (yoga, pranayama, meditation), and how you want the session to feel.',
     model: 'conversational',
     placeholder: 'e.g. Calm Mindfulness & Breathing Guide',
     instruction:
@@ -576,6 +597,8 @@ export const agentsConfiguration = [
     icon: '/assistants/mental_wellness.png',
     description:
       'Best for stress management, journaling prompts, and calm supportive conversations.',
+    subHeading:
+      'Describe your current feelings, stressors, and what kind of support or guidance you are looking for.',
     model: 'conversational',
     placeholder: 'e.g. Supportive Stress Management Companion',
     instruction:
@@ -602,6 +625,8 @@ export const agentsConfiguration = [
     icon: '/assistants/life_coaching.png',
     description:
       'Best for goal setting, self-improvement strategies, and motivation guidance.',
+    subHeading:
+      'Describe your goals, challenges, and the type of support you are looking for.',
     model: 'conversational',
     placeholder: 'e.g. Goal-Oriented Personal Growth Strategist',
 
@@ -628,6 +653,8 @@ export const agentsConfiguration = [
     icon: '/assistants/relationship.png',
     description:
       'Best for communication guidance, understanding boundaries, and relationship improvement.',
+    subHeading:
+      'Describe your relationship dynamics, challenges, and the type of support you are looking for.',
     model: 'conversational',
     placeholder: 'e.g. Healthy Communication Relationship Advisor',
 
@@ -655,6 +682,8 @@ export const agentsConfiguration = [
     icon: '/assistants/finance_assistant.png',
     description:
       'Best for budgeting tips, saving strategies, and money management basics.',
+    subHeading:
+      'Describe your financial goals, current challenges, and what you want to improve (budgeting, saving, or money management).',
     model: 'smart',
     placeholder: 'e.g. Smart Budgeting & Money Discipline Guide',
     instruction:
@@ -681,6 +710,8 @@ export const agentsConfiguration = [
     icon: '/assistants/travel_planner.png',
     description:
       'Best for trip planning, itinerary creation, destination suggestions, and budget guidance.',
+    subHeading:
+      'Describe your travel preferences, budget, and any specific destinations or experiences you are interested in.',
     model: 'smart',
     placeholder: 'e.g. Budget-Friendly Trip Planning Expert',
     instruction:
@@ -707,6 +738,8 @@ export const agentsConfiguration = [
     icon: '/assistants/virtual_boy.png',
     description:
       'Best for romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins.',
+    subHeading:
+      'Describe the kind of virtual boyfriend experience you are looking for, including any specific preferences or boundaries you want to set.',
     model: 'conversational',
     placeholder: 'e.g. Caring & Romantic Daily Companion',
 
@@ -731,6 +764,8 @@ export const agentsConfiguration = [
     icon: '/assistants/virtual_girl.png',
     description:
       'Best for romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins.',
+    subHeading:
+      'Describe the kind of virtual girlfriend experience you are looking for, including any specific preferences or boundaries you want to set.',
     model: 'conversational',
     placeholder: 'e.g. Sweet & Supportive Virtual Partner',
 
@@ -755,6 +790,8 @@ export const agentsConfiguration = [
     icon: '/assistants/creative_writing.png',
     description:
       'Best for storytelling, idea generation, and creative expression.',
+    subHeading:
+      'Describe the type of creative writing help you want (story ideas, character development, plot suggestions) and any specific genres or themes you are interested in.',
     model: 'conversational',
     placeholder: 'e.g. Imaginative Storytelling Mentor',
     instruction:
@@ -780,6 +817,8 @@ export const agentsConfiguration = [
     icon: '/assistants/content_creator.png',
     description:
       'Best for social media ideas, scripts, and content structuring.',
+    subHeading:
+      'Describe the type of content you want help with (social media ideas, scripts, content structuring) and any specific platforms or themes you are targeting.',
     model: 'smart',
     placeholder: 'e.g. Viral Social Media Content Strategist',
 
@@ -806,6 +845,8 @@ export const agentsConfiguration = [
     icon: '/assistants/general_ai.png',
     description:
       'Best for handling uncommon or specific user-defined tasks within safe boundaries.',
+    subHeading:
+      'Describe the specific role or tasks you want this custom assistant to handle, along with any particular instructions or boundaries you want it to follow.',
     model: 'smart',
     placeholder: 'e.g. Describe the exact role you want this assistant to play',
     instruction:

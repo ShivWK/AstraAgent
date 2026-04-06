@@ -24,14 +24,22 @@ const AiAssistant = () => {
   const mode2 = searchParams.get('mode') as Mode;
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
+  const [agents, setAgents] = useState([]);
 
   useEffect(() => {
-    // Simulate loading time for the component (e.g., fetching data)
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Adjust the time as needed
+    const fetchAgents = async () => {
+      setLoading(true);
+      const response = await fetch('/api/agents', {
+        method: 'GET',
+      });
 
-    return () => clearTimeout(timer); // Cleanup the timer on unmount
+      const result = await response.json();
+      setAgents(result.agents);
+      console.log(result);
+      setLoading(false);
+    };
+
+    fetchAgents();
   }, []);
 
   useEffect(() => {
@@ -70,10 +78,7 @@ const AiAssistant = () => {
               Start Session
             </Button>
           </div>
-          <AgentCards
-            mode={mode2}
-            assistants={mode2 === 'speech' ? voice_assistant : text_assistant}
-          />
+          <AgentCards mode={mode2} assistants={agents} />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}

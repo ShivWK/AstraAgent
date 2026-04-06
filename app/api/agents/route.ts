@@ -67,6 +67,7 @@ export async function POST(req: NextRequest) {
       model,
       themeColor,
       isDefault,
+      subHeading,
       sampleQuestions,
       createdBy,
     } = body;
@@ -84,6 +85,7 @@ export async function POST(req: NextRequest) {
       description,
       icon,
       title,
+      subHeading,
       model,
       instruction,
       userInstruction,
