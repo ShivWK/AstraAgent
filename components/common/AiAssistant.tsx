@@ -9,11 +9,12 @@ import {
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 import AgentCards from '@/components/common/AgentCards';
-import { useEffect } from 'react';
+import { use, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
 import { voice_assistant } from '@/utils/voice_assistants';
 import { text_assistant } from '@/utils/text_assistants';
+import AiAssistantSkeleton from '../skeletons/AiAssistantSkeleton';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -22,6 +23,16 @@ const AiAssistant = () => {
   const router = useRouter();
   const mode2 = searchParams.get('mode') as Mode;
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time for the component (e.g., fetching data)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the time as needed
+
+    return () => clearTimeout(timer); // Cleanup the timer on unmount
+  }, []);
 
   useEffect(() => {
     if (!mode1 && mode2) {
@@ -34,6 +45,8 @@ const AiAssistant = () => {
   const startSessionClickHandler = () => {
     router.push('/ai-workspace');
   };
+
+  if (loading) return <AiAssistantSkeleton />;
 
   return (
     <main className="pb-18">

@@ -1,10 +1,10 @@
-// page.jsx
 import { Suspense } from 'react';
 import AiAssistant from '@/components/common/AiAssistant';
+import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 
-export default function Page() {
+export default async function Page() {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<AiAssistantSkeleton />}>
       <AiAssistant />
     </Suspense>
   );
