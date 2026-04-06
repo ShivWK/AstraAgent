@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
-import { Voice_assistant } from '@/utils/voice_assistants';
-import { Text_assistant } from '@/utils/text_assistants';
+
 import {
   Select,
   SelectContent,
@@ -13,9 +12,10 @@ import {
 } from '@/components/ui/select';
 import { BrainCircuit, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Agent } from '@/types/agents';
 
 const AgentDetails = () => {
-  type agent = Voice_assistant | Text_assistant | null;
+  type agent = Agent | null;
   const selectedAgent: agent = useAppSelector(selectSelectedAgent);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
