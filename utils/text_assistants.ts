@@ -1,5 +1,3 @@
-import { model } from 'mongoose';
-
 export type domainType = {
   category: string;
 
@@ -261,20 +259,6 @@ export const text_assistant: Text_assistant[] = [
     title: 'Virtual Boyfriend',
     icon: '/assistants/virtual_boy.png',
   },
-
-  {
-    id: 7,
-    name: 'maya',
-    title: 'Virtual Girlfriend',
-    icon: '/assistants/virtual_girl.png',
-  },
-
-  {
-    id: 8,
-    name: 'ivy',
-    title: 'Personal Tutor',
-    icon: '/assistants/personal_tutor.png',
-  },
 ];
 
 export const modelOptions = {
@@ -283,7 +267,7 @@ export const modelOptions = {
     name: 'LLaMA 3.2 3B Instruct',
     color: 'rgba(255,193,7,0.3)',
     value: 'meta-llama/llama-3.2-3b-instruct:free',
-    description: 'Quick responses, lower intelligence',
+    description: 'Quick responses for simple tasks and daily use',
   },
 
   smart: {
@@ -291,7 +275,7 @@ export const modelOptions = {
     name: 'Gemma 3 12B',
     color: 'rgba(59,130,246,0.3)',
     value: 'google/gemma-3-12b-it:free',
-    description: 'Balanced speed and intelligence',
+    description: 'Balanced for study, communication, and planning tasks',
   },
 
   powerful: {
@@ -299,7 +283,7 @@ export const modelOptions = {
     name: 'Gemma 3 27B',
     color: 'rgba(239,68,68,0.3)',
     value: 'google/gemma-3-27b-it:free',
-    description: 'Best reasoning, slower',
+    description: 'Stronger reasoning for complex tasks like career guidance',
   },
 
   logic: {
@@ -307,7 +291,7 @@ export const modelOptions = {
     name: 'Qwen 3.6 Plus',
     color: 'rgba(139,92,246,0.3)',
     value: 'qwen/qwen3.6-plus:free',
-    description: 'Best for programming & logic',
+    description: 'Best for coding, problem-solving, and technical tasks',
   },
 
   conversational: {
@@ -315,13 +299,16 @@ export const modelOptions = {
     name: 'Trinity Large Preview',
     color: 'rgba(236,72,153,0.3)',
     value: 'arcee-ai/trinity-large-preview:free',
-    description: 'Best for chat, emotions, storytelling',
+    description: 'Natural conversations for chat, relationships, and support',
   },
 };
 
 export const agentsConfiguration = [
   {
     title: 'Language Learning',
+    icon: '/assistants/language_master.png',
+    description:
+      'Best for speaking practice, correction, pronunciation, vocabulary building.',
     model: 'smart',
     placeholder: 'e.g. Friendly English Speaking Practice Partner',
     instruction:
@@ -346,6 +333,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Education / Study',
+    icon: '/assistants/personal_tutor.png',
+    description:
+      'Best for explaining topics, concepts, exam preparation, and academic guidance.',
     model: 'smart',
     placeholder: 'e.g. Patient Math Tutor for Class 10',
     instruction:
@@ -370,6 +360,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Career Guidance',
+    icon: '/assistants/career_guidance.png',
+    description:
+      'Best for resume help, interview preparation, skill roadmap, and career planning.',
     model: 'powerful',
     placeholder: 'e.g. Software Engineering Career Mentor',
 
@@ -395,6 +388,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Productivity',
+    icon: '/assistants/productivity.png',
+    description:
+      'Best for planning, habit building, focus improvement, and routine optimization.',
     model: 'fast',
     placeholder: 'e.g. Daily Focus & Habit Building Coach',
 
@@ -419,6 +415,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Interview Practice',
+    icon: '/assistants/take_interview.png',
+    description:
+      'Best for mock interviews, structured questions, and response feedback.',
     model: 'logic',
     placeholder: 'e.g. Senior React Interviewer for Product Companies',
 
@@ -444,6 +443,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Communication SKills',
+    icon: '/assistants/communication_skills.png',
+    description:
+      'Best for public speaking practice, confidence building, and clarity improvement.',
     model: 'smart',
     placeholder: 'e.g. Public Speaking Confidence Coach',
 
@@ -468,6 +470,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Writing Assistance',
+    icon: '/assistants/grammar_fixer.png',
+    description:
+      'Best for email drafting, summaries, clarity improvement, and structured writing help.',
     model: 'smart',
     placeholder: 'e.g. Professional Email & Content Editor',
 
@@ -492,6 +497,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Tech & Programming',
+    icon: '/assistants/tech_programming.png',
+    description:
+      'Best for coding help, debugging guidance, and concept explanations for learning.',
     model: 'logic',
     placeholder: 'e.g. Senior Full Stack Development Mentor',
     instruction:
@@ -515,6 +523,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Fitness & Exercise',
+    icon: '/assistants/fitness.png',
+    description:
+      'Best for workout routines, general fitness advice, and healthy lifestyle tips.',
     model: 'smart',
     placeholder: 'e.g. Certified Fat Loss & Strength Coach',
 
@@ -536,6 +547,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Meditation & Yoga',
+    icon: '/assistants/yog_guru.png',
+    description:
+      'Best for breathing exercises, mindfulness sessions, and focus practices.',
     model: 'conversational',
     placeholder: 'e.g. Calm Mindfulness & Breathing Guide',
     instruction:
@@ -559,6 +573,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Mental Wellness',
+    icon: '/assistants/mental_wellness.png',
+    description:
+      'Best for stress management, journaling prompts, and calm supportive conversations.',
     model: 'conversational',
     placeholder: 'e.g. Supportive Stress Management Companion',
     instruction:
@@ -582,6 +599,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Life Coaching',
+    icon: '/assistants/life_coaching.png',
+    description:
+      'Best for goal setting, self-improvement strategies, and motivation guidance.',
     model: 'conversational',
     placeholder: 'e.g. Goal-Oriented Personal Growth Strategist',
 
@@ -605,6 +625,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Relationship',
+    icon: '/assistants/relationship.png',
+    description:
+      'Best for communication guidance, understanding boundaries, and relationship improvement.',
     model: 'conversational',
     placeholder: 'e.g. Healthy Communication Relationship Advisor',
 
@@ -629,6 +652,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Personal Finance',
+    icon: '/assistants/finance_assistant.png',
+    description:
+      'Best for budgeting tips, saving strategies, and money management basics.',
     model: 'smart',
     placeholder: 'e.g. Smart Budgeting & Money Discipline Guide',
     instruction:
@@ -652,6 +678,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Travel Planner',
+    icon: '/assistants/travel_planner.png',
+    description:
+      'Best for trip planning, itinerary creation, destination suggestions, and budget guidance.',
     model: 'smart',
     placeholder: 'e.g. Budget-Friendly Trip Planning Expert',
     instruction:
@@ -675,6 +704,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Virtual Boyfriend',
+    icon: '/assistants/virtual_boy.png',
+    description:
+      'Best for romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins.',
     model: 'conversational',
     placeholder: 'e.g. Caring & Romantic Daily Companion',
 
@@ -696,6 +728,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Virtual Girlfriend',
+    icon: '/assistants/virtual_girl.png',
+    description:
+      'Best for romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins.',
     model: 'conversational',
     placeholder: 'e.g. Sweet & Supportive Virtual Partner',
 
@@ -717,6 +752,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Creative Writing',
+    icon: '/assistants/creative_writing.png',
+    description:
+      'Best for storytelling, idea generation, and creative expression.',
     model: 'conversational',
     placeholder: 'e.g. Imaginative Storytelling Mentor',
     instruction:
@@ -739,6 +777,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Content Creation',
+    icon: '/assistants/content_creator.png',
+    description:
+      'Best for social media ideas, scripts, and content structuring.',
     model: 'smart',
     placeholder: 'e.g. Viral Social Media Content Strategist',
 
@@ -762,6 +803,9 @@ export const agentsConfiguration = [
 
   {
     title: 'Custom Assistant',
+    icon: '/assistants/general_ai.png',
+    description:
+      'Best for handling uncommon or specific user-defined tasks within safe boundaries.',
     model: 'smart',
     placeholder: 'e.g. Describe the exact role you want this assistant to play',
     instruction:

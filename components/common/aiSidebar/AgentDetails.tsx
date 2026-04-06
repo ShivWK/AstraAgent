@@ -65,6 +65,13 @@ const AgentDetails = () => {
         </div>
       </div>
 
+      <div className="my-2 w-full px-2">
+        <p className="line-clamp-1 text-sm leading-4.5 text-gray-200 italic">
+          Best for romantic companionship, emotional support, casual
+          conversations, fun flirting, daily check-ins.
+        </p>
+      </div>
+
       <div
         className="mt-3 w-full overflow-hidden rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 backdrop-blur-md"
         style={{
