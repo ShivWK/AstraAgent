@@ -6,7 +6,10 @@ const agentsSchema = new mongoose.Schema({
     required: true,
   },
 
-  userId: mongoose.Schema.Types.ObjectId,
+  description: {
+    type: String,
+    required: true,
+  },
 
   title: {
     type: String,
@@ -18,13 +21,55 @@ const agentsSchema = new mongoose.Schema({
     required: true,
   },
 
-  instruction: String,
-  userInstruction: String,
-  fallbackMessage: String,
-  themeColor: String,
-  sampleQuestions: [String],
-  description: String,
-  placeHolder: String,
+  instruction: {
+    type: String,
+    required: true,
+  },
+
+  userInstruction: {
+    type: String,
+    required: true,
+  },
+
+  fallbackMessage: {
+    type: String,
+    required: true,
+  },
+
+  userPreference: {
+    type: String,
+  },
+
+  model: {
+    type: String,
+    required: true,
+  },
+
+  themeColor: {
+    type: String,
+    required: true,
+  },
+
+  sampleQuestions: {
+    type: [String],
+    required: true,
+  },
+
+  placeholder: {
+    type: String,
+    required: true,
+  },
+
+  isDefault: {
+    type: Boolean,
+    default: false,
+  },
+
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  },
 
   createdAt: {
     type: Date,

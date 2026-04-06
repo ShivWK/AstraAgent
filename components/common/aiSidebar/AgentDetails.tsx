@@ -20,6 +20,7 @@ const AgentDetails = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -65,11 +66,22 @@ const AgentDetails = () => {
         </div>
       </div>
 
-      <div className="my-2 w-full px-2">
-        <p className="line-clamp-1 text-sm leading-4.5 text-gray-200 italic">
+      <div
+        className={`my-2 flex w-full ${showDescription ? 'flex-col' : 'flex-row items-center justify-between'}`}
+      >
+        <p
+          className={`basis-full transition-all duration-250 ease-linear ${showDescription ? 'line-clamp-none' : 'line-clamp-1'} text-sm leading-4.5 text-gray-200 italic`}
+        >
           Best for romantic companionship, emotional support, casual
           conversations, fun flirting, daily check-ins.
         </p>
+
+        <button
+          className="text-sm text-green-400 italic hover:underline"
+          onClick={() => setShowDescription(!showDescription)}
+        >
+          {showDescription ? 'less' : 'more'}
+        </button>
       </div>
 
       <div
