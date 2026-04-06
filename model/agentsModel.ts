@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const agentsSchema = new mongoose.Schema({
+  id: String,
   title: String,
   icon: String,
   description: String,
@@ -13,5 +14,6 @@ const agentsSchema = new mongoose.Schema({
   sampleQuestions: [String],
 });
 
-export const AgentsModel =
-  mongoose.models.Agents || mongoose.model('Agents', agentsSchema);
+export const AgentsTemplateModel =
+  mongoose.models.AgentsTemplate ||
+  mongoose.model('AgentsTemplate', agentsSchema);

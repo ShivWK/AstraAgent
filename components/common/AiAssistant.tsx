@@ -37,7 +37,7 @@ const AiAssistant = () => {
 
   return (
     <main className="pb-18">
-      <div className="mx-auto max-w-[1200px]">
+      <div className="mx-auto max-w-300">
         <section className="w-full">
           <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
             <div>
