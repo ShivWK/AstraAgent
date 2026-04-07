@@ -115,7 +115,7 @@ const AgentDetails = () => {
               <p className="text-lg font-medium">Model Details</p>
             </div>
 
-            <div className="flex w-[80%] flex-wrap items-center gap-0.5">
+            <div className="flex w-[85%] flex-wrap items-center gap-0.5">
               <p className="text-sm">Current Model</p>
               <span>:</span>
               <p className="text-md -mt-0.5 font-medium">

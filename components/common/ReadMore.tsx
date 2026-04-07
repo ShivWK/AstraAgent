@@ -17,7 +17,7 @@ export default function ReadMore({ text }: { text: string }) {
 
       <button
         onClick={() => setExpanded(!expanded)}
-        className="mt-0.5 text-xs font-medium text-green-400 hover:underline"
+        className="text-xs font-medium text-green-400 hover:underline"
       >
         {expanded ? 'Show less' : 'More'}
       </button>
