@@ -261,45 +261,59 @@ export const text_assistant: Text_assistant[] = [
   },
 ];
 
-export const modelOptions = {
+type modelOption = {
+  id: string;
+  label: string;
+  name: string;
+  color: string;
+  value: string;
+  description: string;
+};
+
+export const modelOptions: Record<string, modelOption> = {
   fast: {
+    id: 'fast',
     label: '⚡ FAST',
     name: 'LLaMA 3.2 3B Instruct',
-    color: 'rgba(255,193,7,0.3)',
+    color: 'to-amber-400/60',
     value: 'meta-llama/llama-3.2-3b-instruct:free',
-    description: 'Quick responses for simple tasks and daily use',
+    description: 'Quick responses for simple tasks and daily use.',
   },
 
   smart: {
+    id: 'smart',
     label: '🧠 SMART',
     name: 'Gemma 3 12B',
-    color: 'rgba(59,130,246,0.3)',
+    color: 'to-blue-500/60',
     value: 'google/gemma-3-12b-it:free',
-    description: 'Balanced for study, communication, and planning tasks',
+    description: 'Balanced for study, communication, and planning tasks.',
   },
 
   powerful: {
+    id: 'powerful',
     label: '🔥 POWERFUL',
     name: 'Gemma 3 27B',
-    color: 'rgba(239,68,68,0.3)',
+    color: 'to-red-500/60',
     value: 'google/gemma-3-27b-it:free',
-    description: 'Stronger reasoning for complex tasks like career guidance',
+    description: 'Stronger reasoning for complex tasks like career guidance.',
   },
 
   logic: {
+    id: 'logic',
     label: '🧩 LOGIC EXPERT',
     name: 'Qwen 3.6 Plus',
-    color: 'rgba(139,92,246,0.3)',
+    color: 'to-purple-500/60',
     value: 'qwen/qwen3.6-plus:free',
-    description: 'Best for coding, problem-solving, and technical tasks',
+    description: 'Best for coding, problem-solving, and technical tasks.',
   },
 
   conversational: {
+    id: 'conversational',
     label: '🎭 CONVERSATIONAL',
     name: 'Trinity Large Preview',
-    color: 'rgba(236,72,153,0.3)',
+    color: 'to-pink-500/60',
     value: 'arcee-ai/trinity-large-preview:free',
-    description: 'Natural conversations for chat, relationships, and support',
+    description: 'Natural conversations for chat, relationships, and support.',
   },
 };
 

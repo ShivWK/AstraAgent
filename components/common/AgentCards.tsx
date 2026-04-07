@@ -89,7 +89,7 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
           <div className="carousel_group hide-scrollbar my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4">
             <div
               onClick={newAgentCreationClickHandler}
-              className={`${mode === 'speech' && 'hidden'} rounded-primary flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
+              className={`rounded-primary flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
             >
               <div className="relative overflow-hidden rounded-full">
                 <div className="absolute h-full w-full bg-blue-400/65">

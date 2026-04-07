@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
+import { modelOptions } from '@/utils/text_assistants';
 
 import {
   Select,
@@ -13,6 +14,7 @@ import {
 import { BrainCircuit, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Agent } from '@/types/agents';
+import ReadMore from '../ReadMore';
 
 const AgentDetails = () => {
   type agent = Agent | null;
@@ -20,7 +22,9 @@ const AgentDetails = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
+  const [currentModel, setCurrentModel] = useState(
+    modelOptions[selectedAgent?.model as string],
+  );
 
   useEffect(() => {
     if (containerRef.current) {
@@ -31,6 +35,14 @@ const AgentDetails = () => {
       }
     }
   }, [openDropdown]);
+
+  const modelDetailsContainerClickHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    e.stopPropagation();
+    if (openDropdown) return;
+    setOpenDropdown(!openDropdown);
+  };
 
   if (!selectedAgent) return null;
 
@@ -66,22 +78,10 @@ const AgentDetails = () => {
         </div>
       </div>
 
-      <div
-        className={`my-2 flex w-full ${showDescription ? 'flex-col' : 'flex-row items-center justify-between'}`}
-      >
-        <p
-          className={`basis-full transition-all duration-250 ease-linear ${showDescription ? 'line-clamp-none' : 'line-clamp-1'} text-sm leading-4.5 text-gray-200 italic`}
-        >
-          Best for romantic companionship, emotional support, casual
-          conversations, fun flirting, daily check-ins.
-        </p>
-
-        <button
-          className="text-sm text-green-400 italic hover:underline"
-          onClick={() => setShowDescription(!showDescription)}
-        >
-          {showDescription ? 'less' : 'more'}
-        </button>
+      <div className="my-2 w-full">
+        <ReadMore
+          text={selectedAgent?.description || 'No description available.'}
+        />
       </div>
 
       <div
@@ -91,7 +91,11 @@ const AgentDetails = () => {
           transition: 'height 0.25s linear',
         }}
       >
-        <div ref={containerRef} className="relative p-2">
+        <div
+          ref={containerRef}
+          onClick={modelDetailsContainerClickHandler}
+          className={`relative p-2 ${openDropdown ? 'cursor-default' : 'cursor-pointer'}`}
+        >
           <button
             className={`absolute top-2 right-2 transform transition-all duration-250 ease-linear ${openDropdown ? '-rotate-180' : ''}`}
             aria-label="Open Drop Down"
@@ -111,17 +115,23 @@ const AgentDetails = () => {
               <p className="text-lg font-medium">Model Details</p>
             </div>
 
-            <p className="text-sm">Current Model:</p>
+            <div className="flex w-[80%] flex-wrap items-center gap-0.5">
+              <p className="text-sm">Current Model</p>
+              <span>:</span>
+              <p className="text-md -mt-0.5 font-medium">
+                {currentModel?.name}
+                {selectedAgent?.model === currentModel?.id && ' (Default)'}
+              </p>
+            </div>
 
-            <p className="text-md -mt-0.5 font-medium">
-              Trinity Large Preview (Default)
-            </p>
-            <p className="my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-300/20 to-[rgba(236,72,153,0.3)] px-2 py-0.5 font-medium">
-              🎭 CONVERSATIONAL
+            <p
+              className={`my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-400/40 ${currentModel?.color} px-2 py-0.5 font-medium`}
+            >
+              {currentModel?.label}
             </p>
 
             <p className="line-clamp-2 leading-4.5 text-white">
-              Best for chat, emotions, storytelling
+              {currentModel?.description}
             </p>
           </div>
 

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-// import { AgentsModel } from '@/model/agentsModel';
 import { connectDB } from '@/lib/db/connectDb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';

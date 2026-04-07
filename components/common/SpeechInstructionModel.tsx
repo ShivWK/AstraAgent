@@ -81,7 +81,9 @@ const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
             />
             <div className="flex flex-col gap-1 text-center">
               <p className="text-lg font-medium">{agent.title}</p>
-              <p className="leading-4.5 tracking-wide">{agent.description}</p>
+              <p className="text-sm leading-4.5 tracking-wide italic">
+                {agent.description}
+              </p>
             </div>
           </div>
 
