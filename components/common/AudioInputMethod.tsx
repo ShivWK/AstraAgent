@@ -5,10 +5,13 @@ import hark from 'hark';
 import usePCMRecorder from '@/hooks/usePcmRecorder';
 
 type PropType = {
-  setMessage: (val: string) => void;
+  setStream: (val: string) => void;
+  setChat: (
+    val: (prev: Record<string, string>[]) => Record<string, string>[],
+  ) => void;
 };
 
-const AudioInputMethod = ({ setMessage }: PropType) => {
+const AudioInputMethod = ({ setStream, setChat }: PropType) => {
   const socketRef = useRef<WebSocket | null>(null);
   const { startRecording, stopRecording, recording, stream } =
     usePCMRecorder(socketRef);
@@ -26,21 +29,30 @@ const AudioInputMethod = ({ setMessage }: PropType) => {
     socketRef.current.onmessage = (msg) => {
       const parsed = JSON.parse(msg.data);
 
-      if (parsed.type === 'live_text') {
-        console.log('Received live text', parsed.data);
-        setMessage(parsed.data);
+      if (parsed.type === 'chunk') {
+        console.log('Received live text:', parsed.data);
+        setStream(parsed.data);
+      }
+
+      if (parsed.type === 'end') {
+        console.log('Final text:', parsed.data);
+        setChat((prev) => [
+          ...(prev || []),
+          { role: 'user', content: parsed.data },
+        ]);
+        setStream('');
       }
     };
 
     return () => {
       socketRef.current?.close();
     };
-  }, [setMessage]);
+  }, [setChat, setStream]);
 
   useEffect(() => {
     if (!stream) return;
 
-    const speechEvents = hark(stream, { threshold: -63 });
+    const speechEvents = hark(stream, { threshold: -45 });
 
     speechEvents.on('speaking', () => {
       console.log('Speaking');

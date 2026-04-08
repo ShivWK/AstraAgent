@@ -85,7 +85,6 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         await connectDB();
         const dbUser = await UserModel.findOne({ email: user.email });
-        console.log('dbUser', dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;
@@ -97,7 +96,6 @@ export const authOptions: NextAuthOptions = {
       if (trigger === 'update') {
         await connectDB();
         const dbUser = await UserModel.findById(token.id);
-        console.log('DBUser', dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;
@@ -105,7 +103,7 @@ export const authOptions: NextAuthOptions = {
           token.emailVerified = dbUser.emailVerified;
         }
       }
-      console.log('JWT', token);
+      // console.log('JWT', token);
       return token;
     },
 
@@ -116,7 +114,7 @@ export const authOptions: NextAuthOptions = {
         session.user.emailVerified = token.emailVerified as Date | null;
       }
 
-      console.log('Session', session);
+      // console.log('Session', session);
       return session;
     },
   },

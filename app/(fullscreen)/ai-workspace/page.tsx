@@ -17,7 +17,8 @@ import { useEffect, useRef, useState } from 'react';
 
 const Pages = () => {
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
-  const [chat, setChat] = useState<string | null>(null);
+  const [chat, setChat] = useState<Record<string, string>[]>([]);
+  const [streamMessage, setStreamMessage] = useState('');
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const interactionMode = useAppSelector(selectSelectedInteractionMode);
   const dispatch = useAppDispatch();
@@ -26,6 +27,9 @@ const Pages = () => {
     dispatch(setOpenSidebar(false));
     window.history.back();
   };
+
+  // console.log('Current chat state:', chat);
+  console.log('Current stream message:', streamMessage);
 
   useEffect(() => {
     const ele = chatContainerRef.current;
@@ -51,33 +55,16 @@ const Pages = () => {
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div
               ref={chatContainerRef}
-              className={`pretty-scrollbar h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-20' : 'pb-8'} md:px-4`}
+              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-20' : 'pb-8'} md:px-4`}
             >
-              {chat && <ChatBox writer="agent" chat={chat} />}
-              <ChatBox
-                writer="user"
-                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
-              />
+              {chat.length > 0 &&
+                chat.map((item, index) => (
+                  <ChatBox key={index} writer={item.role} chat={item.content} />
+                ))}
 
-              <ChatBox
-                writer="agent"
-                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
-              />
-
-              <ChatBox
-                writer="user"
-                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
-              />
-
-              <ChatBox
-                writer="agent"
-                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
-              />
-
-              <ChatBox
-                writer="user"
-                chat="Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui placeat labore inventore magnam voluptatem, ullam nulla eius ipsum dicta?"
-              />
+              {streamMessage !== '' && (
+                <ChatBox writer="system" chat={streamMessage} />
+              )}
             </div>
 
             <div
@@ -87,7 +74,7 @@ const Pages = () => {
           {interactionMode === 'text' ? (
             <TextInputMethod />
           ) : (
-            <AudioInputMethod setMessage={setChat} />
+            <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />
           )}
         </section>
       </div>

@@ -11,9 +11,14 @@ const conversationSchema = new mongoose.Schema({
     required: true,
   },
 
-  agentModel: {
+  defaultAgentModel: {
     type: String,
-    default: 'normal',
+    required: true,
+  },
+
+  currentAgentModel: {
+    type: String,
+    required: true,
   },
 
   mode: {
@@ -36,6 +41,8 @@ const conversationSchema = new mongoose.Schema({
   updatedAt: Date,
 });
 
-export const conversationModel =
+conversationSchema.index({ userId: 1 });
+
+export const ConversationModel =
   mongoose.models.Conversation ||
   mongoose.model('Conversation', conversationSchema);

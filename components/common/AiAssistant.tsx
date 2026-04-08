@@ -9,11 +9,9 @@ import {
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 import AgentCards from '@/components/common/AgentCards';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
-import { voice_assistant } from '@/utils/voice_assistants';
-import { text_assistant } from '@/utils/text_assistants';
 import AiAssistantSkeleton from '../skeletons/AiAssistantSkeleton';
 
 const AiAssistant = () => {

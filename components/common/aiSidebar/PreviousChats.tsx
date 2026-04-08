@@ -36,31 +36,6 @@ const PreviousChats = () => {
           chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
           consequuntur!"
         />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
-
-        <PreviousChat
-          chat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora,
-          consequuntur!"
-        />
       </ul>
     </div>
   );
