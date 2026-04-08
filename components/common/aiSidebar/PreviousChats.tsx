@@ -1,6 +1,11 @@
+import { Conversation } from '@/types/conversation';
 import PreviousChat from '../PreviousChat';
 
-const PreviousChats = () => {
+type PropsType = {
+  conversation: Conversation | null;
+};
+
+const PreviousChats = ({ conversation }: PropsType) => {
   return (
     <div>
       <h2 className="mt-2 mb-1.5 text-lg font-medium tracking-wide">

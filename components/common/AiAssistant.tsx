@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
 import AiAssistantSkeleton from '../skeletons/AiAssistantSkeleton';
+import { Spinner } from '../ui/spinner';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -22,7 +23,10 @@ const AiAssistant = () => {
   const mode2 = searchParams.get('mode') as Mode;
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
+  const [conversationLoading, setConversationLoading] = useState(false);
   const [agents, setAgents] = useState([]);
+
+  // console.log("select agent", selectedAgent)
 
   useEffect(() => {
     const fetchAgents = async () => {
@@ -48,8 +52,40 @@ const AiAssistant = () => {
     }
   }, [dispatch, mode1, mode2, router]);
 
-  const startSessionClickHandler = () => {
-    router.push('/ai-workspace');
+  const startSessionClickHandler = async () => {
+    if (!selectedAgent || conversationLoading) return;
+
+    try {
+      setConversationLoading(true);
+      const response = await fetch('api/conversation/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          agentId: selectedAgent._id,
+          defaultAgentModel: selectedAgent.model,
+          mode: mode1 || mode2,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      const conversationID = result.conversation._id;
+
+      router.push(
+        `/ai-workspace?conversation_id=${conversationID}&mode=${mode2 || mode1}`,
+      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log('Unknown error', err);
+      }
+    } finally {
+      setConversationLoading(false);
+    }
   };
 
   if (loading) return <AiAssistantSkeleton />;
@@ -70,17 +106,20 @@ const AiAssistant = () => {
             <Button
               variant={'secondary'}
               onClick={startSessionClickHandler}
-              disabled={selectedAgent === null}
+              disabled={selectedAgent === null || conversationLoading}
               className={`${selectedAgent !== null && 'btn-continue'} rounded-full py-5 text-lg font-normal hover:-translate-y-0.5 active:translate-y-0 max-md:hidden`}
             >
               Start Session
+              {conversationLoading && (
+                <Spinner className="size-5" data-icon="inline-end" />
+              )}
             </Button>
           </div>
           <AgentCards mode={mode2} assistants={agents} />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}
-            disabled={selectedAgent === null}
+            disabled={selectedAgent === null || conversationLoading}
             className={`${selectedAgent !== null && 'btn-continue'} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
           >
             Start Session

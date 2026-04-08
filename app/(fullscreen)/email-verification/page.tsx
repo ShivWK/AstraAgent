@@ -1,4 +1,3 @@
-// page.jsx
 import { Suspense } from 'react';
 import EmailVerification from '@/components/auth/EmailVerification';
 

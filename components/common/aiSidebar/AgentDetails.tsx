@@ -2,6 +2,7 @@ import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
 import { modelOptions } from '@/utils/text_assistants';
+import { type Conversation } from '@/types/conversation';
 
 import {
   Select,
@@ -16,7 +17,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Agent } from '@/types/agents';
 import ReadMore from '../ReadMore';
 
-const AgentDetails = () => {
+type PropsType = {
+  loading: boolean;
+  conversation: Conversation | null;
+};
+
+const AgentDetails = ({ loading, conversation }: PropsType) => {
   type agent = Agent | null;
   const selectedAgent: agent = useAppSelector(selectSelectedAgent);
   const containerRef = useRef<HTMLDivElement | null>(null);

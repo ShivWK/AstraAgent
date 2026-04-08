@@ -26,7 +26,7 @@ const ModeSelection = () => {
 
   return (
     <main className="flex h-screen items-center justify-center md:pt-8">
-      <section className="mx-auto h-fit max-w-[1200px]">
+      <section className="mx-auto h-fit max-w-300">
         <div className="text-center">
           <p className="text-3xl">
             Choose how you <strong>want</strong> to interact today
