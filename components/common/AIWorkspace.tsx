@@ -6,6 +6,7 @@ import {
   selectOpenSidebar,
   setOpenSidebar,
   selectSelectedInteractionMode,
+  setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -16,6 +17,7 @@ import AudioInputMethod from '@/components/common/AudioInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Conversation } from '@/types/conversation';
+import { type Mode } from '@/features/agents/agentsSlice';
 
 const AiWorkspace = () => {
   const [loading, setLoading] = useState(true);
@@ -37,11 +39,21 @@ const AiWorkspace = () => {
   };
 
   useEffect(() => {
+    if (!interactionMode && mode) {
+      dispatch(setSelectedInteractionMode(mode as Mode));
+    } else if (!interactionMode && !mode) {
+      router.push('/mode-selection');
+    }
+  }, [dispatch, interactionMode, mode, router]);
+
+  useEffect(() => {
     const fetchConversation = async () => {
       const response = await fetch(`/api/conversation/${conversationId}`);
       const result = await response.json();
 
       setConversation(result.conversation);
+
+      console.log('Conversation', result.conversation);
 
       if (!response.ok) {
         router.replace(`/ai-assistant?mode=${mode || interactionMode}`);
@@ -91,10 +103,10 @@ const AiWorkspace = () => {
             </div>
 
             <div
-              className={`${interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
+              className={`${mode === 'text' || interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
             />
           </div>
-          {interactionMode === 'text' ? (
+          {mode === 'text' || interactionMode === 'text' ? (
             <TextInputMethod />
           ) : (
             <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />

@@ -261,7 +261,7 @@ export const text_assistant: Text_assistant[] = [
   },
 ];
 
-type modelOption = {
+export type ModelOption = {
   id: string;
   label: string;
   name: string;
@@ -270,7 +270,7 @@ type modelOption = {
   description: string;
 };
 
-export const modelOptions: Record<string, modelOption> = {
+export const modelOptions: Record<string, ModelOption> = {
   fast: {
     id: 'fast',
     label: '⚡ FAST',

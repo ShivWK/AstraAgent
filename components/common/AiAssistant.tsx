@@ -26,8 +26,6 @@ const AiAssistant = () => {
   const [conversationLoading, setConversationLoading] = useState(false);
   const [agents, setAgents] = useState([]);
 
-  // console.log("select agent", selectedAgent)
-
   useEffect(() => {
     const fetchAgents = async () => {
       setLoading(true);
@@ -50,7 +48,7 @@ const AiAssistant = () => {
     } else if (!mode1 && !mode2) {
       router.push('/mode-selection');
     }
-  }, [dispatch, mode1, mode2, router]);
+  }, [dispatch, mode2, router]);
 
   const startSessionClickHandler = async () => {
     if (!selectedAgent || conversationLoading) return;
@@ -123,6 +121,9 @@ const AiAssistant = () => {
             className={`${selectedAgent !== null && 'btn-continue'} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
           >
             Start Session
+            {conversationLoading && (
+              <Spinner className="size-5" data-icon="inline-end" />
+            )}
           </Button>
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
