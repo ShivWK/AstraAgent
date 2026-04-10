@@ -25,7 +25,7 @@ const AgentDetailsSkeleton = () => {
 
       {/* Expandable Section */}
       <div
-        className="mt-3 w-full overflow-hidden rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 backdrop-blur-md"
+        className="mt-3 w-full rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 backdrop-blur-md"
         style={{
           height: '3.5rem',
         }}
@@ -39,18 +39,6 @@ const AgentDetailsSkeleton = () => {
             <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-500" />
             <div className="h-4 w-48 rounded bg-gray-400 dark:bg-gray-500" />
           </div>
-
-          {/* Label */}
-          <div className="mt-2 h-6 w-24 rounded bg-gray-400 dark:bg-gray-500" />
-
-          {/* Description */}
-          <div className="mt-2 space-y-1">
-            <div className="h-3 w-full rounded bg-gray-400 dark:bg-gray-500" />
-            <div className="h-3 w-5/6 rounded bg-gray-400 dark:bg-gray-500" />
-          </div>
-
-          {/* Select */}
-          <div className="mt-4 h-10 w-full rounded bg-gray-400 dark:bg-gray-500" />
         </div>
       </div>
     </div>
