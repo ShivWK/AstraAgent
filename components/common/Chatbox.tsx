@@ -9,35 +9,51 @@ type PropsType = {
 const ChatBox = ({ writer, chat }: PropsType) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopyClick = async (text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(chat);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {}
   };
+
+  if (writer === 'system') {
+    return (
+      <div className="mx-auto mb-8 max-w-[80%] animate-pulse text-center text-gray-400">
+        {chat}
+      </div>
+    );
+  }
+
+  const isUser = writer === 'user';
 
   return (
     <div
-      className={`${writer === 'agent' ? 'float-start' : writer === 'user' ? 'float-end' : 'absolute bottom-10 left-1/2 mx-auto -translate-x-1/2 transform animate-pulse'} mb-5 max-w-[85%] rounded-xl bg-blue-900 p-2 text-lg text-white after:clear-both after:table md:max-w-2/3`}
+      className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'justify-start'}`}
     >
-      <p className="leading-6">{chat}</p>
-      {writer !== 'system' &&
-        (copied ? (
-          <CheckCheck
-            className={`mt-3.5 ${writer === 'agent' ? 'float-end' : 'float-start'}`}
-            aria-hidden="true"
-            strokeWidth={1.5}
-            size={18}
-          />
-        ) : (
-          <button
-            aria-label="Copy"
-            title="copy"
-            onClick={() => handleCopyClick(chat)}
-            className={`mt-1.5 ${writer === 'agent' ? 'float-end' : 'float-start'} transform cursor-pointer rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95`}
-          >
-            <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
-          </button>
-        ))}
+      <div className="max-w-[95%] rounded-xl bg-blue-900 p-3 text-white md:max-w-2/3">
+        <p className="leading-6 wrap-break-word whitespace-pre-wrap">{chat}</p>
+
+        <div className={`flex ${isUser ? 'justify-start' : 'justify-end'}`}>
+          {copied ? (
+            <CheckCheck
+              className="mt-3.5"
+              aria-hidden="true"
+              strokeWidth={1.5}
+              size={18}
+            />
+          ) : (
+            <button
+              aria-label="Copy"
+              title="copy"
+              onClick={handleCopyClick}
+              className={`mt-1.5 transform rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95`}
+            >
+              <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

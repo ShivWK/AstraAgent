@@ -18,17 +18,28 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Conversation } from '@/types/conversation';
 import { type Mode } from '@/features/agents/agentsSlice';
+import useChatSocket from '@/hooks/useChatSocket';
 
 const AiWorkspace = () => {
+  const searchParam = useSearchParams();
+  const conversationId = searchParam.get('conversation_id');
+
+  const {
+    chat,
+    streamMessage,
+    error,
+    sendMessage,
+    stopStream,
+    setChat,
+    setStreamMessage,
+    streaming,
+  } = useChatSocket(conversationId as string);
+
   const [loading, setLoading] = useState(true);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
-  const [chat, setChat] = useState<Record<string, string>[]>([]);
-  const [streamMessage, setStreamMessage] = useState('');
-  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
   const interactionMode = useAppSelector(selectSelectedInteractionMode);
-  const searchParam = useSearchParams();
-  const conversationId = searchParam.get('conversation_id');
   const mode = searchParam.get('mode');
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -53,8 +64,6 @@ const AiWorkspace = () => {
 
       setConversation(result.conversation);
 
-      console.log('Conversation', result.conversation);
-
       if (!response.ok) {
         router.replace(`/ai-assistant?mode=${mode || interactionMode}`);
         return;
@@ -66,17 +75,22 @@ const AiWorkspace = () => {
     fetchConversation();
   }, [conversationId, router, interactionMode, mode]);
 
-  useEffect(() => {
-    const ele = chatContainerRef.current;
-    if (!ele) return;
+  const isNearBottom = (ele: HTMLDivElement) => {
+    return ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;
+  };
 
-    if (ele.scrollHeight > ele.clientHeight) {
-      ele.scrollBy({
-        top: ele.scrollHeight,
+  useEffect(() => {
+    const element = bottomRef.current;
+    if (!element) return;
+
+    if (isNearBottom(element)) {
+      element.scrollIntoView({
         behavior: 'smooth',
       });
     }
-  }, []);
+  }, [streamMessage, chat]);
+
+  console.log('Chat state', chat);
 
   return (
     <main className="md:pr-1 md:pl-2">
@@ -89,8 +103,7 @@ const AiWorkspace = () => {
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div
-              ref={chatContainerRef}
-              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-20' : 'pb-8'} md:px-4`}
+              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
             >
               {chat.length > 0 &&
                 chat.map((item, index) => (
@@ -100,6 +113,8 @@ const AiWorkspace = () => {
               {streamMessage !== '' && (
                 <ChatBox writer="system" chat={streamMessage} />
               )}
+
+              <div ref={bottomRef} />
             </div>
 
             <div
@@ -107,7 +122,12 @@ const AiWorkspace = () => {
             />
           </div>
           {mode === 'text' || interactionMode === 'text' ? (
-            <TextInputMethod />
+            <TextInputMethod
+              error={error}
+              sendMessage={sendMessage}
+              stopStream={stopStream}
+              streaming={streaming}
+            />
           ) : (
             <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />
           )}
