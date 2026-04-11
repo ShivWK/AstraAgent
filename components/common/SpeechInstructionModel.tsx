@@ -32,7 +32,7 @@ type FormType = z.infer<typeof voiceAgentInstructionSchema>;
 const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
   const dispatch = useAppDispatch();
   const agent = currentAgent!;
-  console.log(agent);
+  // console.log(agent);
 
   const submitHandler = (data: FormType) => {
     dispatch(setVoiceAgentInstruction(data.instruction));

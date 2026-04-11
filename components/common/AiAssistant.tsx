@@ -35,7 +35,6 @@ const AiAssistant = () => {
 
       const result = await response.json();
       setAgents(result.agents);
-      console.log(result);
       setLoading(false);
     };
 
@@ -48,7 +47,7 @@ const AiAssistant = () => {
     } else if (!mode1 && !mode2) {
       router.push('/mode-selection');
     }
-  }, [dispatch, mode2, router]);
+  }, [dispatch, mode2, router, mode1]);
 
   const startSessionClickHandler = async () => {
     if (!selectedAgent || conversationLoading) return;

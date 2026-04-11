@@ -90,7 +90,7 @@ const AiWorkspace = () => {
     }
   }, [streamMessage, chat]);
 
-  console.log('Chat state', chat);
+  // console.log('Chat state', chat);
 
   return (
     <main className="md:pr-1 md:pl-2">
