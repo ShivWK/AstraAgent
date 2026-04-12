@@ -61,7 +61,7 @@ const TextInputMethod = ({
       <button
         type="button"
         onClick={handleSubmit}
-        disabled={!text.trim() || !!error}
+        disabled={(!text.trim() && !streaming) || !!error}
         className="rounded-lg bg-blue-900 p-2.5"
       >
         {streaming ? (
