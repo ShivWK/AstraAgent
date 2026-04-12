@@ -3,6 +3,7 @@ import { logoForAgents } from '@/utils/text_assistants';
 import { Conversation } from '@/types/conversation';
 import { useState, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
@@ -10,6 +11,7 @@ type PropsType = {
 
 const PreviousChats = ({ history }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const router = useRouter();
 
   const toggleGroup = (agentId: string) => {
     setOpenGroups((prev) => ({
@@ -28,6 +30,16 @@ const PreviousChats = ({ history }: PropsType) => {
 
     call();
   }, [history]);
+
+  const handleConversationClick = (
+    id: string,
+    mode: string,
+    agentId: string,
+  ) => {
+    router.push(
+      `/ai-workspace?conversation_id=${id}&mode=${mode}&agentId=${agentId}`,
+    );
+  };
 
   return (
     <div>
@@ -80,12 +92,19 @@ const PreviousChats = ({ history }: PropsType) => {
 
                 {/* 🔹 Conversations List */}
                 {isOpen && (
-                  <div className="ml-14 flex flex-col gap-2">
+                  <div className="flex flex-col gap-2">
                     {(group.conversations as Conversation[]).map(
                       (conversation) => (
                         <div
+                          onClick={() =>
+                            handleConversationClick(
+                              conversation._id,
+                              conversation.mode,
+                              conversation.agentId,
+                            )
+                          }
                           key={conversation._id}
-                          className="cursor-pointer rounded-md bg-gray-700/40 px-3 py-2 text-start text-sm text-gray-200 transition hover:bg-gray-600/50"
+                          className="cursor-pointer rounded-md bg-gray-500/40 px-3 py-2 text-start text-sm text-gray-200 transition hover:bg-gray-600/50"
                         >
                           {conversation.title || 'Untitled Conversation'}
                         </div>

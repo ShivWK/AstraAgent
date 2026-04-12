@@ -23,6 +23,7 @@ import useChatSocket from '@/hooks/useChatSocket';
 const AiWorkspace = () => {
   const searchParam = useSearchParams();
   const conversationId = searchParam.get('conversation_id');
+  const agentId = searchParam.get('agentId');
 
   const {
     chat,
@@ -37,6 +38,9 @@ const AiWorkspace = () => {
 
   const [loading, setLoading] = useState(true);
   const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [conversationHistory, setConversationHistory] = useState<
+    Conversation[] | null
+  >(null);
   const [canScroll, setCanScroll] = useState(true);
   const hasAutoScrolled = useRef(false);
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
@@ -62,21 +66,38 @@ const AiWorkspace = () => {
 
   useEffect(() => {
     const fetchConversation = async () => {
-      const response = await fetch(`/api/conversation/${conversationId}`);
-      const result = await response.json();
+      try {
+        const [conversation, conversations] = await Promise.all([
+          fetch(`/api/conversation/${conversationId}`),
+          fetch(
+            `/api/conversation/with_agent?mode=${interactionMode || mode}&agentId=${agentId}`,
+          ),
+        ]);
 
-      setConversation(result.conversation);
+        const [singleData, manyData] = await Promise.all([
+          conversation.json(),
+          conversations.json(),
+        ]);
 
-      if (!response.ok) {
+        setConversation(singleData.conversation);
+        setConversationHistory(manyData.conversation);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.log(err.message);
+        } else {
+          console.log('Random error', err);
+        }
+
         router.replace(`/ai-assistant?mode=${mode || interactionMode}`);
-        return;
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchConversation();
-  }, [conversationId, router, interactionMode, mode]);
+  }, [conversationId, router, interactionMode, mode, agentId]);
+
+  console.log('history conversations', conversationHistory);
 
   const isNearBottom = (ele: HTMLDivElement) => {
     return ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;

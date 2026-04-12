@@ -54,6 +54,8 @@ const AiAssistant = () => {
       } catch (err) {
         if (err instanceof Error) {
           console.log(err.message);
+        } else {
+          console.log('Random error', err);
         }
       }
     };
@@ -96,7 +98,7 @@ const AiAssistant = () => {
       const conversationID = result.conversation._id;
 
       router.push(
-        `/ai-workspace?conversation_id=${conversationID}&mode=${mode2 || mode1}`,
+        `/ai-workspace?conversation_id=${conversationID}&mode=${mode2 || mode1}&agentId=${result.conversation.agentId}`,
       );
     } catch (err: unknown) {
       if (err instanceof Error) {
