@@ -130,7 +130,12 @@ const AiWorkspace = () => {
     <main className="md:pr-1 md:pl-2">
       <div className="flex items-center gap-2">
         <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
-          <AISideBar loading={loading} conversation={conversation} />
+          <AISideBar
+            loading={loading}
+            conversation={conversation}
+            conversationHistory={conversationHistory}
+            setHistory={setConversationHistory}
+          />
         </aside>
         <section
           className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
@@ -193,7 +198,12 @@ const AiWorkspace = () => {
             <ChevronLeft size={27} aria-hidden="true" />
           </button>
           <div className="h-[92%] w-full p-1">
-            <AISideBar loading={loading} conversation={conversation} />
+            <AISideBar
+              loading={loading}
+              conversation={conversation}
+              conversationHistory={conversationHistory}
+              setHistory={setConversationHistory}
+            />
           </div>
         </>
       </Drawer>
