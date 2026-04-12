@@ -16,7 +16,17 @@ const conversationSchema = new mongoose.Schema({
     required: true,
   },
 
+  agentName: {
+    type: String,
+    required: true,
+  },
+
   currentAgentModel: {
+    type: String,
+    required: true,
+  },
+
+  agentTitle: {
     type: String,
     required: true,
   },

@@ -21,9 +21,16 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { agentId, defaultAgentModel, mode, customInstruction } = body;
+    const {
+      agentId,
+      defaultAgentModel,
+      mode,
+      customInstruction,
+      agentTitle,
+      agentName,
+    } = body;
 
-    if (!agentId || !defaultAgentModel || !mode) {
+    if (!agentId || !defaultAgentModel || !mode || !agentTitle || !agentName) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 },
@@ -61,6 +68,8 @@ export async function POST(req: NextRequest) {
     const conversation = await ConversationModel.create({
       userId: session.user.id,
       agentId,
+      agentTitle,
+      agentName,
       defaultAgentModel,
       currentAgentModel: defaultAgentModel,
       mode,

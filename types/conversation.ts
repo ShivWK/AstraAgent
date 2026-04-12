@@ -4,6 +4,8 @@ export type Conversation = {
   agentId: string;
   defaultAgentModel: string;
   currentAgentModel: string;
+  agentTitle: string;
+  agentName: string;
   mode: string;
   customInstruction: string;
   title: string;

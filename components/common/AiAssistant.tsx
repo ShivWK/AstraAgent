@@ -14,6 +14,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
 import AiAssistantSkeleton from '../skeletons/AiAssistantSkeleton';
 import { Spinner } from '../ui/spinner';
+import groupByAgent from '@/utils/groupByAgent';
+import { Conversation } from '@/types/conversation';
+import PreviousChats from './PreviousChats';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -25,21 +28,40 @@ const AiAssistant = () => {
   const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
   const [agents, setAgents] = useState([]);
+  const [history, setHistory] = useState<Record<
+    string,
+    Record<string, string | Conversation[]>
+  > | null>(null);
 
   useEffect(() => {
     const fetchAgents = async () => {
-      setLoading(true);
-      const response = await fetch('/api/agents', {
-        method: 'GET',
-      });
+      try {
+        setLoading(true);
 
-      const result = await response.json();
-      setAgents(result.agents);
-      setLoading(false);
+        const [agents, history] = await Promise.all([
+          fetch('/api/agents'),
+          fetch('/api/conversation?mode=text'),
+        ]);
+
+        const [agentData, historyData] = await Promise.all([
+          agents.json(),
+          history.json(),
+        ]);
+
+        setAgents(agentData.agents);
+        setHistory(groupByAgent(historyData.conversations));
+        setLoading(false);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.log(err.message);
+        }
+      }
     };
 
     fetchAgents();
   }, []);
+
+  console.log('History', history);
 
   useEffect(() => {
     if (!mode1 && mode2) {
@@ -58,6 +80,8 @@ const AiAssistant = () => {
         method: 'POST',
         body: JSON.stringify({
           agentId: selectedAgent._id,
+          agentTitle: selectedAgent.title,
+          agentName: selectedAgent.name,
           defaultAgentModel: selectedAgent.model,
           mode: mode1 || mode2,
         }),
@@ -127,18 +151,15 @@ const AiAssistant = () => {
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
           <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-            <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
-              Previous Conversations
-            </h2>
-            <p>No previous conversations</p>
+            <PreviousChats history={history!} />
           </div>
 
-          <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
+          {/* <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
             <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
               Feedback of Conversations
             </h2>
             <p>No feedback</p>
-          </div>
+          </div> */}
         </section>
       </div>
     </main>
