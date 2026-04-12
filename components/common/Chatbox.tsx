@@ -1,7 +1,6 @@
 import { Copy, CheckCheck } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
 import rehypeHighlight from 'rehype-highlight';
 import { useState } from 'react';
 
@@ -25,8 +24,18 @@ const ChatBox = ({ writer, chat }: PropsType) => {
     return (
       <div className="mx-auto mb-8 max-w-[80%] animate-pulse overflow-x-auto text-gray-400">
         <ReactMarkdown
-          remarkPlugins={[remarkGfm, remarkBreaks]}
+          remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
+          components={{
+            p: ({ children }) => <p className="my-4">{children}</p>,
+            ul: ({ children }) => (
+              <ul className="list-disc pl-5">{children}</ul>
+            ),
+            ol: ({ children }) => (
+              <ol className="list-decimal pl-5">{children}</ol>
+            ),
+            li: ({ children }) => <li className="mb-1">{children}</li>,
+          }}
         >
           {chat}
         </ReactMarkdown>
@@ -42,22 +51,26 @@ const ChatBox = ({ writer, chat }: PropsType) => {
     >
       <div className="relative max-w-[85%] rounded-xl bg-gray-600/50 p-1 pb-10 md:max-w-[95%]">
         <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 pb-10 leading-6 wrap-break-word text-white">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight]}
-            components={{
-              p: ({ children }) => <p className="my-4">{children}</p>,
-              ul: ({ children }) => (
-                <ul className="list-disc pl-5">{children}</ul>
-              ),
-              ol: ({ children }) => (
-                <ol className="list-decimal pl-5">{children}</ol>
-              ),
-              li: ({ children }) => <li className="mb-1">{children}</li>,
-            }}
-          >
-            {chat}
-          </ReactMarkdown>
+          {writer === 'user' ? (
+            <p className="wrap-break-word whitespace-pre-wrap">{chat}</p>
+          ) : (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+              components={{
+                p: ({ children }) => <p className="my-4">{children}</p>,
+                ul: ({ children }) => (
+                  <ul className="list-disc pl-5">{children}</ul>
+                ),
+                ol: ({ children }) => (
+                  <ol className="list-decimal pl-5">{children}</ol>
+                ),
+                li: ({ children }) => <li className="mb-1">{children}</li>,
+              }}
+            >
+              {chat}
+            </ReactMarkdown>
+          )}
 
           <div
             className={`absolute flex ${isUser ? (copied ? 'bottom-3 left-3' : 'bottom-2 left-2') : copied ? 'right-3 bottom-3' : 'right-2 bottom-2'} absolute`}

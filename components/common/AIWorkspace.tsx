@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ArrowDown } from 'lucide-react';
 import AISideBar from '@/components/common/aiSidebar/AISideBar';
 import {
   selectOpenSidebar,
@@ -37,8 +37,10 @@ const AiWorkspace = () => {
 
   const [loading, setLoading] = useState(true);
   const [conversation, setConversation] = useState<Conversation | null>(null);
+  const [canScroll, setCanScroll] = useState(true);
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
   const bottomRef = useRef<HTMLDivElement | null>(null);
+
   const interactionMode = useAppSelector(selectSelectedInteractionMode);
   const mode = searchParam.get('mode');
   const dispatch = useAppDispatch();
@@ -83,12 +85,12 @@ const AiWorkspace = () => {
     const element = bottomRef.current;
     if (!element) return;
 
-    if (isNearBottom(element)) {
+    if (isNearBottom(element) && canScroll) {
       element.scrollIntoView({
         behavior: 'smooth',
       });
     }
-  }, [streamMessage, chat]);
+  }, [streamMessage, chat, canScroll]);
 
   // console.log('Chat state', chat);
 
@@ -103,6 +105,7 @@ const AiWorkspace = () => {
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div
+              onScroll={() => setCanScroll(false)}
               className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
             >
               {chat.length > 0 &&
@@ -127,9 +130,19 @@ const AiWorkspace = () => {
               sendMessage={sendMessage}
               stopStream={stopStream}
               streaming={streaming}
+              setCanScroll={setCanScroll}
             />
           ) : (
             <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />
+          )}
+          {!canScroll && (
+            <button
+              onClick={() => setCanScroll(true)}
+              aria-label="Go to bottom"
+              className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80"
+            >
+              <ArrowDown aria-hidden="true" strokeWidth={1.5} />
+            </button>
           )}
         </section>
       </div>

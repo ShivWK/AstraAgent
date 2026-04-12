@@ -7,6 +7,7 @@ type PropType = {
   sendMessage: (val: Payload) => void;
   stopStream: () => void;
   streaming: boolean;
+  setCanScroll: (val: boolean) => void;
 };
 
 const TextInputMethod = ({
@@ -14,6 +15,7 @@ const TextInputMethod = ({
   stopStream,
   error,
   streaming,
+  setCanScroll,
 }: PropType) => {
   const [text, setText] = useState('');
 
@@ -23,6 +25,7 @@ const TextInputMethod = ({
 
     sendMessage({ type: 'text_message', message: text });
     setText('');
+    setCanScroll(true);
   };
 
   const handleSubmit = () => {
@@ -39,6 +42,7 @@ const TextInputMethod = ({
       if (!streaming) {
         messageSender();
         setText('');
+        setCanScroll(true);
       }
     }
   };
