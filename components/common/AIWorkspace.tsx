@@ -38,6 +38,7 @@ const AiWorkspace = () => {
   const [loading, setLoading] = useState(true);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [canScroll, setCanScroll] = useState(true);
+  const hasAutoScrolled = useRef(false);
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -86,11 +87,21 @@ const AiWorkspace = () => {
     if (!element) return;
 
     if (isNearBottom(element) && canScroll) {
+      hasAutoScrolled.current = true;
       element.scrollIntoView({
         behavior: 'smooth',
       });
     }
+
+    setTimeout(() => {
+      hasAutoScrolled.current = false;
+    }, 2000);
   }, [streamMessage, chat, canScroll]);
+
+  // const scrollHandler = () => {
+  //   if (hasAutoScrolled.current) return;
+  //   setCanScroll(false);
+  // }
 
   // console.log('Chat state', chat);
 
@@ -105,7 +116,7 @@ const AiWorkspace = () => {
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
             <div
-              onScroll={() => setCanScroll(false)}
+              // onScroll={scrollHandler}
               className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
             >
               {chat.length > 0 &&
@@ -135,15 +146,15 @@ const AiWorkspace = () => {
           ) : (
             <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />
           )}
-          {!canScroll && (
+          {/* {!canScroll && (
             <button
               onClick={() => setCanScroll(true)}
               aria-label="Go to bottom"
-              className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80"
+              className="absolute bottom-26 md:bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80"
             >
               <ArrowDown aria-hidden="true" strokeWidth={1.5} />
             </button>
-          )}
+          )} */}
         </section>
       </div>
       <Drawer
