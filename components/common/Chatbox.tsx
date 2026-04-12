@@ -41,10 +41,20 @@ const ChatBox = ({ writer, chat }: PropsType) => {
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
       <div className="relative max-w-[85%] rounded-xl bg-gray-600/50 p-1 pb-10 md:max-w-[95%]">
-        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 pb-10 wrap-break-word whitespace-pre-wrap text-white">
+        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 pb-10 leading-6 wrap-break-word text-white">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
+            components={{
+              p: ({ children }) => <p className="my-4">{children}</p>,
+              ul: ({ children }) => (
+                <ul className="list-disc pl-5">{children}</ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal pl-5">{children}</ol>
+              ),
+              li: ({ children }) => <li className="mb-1">{children}</li>,
+            }}
           >
             {chat}
           </ReactMarkdown>
