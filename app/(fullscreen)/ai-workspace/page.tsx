@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import AiWorkspace from '@/components/common/AIWorkspace';
+import AiWorkspace from '@/components/common/aiWorkspace/AIWorkspace';
 
 export default function Page() {
   return (

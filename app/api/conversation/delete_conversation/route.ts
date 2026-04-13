@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/options';
 import { connectDB } from '@/lib/db/connectDb';
 import { ConversationModel } from '@/model/conversationModel';
-import mongoose from 'mongoose';
 
 export async function DELETE(req: NextRequest) {
   try {

@@ -6,19 +6,19 @@ import {
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { Check, ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
-import SpeechInstructionModel from './SpeechInstructionModel';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
-import NewAgentCreationModel from './NewAgentCreationModel';
 import { type Agent } from '@/types/agents';
+import SpeechInstructionModel from './SpeechInstructionModel';
+import NewAgentCreationModel from './NewAgentCreationModel';
 
 type PropsType = {
   assistants: Agent[];
   mode: Mode;
 };
 
-const ModelCards = ({ mode, assistants }: PropsType) => {
+const AgentCards = ({ mode, assistants }: PropsType) => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -202,4 +202,4 @@ const ModelCards = ({ mode, assistants }: PropsType) => {
   );
 };
 
-export default ModelCards;
+export default AgentCards;

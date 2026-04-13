@@ -60,7 +60,7 @@ const Page = () => {
             <ProfileChange />
             <p className="text-lg">{session?.user?.name || 'User Name'}</p>
             <p className="-mt-2 flex items-center gap-2 text-lg">
-              {session?.user?.emailVerified === null && (
+              {session?.user?.emailVerified !== null && (
                 <button
                   onClick={handleEmailVerificationClick}
                   aria-label="Verify Email"

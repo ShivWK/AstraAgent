@@ -14,10 +14,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+} from '../../ui/dialog';
+import { Button } from '../../ui/button';
+import { Label } from '../../ui/label';
+import { Input } from '../../ui/input';
 import {
   Select,
   SelectContent,
@@ -29,7 +29,7 @@ import {
   SelectSeparator,
 } from '@/components/ui/select';
 import Image from 'next/image';
-import { Textarea } from '../ui/textarea';
+import { Textarea } from '../../ui/textarea';
 
 type PropsType = {
   open: boolean;

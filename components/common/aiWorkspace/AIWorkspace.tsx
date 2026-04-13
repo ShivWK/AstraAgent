@@ -10,10 +10,10 @@ import {
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
-import ChatBox from '@/components/common/Chatbox';
+import ChatBox from '@/components/common/aiWorkspace/Chatbox';
 import Drawer from '@/components/common/Modal';
-import TextInputMethod from '@/components/common/TextInputMethod';
-import AudioInputMethod from '@/components/common/AudioInputMethod';
+import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
+import AudioInputMethod from '@/components/common/aiWorkspace/AudioInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Conversation } from '@/types/conversation';

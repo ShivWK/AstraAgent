@@ -1,5 +1,5 @@
 import { type Conversation } from '@/types/conversation';
-import PreviousChat from '../PreviousChat';
+import PreviousChat from '../aiWorkspace/PreviousChat';
 import { Dispatch, SetStateAction } from 'react';
 
 type PropsType = {

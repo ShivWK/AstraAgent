@@ -8,15 +8,16 @@ import {
   selectSelectedInteractionMode,
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
-import AgentCards from '@/components/common/AgentCards';
+
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
-import AiAssistantSkeleton from '../skeletons/AiAssistantSkeleton';
-import { Spinner } from '../ui/spinner';
+import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
+import { Spinner } from '@/components/ui/spinner';
 import groupByAgent from '@/utils/groupByAgent';
 import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
+import AgentCards from './AgentCards';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
