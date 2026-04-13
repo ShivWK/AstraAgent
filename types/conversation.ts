@@ -7,6 +7,7 @@ export type Conversation = {
   agentTitle: string;
   agentName: string;
   mode: string;
+  key: string;
   customInstruction: string;
   title: string;
   updatedAt: Date;

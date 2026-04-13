@@ -16,5 +16,5 @@ const agentsSchema = new mongoose.Schema({
 });
 
 export const AgentsTemplateModel =
-  mongoose.models.AgentsTemplate ||
-  mongoose.model('AgentsTemplate', agentsSchema);
+  mongoose.models.AgentsTemplates ||
+  mongoose.model('AgentsTemplates', agentsSchema);

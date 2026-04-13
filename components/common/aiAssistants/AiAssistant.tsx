@@ -18,6 +18,7 @@ import groupByAgent from '@/utils/groupByAgent';
 import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
+import { Agent } from '@/types/agents';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -28,7 +29,7 @@ const AiAssistant = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
-  const [agents, setAgents] = useState([]);
+  const [agents, setAgents] = useState<Agent[]>([]);
   const [history, setHistory] = useState<Record<
     string,
     Record<string, string | Conversation[]>
@@ -86,6 +87,7 @@ const AiAssistant = () => {
           agentTitle: selectedAgent.title,
           agentName: selectedAgent.name,
           defaultAgentModel: selectedAgent.model,
+          key: selectedAgent.key,
           mode: mode1 || mode2,
         }),
       });
@@ -139,7 +141,7 @@ const AiAssistant = () => {
               )}
             </Button>
           </div>
-          <AgentCards mode={mode2} assistants={agents} />
+          <AgentCards mode={mode2} assistants={agents} setAgents={setAgents} />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}

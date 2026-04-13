@@ -7,7 +7,7 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { Check, ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
 import { type Agent } from '@/types/agents';
 import SpeechInstructionModel from './SpeechInstructionModel';
@@ -16,9 +16,10 @@ import NewAgentCreationModel from './NewAgentCreationModel';
 type PropsType = {
   assistants: Agent[];
   mode: Mode;
+  setAgents: Dispatch<SetStateAction<Agent[]>>;
 };
 
-const AgentCards = ({ mode, assistants }: PropsType) => {
+const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -197,6 +198,7 @@ const AgentCards = ({ mode, assistants }: PropsType) => {
       <NewAgentCreationModel
         open={openCreationModel}
         setOpen={setOpenCreationModel}
+        setAgents={setAgents}
       />
     </>
   );

@@ -8,6 +8,7 @@ const groupByAgent = (conversations: Conversation[]) => {
         acc[current.agentId] = {
           agentTitle: current.agentTitle,
           agentName: current.agentName,
+          agentKey: current.key,
           conversations: [],
         };
       }

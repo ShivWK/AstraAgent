@@ -13,6 +13,8 @@ const PreviousChats = ({ history }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
+  console.log('History in PreviousChats', history);
+
   const toggleGroup = (agentId: string) => {
     setOpenGroups((prev) => ({
       ...prev,
@@ -62,7 +64,7 @@ const PreviousChats = ({ history }: PropsType) => {
                   <div className="flex items-center gap-3">
                     <Image
                       src={
-                        logoForAgents[group.agentTitle as string] ||
+                        logoForAgents[group.agentKey as string] ||
                         '/assistants/general_ai.png'
                       }
                       alt="Agent"

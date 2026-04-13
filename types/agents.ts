@@ -11,6 +11,7 @@ export type Agent = {
   fallbackMessage: string;
 
   userPreference?: string;
+  key: string;
 
   model: string;
   themeColor: string;

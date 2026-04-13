@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/db/connectDb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';
 import { UserAgentsModel } from '@/model/userAgentModel';
+import { agentCreationSchema } from '@/lib/validations/agents.schema';
+import { AgentsTemplateModel } from '@/model/agentsModel';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -20,7 +22,9 @@ export async function GET() {
 
     const agents = await UserAgentsModel.find({
       $or: [{ createdBy: userId }, { createdBy: null }],
-    }).lean();
+    })
+      .sort({ createdAt: -1 })
+      .lean();
 
     return NextResponse.json({
       success: true,
@@ -53,48 +57,51 @@ export async function POST(req: NextRequest) {
     const userId = session.user.id;
     const body = await req.json();
 
-    const {
-      name,
-      description,
-      title,
-      icon,
-      instruction,
-      userInstruction,
-      fallbackMessage,
-      userPreference,
-      placeholder,
-      model,
-      themeColor,
-      isDefault,
-      subHeading,
-      sampleQuestions,
-      createdBy,
-    } = body;
+    const parsed = agentCreationSchema.safeParse(body);
 
-    if (!name || !instruction || !model) {
+    if (!parsed.success) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 },
       );
     }
 
+    const { domain, name, style, level } = parsed.data;
+    let { purpose } = parsed.data;
+
+    console.log('Received data:', { domain, name, style, level, purpose });
+
     await connectDB();
+    const template = await AgentsTemplateModel.findOne({
+      id: domain,
+    });
+
+    if (!template) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid domain' },
+        { status: 400 },
+      );
+    }
+
+    purpose += ` I want you to be ${style} and treat me as of ${level} level.`;
+
     const agent = await UserAgentsModel.create({
       name,
-      description,
-      icon,
-      title,
-      subHeading,
-      model,
-      instruction,
-      userInstruction,
-      fallbackMessage,
-      userPreference,
-      placeholder,
-      themeColor,
-      sampleQuestions,
-      isDefault,
-      createdBy: createdBy ? userId : null,
+      icon: template.icon,
+      description: template.description,
+      subHeading: template.subHeading,
+      title: template.title,
+      Icon: template.icon,
+      instruction: template.instruction,
+      userInstruction: template.userInstruction,
+      fallbackMessage: template.fallbackMessage,
+      userPreference: purpose,
+      model: template.model,
+      themeColor: template.themeColor,
+      sampleQuestions: template.sampleQuestions,
+      placeholder: template.placeholder,
+      isDefault: false,
+      createdBy: userId,
     });
 
     return NextResponse.json(
@@ -122,6 +129,8 @@ export async function POST(req: NextRequest) {
 //     const {
 //       title,
 //       icon,
+//       subHeading,
+//       placeholder,
 //       description,
 //       model,
 //       placeHolder,
@@ -140,17 +149,18 @@ export async function POST(req: NextRequest) {
 //     }
 
 //     await connectDB();
-//     const agent = await AgentsModel.create({
+//     const agent = await AgentsTemplateModel.create({
 //       title,
 //       icon,
 //       description,
 //       model,
-//       placeHolder,
+//       placeholder,
 //       instruction,
 //       userInstruction,
 //       fallbackMessage,
 //       themeColor,
 //       sampleQuestions,
+//       subHeading,
 //     });
 
 //     return NextResponse.json({ success: true, data: agent }, { status: 201 });

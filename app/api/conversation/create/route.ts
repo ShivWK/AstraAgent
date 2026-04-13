@@ -28,9 +28,17 @@ export async function POST(req: NextRequest) {
       customInstruction,
       agentTitle,
       agentName,
+      key,
     } = body;
 
-    if (!agentId || !defaultAgentModel || !mode || !agentTitle || !agentName) {
+    if (
+      !agentId ||
+      !defaultAgentModel ||
+      !mode ||
+      !agentTitle ||
+      !agentName ||
+      !key
+    ) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 },
@@ -95,6 +103,7 @@ export async function POST(req: NextRequest) {
       agentId,
       agentTitle,
       agentName,
+      key,
       defaultAgentModel,
       currentAgentModel: defaultAgentModel,
       mode,

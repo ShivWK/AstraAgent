@@ -30,15 +30,19 @@ import {
 } from '@/components/ui/select';
 import Image from 'next/image';
 import { Textarea } from '../../ui/textarea';
+import { Spinner } from '@/components/ui/spinner';
+import { Agent } from '@/types/agents';
+import { Dispatch, SetStateAction } from 'react';
 
 type PropsType = {
   open: boolean;
   setOpen: (val: boolean) => void;
+  setAgents: Dispatch<SetStateAction<Agent[]>>;
 };
 
 type FromType = z.infer<typeof agentCreationSchema>;
 
-const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
+const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
   const {
     register,
     watch,
@@ -63,17 +67,31 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
     agentCreationPlaceholders[selectedDomain] ||
     'e.g. Describe the role you want this assistant to play';
 
-  const submitHandler = (data: FromType) => {
-    console.log('Submit data:', data);
+  const submitHandler = async (data: FromType) => {
+    try {
+      const response = await fetch('/api/agents', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-    const image = logoForAgents[selectedDomain] || '/assistants/general_ai.png';
+      const result = await response.json();
 
-    const finalPayload = {
-      ...data,
-      image,
-    };
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to create agent');
+      }
 
-    console.log('final data', finalPayload);
+      setAgents((prev) => [result.agent, ...prev]);
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error('Error creating agent:', err.message);
+      } else {
+        console.error('Unknown error creating agent:', err);
+      }
+    }
+
     setOpen(false);
   };
 
@@ -131,7 +149,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                                   {domains.map((domain) => (
                                     <SelectItem
                                       key={domain.id}
-                                      value={domain.name}
+                                      value={domain.key}
                                     >
                                       {domain.name}
                                     </SelectItem>
@@ -158,7 +176,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-45">
                         <SelectValue placeholder="Select Style" />
                       </SelectTrigger>
                       <SelectContent position="popper">
@@ -217,7 +235,7 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-45">
                     <SelectValue placeholder="Select Level" />
                   </SelectTrigger>
                   <SelectContent position="popper">
@@ -236,7 +254,11 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
           <DialogFooter>
             <div className="ml-auto flex items-center gap-2">
               <DialogClose type="button" asChild>
-                <Button variant={'outline'} className="">
+                <Button
+                  variant={'outline'}
+                  className=""
+                  disabled={isSubmitting}
+                >
                   Cancel
                 </Button>
               </DialogClose>
@@ -244,9 +266,17 @@ const NewAgentCreationModel = ({ open, setOpen }: PropsType) => {
                 onClick={() => {}}
                 type="submit"
                 variant={'secondary'}
+                disabled={isSubmitting}
                 className=""
               >
-                Create
+                {isSubmitting ? (
+                  <>
+                    <span>Create</span>
+                    <Spinner />
+                  </>
+                ) : (
+                  'Create'
+                )}
               </Button>
             </div>
           </DialogFooter>

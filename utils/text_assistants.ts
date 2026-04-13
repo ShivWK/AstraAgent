@@ -6,31 +6,32 @@ export type domainType = {
     logo: string;
     category: string;
     name: string;
+    key: string;
     work: string;
   }[];
 }[];
 
 export const logoForAgents: Record<string, string> = {
-  'Language Learning': '/assistants/language_master.png',
-  'Education / Study': '/assistants/personal_tutor.png',
-  'Career Guidance': '/assistants/career_guidance.png',
-  Productivity: '/assistants/productivity.png',
-  'Interview Practice': '/assistants/take_interview.png',
-  'Communication Skills': '/assistants/communication_skills.png',
-  'Writing Assistance': '/assistants/grammar_fixer.png',
-  'Tech & Programming': '/assistants/tech_programming.png',
-  'Fitness & Exercise': '/assistants/fitness.png',
-  'Meditation & Yoga': '/assistants/yog_guru.png',
-  'Mental Wellness': '/assistants/mental_wellness.png',
-  'Life Coaching': '/assistants/life_coaching.png',
-  Relationship: '/assistants/relationship.png',
-  'Personal Finance': '/assistants/finance_assistant.png',
-  'Creative Writing': '/assistants/creative_writing.png',
-  'Content Creation': '/assistants/content_creator.png',
-  'Travel Planning': '/assistants/travel_planner.png',
-  'Virtual Boyfriend': '/assistants/virtual_boy.png',
-  'Virtual Girlfriend': '/assistants/virtual_girl.png',
-  'Custom Assistant': '/assistants/general_ai.png',
+  language_learning: '/assistants/language_master.png',
+  education_study: '/assistants/personal_tutor.png',
+  career_guidance: '/assistants/career_guidance.png',
+  productivity: '/assistants/productivity.png',
+  interview_practice: '/assistants/take_interview.png',
+  communication_skills: '/assistants/communication_skills.png',
+  writing_assistance: '/assistants/grammar_fixer.png',
+  tech_programming: '/assistants/tech_programming.png',
+  fitness_exercise: '/assistants/fitness.png',
+  meditation_yoga: '/assistants/yog_guru.png',
+  mental_wellness: '/assistants/mental_wellness.png',
+  life_coaching: '/assistants/life_coaching.png',
+  relationship: '/assistants/relationship.png',
+  personal_finance: '/assistants/finance_assistant.png',
+  creative_writing: '/assistants/creative_writing.png',
+  content_creation: '/assistants/content_creator.png',
+  travel_planning: '/assistants/travel_planner.png',
+  virtual_boyfriend: '/assistants/virtual_boy.png',
+  virtual_girlfriend: '/assistants/virtual_girl.png',
+  custom_assistant: '/assistants/general_ai.png',
 };
 
 export const TEXT_AGENT_DOMAINS: domainType = [
@@ -42,6 +43,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/language_master.png',
         category: 'Learning & Growth',
         name: 'Language Learning',
+        key: 'language_learning',
         work: 'Speaking practice, correction, pronunciation, vocabulary building.',
       },
       {
@@ -49,6 +51,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistants/personal_tutor.png',
         category: 'Learning & Growth',
         name: 'Education / Study',
+        key: "education_study'",
         work: 'Explaining topics, concepts, exam preparation, academic guidance.',
       },
       {
@@ -56,6 +59,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/career_guidance.png',
         category: 'Learning & Growth',
         name: 'Career Guidance',
+        key: 'career_guidance',
         work: 'Resume help, interview preparation, skill roadmap, career planning.',
       },
       {
@@ -63,6 +67,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/productivity.png',
         category: 'Learning & Growth',
         name: 'Productivity',
+        key: 'productivity',
         work: 'Planning, habit building, focus improvement, routine optimization.',
       },
     ],
@@ -76,6 +81,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/interviewer.png',
         category: 'Work & Professional',
         name: 'Interview Practice',
+        key: 'interview_practice',
         work: 'Mock interviews, structured questions, response feedback.',
       },
       {
@@ -83,6 +89,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/communication_skills.png',
         category: 'Work & Professional',
         name: 'Communication Skills',
+        key: 'communication_skills',
         work: 'Public speaking practice, confidence building, clarity improvement.',
       },
       {
@@ -90,6 +97,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/grammar_fixer.png',
         category: 'Work & Professional',
         name: 'Writing Assistance',
+        key: 'writing_assistance',
         work: 'Email drafting, summaries, clarity improvement, structured writing help.',
       },
       {
@@ -97,6 +105,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/tech_programming.png',
         category: 'Work & Professional',
         name: 'Tech & Programming',
+        key: 'tech_programming',
         work: 'Coding help, debugging guidance, concept explanations for learning.',
       },
     ],
@@ -109,6 +118,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/fitness.png',
         category: 'Health, Wellness & Mind',
         name: 'Fitness & Exercise',
+        key: 'fitness_exercise',
         work: 'Workout routines, general fitness advice, healthy lifestyle tips.',
       },
       {
@@ -116,6 +126,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/yog_guru.png',
         category: 'Health, Wellness & Mind',
         name: 'Meditation & Yoga',
+        key: 'meditation_yoga',
         work: 'Breathing exercises, mindfulness sessions, focus practices.',
       },
       {
@@ -123,6 +134,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/mental_wellness.png',
         category: 'Health, Wellness & Mind',
         name: 'Mental Wellness',
+        key: 'mental_wellness',
         work: 'Stress management, journaling prompts, calm supportive conversations.',
       },
     ],
@@ -135,6 +147,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/life_coaching.png',
         category: 'Life & Personal',
         name: 'Life Coaching',
+        key: 'life_coaching',
         work: 'Goal setting, self-improvement strategies, motivation guidance.',
       },
       {
@@ -142,6 +155,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/relationship.png',
         category: 'Life & Personal',
         name: 'Relationship',
+        key: 'relationship',
         work: 'Communication guidance, understanding boundaries, relationship improvement.',
       },
       {
@@ -149,6 +163,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/finance_assistant.png',
         category: 'Life & Personal',
         name: 'Personal Finance',
+        key: 'personal_finance',
         work: 'Budgeting tips, saving strategies, money management basics.',
       },
 
@@ -157,6 +172,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/travel_planner.png',
         category: 'Life & Personal',
         name: 'Travel Planner',
+        key: 'travel_planner',
         work: 'Trip planning, itinerary creation, destination suggestions, budget guidance.',
       },
 
@@ -165,6 +181,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         category: 'Life & Personal',
         logo: '/assistant/virtual_boy.png',
         name: 'Virtual Boyfriend',
+        key: 'virtual_boyfriend',
         work: 'Romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins, and relationship-style interaction in a safe virtual environment.',
       },
 
@@ -173,6 +190,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         category: 'Life & Personal',
         logo: '/assistant/virtual_girl.png',
         name: 'Virtual Girlfriend',
+        key: 'virtual_girlfriend',
         work: 'Romantic companionship, emotional support, casual conversations, fun flirting, daily check-ins, and relationship-style interaction in a safe virtual environment.',
       },
     ],
@@ -185,6 +203,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/creative_writing.png',
         category: 'Creative & Fun',
         name: 'Creative Writing',
+        key: 'creative_writing',
         work: 'Story ideas, character development, creative brainstorming.',
       },
       {
@@ -192,6 +211,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/',
         category: 'Creative & Fun',
         name: 'Content Creation',
+        key: 'content_creation',
         work: 'Social media ideas, scripts, content structuring.',
       },
     ],
@@ -204,6 +224,7 @@ export const TEXT_AGENT_DOMAINS: domainType = [
         logo: '/assistant/general_ai',
         category: 'Custom',
         name: 'Custom Assistant',
+        key: 'custom_assistant',
         work: 'Handles uncommon or specific user-defined tasks within safe boundaries.',
       },
     ],
