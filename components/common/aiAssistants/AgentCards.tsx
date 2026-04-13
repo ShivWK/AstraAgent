@@ -5,7 +5,7 @@ import {
 
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { Check, ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, CirclePlus, X } from 'lucide-react';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
@@ -83,11 +83,15 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
   const newAgentCreationClickHandler = () => {
     setOpenCreationModel(true);
   };
+
+  const crossClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+  };
   return (
     <>
       <section className="relative h-fit">
         <div ref={containerRef} className="carousel hide-scrollbar">
-          <div className="carousel_group hide-scrollbar my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4">
+          <div className="carousel_group hide-scrollbar my-5 w-45 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4">
             <div
               onClick={newAgentCreationClickHandler}
               className={`rounded-primary flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
@@ -125,8 +129,17 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
                 <div
                   onClick={() => cardClickHandler(ai)}
                   key={ai._id}
-                  className="rounded-primary flex shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
+                  className="rounded-primary relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
                 >
+                  {ai.createdBy && (
+                    <button
+                      onClick={crossClickHandler}
+                      className="absolute top-2 left-2"
+                    >
+                      <X size={18} />
+                    </button>
+                  )}
+
                   <Image
                     src={ai.icon}
                     alt={`A ${ai.title} AI assistant`}
