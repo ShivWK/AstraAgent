@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft, ArrowDown } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import AISideBar from '@/components/common/aiWorkspace/AISideBar';
 import {
   selectOpenSidebar,

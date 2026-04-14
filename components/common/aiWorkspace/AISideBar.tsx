@@ -1,7 +1,7 @@
 import { type Conversation } from '@/types/conversation';
 import AgentDetails from './AgentDetails';
 import PreviousChats from './PreviousChats';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Agent } from '@/types/agents';
 
 type PropsType = {
@@ -19,15 +19,20 @@ const AISideBar = ({
   setHistory,
   currentAgent,
 }: PropsType) => {
+  const [openDropdown, setOpenDropdown] = useState(false);
+
   return (
     <div className="section__agent rounded-primary flex h-full w-full flex-col pb-2">
       <AgentDetails
+        openDropDown={openDropdown}
+        setOpenDropDown={setOpenDropdown}
         loading={loading}
         conversation={conversation}
         currentAgent={currentAgent}
       />
       <PreviousChats
         loading={loading}
+        openDropDown={openDropdown}
         conversationHistory={conversationHistory}
         setHistory={setHistory}
       />

@@ -13,23 +13,26 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { BrainCircuit, ChevronDown } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import ReadMore from '../ReadMore';
 
 type PropsType = {
   conversation: Conversation | null;
   currentAgent: Agent | null;
   loading: boolean;
+  openDropDown: boolean;
+  setOpenDropDown: Dispatch<SetStateAction<boolean>>;
 };
 
 const AgentDetails = ({
+  openDropDown,
+  setOpenDropDown,
   conversation,
   currentAgent: selectedAgent,
   loading,
 }: PropsType) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
-  const [openDropdown, setOpenDropdown] = useState(false);
   const [currentModel, setCurrentModel] = useState<ModelOption | null>(null);
 
   useEffect(() => {
@@ -42,20 +45,20 @@ const AgentDetails = ({
 
   useEffect(() => {
     if (containerRef.current) {
-      if (openDropdown) {
+      if (openDropDown) {
         setHeight(containerRef.current.scrollHeight);
       } else {
         setHeight(0);
       }
     }
-  }, [openDropdown]);
+  }, [openDropDown]);
 
   const modelDetailsContainerClickHandler = (
     e: React.MouseEvent<HTMLDivElement>,
   ) => {
     e.stopPropagation();
-    if (openDropdown) return;
-    setOpenDropdown(!openDropdown);
+    if (openDropDown) return;
+    setOpenDropDown(!openDropDown);
   };
 
   if (loading) return <AgentDetailsSkeleton />;
@@ -108,18 +111,18 @@ const AgentDetails = ({
         <div
           ref={containerRef}
           onClick={modelDetailsContainerClickHandler}
-          className={`relative p-2 ${openDropdown ? 'cursor-default' : 'cursor-pointer'}`}
+          className={`relative p-2 ${openDropDown ? 'cursor-default' : 'cursor-pointer'}`}
         >
           <button
-            className={`absolute top-2 right-2 transform transition-all duration-250 ease-linear ${openDropdown ? '-rotate-180' : ''}`}
+            className={`absolute top-2 right-2 transform transition-all duration-250 ease-linear ${openDropDown ? '-rotate-180' : ''}`}
             aria-label="Open Drop Down"
-            onClick={() => setOpenDropdown(!openDropdown)}
+            onClick={() => setOpenDropDown(!openDropDown)}
           >
             <ChevronDown aria-hidden="true" size={20} />
           </button>
           <div className="rounded-primary w-full">
             <div
-              className={`mb-2 flex items-center gap-1 ${openDropdown ? 'block' : 'hidden'}`}
+              className={`mb-2 flex items-center gap-1 ${openDropDown ? 'block' : 'hidden'}`}
             >
               <BrainCircuit
                 className="text-green-400"
