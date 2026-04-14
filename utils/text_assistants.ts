@@ -295,18 +295,18 @@ export const modelOptions: Record<string, ModelOption> = {
   fast: {
     id: 'fast',
     label: '⚡ FAST',
-    name: 'LLaMA 3.2 3B Instruct',
+    name: 'LLaMA 3.1 3B Instruct',
     color: 'to-amber-400/60',
-    value: 'meta-llama/llama-3.2-3b-instruct:free',
+    value: 'llama-3.1-8b-instant',
     description: 'Quick responses for simple tasks and daily use.',
   },
 
   smart: {
     id: 'smart',
     label: '🧠 SMART',
-    name: 'Gemma 3 12B',
+    name: 'LLaMA 3.3 70B Versatile',
     color: 'to-blue-500/60',
-    value: 'google/gemma-3-12b-it:free',
+    value: 'llama-3.3-70b-versatile',
     description: 'Balanced for study, communication, and planning tasks.',
   },
 
@@ -322,9 +322,9 @@ export const modelOptions: Record<string, ModelOption> = {
   logic: {
     id: 'logic',
     label: '🧩 LOGIC EXPERT',
-    name: 'Qwen 3.6 Plus',
+    name: 'Z.ai: GLM 4.5 Air',
     color: 'to-purple-500/60',
-    value: 'qwen/qwen3.6-plus:free',
+    value: 'z-ai/glm-4.5-air:free',
     description: 'Best for coding, problem-solving, and technical tasks.',
   },
 
