@@ -1,11 +1,10 @@
 'use client';
 
 import { ChevronLeft, ArrowDown } from 'lucide-react';
-import AISideBar from '@/components/common/aiSidebar/AISideBar';
+import AISideBar from '@/components/common/aiWorkspace/AISideBar';
 import {
   selectOpenSidebar,
   setOpenSidebar,
-  selectSelectedInteractionMode,
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
@@ -16,14 +15,16 @@ import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
 import AudioInputMethod from '@/components/common/aiWorkspace/AudioInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { type Conversation } from '@/types/conversation';
 import { type Mode } from '@/features/agents/agentsSlice';
 import useChatSocket from '@/hooks/useChatSocket';
+import SampleQuestions from './SampleQuestions';
+import useFetchData from '@/hooks/useFetchData';
 
 const AiWorkspace = () => {
   const searchParam = useSearchParams();
   const conversationId = searchParam.get('conversation_id');
   const agentId = searchParam.get('agentId');
+  const mode = searchParam.get('mode');
 
   const {
     chat,
@@ -36,68 +37,24 @@ const AiWorkspace = () => {
     streaming,
   } = useChatSocket(conversationId as string);
 
-  const [loading, setLoading] = useState(true);
-  const [conversation, setConversation] = useState<Conversation | null>(null);
-  const [conversationHistory, setConversationHistory] = useState<
-    Conversation[] | null
-  >(null);
+  const {
+    loading,
+    currentAgent,
+    conversation,
+    hasMessages,
+    conversationHistory,
+    interactionMode,
+    setHasMessages,
+    setConversationHistory,
+  } = useFetchData({ conversationId, mode, agentId, setChat, chat });
+
   const [canScroll, setCanScroll] = useState(true);
   const hasAutoScrolled = useRef(false);
   const isSidebarOpen = useAppSelector(selectOpenSidebar);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const interactionMode = useAppSelector(selectSelectedInteractionMode);
-  const mode = searchParam.get('mode');
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  const closeHandler = () => {
-    dispatch(setOpenSidebar(false));
-    window.history.back();
-  };
-
-  useEffect(() => {
-    if (!interactionMode && mode) {
-      dispatch(setSelectedInteractionMode(mode as Mode));
-    } else if (!interactionMode && !mode) {
-      router.push('/mode-selection');
-    }
-  }, [dispatch, interactionMode, mode, router]);
-
-  useEffect(() => {
-    const fetchConversation = async () => {
-      try {
-        const [conversation, conversations] = await Promise.all([
-          fetch(`/api/conversation/${conversationId}`),
-          fetch(
-            `/api/conversation/with_agent?mode=${interactionMode || mode}&agentId=${agentId}`,
-          ),
-        ]);
-
-        const [singleData, manyData] = await Promise.all([
-          conversation.json(),
-          conversations.json(),
-        ]);
-
-        setConversation(singleData.conversation);
-        setConversationHistory(manyData.conversation);
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log(err.message);
-        } else {
-          console.log('Random error', err);
-        }
-
-        router.replace(`/ai-assistant?mode=${mode || interactionMode}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchConversation();
-  }, [conversationId, router, interactionMode, mode, agentId]);
-
-  console.log('history conversations', conversationHistory);
 
   const isNearBottom = (ele: HTMLDivElement) => {
     return ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;
@@ -119,12 +76,28 @@ const AiWorkspace = () => {
     }, 2000);
   }, [streamMessage, chat, canScroll]);
 
+  useEffect(() => {
+    if (!interactionMode && mode) {
+      dispatch(setSelectedInteractionMode(mode as Mode));
+    } else if (!interactionMode && !mode) {
+      router.push('/mode-selection');
+    }
+  }, [dispatch, interactionMode, mode, router]);
+
+  const suggestionClickHandler = (q: string) => {
+    sendMessage({ type: 'text_message', message: q });
+    setHasMessages(true);
+  };
+
+  const closeHandler = () => {
+    dispatch(setOpenSidebar(false));
+    window.history.back();
+  };
+
   // const scrollHandler = () => {
   //   if (hasAutoScrolled.current) return;
   //   setCanScroll(false);
   // }
-
-  // console.log('Chat state', chat);
 
   return (
     <main className="md:pr-1 md:pl-2">
@@ -135,15 +108,23 @@ const AiWorkspace = () => {
             conversation={conversation}
             conversationHistory={conversationHistory}
             setHistory={setConversationHistory}
+            currentAgent={currentAgent}
           />
         </aside>
         <section
           className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
         >
           <div className="section__chat-box relative w-full basis-full overflow-auto">
+            {!hasMessages && (
+              <SampleQuestions
+                clickHandler={suggestionClickHandler}
+                loading={loading}
+                sampleQuestions={currentAgent?.sampleQuestions}
+              />
+            )}
             <div
               // onScroll={scrollHandler}
-              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
+              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
             >
               {chat.length > 0 &&
                 chat.map((item, index) => (
@@ -203,6 +184,7 @@ const AiWorkspace = () => {
               conversation={conversation}
               conversationHistory={conversationHistory}
               setHistory={setConversationHistory}
+              currentAgent={currentAgent}
             />
           </div>
         </>

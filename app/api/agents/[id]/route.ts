@@ -19,6 +19,7 @@ export async function GET(
 
   try {
     const { id } = await params;
+    console.log('Got id', id);
 
     if (!id) {
       return NextResponse.json(

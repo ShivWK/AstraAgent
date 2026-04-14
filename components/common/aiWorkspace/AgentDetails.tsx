@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { modelOptions, type ModelOption } from '@/utils/text_assistants';
 import { type Conversation } from '@/types/conversation';
+import { type Agent } from '@/types/agents';
 import AgentDetailsSkeleton from '@/components/skeletons/AgentDetailsSkeleton';
 
 import {
@@ -13,52 +14,31 @@ import {
 } from '@/components/ui/select';
 import { BrainCircuit, ChevronDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import { Agent } from '@/types/agents';
 import ReadMore from '../ReadMore';
 
 type PropsType = {
-  loading: boolean;
   conversation: Conversation | null;
+  currentAgent: Agent | null;
+  loading: boolean;
 };
 
-const AgentDetails = ({ loading, conversation }: PropsType) => {
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+const AgentDetails = ({
+  conversation,
+  currentAgent: selectedAgent,
+  loading,
+}: PropsType) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [currentModel, setCurrentModel] = useState<ModelOption | null>(null);
-  const [agentLoading, setAgentLoading] = useState(true);
 
   useEffect(() => {
-    if (loading) return;
-
-    const fetchAgent = async () => {
-      try {
-        const response = await fetch(`api/agents/${conversation?.agentId}`);
-        const result = await response.json();
-
-        if (!response.ok) {
-          throw new Error(result.message);
-        }
-
-        setSelectedAgent(result.agent);
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log(err.message);
-        } else {
-          console.log('Unknown Error', err);
-        }
-      } finally {
-        setAgentLoading(false);
-      }
+    const call = () => {
+      setCurrentModel(modelOptions[conversation?.defaultAgentModel as string]);
     };
 
-    fetchAgent();
-  }, [conversation, loading]);
-
-  useEffect(() => {
-    setCurrentModel(modelOptions[conversation?.defaultAgentModel as string]);
-  }, [agentLoading, conversation]);
+    call();
+  }, [loading, conversation]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -78,7 +58,7 @@ const AgentDetails = ({ loading, conversation }: PropsType) => {
     setOpenDropdown(!openDropdown);
   };
 
-  if (agentLoading || loading) return <AgentDetailsSkeleton />;
+  if (loading) return <AgentDetailsSkeleton />;
 
   return (
     <div className="section__agent-card dark:bg-primary-dark-bg h-auto rounded-lg p-2">
@@ -99,7 +79,7 @@ const AgentDetails = ({ loading, conversation }: PropsType) => {
 
         <div>
           <p className="line-clamp-1 text-xl font-semibold max-md:text-center md:text-2xl">
-            {(selectedAgent?.name[0] as string).toUpperCase() +
+            {(selectedAgent?.name[0] as string)?.toUpperCase() +
               selectedAgent?.name.slice(1)}
           </p>
           <div className="flex items-center max-md:gap-1 max-md:text-sm md:flex-col md:items-start">

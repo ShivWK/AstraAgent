@@ -13,8 +13,6 @@ const PreviousChats = ({ history }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
-  console.log('History in PreviousChats', history);
-
   const toggleGroup = (agentId: string) => {
     setOpenGroups((prev) => ({
       ...prev,

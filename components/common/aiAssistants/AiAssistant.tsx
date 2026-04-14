@@ -65,8 +65,6 @@ const AiAssistant = () => {
     fetchAgents();
   }, []);
 
-  console.log('History', history);
-
   useEffect(() => {
     if (!mode1 && mode2) {
       dispatch(setSelectedInteractionMode(mode2 as Mode));

@@ -24,6 +24,8 @@ const agentsSlice = createSlice({
   initialState,
   reducers: {
     setSelectedAgent: (state, action: PayloadAction<Agent>) => {
+      console.log('Clalled to upftae');
+
       if (state.selectedAgent?._id === action.payload._id) {
         state.selectedAgent = null;
       } else {

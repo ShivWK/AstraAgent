@@ -1,8 +1,9 @@
 import { type Conversation } from '@/types/conversation';
-import PreviousChat from '../aiWorkspace/PreviousChat';
+import PreviousChat from './PreviousChat';
 import { Dispatch, SetStateAction } from 'react';
 
 type PropsType = {
+  loading: boolean;
   conversationHistory: Conversation[] | null;
   setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
 };
