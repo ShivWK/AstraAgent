@@ -8,9 +8,15 @@ type PropsType = {
   chat: string;
   id: string;
   setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
+  currentConversation: Conversation | null;
 };
 
-const PreviousChat = ({ chat, id, setHistory }: PropsType) => {
+const PreviousChat = ({
+  chat,
+  id,
+  setHistory,
+  currentConversation,
+}: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
@@ -49,9 +55,13 @@ const PreviousChat = ({ chat, id, setHistory }: PropsType) => {
     setOpenDropdown(false);
   };
 
+  console.log('Current', currentConversation?._id, 'and', id);
+
   return (
     <>
-      <li className="rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between px-2 py-1 transition-all duration-150 ease-linear hover:bg-white/20">
+      <li
+        className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between px-2 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-white/20' : 'hover:bg-white/20'}`}
+      >
         <button className="line-clamp-1 text-start">{chat}</button>
         <button
           onClick={moreOptionsClickHandler}

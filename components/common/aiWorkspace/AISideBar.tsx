@@ -33,6 +33,7 @@ const AISideBar = ({
       <PreviousChats
         loading={loading}
         openDropDown={openDropdown}
+        currentConversation={conversation}
         conversationHistory={conversationHistory}
         setHistory={setHistory}
       />
