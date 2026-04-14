@@ -23,7 +23,7 @@ const SampleQuestions = ({
         How can I help you today?
       </h2>
 
-      <div className="mt-5 flex w-fit max-w-2xl flex-col items-center justify-center gap-3">
+      <div className="flex w-fit max-w-2xl flex-col items-center justify-center gap-3">
         {sampleQuestions!.map((q, i) => (
           <button
             key={i}
