@@ -287,7 +287,6 @@ export type ModelOption = {
   label: string;
   name: string;
   color: string;
-  value: string;
   description: string;
 };
 
@@ -297,7 +296,6 @@ export const modelOptions: Record<string, ModelOption> = {
     label: '⚡ FAST',
     name: 'LLaMA 3.1 3B Instruct',
     color: 'to-amber-400/60',
-    value: 'llama-3.1-8b-instant',
     description: 'Quick responses for simple tasks and daily use.',
   },
 
@@ -306,7 +304,6 @@ export const modelOptions: Record<string, ModelOption> = {
     label: '🧠 SMART',
     name: 'LLaMA 3.3 70B Versatile',
     color: 'to-blue-500/60',
-    value: 'llama-3.3-70b-versatile',
     description: 'Balanced for study, communication, and planning tasks.',
   },
 
@@ -315,7 +312,6 @@ export const modelOptions: Record<string, ModelOption> = {
     label: '🔥 POWERFUL',
     name: 'Gemma 3 27B',
     color: 'to-red-500/60',
-    value: 'google/gemma-3-27b-it:free',
     description: 'Stronger reasoning for complex tasks like career guidance.',
   },
 
@@ -324,7 +320,6 @@ export const modelOptions: Record<string, ModelOption> = {
     label: '🧩 LOGIC EXPERT',
     name: 'Z.ai: GLM 4.5 Air',
     color: 'to-purple-500/60',
-    value: 'z-ai/glm-4.5-air:free',
     description: 'Best for coding, problem-solving, and technical tasks.',
   },
 
@@ -333,7 +328,6 @@ export const modelOptions: Record<string, ModelOption> = {
     label: '🎭 CONVERSATIONAL',
     name: 'Trinity Large Preview',
     color: 'to-pink-500/60',
-    value: 'arcee-ai/trinity-large-preview:free',
     description: 'Natural conversations for chat, relationships, and support.',
   },
 };
