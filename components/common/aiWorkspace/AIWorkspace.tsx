@@ -19,6 +19,7 @@ import { type Mode } from '@/features/agents/agentsSlice';
 import useChatSocket from '@/hooks/useChatSocket';
 import SampleQuestions from './SampleQuestions';
 import useFetchData from '@/hooks/useFetchData';
+import ChatSkeleton from '@/components/skeletons/ChatSkeleton';
 
 const AiWorkspace = () => {
   const searchParam = useSearchParams();
@@ -126,6 +127,8 @@ const AiWorkspace = () => {
               // onScroll={scrollHandler}
               className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
             >
+              {loading && <ChatSkeleton />}
+
               {chat.length > 0 &&
                 chat.map((item, index) => (
                   <ChatBox key={index} writer={item.role} chat={item.content} />
