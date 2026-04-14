@@ -55,8 +55,6 @@ const PreviousChat = ({
     setOpenDropdown(false);
   };
 
-  console.log('Current', currentConversation?._id, 'and', id);
-
   return (
     <>
       <li

@@ -1,6 +1,7 @@
 import { type Conversation } from '@/types/conversation';
 import PreviousChat from './PreviousChat';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import PreviousChatSkeleton from '@/components/skeletons/PreviousChatSkeleton';
 
 type PropsType = {
   loading: boolean;
@@ -11,6 +12,7 @@ type PropsType = {
 };
 
 const PreviousChats = ({
+  loading,
   conversationHistory,
   setHistory,
   openDropDown,
@@ -42,22 +44,26 @@ const PreviousChats = ({
         Your Chats with this agent
       </h2>
 
-      <ul className="section__previous-chats flex min-h-0 grow-0 basis-full list-none flex-col gap-1">
-        <li className="mt-0.5 mb-1">
-          <button className="rounded-primary dark:bg-primary-dark-bg/70 shrink-0 cursor-pointer px-2 py-0.5 transition-all duration-100 ease-linear active:scale-95">
-            Create New chat
-          </button>
-        </li>
-        {conversationHistory?.map((conversation) => (
-          <PreviousChat
-            currentConversation={currentConversation}
-            key={conversation._id}
-            chat={conversation.title}
-            id={conversation._id}
-            setHistory={setHistory}
-          />
-        ))}
-      </ul>
+      {!loading ? (
+        <PreviousChatSkeleton />
+      ) : (
+        <ul className="section__previous-chats flex min-h-0 grow-0 basis-full list-none flex-col gap-1">
+          <li className="mt-0.5 mb-1">
+            <button className="rounded-primary dark:bg-primary-dark-bg/70 shrink-0 cursor-pointer px-2 py-0.5 transition-all duration-100 ease-linear active:scale-95">
+              Create New chat
+            </button>
+          </li>
+          {conversationHistory?.map((conversation) => (
+            <PreviousChat
+              currentConversation={currentConversation}
+              key={conversation._id}
+              chat={conversation.title}
+              id={conversation._id}
+              setHistory={setHistory}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
