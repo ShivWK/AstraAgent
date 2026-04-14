@@ -44,7 +44,7 @@ const PreviousChats = ({
         Your Chats with this agent
       </h2>
 
-      {!loading ? (
+      {loading ? (
         <PreviousChatSkeleton />
       ) : (
         <ul className="section__previous-chats flex min-h-0 grow-0 basis-full list-none flex-col gap-1">
