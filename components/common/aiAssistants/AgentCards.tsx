@@ -94,9 +94,11 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
   const handleCardInteraction = (id: string) => {
     setActiveCardId((prev) => (prev === id ? null : id));
   };
-  const crossClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const crossClickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
   };
+
   return (
     <>
       <section className="relative h-fit">
@@ -146,10 +148,11 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
                 >
                   {ai.createdBy && (
                     <button
+                      aria-label="Delete Agent"
                       onClick={crossClickHandler}
                       className={`absolute top-2 left-2 opacity-0 transition-all duration-100 ease-linear group-hover:opacity-100 ${activeCardId === ai._id ? 'opacity-100' : ''}`}
                     >
-                      <TrashIcon size={16} />
+                      <TrashIcon aria-hidden="true" size={16} />
                     </button>
                   )}
 

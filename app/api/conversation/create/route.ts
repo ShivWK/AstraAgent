@@ -31,6 +31,17 @@ export async function POST(req: NextRequest) {
       key,
     } = body;
 
+    console.log(
+      'Got',
+      agentId,
+      defaultAgentModel,
+      mode,
+      customInstruction,
+      agentTitle,
+      agentName,
+      key,
+    );
+
     if (
       !agentId ||
       !defaultAgentModel ||

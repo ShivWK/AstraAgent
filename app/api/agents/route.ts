@@ -88,6 +88,7 @@ export async function POST(req: NextRequest) {
     const agent = await UserAgentsModel.create({
       name,
       icon: template.icon,
+      key: domain,
       description: template.description,
       subHeading: template.subHeading,
       title: template.title,

@@ -26,6 +26,11 @@ const agentsSchema = new mongoose.Schema({
     required: true,
   },
 
+  key: {
+    type: String,
+    required: true,
+  },
+
   instruction: {
     type: String,
     required: true,
