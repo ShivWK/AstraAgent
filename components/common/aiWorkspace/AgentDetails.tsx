@@ -152,16 +152,30 @@ const AgentDetails = ({
             </p>
           </div>
 
-          <div className="z-80">
+          <div>
             <Select>
               <SelectTrigger className="mt-4 w-full rounded-md px-3 py-2 shadow-[0_0_10px_0px_#05df72] placeholder:text-gray-400 hover:bg-gray-600/50 dark:bg-gray-700">
                 <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent position="popper" className="z-10000">
                 <SelectGroup>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  {Object.entries(modelOptions).map(([key, model]) => {
+                    const isDefault = selectedAgent?.model === model?.id;
+
+                    return (
+                      <SelectItem
+                        key={key}
+                        value={model.id}
+                        disabled={isDefault}
+                        className="flex justify-between"
+                      >
+                        <span>{model.name}</span>
+                        <span className="text-xs opacity-70">
+                          {model.label.slice(2)}
+                        </span>
+                      </SelectItem>
+                    );
+                  })}
                 </SelectGroup>
               </SelectContent>
             </Select>

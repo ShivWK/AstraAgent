@@ -310,7 +310,7 @@ export const modelOptions: Record<string, ModelOption> = {
   powerful: {
     id: 'powerful',
     label: '🔥 POWERFUL',
-    name: 'Gemma 3 27B',
+    name: 'Gemini Flash Latest',
     color: 'to-red-500/60',
     description: 'Stronger reasoning for complex tasks like career guidance.',
   },
