@@ -191,7 +191,7 @@ const AgentDetails = ({
               <SelectContent position="popper" className="z-10000">
                 <SelectGroup>
                   {Object.entries(modelOptions).map(([key, model]) => {
-                    const isDefault = selectedAgent?.model === model?.id;
+                    const isDefault = currentModel?.id === model?.id;
 
                     return (
                       <SelectItem
