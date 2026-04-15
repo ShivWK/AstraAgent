@@ -1,23 +1,14 @@
-import {
-  selectSelectedAgent,
-  setSelectedAgent,
-} from '@/features/agents/agentsSlice';
+import { setSelectedAgent } from '@/features/agents/agentsSlice';
 
 import useAppDispatch from '@/hooks/useAppDispatch';
-import useAppSelector from '@/hooks/useAppSelector';
-import {
-  Check,
-  ChevronLeft,
-  ChevronRight,
-  CirclePlus,
-  TrashIcon,
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { type Mode } from '@/features/agents/agentsSlice';
 import { type Agent } from '@/types/agents';
 import SpeechInstructionModel from './SpeechInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
+import AgentCard from './AgentCard';
 
 type PropsType = {
   assistants: Agent[];
@@ -26,7 +17,6 @@ type PropsType = {
 };
 
 const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
-  const selectedAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
@@ -91,14 +81,6 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
     setOpenCreationModel(true);
   };
 
-  const handleCardInteraction = (id: string) => {
-    setActiveCardId((prev) => (prev === id ? null : id));
-  };
-
-  const crossClickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-  };
-
   return (
     <>
       <section className="relative h-fit">
@@ -138,46 +120,14 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
 
             {assistants.map((ai) => {
               return (
-                <div
-                  onClick={() => {
-                    handleCardInteraction(ai._id);
-                    cardClickHandler(ai);
-                  }}
+                <AgentCard
                   key={ai._id}
-                  className="group rounded-primary relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105"
-                >
-                  {ai.createdBy && (
-                    <button
-                      aria-label="Delete Agent"
-                      onClick={crossClickHandler}
-                      className={`absolute top-2 left-2 opacity-0 transition-all duration-100 ease-linear group-hover:opacity-100 ${activeCardId === ai._id ? 'opacity-100' : ''}`}
-                    >
-                      <TrashIcon aria-hidden="true" size={16} />
-                    </button>
-                  )}
-
-                  <Image
-                    src={ai.icon}
-                    alt={`A ${ai.title} AI assistant`}
-                    height={300}
-                    width={300}
-                    quality={100}
-                    placeholder="blur"
-                    blurDataURL="/blurImage.png"
-                    className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
-                  />
-                  {selectedAgent?._id === ai._id && (
-                    <Check
-                      size={20}
-                      strokeWidth={3}
-                      className="absolute top-2 right-2 overflow-hidden rounded-full bg-linear-to-br from-[#8B75FE] via-[#5BDDFD] to-[#1F58FD] p-1"
-                    />
-                  )}
-                  <p className="mt-2 w-[99%] truncate text-center">{ai.name}</p>
-                  <p className="w-[99%] truncate text-center font-medium">
-                    {ai.title}
-                  </p>
-                </div>
+                  setActiveCardId={setActiveCardId}
+                  activeCardId={activeCardId}
+                  ai={ai}
+                  setAgents={setAgents}
+                  cardClickHandler={cardClickHandler}
+                />
               );
             })}
           </div>

@@ -4,6 +4,7 @@ import { Conversation } from '@/types/conversation';
 import { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import { ChevronDown, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/ui/spinner';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
@@ -17,6 +18,7 @@ type PropsType = {
 
 const PreviousChats = ({ history, setHistory }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const router = useRouter();
 
   const toggleGroup = (agentId: string) => {
@@ -42,6 +44,7 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
     mode: string,
     agentId: string,
   ) => {
+    if (deleteLoading) return;
     router.push(
       `/ai-workspace?conversation_id=${id}&mode=${mode}&agentId=${agentId}`,
     );
@@ -52,6 +55,8 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
     id: string,
     agentId: string,
   ) => {
+    if (deleteLoading) return;
+    setDeleteLoading(true);
     e.stopPropagation();
     try {
       const response = await fetch(
@@ -87,6 +92,8 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
       } else {
         console.log('Random error in delete', err);
       }
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -151,7 +158,7 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
                             )
                           }
                           key={conversation._id}
-                          className="flex cursor-pointer items-center justify-between rounded-md bg-gray-500/40 px-2 py-1.5 text-start text-sm text-gray-200 transition hover:bg-gray-600/50"
+                          className={`flex cursor-pointer items-center justify-between rounded-md bg-gray-500/40 px-2 py-1.5 text-start text-sm text-gray-200 transition hover:bg-gray-600/50 ${deleteLoading && 'opacity-50'}`}
                         >
                           <span className="line-clamp-1 basis-full">
                             {conversation.title || 'Untitled Conversation'}
@@ -163,7 +170,11 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
                             }
                             className="rounded-full bg-gray-700/50 p-0.5"
                           >
-                            <X aria-hidden="true" size={18} />
+                            {deleteLoading ? (
+                              <Spinner className="size-5" />
+                            ) : (
+                              <X aria-hidden="true" size={19.5} />
+                            )}
                           </button>
                         </div>
                       ),
