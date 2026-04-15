@@ -20,8 +20,11 @@ import useChatSocket from '@/hooks/useChatSocket';
 import SampleQuestions from './SampleQuestions';
 import useFetchData from '@/hooks/useFetchData';
 import ChatSkeleton from '@/components/skeletons/ChatSkeleton';
+import useToast from '@/hooks/useToast';
+import { showToast } from '@/utils/showToast';
 
 const AiWorkspace = () => {
+  const { ToastContainer, triggerToast } = useToast('top-right');
   const searchParam = useSearchParams();
   const conversationId = searchParam.get('conversation_id');
   const agentId = searchParam.get('agentId');
@@ -36,6 +39,8 @@ const AiWorkspace = () => {
     setChat,
     setStreamMessage,
     streaming,
+    modelLoading,
+    setError,
   } = useChatSocket(conversationId as string);
 
   const {
@@ -85,6 +90,18 @@ const AiWorkspace = () => {
     }
   }, [dispatch, interactionMode, mode, router]);
 
+  useEffect(() => {
+    if (!error) return;
+
+    showToast({
+      message: error as string,
+      type: 'error',
+      trigger: triggerToast,
+    });
+
+    setError(null);
+  }, [error, setError, triggerToast]);
+
   const suggestionClickHandler = (q: string) => {
     sendMessage({ type: 'text_message', message: q });
     setHasMessages(true);
@@ -101,62 +118,70 @@ const AiWorkspace = () => {
   // }
 
   return (
-    <main className="md:pr-1 md:pl-2">
-      <div className="flex items-center gap-2">
-        <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
-          <AISideBar
-            loading={loading}
-            conversation={conversation}
-            conversationHistory={conversationHistory}
-            setHistory={setConversationHistory}
-            currentAgent={currentAgent}
-          />
-        </aside>
-        <section
-          className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
-        >
-          <div className="section__chat-box relative w-full basis-full overflow-auto">
-            {!hasMessages && (
-              <SampleQuestions
-                clickHandler={suggestionClickHandler}
-                loading={loading}
-                sampleQuestions={currentAgent?.sampleQuestions}
+    <>
+      <main className="md:pr-1 md:pl-2">
+        <div className="flex items-center gap-2">
+          <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
+            <AISideBar
+              loading={loading}
+              conversation={conversation}
+              conversationHistory={conversationHistory}
+              setHistory={setConversationHistory}
+              currentAgent={currentAgent}
+            />
+          </aside>
+          <section
+            className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
+          >
+            <div className="section__chat-box relative w-full basis-full overflow-auto">
+              {!hasMessages && (
+                <SampleQuestions
+                  clickHandler={suggestionClickHandler}
+                  loading={loading}
+                  sampleQuestions={currentAgent?.sampleQuestions}
+                />
+              )}
+              <div
+                // onScroll={scrollHandler}
+                className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
+              >
+                {loading && <ChatSkeleton />}
+
+                {chat.length > 0 &&
+                  chat.map((item, index) => (
+                    <ChatBox
+                      key={index}
+                      writer={item.role}
+                      chat={item.content}
+                    />
+                  ))}
+
+                {streamMessage !== '' && (
+                  <ChatBox writer="system" chat={streamMessage} />
+                )}
+
+                <div ref={bottomRef} />
+              </div>
+
+              <div
+                className={`${mode === 'text' || interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
+              />
+            </div>
+            {mode === 'text' || interactionMode === 'text' ? (
+              <TextInputMethod
+                sendMessage={sendMessage}
+                stopStream={stopStream}
+                streaming={streaming}
+                setCanScroll={setCanScroll}
+                loading={modelLoading}
+              />
+            ) : (
+              <AudioInputMethod
+                setStream={setStreamMessage}
+                setChat={setChat}
               />
             )}
-            <div
-              // onScroll={scrollHandler}
-              className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
-            >
-              {loading && <ChatSkeleton />}
-
-              {chat.length > 0 &&
-                chat.map((item, index) => (
-                  <ChatBox key={index} writer={item.role} chat={item.content} />
-                ))}
-
-              {streamMessage !== '' && (
-                <ChatBox writer="system" chat={streamMessage} />
-              )}
-
-              <div ref={bottomRef} />
-            </div>
-
-            <div
-              className={`${mode === 'text' || interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
-            />
-          </div>
-          {mode === 'text' || interactionMode === 'text' ? (
-            <TextInputMethod
-              error={error}
-              sendMessage={sendMessage}
-              stopStream={stopStream}
-              streaming={streaming}
-              setCanScroll={setCanScroll}
-            />
-          ) : (
-            <AudioInputMethod setStream={setStreamMessage} setChat={setChat} />
-          )}
-          {/* {!canScroll && (
+            {/* {!canScroll && (
             <button
               onClick={() => setCanScroll(true)}
               aria-label="Go to bottom"
@@ -165,34 +190,36 @@ const AiWorkspace = () => {
               <ArrowDown aria-hidden="true" strokeWidth={1.5} />
             </button>
           )} */}
-        </section>
-      </div>
-      <Drawer
-        open={isSidebarOpen}
-        onClose={closeHandler}
-        showClasses="translate-x-0"
-        hideClasses="-translate-x-full"
-        className="fixed top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
-      >
-        <>
-          <button
-            className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-            onClick={closeHandler}
-          >
-            <ChevronLeft size={27} aria-hidden="true" />
-          </button>
-          <div className="h-[92%] w-full p-1">
-            <AISideBar
-              loading={loading}
-              conversation={conversation}
-              conversationHistory={conversationHistory}
-              setHistory={setConversationHistory}
-              currentAgent={currentAgent}
-            />
-          </div>
-        </>
-      </Drawer>
-    </main>
+          </section>
+        </div>
+        <Drawer
+          open={isSidebarOpen}
+          onClose={closeHandler}
+          showClasses="translate-x-0"
+          hideClasses="-translate-x-full"
+          className="fixed top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
+        >
+          <>
+            <button
+              className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
+              onClick={closeHandler}
+            >
+              <ChevronLeft size={27} aria-hidden="true" />
+            </button>
+            <div className="h-[92%] w-full p-1">
+              <AISideBar
+                loading={loading}
+                conversation={conversation}
+                conversationHistory={conversationHistory}
+                setHistory={setConversationHistory}
+                currentAgent={currentAgent}
+              />
+            </div>
+          </>
+        </Drawer>
+      </main>
+      {ToastContainer}
+    </>
   );
 };
 

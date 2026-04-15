@@ -8,10 +8,11 @@ export type Payload = {
 const useChatSocket = (conversationId: string) => {
   const socketRef = useRef<WebSocket | null>(null);
 
+  const [loading, setLoading] = useState(false);
   const [streaming, setStreaming] = useState(false);
   const [chat, setChat] = useState<Record<string, string>[]>([]);
   const [streamMessage, setStreamMessage] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const streamRef = useRef('');
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const useChatSocket = (conversationId: string) => {
           console.log('Ai start');
           streamRef.current = '';
           setStreamMessage('');
-          setStreaming(true);
+          setLoading(true);
           break;
 
         case 'ai_stream':
@@ -49,11 +50,13 @@ const useChatSocket = (conversationId: string) => {
           streamRef.current = '';
           setStreamMessage('');
           setStreaming(false);
+          setLoading(false);
           break;
 
         case 'error':
           setError(parsed.message);
           setStreaming(false);
+          setLoading(false);
           console.log('Error occurred', parsed.message);
           break;
       }
@@ -96,6 +99,8 @@ const useChatSocket = (conversationId: string) => {
     setChat,
     setStreamMessage,
     streaming,
+    modelLoading: loading,
+    setError,
   };
 };
 

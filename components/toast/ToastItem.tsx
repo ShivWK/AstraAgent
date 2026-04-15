@@ -3,10 +3,10 @@ import { useEffect, useRef } from 'react';
 import styles from './toast.module.css';
 
 const icons = {
-  success: <CircleCheckBig className="icon" size={23.5} />,
-  info: <Info className="icon" size={23.5} />,
-  warning: <CircleAlert className="icon" size={23.5} />,
-  error: <CircleX className="icon" size={23.5} />,
+  success: <CircleCheckBig className="icon shrink-0" size={23.5} />,
+  info: <Info className="icon shrink-0" size={23.5} />,
+  warning: <CircleAlert className="icon shrink-0" size={23.5} />,
+  error: <CircleX className="icon shrink-0" size={23.5} />,
 };
 
 type PropsType = {
@@ -56,7 +56,7 @@ const ToastItem = ({
     <div
       onMouseEnter={pauseTimer}
       onMouseLeave={resumeTimer}
-      className={`${styles['toast']} ${styles[type]} ${styles[animation]}`}
+      className={`${styles['toast']} ${styles[type]} ${styles[animation]} z-999999`}
       role={type === 'success' || type === 'info' ? 'status' : 'alert'}
     >
       {icons[type]}

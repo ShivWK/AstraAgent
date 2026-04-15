@@ -1,23 +1,26 @@
+import { Spinner } from '@/components/ui/spinner';
 import { Payload } from '@/hooks/useChatSocket';
 import { ArrowUpFromDot, X } from 'lucide-react';
 import { useState } from 'react';
 
 type PropType = {
-  error: string;
   sendMessage: (val: Payload) => void;
   stopStream: () => void;
   streaming: boolean;
   setCanScroll: (val: boolean) => void;
+  loading: boolean;
 };
 
 const TextInputMethod = ({
   sendMessage,
   stopStream,
-  error,
   streaming,
   setCanScroll,
+  loading,
 }: PropType) => {
   const [text, setText] = useState('');
+
+  console.log('Model Loading', loading);
 
   const messageSender = () => {
     const trimmed = text.trim();
@@ -65,11 +68,15 @@ const TextInputMethod = ({
       <button
         type="button"
         onClick={handleSubmit}
-        disabled={(!text.trim() && !streaming) || !!error}
+        disabled={!text.trim() && !streaming}
         className="rounded-lg bg-blue-900 p-2.5"
       >
-        {streaming ? (
-          <X aria-hidden="true" />
+        {loading ? (
+          streaming ? (
+            <X aria-hidden="true" />
+          ) : (
+            <Spinner className="size-6" />
+          )
         ) : (
           <ArrowUpFromDot aria-hidden="true" />
         )}
