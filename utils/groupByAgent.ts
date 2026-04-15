@@ -1,7 +1,6 @@
 import { type Conversation } from '@/types/conversation';
 
 const groupByAgent = (conversations: Conversation[]) => {
-  console.log('Conversations', conversations);
   return conversations.reduce(
     (acc, current) => {
       if (!acc[current.agentId]) {

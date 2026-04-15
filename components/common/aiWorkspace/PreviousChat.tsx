@@ -3,12 +3,15 @@ import { useState } from 'react';
 import { type Conversation } from '@/types/conversation';
 import { Dispatch, SetStateAction } from 'react';
 import RenameModal from './RenameModal';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   chat: string;
   id: string;
   setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
   currentConversation: Conversation | null;
+  agentId: string;
+  mode: string | null;
 };
 
 const PreviousChat = ({
@@ -16,9 +19,12 @@ const PreviousChat = ({
   id,
   setHistory,
   currentConversation,
+  agentId,
+  mode,
 }: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const router = useRouter();
 
   const moreOptionsClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -55,12 +61,23 @@ const PreviousChat = ({
     setOpenDropdown(false);
   };
 
+  const handleOpenConversation = () => {
+    router.push(
+      `/ai-workspace?conversation_id=${id}&mode=${mode}&agentId=${agentId}`,
+    );
+  };
+
   return (
     <>
       <li
         className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between px-2 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-white/20' : 'hover:bg-white/20'}`}
       >
-        <button className="line-clamp-1 text-start">{chat}</button>
+        <button
+          onClick={handleOpenConversation}
+          className="line-clamp-1 basis-full text-start"
+        >
+          {chat}
+        </button>
         <button
           onClick={moreOptionsClickHandler}
           aria-haspopup="menu"

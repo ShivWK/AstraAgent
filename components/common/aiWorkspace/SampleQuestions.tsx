@@ -1,6 +1,3 @@
-import useAppSelector from '@/hooks/useAppSelector';
-import { selectSelectedAgent } from '@/features/agents/agentsSlice';
-
 type PropsType = {
   clickHandler: (val: string) => void;
   loading: boolean;
@@ -12,9 +9,6 @@ const SampleQuestions = ({
   loading,
   sampleQuestions,
 }: PropsType) => {
-  const selectAgent = useAppSelector(selectSelectedAgent);
-  console.log(selectAgent);
-
   if (loading) return null;
 
   return (

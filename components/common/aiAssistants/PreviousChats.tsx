@@ -1,15 +1,21 @@
 import Image from 'next/image';
 import { logoForAgents } from '@/utils/text_assistants';
 import { Conversation } from '@/types/conversation';
-import { useState, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import { ChevronDown, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
+  setHistory: Dispatch<
+    SetStateAction<Record<
+      string,
+      Record<string, string | Conversation[]>
+    > | null>
+  >;
 };
 
-const PreviousChats = ({ history }: PropsType) => {
+const PreviousChats = ({ history, setHistory }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
@@ -41,6 +47,49 @@ const PreviousChats = ({ history }: PropsType) => {
     );
   };
 
+  const crossClickHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: string,
+    agentId: string,
+  ) => {
+    e.stopPropagation();
+    try {
+      const response = await fetch(
+        `/api/conversation/delete_conversation?id=${id}`,
+        {
+          method: 'DELETE',
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      setHistory((prv) => {
+        if (!prv?.[agentId]) return prv;
+
+        const conversations = prv[agentId].conversations || [];
+        return {
+          ...prv,
+          [agentId]: {
+            ...prv[agentId],
+            conversations: (conversations as Conversation[]).filter(
+              (obj) => obj._id !== id,
+            ),
+          },
+        };
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log('Random error in delete', err);
+      }
+    }
+  };
+
   return (
     <div>
       <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
@@ -54,10 +103,9 @@ const PreviousChats = ({ history }: PropsType) => {
             const isOpen = openGroups[agentId];
             return (
               <div key={agentId}>
-                {/* 🔹 Agent Header (clickable) */}
                 <div
                   onClick={() => toggleGroup(agentId)}
-                  className="mb-2 flex cursor-pointer items-center justify-between rounded-md p-2 transition hover:bg-gray-700/30"
+                  className="mb-2 flex cursor-pointer items-center justify-between rounded-md bg-white/20 p-2 transition hover:bg-gray-700/30"
                 >
                   <div className="flex items-center gap-3">
                     <Image
@@ -81,7 +129,6 @@ const PreviousChats = ({ history }: PropsType) => {
                     </div>
                   </div>
 
-                  {/* 🔽 Arrow */}
                   <ChevronDown
                     className={`transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
@@ -104,9 +151,20 @@ const PreviousChats = ({ history }: PropsType) => {
                             )
                           }
                           key={conversation._id}
-                          className="cursor-pointer rounded-md bg-gray-500/40 px-3 py-2 text-start text-sm text-gray-200 transition hover:bg-gray-600/50"
+                          className="flex cursor-pointer items-center justify-between rounded-md bg-gray-500/40 px-2 py-1.5 text-start text-sm text-gray-200 transition hover:bg-gray-600/50"
                         >
-                          {conversation.title || 'Untitled Conversation'}
+                          <span className="line-clamp-1 basis-full">
+                            {conversation.title || 'Untitled Conversation'}
+                          </span>
+                          <button
+                            aria-label="Delete Chat"
+                            onClick={(e) =>
+                              crossClickHandler(e, conversation._id, agentId)
+                            }
+                            className="rounded-full bg-gray-700/50 p-0.5"
+                          >
+                            <X aria-hidden="true" size={18} />
+                          </button>
                         </div>
                       ),
                     )}

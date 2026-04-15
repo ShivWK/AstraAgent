@@ -87,6 +87,7 @@ const AiAssistant = () => {
           defaultAgentModel: selectedAgent.model,
           key: selectedAgent.key,
           mode: mode1 || mode2,
+          newCreation: false,
         }),
       });
 
@@ -154,7 +155,7 @@ const AiAssistant = () => {
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
           <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-            <PreviousChats history={history!} />
+            <PreviousChats history={history!} setHistory={setHistory} />
           </div>
 
           {/* <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">

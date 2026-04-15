@@ -29,18 +29,8 @@ export async function POST(req: NextRequest) {
       agentTitle,
       agentName,
       key,
+      newCreation = false,
     } = body;
-
-    console.log(
-      'Got',
-      agentId,
-      defaultAgentModel,
-      mode,
-      customInstruction,
-      agentTitle,
-      agentName,
-      key,
-    );
 
     if (
       !agentId ||
@@ -84,29 +74,31 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const oldConversations = await ConversationModel.find({
-      userId: session.user.id,
-      agentId,
-    })
-      .sort({ updatedAt: -1 })
-      .lean();
+    if (!newCreation) {
+      const oldConversations = await ConversationModel.find({
+        userId: session.user.id,
+        agentId,
+      })
+        .sort({ updatedAt: -1 })
+        .lean();
 
-    const mostRecent = oldConversations[0];
-    const THRESHOLD = 30 * 60 * 1000;
+      const mostRecent = oldConversations[0];
+      const THRESHOLD = 30 * 60 * 1000;
 
-    const isRecent =
-      mostRecent &&
-      Date.now() - new Date(mostRecent.updatedAt).getTime() < THRESHOLD;
+      const isRecent =
+        mostRecent &&
+        Date.now() - new Date(mostRecent.updatedAt).getTime() < THRESHOLD;
 
-    if (isRecent) {
-      await ConversationModel.findByIdAndUpdate(mostRecent._id, {
-        updatedAt: Date.now(),
-      });
+      if (isRecent) {
+        await ConversationModel.findByIdAndUpdate(mostRecent._id, {
+          updatedAt: Date.now(),
+        });
 
-      return NextResponse.json({
-        success: true,
-        conversation: mostRecent,
-      });
+        return NextResponse.json({
+          success: true,
+          conversation: mostRecent,
+        });
+      }
     }
 
     const conversation = await ConversationModel.create({

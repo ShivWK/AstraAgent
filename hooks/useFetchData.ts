@@ -40,6 +40,8 @@ const useFetchData = ({
   const router = useRouter();
 
   useEffect(() => {
+    if (!conversationId || !agentId) return;
+
     const fetchConversation = async () => {
       try {
         const [conversation, conversations, messages, agent] =
@@ -63,6 +65,8 @@ const useFetchData = ({
         setConversation(singleData.conversation);
         setConversationHistory(manyData.conversation);
         setCurrentAgent(agentData.agent);
+
+        console.log('Messages', chat, 'id', conversationId);
 
         if (messagesData.messages && messagesData.messages.length > 0) {
           setHasMessages(true);
