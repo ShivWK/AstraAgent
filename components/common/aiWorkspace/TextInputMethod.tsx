@@ -69,7 +69,7 @@ const TextInputMethod = ({
         type="button"
         onClick={handleSubmit}
         disabled={!text.trim() && !streaming}
-        className="rounded-lg bg-blue-900 p-2.5"
+        className="rounded-lg bg-blue-900 p-2.5 disabled:opacity-50"
       >
         {loading ? (
           streaming ? (
