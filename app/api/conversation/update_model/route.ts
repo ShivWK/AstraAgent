@@ -21,6 +21,8 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { conversationId, newModel } = body;
 
+    console.log(conversationId, newModel);
+
     if (!conversationId || !newModel) {
       return NextResponse.json(
         { success: false, message: 'Missing fields' },
@@ -53,7 +55,7 @@ export async function PATCH(req: NextRequest) {
         currentAgentModel: newModel,
         updatedAt: new Date(),
       },
-      { new: true },
+      { returnDocument: 'after' },
     );
 
     if (!updated) {

@@ -34,10 +34,11 @@ const AgentDetails = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
   const [currentModel, setCurrentModel] = useState<ModelOption | null>(null);
+  const [isSwitchingModel, setIsSwitchingModel] = useState(false);
 
   useEffect(() => {
     const call = () => {
-      setCurrentModel(modelOptions[conversation?.defaultAgentModel as string]);
+      setCurrentModel(modelOptions[conversation?.currentAgentModel as string]);
     };
 
     call();
@@ -59,6 +60,33 @@ const AgentDetails = ({
     e.stopPropagation();
     if (openDropDown) return;
     setOpenDropDown(!openDropDown);
+  };
+
+  const handleModelChange = async (modelId: string) => {
+    if (!conversation?._id) return;
+
+    try {
+      setIsSwitchingModel(true);
+      setCurrentModel(modelOptions[modelId]);
+
+      const res = await fetch(`/api/conversation/update_model`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          conversationId: conversation._id,
+          newModel: modelId,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Failed to update model');
+    } catch (err) {
+      console.error(err);
+      setCurrentModel(modelOptions[conversation?.defaultAgentModel as string]);
+    } finally {
+      setIsSwitchingModel(false);
+    }
   };
 
   if (loading) return <AgentDetailsSkeleton />;
@@ -153,7 +181,10 @@ const AgentDetails = ({
           </div>
 
           <div>
-            <Select>
+            <Select
+              onValueChange={(value) => handleModelChange(value)}
+              disabled={isSwitchingModel}
+            >
               <SelectTrigger className="mt-4 w-full rounded-md px-3 py-2 shadow-[0_0_10px_0px_#05df72] placeholder:text-gray-400 hover:bg-gray-600/50 dark:bg-gray-700">
                 <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
               </SelectTrigger>
