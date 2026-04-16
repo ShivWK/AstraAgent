@@ -66,6 +66,28 @@ const AiAssistant = () => {
   }, []);
 
   useEffect(() => {
+    setHistory((prev) => {
+      if (!prev) return prev;
+
+      let hasChange = false;
+
+      const cleaned = Object.entries(prev).reduce(
+        (acc, [agentId, agentData]) => {
+          if (agentData?.conversations?.length > 0) {
+            acc[agentId] = agentData;
+          } else {
+            hasChange = true;
+          }
+          return acc;
+        },
+        {} as typeof prev,
+      );
+
+      return hasChange ? cleaned : prev;
+    });
+  }, [history]);
+
+  useEffect(() => {
     if (!mode1 && mode2) {
       dispatch(setSelectedInteractionMode(mode2 as Mode));
     } else if (!mode1 && !mode2) {
@@ -140,7 +162,12 @@ const AiAssistant = () => {
               )}
             </Button>
           </div>
-          <AgentCards mode={mode2} assistants={agents} setAgents={setAgents} />
+          <AgentCards
+            mode={mode2}
+            assistants={agents}
+            setAgents={setAgents}
+            setHistory={setHistory}
+          />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}

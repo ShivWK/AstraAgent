@@ -9,14 +9,21 @@ import { type Agent } from '@/types/agents';
 import SpeechInstructionModel from './SpeechInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
 import AgentCard from './AgentCard';
+import { Conversation } from '@/types/conversation';
 
 type PropsType = {
   assistants: Agent[];
   mode: Mode;
   setAgents: Dispatch<SetStateAction<Agent[]>>;
+  setHistory: Dispatch<
+    SetStateAction<Record<
+      string,
+      Record<string, string | Conversation[]>
+    > | null>
+  >;
 };
 
-const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
+const AgentCards = ({ mode, assistants, setAgents, setHistory }: PropsType) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
@@ -127,6 +134,7 @@ const AgentCards = ({ mode, assistants, setAgents }: PropsType) => {
                   ai={ai}
                   setAgents={setAgents}
                   cardClickHandler={cardClickHandler}
+                  setHistory={setHistory}
                 />
               );
             })}

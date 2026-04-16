@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { TrashIcon, Check } from 'lucide-react';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
+import { Conversation } from '@/types/conversation';
 
 type PropsType = {
   cardClickHandler: (val: Agent) => void;
@@ -11,6 +12,12 @@ type PropsType = {
   setActiveCardId: Dispatch<SetStateAction<string | null>>;
   setAgents: Dispatch<SetStateAction<Agent[]>>;
   ai: Agent;
+  setHistory: Dispatch<
+    SetStateAction<Record<
+      string,
+      Record<string, string | Conversation[]>
+    > | null>
+  >;
 };
 
 const AgentCard = ({
@@ -19,6 +26,7 @@ const AgentCard = ({
   ai,
   setActiveCardId,
   activeCardId,
+  setHistory,
 }: PropsType) => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -41,6 +49,13 @@ const AgentCard = ({
 
       setAgents((prv) => {
         return [...prv.filter((obj) => obj._id !== ai._id)];
+      });
+
+      setHistory((prev) => {
+        if (!prev) return prev;
+
+        const { [ai._id]: _, ...rest } = prev;
+        return rest;
       });
     } catch (err) {
       if (err instanceof Error) {
