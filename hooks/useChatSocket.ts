@@ -26,21 +26,20 @@ const useChatSocket = (conversationId: string) => {
 
       switch (parsed.type) {
         case 'ai_start':
-          console.log('Ai start');
+          // console.log('Ai start');
           streamRef.current = '';
           setStreamMessage('');
-          setLoading(true);
           break;
 
         case 'ai_stream':
-          console.log('Ai streaming');
+          // console.log('Ai streaming');
           streamRef.current += parsed.chunk;
           setStreamMessage(streamRef.current);
           setStreaming(true);
           break;
 
         case 'ai_end':
-          console.log('Ai end');
+          // console.log('Ai end');
           const finalAnswer = streamRef.current;
 
           setChat((prv) => {
@@ -76,6 +75,7 @@ const useChatSocket = (conversationId: string) => {
   };
 
   const sendMessage = (payload: Payload) => {
+    setLoading(true);
     if (payload.type === 'text_message') {
       setChat((prv) => [...prv, { role: 'user', content: payload.message }]);
 

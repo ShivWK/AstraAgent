@@ -46,7 +46,15 @@ const conversationSchema = new mongoose.Schema({
     type: String,
   },
 
-  title: String,
+  title: {
+    type: String,
+    default: 'New Chat',
+  },
+
+  isTitleGenerated: {
+    type: Boolean,
+    default: false,
+  },
 
   createdAt: {
     type: Date,

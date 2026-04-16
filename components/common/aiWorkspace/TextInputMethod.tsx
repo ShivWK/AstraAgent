@@ -20,8 +20,6 @@ const TextInputMethod = ({
 }: PropType) => {
   const [text, setText] = useState('');
 
-  console.log('Model Loading', loading);
-
   const messageSender = () => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -69,7 +67,7 @@ const TextInputMethod = ({
         type="button"
         onClick={handleSubmit}
         disabled={!text.trim() && !streaming}
-        className="rounded-lg bg-blue-900 p-2.5 disabled:opacity-50"
+        className={`rounded-lg bg-blue-900 p-2.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
       >
         {loading ? (
           streaming ? (

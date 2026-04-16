@@ -5,6 +5,7 @@ type ArgumentsType = {
   type: 'info' | 'success' | 'error' | 'warning';
   animation?: 'slide' | 'pop';
   trigger: (val: TriggerToastArgumentsType) => void;
+  duration?: number;
 };
 
 export function showToast({
@@ -12,12 +13,13 @@ export function showToast({
   type,
   animation = 'slide',
   trigger,
+  duration = 3000,
 }: ArgumentsType) {
   const toast: TriggerToastArgumentsType = {
     message,
     animation,
     type,
-    duration: 3000,
+    duration,
   };
 
   trigger(toast);

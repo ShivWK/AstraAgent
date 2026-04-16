@@ -9,6 +9,7 @@ export type Conversation = {
   mode: string;
   key: string;
   customInstruction: string;
+  isTitleGenerated: boolean;
   title: string;
   updatedAt: Date;
   createdAt: Date;

@@ -34,8 +34,9 @@ export async function PATCH(req: NextRequest) {
       conversationId,
       {
         title,
+        isTitleGenerated: true,
       },
-      { new: true },
+      { returnDocument: 'after' },
     );
 
     if (!updated) {

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/store';
 import { Agent } from '@/types/agents';
+import { Conversation } from '@/types/conversation';
 
 export type Mode = 'text' | 'speech' | '';
 type Assistant = Agent | null;
@@ -10,6 +11,7 @@ type InitialState = {
   voiceAgentInstruction: string;
   selectedAgent: Assistant;
   openSidebar: boolean;
+  conversationHistory: Conversation[] | null;
 };
 
 const initialState: InitialState = {
@@ -17,6 +19,7 @@ const initialState: InitialState = {
   voiceAgentInstruction: '',
   selectedAgent: null,
   openSidebar: false,
+  conversationHistory: null,
 };
 
 const agentsSlice = createSlice({
@@ -24,8 +27,6 @@ const agentsSlice = createSlice({
   initialState,
   reducers: {
     setSelectedAgent: (state, action: PayloadAction<Agent>) => {
-      console.log('Clalled to upftae');
-
       if (state.selectedAgent?._id === action.payload._id) {
         state.selectedAgent = null;
       } else {
@@ -45,6 +46,10 @@ const agentsSlice = createSlice({
     setOpenSidebar: (state, action: PayloadAction<boolean>) => {
       state.openSidebar = action.payload;
     },
+
+    setConversationHistory: (state, action: PayloadAction<Conversation[]>) => {
+      state.conversationHistory = action.payload;
+    },
   },
 });
 
@@ -57,10 +62,13 @@ export const selectSelectedInteractionMode = (state: RootState) =>
 export const selectOpenSidebar = (state: RootState) => state.agents.openSidebar;
 export const selectVoiceAgentInstruction = (state: RootState) =>
   state.agents.voiceAgentInstruction;
+export const selectConversationHistory = (state: RootState) =>
+  state.agents.conversationHistory;
 
 export const {
   setSelectedAgent,
   setSelectedInteractionMode,
   setOpenSidebar,
   setVoiceAgentInstruction,
+  setConversationHistory,
 } = agentsSlice.actions;

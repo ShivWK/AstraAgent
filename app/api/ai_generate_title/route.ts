@@ -1,26 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MODEL_MAP } from '@/lib/constant';
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, model = 'smart' } = await req.json();
+    const { messages } = await req.json();
 
-    if (!message) {
+    if (!messages) {
       return NextResponse.json(
-        { success: false, message: 'Message is required' },
+        { success: false, message: 'Messages are required' },
         { status: 400 },
       );
     }
 
-    const selectedModel = MODEL_MAP[model];
-    console.log('Selected Model:', selectedModel);
+    const formattedMessages = messages
+      .map((m: Record<string, string>) => `${m.role}: ${m.content}`)
+      .join('\n');
 
-    if (!selectedModel) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid model' },
-        { status: 400 },
-      );
-    }
+    const prompt = `
+    You are a title generator.
+
+    Rules:
+    - Max 5-6 words
+    - No quotes
+    - No punctuation at end
+    - Clear and specific
+    - Based on user intent
+
+    Conversation:
+    ${formattedMessages}
+
+    Return only the title.
+    `;
 
     const response = await fetch(
       'https://openrouter.ai/api/v1/chat/completions',
@@ -33,29 +42,31 @@ export async function POST(req: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: selectedModel,
+          model: 'arcee-ai/trinity-large-preview:free',
           messages: [
-            // {
-            //   role: 'system',
-            //   content: 'You are a helpful AI assistant.',
-            // },
             {
               role: 'user',
-              content: message,
+              content: prompt,
             },
           ],
         }),
       },
     );
 
+    console.log('Agent response for title', JSON.stringify(response));
+
     const data = await response.json();
-    console.log('OpenRouter Response:', data);
-    const aiText =
-      data?.choices?.[0]?.message?.content || 'No response from AI';
+
+    if (!response.ok) {
+      throw new Error('Error in generating Response');
+    }
+
+    const aiText = data?.choices?.[0]?.message?.content || 'New Chat';
+    console.log(aiText);
 
     return NextResponse.json({
       success: true,
-      reply: aiText,
+      title: aiText,
     });
   } catch (error) {
     console.error('OpenRouter Error:', error);

@@ -22,7 +22,7 @@ const ChatBox = ({ writer, chat }: PropsType) => {
 
   if (writer === 'system') {
     return (
-      <div className="mx-auto mb-8 max-w-[80%] animate-pulse overflow-x-auto text-gray-400">
+      <div className="mx-auto mb-8 max-w-[80%] animate-pulse overflow-x-auto rounded-lg border px-4 pb-3 text-gray-400">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeHighlight]}
@@ -50,7 +50,7 @@ const ChatBox = ({ writer, chat }: PropsType) => {
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
       <div className="relative max-w-[85%] rounded-xl bg-gray-600/50 p-1 pb-10">
-        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 pb-3 leading-6 wrap-break-word text-white">
+        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 px-4 leading-6 wrap-break-word text-white">
           {writer === 'user' ? (
             <p className="wrap-break-word whitespace-pre-wrap">{chat}</p>
           ) : (
