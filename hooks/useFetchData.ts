@@ -42,16 +42,22 @@ const useFetchData = ({
   useEffect(() => {
     if (!conversationId || !agentId) return;
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     const fetchConversation = async () => {
+      setLoading(true);
+
       try {
         const [conversation, conversations, messages, agent] =
           await Promise.all([
-            fetch(`/api/conversation/${conversationId}`),
+            fetch(`/api/conversation/${conversationId}`, { signal }),
             fetch(
               `/api/conversation/with_agent?mode=${interactionMode || mode}&agentId=${agentId}`,
+              { signal },
             ),
-            fetch(`/api/messages/${conversationId}`),
-            fetch(`/api/agents/${agentId}`),
+            fetch(`/api/messages/${conversationId}`, { signal }),
+            fetch(`/api/agents/${agentId}`, { signal }),
           ]);
 
         const [singleData, manyData, messagesData, agentData] =
@@ -66,11 +72,10 @@ const useFetchData = ({
         setConversationHistory(manyData.conversation);
         setCurrentAgent(agentData.agent);
 
-        if (messagesData.messages && messagesData.messages.length > 0) {
-          setHasMessages(true);
-          setChat(messagesData.messages);
-        }
-      } catch (err) {
+        setChat(messagesData.messages || []);
+        setHasMessages(messagesData.messages?.length > 0);
+      } catch (err: unknown) {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
         if (err instanceof Error) {
           console.log(err.message);
         } else {
@@ -84,7 +89,18 @@ const useFetchData = ({
     };
 
     fetchConversation();
+
+    return () => controller.abort();
   }, [conversationId, router, interactionMode, mode, setChat, agentId]);
+
+  console.log(currentAgent, 'AGent');
+
+  useEffect(() => {
+    if (!conversationId) return;
+
+    setChat([]);
+    setHasMessages(false);
+  }, [conversationId, setChat]);
 
   useEffect(() => {
     if (!interactionMode && mode) {
@@ -180,7 +196,6 @@ const useFetchData = ({
     conversation?.title,
     conversation?.isTitleGenerated,
     conversationId,
-    conversationHistory,
   ]);
 
   return {

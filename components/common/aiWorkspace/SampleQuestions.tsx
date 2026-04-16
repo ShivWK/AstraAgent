@@ -18,7 +18,7 @@ const SampleQuestions = ({
       </h2>
 
       <div className="flex w-fit max-w-2xl flex-col items-center justify-center gap-3">
-        {sampleQuestions!.map((q, i) => (
+        {sampleQuestions?.map((q, i) => (
           <button
             key={i}
             onClick={() => clickHandler(q)}
