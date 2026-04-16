@@ -1,7 +1,7 @@
 import { Spinner } from '@/components/ui/spinner';
 import { Payload } from '@/hooks/useChatSocket';
 import { ArrowUpFromDot, X } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 type PropType = {
   sendMessage: (val: Payload) => void;
@@ -18,7 +18,33 @@ const TextInputMethod = ({
   setCanScroll,
   loading,
 }: PropType) => {
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState('');
+  const [columnLayout, setColumnLayout] = useState(false);
+
+  const MAX_HEIGHT = 200;
+
+  useEffect(() => {
+    const call = () => {
+      const ele = inputRef.current;
+      if (!ele) return;
+
+      ele.style.height = 'auto';
+      const newHeight = Math.min(ele.scrollHeight, MAX_HEIGHT);
+      ele.style.height = newHeight + 'px';
+      ele.style.overflowY = ele.scrollHeight > MAX_HEIGHT ? 'auto' : 'hidden';
+
+      const BUFFER = 10;
+
+      setColumnLayout((prev) => {
+        if (ele.scrollHeight > MAX_HEIGHT + BUFFER) return true;
+        if (ele.scrollHeight < MAX_HEIGHT - BUFFER) return false;
+        return prev;
+      });
+    };
+
+    call();
+  }, [text]);
 
   const messageSender = () => {
     const trimmed = text.trim();
@@ -52,13 +78,14 @@ const TextInputMethod = ({
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className="absolute bottom-5 left-1/2 z-40 flex max-h-[40%] w-[95%] -translate-x-1/2 items-end gap-2 rounded-2xl border-2 border-blue-900 bg-black py-2 pr-2 pl-4 md:bottom-6 md:w-[88%]"
+      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-2 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 bg-black md:bottom-6 md:w-[88%]`}
     >
       <textarea
+        ref={inputRef}
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className="wrap-break-words field-sizing-content max-h-full flex-1 resize-none self-center overflow-auto border border-none border-white text-lg outline-none"
+        className={`wrap-break-words resize-none border-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full border-white text-lg outline-none`}
         aria-label="Enter Query"
         placeholder="Enter query"
       />

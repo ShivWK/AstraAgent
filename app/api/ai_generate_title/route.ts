@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       title: aiText,
     });
   } catch (error) {
-    console.error('OpenRouter Error:', error);
+    console.error('OpenRouter', error);
 
     return NextResponse.json(
       { success: false, message: 'Server error' },
