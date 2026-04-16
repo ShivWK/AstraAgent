@@ -3,6 +3,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/options';
 import { UserAgentsModel } from '@/model/userAgentModel';
 import { connectDB } from '@/lib/db/connectDb';
+import { ConversationModel } from '@/model/conversationModel';
+import { MessagesModel } from '@/model/messagesModel';
 
 export async function GET(
   req: Request,
@@ -67,17 +69,38 @@ export async function DELETE(
     const { id: agentId } = await params;
 
     await connectDB();
-    const deletedAgent = await UserAgentsModel.findOneAndDelete({
+
+    const agent = await UserAgentsModel.findOne({
       _id: agentId,
       createdBy: userId,
     });
 
-    if (!deletedAgent) {
+    if (!agent) {
       return NextResponse.json(
         { message: 'Agent not found or not authorized' },
         { status: 404 },
       );
     }
+
+    const conversations = await ConversationModel.find({ agentId }).select(
+      '_id',
+    );
+    const conversationIds = conversations.map((c) => c._id);
+
+    if (conversationIds.length > 0) {
+      await MessagesModel.deleteMany({
+        conversationId: { $in: conversationIds },
+      });
+    }
+
+    if (conversations) {
+      await ConversationModel.deleteMany({ agentId, userId });
+    }
+
+    await UserAgentsModel.findOneAndDelete({
+      _id: agentId,
+      createdBy: userId,
+    });
 
     return NextResponse.json({
       message: 'Agent deleted successfully',

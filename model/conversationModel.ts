@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { MessagesModel } from './messagesModel';
 
 const conversationSchema = new mongoose.Schema({
   userId: {
@@ -68,6 +69,14 @@ const conversationSchema = new mongoose.Schema({
 });
 
 conversationSchema.index({ userId: 1 });
+
+conversationSchema.pre('findOneAndDelete', async function () {
+  const doc = await this.model.findOne(this.getFilter());
+
+  if (doc) {
+    await MessagesModel.deleteMany({ conversationId: doc._id });
+  }
+});
 
 export const ConversationModel =
   mongoose.models.Conversation ||

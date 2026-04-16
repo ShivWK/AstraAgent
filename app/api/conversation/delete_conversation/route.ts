@@ -3,14 +3,13 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/options';
 import { connectDB } from '@/lib/db/connectDb';
 import { ConversationModel } from '@/model/conversationModel';
+import { MessagesModel } from '@/model/messagesModel';
 
 export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     const session = await getServerSession(authOptions);
-
-    console.log('Got id', id);
 
     if (!session?.user?.id) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -19,17 +18,25 @@ export async function DELETE(req: NextRequest) {
     const userId = session.user.id;
 
     await connectDB();
-    const deletedConversation = await ConversationModel.findOneAndDelete({
+
+    const conversation = await ConversationModel.findOne({
       _id: id,
       userId,
     });
 
-    if (!deletedConversation) {
+    if (!conversation) {
       return NextResponse.json(
         { message: 'Conversation not found or not authorized' },
         { status: 404 },
       );
     }
+
+    await MessagesModel.deleteMany({ conversationId: id });
+
+    await ConversationModel.findOneAndDelete({
+      _id: id,
+      userId,
+    });
 
     return NextResponse.json({
       message: 'Conversation deleted successfully',

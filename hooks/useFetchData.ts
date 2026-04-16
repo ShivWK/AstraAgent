@@ -93,8 +93,6 @@ const useFetchData = ({
     return () => controller.abort();
   }, [conversationId, router, interactionMode, mode, setChat, agentId]);
 
-  console.log(currentAgent, 'AGent');
-
   useEffect(() => {
     if (!conversationId) return;
 
