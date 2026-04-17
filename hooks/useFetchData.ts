@@ -115,9 +115,11 @@ const useFetchData = ({
   }, [chat]);
 
   useEffect(() => {
-    if (!chat || chat.length === 0) return;
+    hasGeneratedTitleRef.current = false;
+  }, [conversationId]);
 
-    console.log('Called JI 1');
+  useEffect(() => {
+    if (!chat || chat.length === 0) return;
 
     const shouldGenerate =
       chat.length >= 3 &&
@@ -126,8 +128,6 @@ const useFetchData = ({
       !hasGeneratedTitleRef.current;
 
     if (!shouldGenerate) return;
-
-    console.log('Called JI 2');
 
     const generateTitle = async () => {
       hasGeneratedTitleRef.current = true;

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ArrowDown } from 'lucide-react';
 import AISideBar from '@/components/common/aiWorkspace/AISideBar';
 import {
   selectOpenSidebar,
@@ -70,16 +70,20 @@ const AiWorkspace = () => {
     const element = bottomRef.current;
     if (!element) return;
 
+    let timer: NodeJS.Timeout;
+
     if (isNearBottom(element) && canScroll) {
       hasAutoScrolled.current = true;
       element.scrollIntoView({
         behavior: 'smooth',
       });
+
+      timer = setTimeout(() => {
+        hasAutoScrolled.current = false;
+      }, 2000);
     }
 
-    setTimeout(() => {
-      hasAutoScrolled.current = false;
-    }, 2000);
+    return () => clearTimeout(timer);
   }, [streamMessage, chat, canScroll]);
 
   useEffect(() => {
@@ -114,10 +118,10 @@ const AiWorkspace = () => {
     window.history.back();
   };
 
-  // const scrollHandler = () => {
-  //   if (hasAutoScrolled.current) return;
-  //   setCanScroll(false);
-  // }
+  const scrollHandler = () => {
+    if (hasAutoScrolled.current) return;
+    setCanScroll(false);
+  };
 
   return (
     <>
@@ -144,7 +148,7 @@ const AiWorkspace = () => {
                 />
               )}
               <div
-                // onScroll={scrollHandler}
+                onScroll={scrollHandler}
                 className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
               >
                 {loading && <ChatSkeleton />}
@@ -183,15 +187,15 @@ const AiWorkspace = () => {
                 setChat={setChat}
               />
             )}
-            {/* {!canScroll && (
-            <button
-              onClick={() => setCanScroll(true)}
-              aria-label="Go to bottom"
-              className="absolute bottom-26 md:bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80"
-            >
-              <ArrowDown aria-hidden="true" strokeWidth={1.5} />
-            </button>
-          )} */}
+            {!canScroll && streaming && (
+              <button
+                onClick={() => setCanScroll(true)}
+                aria-label="Go to bottom"
+                className="absolute bottom-26 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80 md:bottom-28"
+              >
+                <ArrowDown aria-hidden="true" strokeWidth={1.5} />
+              </button>
+            )}
           </section>
         </div>
         <Drawer
