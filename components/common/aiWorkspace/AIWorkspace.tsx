@@ -80,7 +80,7 @@ const AiWorkspace = () => {
 
       timer = setTimeout(() => {
         hasAutoScrolled.current = false;
-      }, 2000);
+      }, 1000);
     }
 
     return () => clearTimeout(timer);

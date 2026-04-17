@@ -1,7 +1,5 @@
-import { Copy, CheckCheck } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
+import { Copy, CheckCheck, BrainCircuit, User } from 'lucide-react';
+import ResponseFormatter from './ResponseFormatter';
 import { useState } from 'react';
 
 type PropsType = {
@@ -22,38 +20,14 @@ const ChatBox = ({ writer, chat }: PropsType) => {
 
   if (writer === 'system') {
     return (
-      <div className="mx-auto mb-8 max-w-[80%] animate-pulse overflow-x-auto rounded-lg border px-4 pb-3 text-gray-400">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight]}
-          components={{
-            hr: () => <hr className="my-5 border-t border-gray-400/90" />,
-
-            h1: ({ children }) => (
-              <h1 className="mb-6 text-2xl font-semibold">{children}</h1>
-            ),
-            h2: ({ children }) => (
-              <h2 className="my-4 text-xl font-semibold">{children}</h2>
-            ),
-            h3: ({ children }) => (
-              <h3 className="my-4 text-lg font-medium">{children}</h3>
-            ),
-
-            p: ({ children }) => <p className="my-4">{children}</p>,
-
-            ul: ({ children }) => (
-              <ul className="mt-2 mb-3 list-disc pl-5">{children}</ul>
-            ),
-
-            ol: ({ children }) => (
-              <ol className="mt-2 mb-3 list-decimal pl-5">{children}</ol>
-            ),
-
-            li: ({ children }) => <li className="mb-1">{children}</li>,
-          }}
-        >
-          {chat}
-        </ReactMarkdown>
+      <div className="relative mx-auto mb-8 max-w-[95%] animate-pulse overflow-x-auto rounded-lg border px-4 pb-3 text-gray-400 md:max-w-[85%]">
+        <BrainCircuit
+          aria-hidden="true"
+          className="absolute top-2 left-2 text-gray-400"
+          size={18}
+          strokeWidth={2.5}
+        />
+        <ResponseFormatter chat={chat} />
       </div>
     );
   }
@@ -64,42 +38,28 @@ const ChatBox = ({ writer, chat }: PropsType) => {
     <div
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
-      <div className="relative max-w-[85%] rounded-xl bg-gray-600/50 p-1 pb-10">
+      <div className="relative max-w-[95%] rounded-xl bg-gray-600/50 p-1 pb-10 md:max-w-[85%]">
         <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 px-4 leading-6 wrap-break-word text-white">
           {writer === 'user' ? (
-            <p className="wrap-break-word whitespace-pre-wrap">{chat}</p>
+            <>
+              <User
+                aria-hidden="true"
+                className="absolute right-3 bottom-3 text-green-400"
+                size={18}
+                strokeWidth={2.5}
+              />
+              <p className="wrap-break-word whitespace-pre-wrap">{chat}</p>
+            </>
           ) : (
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeHighlight]}
-              components={{
-                hr: () => <hr className="my-5 border-t border-gray-400/90" />,
-
-                h1: ({ children }) => (
-                  <h1 className="mb-6 text-2xl font-semibold">{children}</h1>
-                ),
-                h2: ({ children }) => (
-                  <h2 className="my-4 text-xl font-semibold">{children}</h2>
-                ),
-                h3: ({ children }) => (
-                  <h3 className="my-4 text-lg font-medium">{children}</h3>
-                ),
-
-                p: ({ children }) => <p className="my-4">{children}</p>,
-
-                ul: ({ children }) => (
-                  <ul className="mt-2 mb-3 list-disc pl-5">{children}</ul>
-                ),
-
-                ol: ({ children }) => (
-                  <ol className="mt-2 mb-3 list-decimal pl-5">{children}</ol>
-                ),
-
-                li: ({ children }) => <li className="mb-1">{children}</li>,
-              }}
-            >
-              {chat}
-            </ReactMarkdown>
+            <>
+              <BrainCircuit
+                aria-hidden="true"
+                className="absolute top-2 left-2 text-green-400"
+                size={18}
+                strokeWidth={2.5}
+              />
+              <ResponseFormatter chat={chat} />
+            </>
           )}
 
           <div
