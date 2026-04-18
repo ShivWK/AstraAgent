@@ -197,7 +197,7 @@ const AiWorkspace = () => {
                 setChat={setChat}
               />
             )}
-            {!isAtBottom && (
+            {!isAtBottom && !loading && hasMessages && (
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
