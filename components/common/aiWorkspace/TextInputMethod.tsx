@@ -7,7 +7,6 @@ type PropType = {
   sendMessage: (val: Payload) => void;
   stopStream: () => void;
   streaming: boolean;
-  setCanScroll: (val: boolean) => void;
   loading: boolean;
 };
 
@@ -15,7 +14,6 @@ const TextInputMethod = ({
   sendMessage,
   stopStream,
   streaming,
-  setCanScroll,
   loading,
 }: PropType) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -52,7 +50,6 @@ const TextInputMethod = ({
 
     sendMessage({ type: 'text_message', message: text });
     setText('');
-    setCanScroll(true);
   };
 
   const handleSubmit = () => {
@@ -69,7 +66,6 @@ const TextInputMethod = ({
       if (!streaming) {
         messageSender();
         setText('');
-        setCanScroll(true);
       }
     }
   };

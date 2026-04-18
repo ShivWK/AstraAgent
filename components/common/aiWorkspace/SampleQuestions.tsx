@@ -1,15 +1,24 @@
+import { Payload } from '@/hooks/useChatSocket';
+
 type PropsType = {
-  clickHandler: (val: string) => void;
   loading: boolean;
   sampleQuestions: string[] | undefined;
+  setHasMessages: (val: boolean) => void;
+  sendMessage: (val: Payload) => void;
 };
 
 const SampleQuestions = ({
-  clickHandler,
   loading,
   sampleQuestions,
+  setHasMessages,
+  sendMessage,
 }: PropsType) => {
   if (loading) return null;
+
+  const clickHandler = (q: string) => {
+    sendMessage({ type: 'text_message', message: q });
+    setHasMessages(true);
+  };
 
   return (
     <div className="animate-fadeIn pointer-events-auto absolute inset-0 z-30 flex flex-col items-center justify-center px-4 text-center">

@@ -30,6 +30,12 @@ const AiWorkspace = () => {
   const agentId = searchParam.get('agentId');
   const mode = searchParam.get('mode');
 
+  const isSidebarOpen = useAppSelector(selectOpenSidebar);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isAtBottom, setIsAtBottom] = useState(false);
+
   const {
     chat,
     streamMessage,
@@ -54,37 +60,15 @@ const AiWorkspace = () => {
     setConversationHistory,
   } = useFetchData({ conversationId, mode, agentId, setChat, chat });
 
-  const [canScroll, setCanScroll] = useState(true);
-  const hasAutoScrolled = useRef(false);
-  const isSidebarOpen = useAppSelector(selectOpenSidebar);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
-
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  const isNearBottom = (ele: HTMLDivElement) => {
-    return ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;
-  };
-
   useEffect(() => {
-    const element = bottomRef.current;
-    if (!element) return;
+    const ele = containerRef.current;
+    if (!ele || loading || !hasMessages) return;
 
-    let timer: NodeJS.Timeout;
-
-    if (isNearBottom(element) && canScroll) {
-      hasAutoScrolled.current = true;
-      element.scrollIntoView({
-        behavior: 'smooth',
-      });
-
-      timer = setTimeout(() => {
-        hasAutoScrolled.current = false;
-      }, 1000);
-    }
-
-    return () => clearTimeout(timer);
-  }, [streamMessage, chat, canScroll]);
+    ele.scrollTo({
+      top: ele.scrollHeight,
+      behavior: 'smooth',
+    });
+  }, [loading, hasMessages]);
 
   useEffect(() => {
     if (!interactionMode && mode) {
@@ -108,19 +92,46 @@ const AiWorkspace = () => {
     setError(null);
   }, [error, setError, triggerToast]);
 
-  const suggestionClickHandler = (q: string) => {
-    sendMessage({ type: 'text_message', message: q });
-    setHasMessages(true);
-  };
-
   const closeHandler = () => {
     dispatch(setOpenSidebar(false));
     window.history.back();
   };
 
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    if (isAtBottom) {
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [streamMessage, chat, isAtBottom]);
+
+  const isNearBottom = (ele: HTMLDivElement) => {
+    const THRESHOLD = 100;
+    return ele.scrollHeight - ele.scrollTop - ele.clientHeight < THRESHOLD;
+  };
+
   const scrollHandler = () => {
-    if (hasAutoScrolled.current) return;
-    setCanScroll(false);
+    const el = containerRef.current;
+    if (!el) return;
+
+    const atBottom = isNearBottom(el);
+    setIsAtBottom(atBottom);
+  };
+
+  const downButtonClickHandler = () => {
+    const ele = containerRef.current;
+    if (!ele) return;
+
+    ele.scrollTo({
+      top: ele.scrollHeight,
+      behavior: 'smooth',
+    });
+
+    setIsAtBottom(true);
   };
 
   return (
@@ -142,12 +153,14 @@ const AiWorkspace = () => {
             <div className="section__chat-box relative w-full basis-full overflow-auto">
               {!hasMessages && (
                 <SampleQuestions
-                  clickHandler={suggestionClickHandler}
+                  setHasMessages={setHasMessages}
+                  sendMessage={sendMessage}
                   loading={loading}
                   sampleQuestions={currentAgent?.sampleQuestions}
                 />
               )}
               <div
+                ref={containerRef}
                 onScroll={scrollHandler}
                 className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
               >
@@ -165,8 +178,6 @@ const AiWorkspace = () => {
                 {streamMessage !== '' && (
                   <ChatBox writer="system" chat={streamMessage} />
                 )}
-
-                <div ref={bottomRef} />
               </div>
 
               <div
@@ -178,7 +189,6 @@ const AiWorkspace = () => {
                 sendMessage={sendMessage}
                 stopStream={stopStream}
                 streaming={streaming}
-                setCanScroll={setCanScroll}
                 loading={modelLoading}
               />
             ) : (
@@ -187,11 +197,11 @@ const AiWorkspace = () => {
                 setChat={setChat}
               />
             )}
-            {!canScroll && streaming && (
+            {!isAtBottom && (
               <button
-                onClick={() => setCanScroll(true)}
+                onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
-                className="absolute bottom-26 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/50 p-1 opacity-80 md:bottom-28"
+                className="absolute bottom-22 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/70 p-1 opacity-90 md:bottom-28"
               >
                 <ArrowDown aria-hidden="true" strokeWidth={1.5} />
               </button>
