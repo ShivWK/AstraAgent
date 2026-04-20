@@ -5,6 +5,7 @@ type PropsType = {
   sampleQuestions: string[] | undefined;
   setHasMessages: (val: boolean) => void;
   sendMessage: (val: Payload) => void;
+  mode: string | null;
 };
 
 const SampleQuestions = ({
@@ -12,6 +13,7 @@ const SampleQuestions = ({
   sampleQuestions,
   setHasMessages,
   sendMessage,
+  mode,
 }: PropsType) => {
   if (loading) return null;
 
@@ -33,7 +35,7 @@ const SampleQuestions = ({
             onClick={() => clickHandler(q)}
             className="w-fit cursor-pointer rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-left text-sm text-white transition-all duration-150 hover:bg-white/10"
           >
-            {q}
+            {mode === 'voice' ? `Say "${q}"` : q}
           </button>
         ))}
       </div>

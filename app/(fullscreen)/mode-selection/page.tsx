@@ -77,14 +77,14 @@ const ModeSelection = () => {
           <div
             role="button"
             tabIndex={0}
-            onClick={() => selectHandler('speech')}
-            onKeyDown={() => selectHandler('speech')}
-            className={`${interactionMode === 'speech' && 'shadow-[0_0_10px_1px_#155dfc]'} flex items-center gap-4 rounded-2xl border px-8 py-4 md:flex-col`}
+            onClick={() => selectHandler('voice')}
+            onKeyDown={() => selectHandler('voice')}
+            className={`${interactionMode === 'voice' && 'shadow-[0_0_10px_1px_#155dfc]'} flex items-center gap-4 rounded-2xl border px-8 py-4 md:flex-col`}
           >
             <Mic
               size={100}
               strokeWidth={1}
-              className={`${interactionMode === 'speech' && 'text-blue-400'}`}
+              className={`${interactionMode === 'voice' && 'text-blue-400'}`}
             />
 
             <div className="flex flex-col gap-1 md:items-center md:gap-4">
@@ -101,12 +101,12 @@ const ModeSelection = () => {
               <Button
                 onClick={(e) => {
                   e.stopPropagation();
-                  selectHandler('speech');
+                  selectHandler('voice');
                 }}
                 variant={'secondary'}
                 className="mt-2 hidden px-6 text-lg font-medium tracking-wider transition-all duration-100 ease-in hover:-translate-y-0.5 active:translate-y-0 md:flex"
               >
-                {interactionMode === 'speech' ? 'Selected' : 'Select'}
+                {interactionMode === 'voice' ? 'Selected' : 'Select'}
               </Button>
             </div>
           </div>

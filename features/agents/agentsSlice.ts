@@ -3,7 +3,7 @@ import { RootState } from '@/lib/store';
 import { Agent } from '@/types/agents';
 import { Conversation } from '@/types/conversation';
 
-export type Mode = 'text' | 'speech' | '';
+export type Mode = 'text' | 'voice' | '';
 type Assistant = Agent | null;
 
 type InitialState = {

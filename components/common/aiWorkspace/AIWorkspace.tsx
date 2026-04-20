@@ -43,7 +43,6 @@ const AiWorkspace = () => {
     sendMessage,
     stopStream,
     setChat,
-    setStreamMessage,
     streaming,
     modelLoading,
     setError,
@@ -157,6 +156,7 @@ const AiWorkspace = () => {
                   sendMessage={sendMessage}
                   loading={loading}
                   sampleQuestions={currentAgent?.sampleQuestions}
+                  mode={mode || interactionMode}
                 />
               )}
               <div
@@ -193,8 +193,8 @@ const AiWorkspace = () => {
               />
             ) : (
               <AudioInputMethod
-                setStream={setStreamMessage}
-                setChat={setChat}
+                sendMessage={sendMessage}
+                stopStream={stopStream}
               />
             )}
             {!isAtBottom && !loading && hasMessages && (

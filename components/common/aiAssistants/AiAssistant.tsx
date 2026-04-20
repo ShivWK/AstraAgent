@@ -42,7 +42,7 @@ const AiAssistant = () => {
 
         const [agents, history] = await Promise.all([
           fetch('/api/agents'),
-          fetch('/api/conversation?mode=text'),
+          fetch(`/api/conversation?mode=${mode1 || mode2}`),
         ]);
 
         const [agentData, historyData] = await Promise.all([
@@ -63,7 +63,7 @@ const AiAssistant = () => {
     };
 
     fetchAgents();
-  }, []);
+  }, [mode1, mode2]);
 
   useEffect(() => {
     setHistory((prev) => {
@@ -181,9 +181,11 @@ const AiAssistant = () => {
           </Button>
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
-          <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-            <PreviousChats history={history!} setHistory={setHistory} />
-          </div>
+          {history && (
+            <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
+              <PreviousChats history={history!} setHistory={setHistory} />
+            </div>
+          )}
 
           {/* <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
             <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">

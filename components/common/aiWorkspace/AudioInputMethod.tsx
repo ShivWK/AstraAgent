@@ -1,73 +1,18 @@
-import { useEffect, useRef } from 'react';
 import { Mic, CircleStop } from 'lucide-react';
 import useMicLevel from '@/hooks/useMicLevel';
-import hark from 'hark';
-import usePCMRecorder from '@/hooks/usePcmRecorder';
+import useAudioRecorder from '@/hooks/useAudioRecorder';
+import { Payload } from '@/hooks/useChatSocket';
 
 type PropType = {
-  setStream: (val: string) => void;
-  setChat: (
-    val: (prev: Record<string, string>[]) => Record<string, string>[],
-  ) => void;
+  sendMessage: (val: Payload) => void;
+  stopStream: () => void;
 };
 
-const AudioInputMethod = ({ setStream, setChat }: PropType) => {
-  const socketRef = useRef<WebSocket | null>(null);
-  const { startRecording, stopRecording, recording, stream } =
-    usePCMRecorder(socketRef);
+const AudioInputMethod = ({ sendMessage, stopStream }: PropType) => {
+  const { startRecording, stopRecording, recording, stream } = useAudioRecorder(
+    { sendMessage, stopStream },
+  );
   const level = useMicLevel(stream);
-
-  useEffect(() => {
-    socketRef.current = new WebSocket(
-      process.env.NEXT_PUBLIC_WS_SERVER_URL as string,
-    );
-
-    socketRef.current.onopen = () => {
-      console.log('Connected');
-    };
-
-    socketRef.current.onmessage = (msg) => {
-      const parsed = JSON.parse(msg.data);
-
-      if (parsed.type === 'chunk') {
-        console.log('Received live text:', parsed.data);
-        setStream(parsed.data);
-      }
-
-      if (parsed.type === 'end') {
-        console.log('Final text:', parsed.data);
-        setChat((prev) => [
-          ...(prev || []),
-          { role: 'user', content: parsed.data },
-        ]);
-        setStream('');
-      }
-    };
-
-    return () => {
-      socketRef.current?.close();
-    };
-  }, [setChat, setStream]);
-
-  useEffect(() => {
-    if (!stream) return;
-
-    const speechEvents = hark(stream, { threshold: -45 });
-
-    speechEvents.on('speaking', () => {
-      console.log('Speaking');
-    });
-
-    speechEvents.on('stopped_speaking', () => {
-      console.log('Stopped Speaking');
-
-      socketRef.current?.send(JSON.stringify({ type: 'end_of_speech' }));
-    });
-
-    return () => {
-      speechEvents.stop();
-    };
-  }, [stream]);
 
   const micClickHandler = async () => {
     if (recording) {
