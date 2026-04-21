@@ -70,7 +70,7 @@ const PreviousChat = ({
   return (
     <>
       <li
-        className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between px-2 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-white/20' : 'hover:bg-white/20'}`}
+        className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between gap-1 px-1 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-white/20' : 'hover:bg-white/20'}`}
       >
         <button
           onClick={handleOpenConversation}
