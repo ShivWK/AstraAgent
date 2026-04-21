@@ -1,20 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 
-type textPayload = {
+type Payload = {
   type: 'text_message';
   message: string;
 };
-
-type voicePayload = {
-  type: 'voice_chunk';
-  audio: string;
-};
-
-type voiceStart = {
-  type: 'voice_start' | 'voice_end';
-};
-
-export type Payload = textPayload | voicePayload | voiceStart;
 
 const useChatSocket = (conversationId: string) => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -85,33 +74,21 @@ const useChatSocket = (conversationId: string) => {
   }, []);
 
   const msgSender = (payload: Payload) => {
-    if (payload.type === 'voice_chunk') {
-      console.log('called');
-      socketRef.current?.send(payload.audio);
-      return;
-    }
-
     socketRef.current?.send(
       JSON.stringify({
         type: payload.type,
         conversationId,
-        ...(payload.type === 'text_message' && { message: payload.message }),
+        message: payload.message,
       }),
     );
   };
 
   const sendMessage = (payload: Payload) => {
+    console.log('Payload', payload);
     if (socketRef.current?.readyState !== WebSocket.OPEN) return;
-    console.log('send message called');
-
     setLoading(true);
-    if (payload.type === 'text_message') {
-      setChat((prv) => [...prv, { role: 'user', content: payload.message }]);
 
-      msgSender(payload);
-      return;
-    }
-
+    setChat((prv) => [...prv, { role: 'user', content: payload.message }]);
     msgSender(payload);
   };
 
