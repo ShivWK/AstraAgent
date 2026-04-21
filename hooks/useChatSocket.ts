@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-type Payload = {
+export type Payload = {
   type: 'text_message';
   message: string;
 };
