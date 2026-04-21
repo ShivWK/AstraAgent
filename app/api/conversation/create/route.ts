@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!newCreation) {
+    if (!newCreation || !customInstruction) {
       const oldConversations = await ConversationModel.find({
         userId: session.user.id,
         agentId,
