@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 
 const useAudioRecorder = (onResult: (text: string) => void) => {
   const [recording, setRecording] = useState(false);
+  const [sttLoading, setSttLoading] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -34,13 +35,17 @@ const useAudioRecorder = (onResult: (text: string) => void) => {
       const formData = new FormData();
       formData.append('file', audioBlob);
 
-      const res = await fetch('/api/stt', {
-        method: 'POST',
-        body: formData,
-      });
+      console.log(audioBlob);
 
-      const data = await res.json();
-      onResult(data.text);
+      // setSttLoading(true);
+      // const res = await fetch('/api/stt', {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+
+      // const data = await res.json();
+      // onResult(data.text);
+      // setSttLoading(false)
     };
 
     mediaRecorder.start();
@@ -55,7 +60,7 @@ const useAudioRecorder = (onResult: (text: string) => void) => {
     setStream(null);
   };
 
-  return { startRecording, stopRecording, recording, stream };
+  return { startRecording, stopRecording, recording, stream, sttLoading };
 };
 
 export default useAudioRecorder;

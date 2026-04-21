@@ -1,5 +1,7 @@
 import { Spinner } from '@/components/ui/spinner';
+import useAudioRecorder from '@/hooks/useAudioRecorder';
 import { Payload } from '@/hooks/useChatSocket';
+import useMicLevel from '@/hooks/useMicLevel';
 import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
@@ -19,6 +21,9 @@ const TextInputMethod = ({
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState('');
   const [columnLayout, setColumnLayout] = useState(false);
+  const { startRecording, stopRecording, recording, stream, sttLoading } =
+    useAudioRecorder(setText);
+  const level = useMicLevel(stream);
 
   const MAX_HEIGHT = 200;
 
@@ -70,6 +75,15 @@ const TextInputMethod = ({
     }
   };
 
+  const micBtnClickHandler = () => {
+    console.log('Clicked');
+    if (!recording) {
+      startRecording();
+    } else {
+      stopRecording();
+    }
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -89,15 +103,15 @@ const TextInputMethod = ({
       <div className="flex items-center gap-1">
         <button
           type="button"
-          // onClick={handleSubmit}
-          disabled={!!text.trim() || streaming}
-          className={`rounded-full bg-gray-900 p-1.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          onClick={micBtnClickHandler}
+          disabled={!!text.trim() || streaming || loading}
+          className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
-          {loading ? (
-            streaming ? (
-              <X aria-hidden="true" />
+          {recording ? (
+            sttLoading ? (
+              <Spinner className="size-4.5" />
             ) : (
-              <Spinner className="size-6" />
+              <X aria-hidden="true" size={18} />
             )
           ) : (
             <Mic aria-hidden="true" size={18} />

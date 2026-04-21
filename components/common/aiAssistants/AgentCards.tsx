@@ -4,7 +4,6 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { type Mode } from '@/features/agents/agentsSlice';
 import { type Agent } from '@/types/agents';
 import SpeechInstructionModel from './SpeechInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
@@ -13,7 +12,6 @@ import { Conversation } from '@/types/conversation';
 
 type PropsType = {
   assistants: Agent[];
-  mode: Mode;
   setAgents: Dispatch<SetStateAction<Agent[]>>;
   setHistory: Dispatch<
     SetStateAction<Record<
@@ -23,16 +21,13 @@ type PropsType = {
   >;
 };
 
-const AgentCards = ({ mode, assistants, setAgents, setHistory }: PropsType) => {
+const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
   const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
   const [openInstructionModel, setOpenInstructionModel] = useState(false);
   const [openCreationModel, setOpenCreationModel] = useState(false);
-  const [currentVoiceAgent, setCurrentVoiceAgent] = useState<Agent | null>(
-    null,
-  );
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
@@ -76,12 +71,8 @@ const AgentCards = ({ mode, assistants, setAgents, setHistory }: PropsType) => {
   }, []);
 
   const cardClickHandler = (data: Agent) => {
-    if (mode === 'speech') {
-      setCurrentVoiceAgent(data);
-      setOpenInstructionModel(true);
-    } else {
-      dispatch(setSelectedAgent(data));
-    }
+    dispatch(setSelectedAgent(data));
+    setOpenInstructionModel(true);
   };
 
   const newAgentCreationClickHandler = () => {
@@ -179,7 +170,6 @@ const AgentCards = ({ mode, assistants, setAgents, setHistory }: PropsType) => {
       <SpeechInstructionModel
         open={openInstructionModel}
         setOpen={setOpenInstructionModel}
-        currentAgent={currentVoiceAgent}
       />
 
       <NewAgentCreationModel

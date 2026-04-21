@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import {
+  selectSelectedAgent,
   setSelectedAgent,
   setVoiceAgentInstruction,
 } from '@/features/agents/agentsSlice';
@@ -19,20 +20,19 @@ import { DialogContent } from '../../ui/dialog';
 import { Textarea } from '../../ui/textarea';
 import { Button } from '../../ui/button';
 import Image from 'next/image';
-import { Agent } from '@/types/agents';
+import useAppSelector from '@/hooks/useAppSelector';
 
 type PropsType = {
-  currentAgent: Agent | null;
   open: boolean;
   setOpen: (val: boolean) => void;
 };
 
 type FormType = z.infer<typeof voiceAgentInstructionSchema>;
 
-const SpeechInstructionModel = ({ currentAgent, open, setOpen }: PropsType) => {
+const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
+  const currentAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const agent = currentAgent!;
-  // console.log(agent);
 
   const submitHandler = (data: FormType) => {
     dispatch(setVoiceAgentInstruction(data.instruction));

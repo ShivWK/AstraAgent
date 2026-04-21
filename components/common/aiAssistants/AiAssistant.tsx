@@ -163,7 +163,6 @@ const AiAssistant = () => {
             </Button>
           </div>
           <AgentCards
-            mode={mode2}
             assistants={agents}
             setAgents={setAgents}
             setHistory={setHistory}
