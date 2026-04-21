@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import {
+  selectAgentInstruction,
   selectSelectedAgent,
   selectSelectedInteractionMode,
   setSelectedInteractionMode,
@@ -23,6 +24,7 @@ import { Agent } from '@/types/agents';
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const mode1 = useAppSelector(selectSelectedInteractionMode);
+  const agentInstruction = useAppSelector(selectAgentInstruction);
   const searchParams = useSearchParams();
   const router = useRouter();
   const mode2 = searchParams.get('mode') as Mode;
@@ -42,13 +44,15 @@ const AiAssistant = () => {
 
         const [agents, history] = await Promise.all([
           fetch('/api/agents'),
-          fetch(`/api/conversation?mode=${mode1 || mode2}`),
+          fetch(`/api/conversation?mode=text`),
         ]);
 
         const [agentData, historyData] = await Promise.all([
           agents.json(),
           history.json(),
         ]);
+
+        console.log('History data', historyData, 'agents', agentData);
 
         setAgents(agentData.agents);
         setHistory(groupByAgent(historyData.conversations));
@@ -110,6 +114,7 @@ const AiAssistant = () => {
           key: selectedAgent.key,
           mode: mode1 || mode2,
           newCreation: false,
+          customInstruction: agentInstruction,
         }),
       });
 
@@ -185,13 +190,6 @@ const AiAssistant = () => {
               <PreviousChats history={history!} setHistory={setHistory} />
             </div>
           )}
-
-          {/* <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-            <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
-              Feedback of Conversations
-            </h2>
-            <p>No feedback</p>
-          </div> */}
         </section>
       </div>
     </main>

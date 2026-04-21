@@ -25,6 +25,8 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
     }));
   };
 
+  console.log('Chat history', history);
+
   useEffect(() => {
     const call = () => {
       const firstKey = Object.keys(history)[0];
@@ -83,7 +85,6 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
                   />
                 </div>
 
-                {/* 🔹 Conversations List */}
                 {isOpen && (
                   <div className="flex flex-col gap-2">
                     {(group.conversations as Conversation[]).map(

@@ -8,7 +8,7 @@ type Assistant = Agent | null;
 
 type InitialState = {
   selectedInteractionMode: Mode;
-  voiceAgentInstruction: string;
+  agentInstruction: string;
   selectedAgent: Assistant;
   openSidebar: boolean;
   conversationHistory: Conversation[] | null;
@@ -16,7 +16,7 @@ type InitialState = {
 
 const initialState: InitialState = {
   selectedInteractionMode: '',
-  voiceAgentInstruction: '',
+  agentInstruction: '',
   selectedAgent: null,
   openSidebar: false,
   conversationHistory: null,
@@ -34,8 +34,8 @@ const agentsSlice = createSlice({
       }
     },
 
-    setVoiceAgentInstruction: (state, action: PayloadAction<string>) => {
-      state.voiceAgentInstruction = action.payload;
+    setAgentInstruction: (state, action: PayloadAction<string>) => {
+      state.agentInstruction = action.payload;
     },
 
     setSelectedInteractionMode: (state, action: PayloadAction<Mode>) => {
@@ -60,8 +60,8 @@ export const selectSelectedAgent = (state: RootState) =>
 export const selectSelectedInteractionMode = (state: RootState) =>
   state.agents.selectedInteractionMode;
 export const selectOpenSidebar = (state: RootState) => state.agents.openSidebar;
-export const selectVoiceAgentInstruction = (state: RootState) =>
-  state.agents.voiceAgentInstruction;
+export const selectAgentInstruction = (state: RootState) =>
+  state.agents.agentInstruction;
 export const selectConversationHistory = (state: RootState) =>
   state.agents.conversationHistory;
 
@@ -69,6 +69,6 @@ export const {
   setSelectedAgent,
   setSelectedInteractionMode,
   setOpenSidebar,
-  setVoiceAgentInstruction,
+  setAgentInstruction,
   setConversationHistory,
 } = agentsSlice.actions;

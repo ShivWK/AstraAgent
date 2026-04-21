@@ -1,12 +1,11 @@
-import { voiceAgentInstructionSchema } from '@/lib/validations/agents.schema';
+import { agentInstructionSchema } from '@/lib/validations/agents.schema';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import {
   selectSelectedAgent,
-  setSelectedAgent,
-  setVoiceAgentInstruction,
+  setAgentInstruction,
 } from '@/features/agents/agentsSlice';
 
 import {
@@ -27,7 +26,7 @@ type PropsType = {
   setOpen: (val: boolean) => void;
 };
 
-type FormType = z.infer<typeof voiceAgentInstructionSchema>;
+type FormType = z.infer<typeof agentInstructionSchema>;
 
 const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
   const currentAgent = useAppSelector(selectSelectedAgent);
@@ -35,8 +34,7 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
   const agent = currentAgent!;
 
   const submitHandler = (data: FormType) => {
-    dispatch(setVoiceAgentInstruction(data.instruction));
-    dispatch(setSelectedAgent(agent));
+    dispatch(setAgentInstruction(data.instruction));
     setOpen(false);
   };
 
@@ -45,7 +43,7 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
     formState: { errors },
     handleSubmit,
   } = useForm<FormType>({
-    resolver: zodResolver(voiceAgentInstructionSchema),
+    resolver: zodResolver(agentInstructionSchema),
     shouldUnregister: true,
     mode: 'onBlur',
     defaultValues: {
@@ -66,7 +64,7 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
           onSubmit={handleSubmit(submitHandler)}
         >
           <DialogHeader className="mb-1">
-            <DialogTitle>Configure Your Session</DialogTitle>
+            <DialogTitle>Configure Your Session (optional)</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 md:flex-row">
             <Image
@@ -92,14 +90,16 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
           </p>
 
           <Textarea
-            {...register('instruction', {
-              required: 'Instruction is required',
-            })}
+            {...register('instruction')}
             aria-invalid={!!errors.instruction}
             className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
             placeholder={agent.placeholder}
           ></Textarea>
-
+          {errors.instruction && (
+            <p className="text-center text-sm text-red-500">
+              {errors.instruction.message}
+            </p>
+          )}
           <DialogFooter>
             <div className="ml-auto flex items-center gap-2">
               <DialogClose type="button" asChild>
@@ -116,11 +116,6 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
               </Button>
             </div>
           </DialogFooter>
-          {errors.instruction && (
-            <p className="text-center font-medium text-red-500">
-              {errors.instruction.message}
-            </p>
-          )}
         </form>
       </DialogContent>
     </Dialog>

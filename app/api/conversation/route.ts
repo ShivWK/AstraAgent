@@ -32,6 +32,8 @@ export async function GET(req: NextRequest) {
       .sort({ updatedAt: -1 })
       .lean();
 
+    console.log('conversations', conversations);
+
     return NextResponse.json({
       conversations,
     });

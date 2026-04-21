@@ -20,7 +20,7 @@ export const agentCreationSchema = z.object({
   level: z.string().optional(),
 });
 
-export const voiceAgentInstructionSchema = z.object({
+export const agentInstructionSchema = z.object({
   instruction: z
     .string()
     .trim()
