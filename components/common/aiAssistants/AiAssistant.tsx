@@ -6,13 +6,11 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import {
   selectAgentInstruction,
   selectSelectedAgent,
-  selectSelectedInteractionMode,
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { type Mode } from '@/features/agents/agentsSlice';
+import { useRouter } from 'next/navigation';
 import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
 import groupByAgent from '@/utils/groupByAgent';
@@ -23,11 +21,8 @@ import { Agent } from '@/types/agents';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
-  const mode1 = useAppSelector(selectSelectedInteractionMode);
   const agentInstruction = useAppSelector(selectAgentInstruction);
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const mode2 = searchParams.get('mode') as Mode;
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
@@ -67,7 +62,7 @@ const AiAssistant = () => {
     };
 
     fetchAgents();
-  }, [mode1, mode2]);
+  }, []);
 
   useEffect(() => {
     setHistory((prev) => {
@@ -92,12 +87,8 @@ const AiAssistant = () => {
   }, [history]);
 
   useEffect(() => {
-    if (!mode1 && mode2) {
-      dispatch(setSelectedInteractionMode(mode2 as Mode));
-    } else if (!mode1 && !mode2) {
-      router.push('/mode-selection');
-    }
-  }, [dispatch, mode2, router, mode1]);
+    dispatch(setSelectedInteractionMode('text'));
+  }, [dispatch]);
 
   const startSessionClickHandler = async () => {
     if (!selectedAgent || conversationLoading) return;
@@ -112,7 +103,7 @@ const AiAssistant = () => {
           agentName: selectedAgent.name,
           defaultAgentModel: selectedAgent.model,
           key: selectedAgent.key,
-          mode: mode1 || mode2,
+          mode: 'text',
           newCreation: false,
           customInstruction: agentInstruction,
         }),
@@ -127,7 +118,7 @@ const AiAssistant = () => {
       const conversationID = result.conversation._id;
 
       router.push(
-        `/ai-workspace?conversation_id=${conversationID}&mode=${mode2 || mode1}&agentId=${result.conversation.agentId}`,
+        `/ai-workspace?conversation_id=${conversationID}&mode=text&agentId=${result.conversation.agentId}`,
       );
     } catch (err: unknown) {
       if (err instanceof Error) {

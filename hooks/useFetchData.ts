@@ -109,12 +109,6 @@ const useFetchData = ({
   }, [dispatch, interactionMode, mode, router]);
 
   useEffect(() => {
-    if (chat.length > 0) {
-      setHasMessages(true);
-    }
-  }, [chat]);
-
-  useEffect(() => {
     hasGeneratedTitleRef.current = false;
   }, [conversationId]);
 
@@ -122,7 +116,7 @@ const useFetchData = ({
     if (!chat || chat.length === 0) return;
 
     const shouldGenerate =
-      chat.length >= 3 &&
+      chat.length >= 4 &&
       conversation?.title.trim() === 'New Chat' &&
       conversation?.isTitleGenerated === false &&
       !hasGeneratedTitleRef.current;

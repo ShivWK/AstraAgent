@@ -22,7 +22,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
 
   const getStartedClickHandler = () => {
-    router.push('/mode-selection');
+    router.push('/ai-assistant');
 
     if (status !== 'authenticated') {
       dispatch(setGetStartedLoading(true));

@@ -5,12 +5,7 @@ export default withAuth(
   function middleware(req) {
     const { pathname } = req.nextUrl;
 
-    const protectedRoutes = [
-      '/ai-assistant',
-      '/mode-selection',
-      '/account',
-      '/ai-workspace',
-    ];
+    const protectedRoutes = ['/ai-assistant', '/account', '/ai-workspace'];
 
     const isProtected = protectedRoutes.some((route) =>
       pathname.startsWith(route),
