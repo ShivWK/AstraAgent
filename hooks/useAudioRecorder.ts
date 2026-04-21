@@ -1,73 +1,61 @@
 import { useRef, useState } from 'react';
-import { Payload } from './useChatSocket';
 
-type PropsType = {
-  sendMessage: (val: Payload) => void;
-  stopStream: () => void;
-};
-
-const usePCMRecorder = ({ sendMessage, stopStream }: PropsType) => {
+const useAudioRecorder = (onResult: (text: string) => void) => {
   const [recording, setRecording] = useState(false);
-  const audioContextRef = useRef<AudioContext | null>(null);
+
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
   const [stream, setStream] = useState<MediaStream | null>(null);
-
-  // const toBase64 = (buffer: ArrayBuffer) => {
-  //   let binary = '';
-  //   const bytes = new Uint8Array(buffer);
-  //   const chunkSize = 8192;
-
-  //   for (let i = 0; i < bytes.length; i += chunkSize) {
-  //     binary += String.fromCharCode(...bytes.slice(i, i + chunkSize));
-  //   }
-
-  //   return btoa(binary);
-  // };
 
   const startRecording = async () => {
     if (recording) return;
-    sendMessage({ type: 'voice_start' });
-
-    stopStream();
 
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     setStream(stream);
 
-    const audioContext = new AudioContext({ sampleRate: 16000 });
-    audioContextRef.current = audioContext;
+    const mediaRecorder = new MediaRecorder(stream);
+    mediaRecorderRef.current = mediaRecorder;
+    chunksRef.current = [];
 
-    await audioContext.audioWorklet.addModule('/pcm-processor.js');
-
-    const source = audioContext.createMediaStreamSource(stream);
-    const workletNode = new AudioWorkletNode(audioContext, 'pcm-processor');
-
-    source.connect(workletNode);
-    workletNode.connect(audioContext.destination);
-
-    workletNode.port.onmessage = (event) => {
-      const pcm16 = event.data;
-
-      sendMessage({
-        type: 'voice_chunk',
-        audio: pcm16.buffer,
-      });
+    mediaRecorder.ondataavailable = (e) => {
+      if (e.data.size > 0) {
+        chunksRef.current.push(e.data);
+      }
     };
 
+    mediaRecorder.onstop = async () => {
+      const audioBlob = new Blob(chunksRef.current, {
+        type: 'audio/webm',
+      });
+
+      stream?.getTracks().forEach((t) => t.stop());
+      setStream(null);
+
+      const formData = new FormData();
+      formData.append('file', audioBlob);
+
+      const res = await fetch('/api/stt', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      onResult(data.text);
+    };
+
+    mediaRecorder.start();
     setRecording(true);
   };
 
   const stopRecording = () => {
-    audioContextRef.current?.close();
-    stream?.getTracks().forEach((t) => t.stop());
-
-    sendMessage({ type: 'voice_end' });
+    mediaRecorderRef.current?.stop();
     setRecording(false);
+
+    stream?.getTracks().forEach((t) => t.stop());
+    setStream(null);
   };
 
-  const interrupt = () => {
-    stopStream();
-  };
-
-  return { startRecording, stopRecording, recording, interrupt, stream };
+  return { startRecording, stopRecording, recording, stream };
 };
 
-export default usePCMRecorder;
+export default useAudioRecorder;

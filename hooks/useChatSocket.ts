@@ -20,7 +20,6 @@ const useChatSocket = (conversationId: string) => {
   const socketRef = useRef<WebSocket | null>(null);
 
   const [loading, setLoading] = useState(false);
-  const [sarvamReady, setSarvamReady] = useState(false);
   const [streaming, setStreaming] = useState(false);
   const [chat, setChat] = useState<Record<string, string>[]>([]);
   const [streamMessage, setStreamMessage] = useState('');
@@ -69,19 +68,13 @@ const useChatSocket = (conversationId: string) => {
 
           streamRef.current = '';
           setStreamMessage('');
-          setSarvamReady(false);
           setStreaming(false);
           setLoading(false);
-          break;
-
-        case 'sarvam_ready':
-          setSarvamReady(true);
           break;
 
         case 'error':
           setError(parsed.message);
           setStreaming(false);
-          setSarvamReady(false);
           setLoading(false);
           console.log('Error occurred', parsed.message);
           break;
@@ -108,7 +101,9 @@ const useChatSocket = (conversationId: string) => {
   };
 
   const sendMessage = (payload: Payload) => {
-    if (socketRef.current?.readyState !== 1) return;
+    if (socketRef.current?.readyState !== WebSocket.OPEN) return;
+    console.log('send message called');
+
     setLoading(true);
     if (payload.type === 'text_message') {
       setChat((prv) => [...prv, { role: 'user', content: payload.message }]);
@@ -135,7 +130,6 @@ const useChatSocket = (conversationId: string) => {
     streaming,
     modelLoading: loading,
     setError,
-    sarvamReady,
   };
 };
 

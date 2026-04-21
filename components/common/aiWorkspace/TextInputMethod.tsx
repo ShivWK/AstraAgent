@@ -1,6 +1,6 @@
 import { Spinner } from '@/components/ui/spinner';
 import { Payload } from '@/hooks/useChatSocket';
-import { ArrowUpFromDot, X } from 'lucide-react';
+import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 type PropType = {
@@ -74,34 +74,53 @@ const TextInputMethod = ({
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-2 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 bg-black md:bottom-6 md:w-[88%]`}
+      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 bg-black md:bottom-6 md:w-[88%]`}
     >
       <textarea
         ref={inputRef}
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className={`wrap-break-words resize-none border-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full border-white text-lg outline-none`}
+        className={`wrap-break-words resize-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full text-lg outline-none`}
         aria-label="Enter Query"
         placeholder="Enter query"
       />
 
-      <button
-        type="button"
-        onClick={handleSubmit}
-        disabled={!text.trim() && !streaming}
-        className={`rounded-lg bg-blue-900 p-2.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
-      >
-        {loading ? (
-          streaming ? (
-            <X aria-hidden="true" />
+      <div className="flex items-center gap-1">
+        <button
+          type="button"
+          // onClick={handleSubmit}
+          disabled={!!text.trim() || streaming}
+          className={`rounded-full bg-gray-900 p-1.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+        >
+          {loading ? (
+            streaming ? (
+              <X aria-hidden="true" />
+            ) : (
+              <Spinner className="size-6" />
+            )
           ) : (
-            <Spinner className="size-6" />
-          )
-        ) : (
-          <ArrowUpFromDot aria-hidden="true" />
-        )}
-      </button>
+            <Mic aria-hidden="true" size={18} />
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={!text.trim() && !streaming}
+          className={`rounded-lg bg-blue-900 p-2 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+        >
+          {loading ? (
+            streaming ? (
+              <X aria-hidden="true" />
+            ) : (
+              <Spinner className="size-6" />
+            )
+          ) : (
+            <ArrowUpFromDot aria-hidden="true" />
+          )}
+        </button>
+      </div>
     </form>
   );
 };

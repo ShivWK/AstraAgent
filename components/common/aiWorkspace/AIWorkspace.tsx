@@ -12,7 +12,6 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/common/aiWorkspace/Chatbox';
 import Drawer from '@/components/common/Modal';
 import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
-import AudioInputMethod from '@/components/common/aiWorkspace/AudioInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
@@ -184,19 +183,12 @@ const AiWorkspace = () => {
                 className={`${mode === 'text' || interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
               />
             </div>
-            {mode === 'text' || interactionMode === 'text' ? (
-              <TextInputMethod
-                sendMessage={sendMessage}
-                stopStream={stopStream}
-                streaming={streaming}
-                loading={modelLoading}
-              />
-            ) : (
-              <AudioInputMethod
-                sendMessage={sendMessage}
-                stopStream={stopStream}
-              />
-            )}
+            <TextInputMethod
+              sendMessage={sendMessage}
+              stopStream={stopStream}
+              streaming={streaming}
+              loading={modelLoading}
+            />
             {!isAtBottom && !loading && hasMessages && (
               <button
                 onClick={downButtonClickHandler}
