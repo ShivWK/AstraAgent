@@ -84,14 +84,33 @@ const TextInputMethod = ({
     }
   };
 
+  const intensity = Math.min(1, level / 180); // normalize mic level
+
+  const bgOpacity = 0.25 + intensity * 0.35; // 0.25 → 0.6
+  const glowSize = 10 + intensity * 25; // 10px → 35px
+
   return (
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 bg-black md:bottom-6 md:w-[88%]`}
+      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 transition-all duration-200 md:bottom-6 md:w-[88%]`}
+      style={{
+        background: recording
+          ? `linear-gradient(
+          120deg,
+          rgba(59,130,246,${bgOpacity}),
+          rgba(99,102,241,0.25)
+        )`
+          : undefined,
+
+        boxShadow: recording
+          ? `0 0 ${glowSize}px rgba(59,130,246,0.6)`
+          : undefined,
+      }}
     >
       <textarea
         ref={inputRef}
+        disabled={recording}
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
@@ -106,6 +125,11 @@ const TextInputMethod = ({
           onClick={micBtnClickHandler}
           disabled={!!text.trim() || streaming || loading}
           className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          style={{
+            transform: recording
+              ? `scale(${1 + intensity * 0.02})`
+              : 'scale(1)',
+          }}
         >
           {recording ? (
             sttLoading ? (

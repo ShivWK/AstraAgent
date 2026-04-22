@@ -16,6 +16,9 @@ const useMicLevel = (stream: MediaStream | null) => {
     analyser.fftSize = 256;
     const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
+    const SMOOTHING = 0.8;
+    let prev = 0;
+
     function update() {
       if (!analyser || !dataArray) return;
       analyser.getByteFrequencyData(dataArray);
@@ -26,6 +29,10 @@ const useMicLevel = (stream: MediaStream | null) => {
       }
 
       const avg = sum / dataArray.length;
+
+      const smooth = prev * SMOOTHING + avg * (1 - SMOOTHING);
+      prev = smooth;
+
       setLevel(avg);
       rafId = requestAnimationFrame(update);
     }

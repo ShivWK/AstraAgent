@@ -46,11 +46,14 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
       {Object.keys(history!).length === 0 ? (
         <p className="text-gray-400">No previous conversations</p>
       ) : (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-1">
           {Object.entries(history!).map(([agentId, group]) => {
             const isOpen = openGroups[agentId];
             return (
-              <div key={agentId}>
+              <div
+                key={agentId}
+                className={`${openGroups[agentId] ? 'border-2' : 'border-none'} rounded-2xl p-1`}
+              >
                 <div
                   onClick={() => toggleGroup(agentId)}
                   className="mb-2 flex cursor-pointer items-center justify-between rounded-md bg-white/20 p-2 transition hover:bg-gray-700/30"
