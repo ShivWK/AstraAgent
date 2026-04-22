@@ -8,7 +8,14 @@ type PropsType = {
   loading: boolean;
   conversation: Conversation | null;
   conversationHistory: Conversation[] | null;
-  setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
+  setHistory: Dispatch<
+    SetStateAction<{
+      loading: boolean;
+      conversation: Conversation | null;
+      conversationHistory: Conversation[] | null;
+      currentAgent: Agent | null;
+    }>
+  >;
   currentAgent: Agent | null;
 };
 

@@ -51,22 +51,22 @@ const AiWorkspace = () => {
     loading,
     currentAgent,
     conversation,
-    hasMessages,
     conversationHistory,
+    hasMessage,
     interactionMode,
-    setHasMessages,
-    setConversationHistory,
+    setHasMessage,
+    setState,
   } = useFetchData({ conversationId, mode, agentId, setChat, chat });
 
   useEffect(() => {
     const ele = containerRef.current;
-    if (!ele || loading || !hasMessages) return;
+    if (!ele || loading || !hasMessage) return;
 
     ele.scrollTo({
       top: ele.scrollHeight,
       behavior: 'smooth',
     });
-  }, [loading, hasMessages]);
+  }, [loading, hasMessage]);
 
   useEffect(() => {
     if (!interactionMode && mode) {
@@ -141,7 +141,7 @@ const AiWorkspace = () => {
               loading={loading}
               conversation={conversation}
               conversationHistory={conversationHistory}
-              setHistory={setConversationHistory}
+              setHistory={setState}
               currentAgent={currentAgent}
             />
           </aside>
@@ -149,9 +149,9 @@ const AiWorkspace = () => {
             className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
           >
             <div className="section__chat-box relative w-full basis-full overflow-auto">
-              {!hasMessages && (
+              {!hasMessage && (
                 <SampleQuestions
-                  setHasMessages={setHasMessages}
+                  setHasMessages={setHasMessage}
                   sendMessage={sendMessage}
                   loading={loading}
                   sampleQuestions={currentAgent?.sampleQuestions}
@@ -189,7 +189,7 @@ const AiWorkspace = () => {
               streaming={streaming}
               loading={modelLoading}
             />
-            {!isAtBottom && !loading && hasMessages && (
+            {!isAtBottom && !loading && hasMessage && (
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
@@ -219,7 +219,7 @@ const AiWorkspace = () => {
                 loading={loading}
                 conversation={conversation}
                 conversationHistory={conversationHistory}
-                setHistory={setConversationHistory}
+                setHistory={setState}
                 currentAgent={currentAgent}
               />
             </div>

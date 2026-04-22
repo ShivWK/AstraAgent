@@ -2,13 +2,21 @@ import Modal from '../Modal';
 import { useState, useRef } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { Conversation } from '@/types/conversation';
+import { type Agent } from '@/types/agents';
 
 type Props = {
   isOpen: boolean;
   initialValue: string;
   onClose: () => void;
   conversationId: string;
-  setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
+  setHistory: Dispatch<
+    SetStateAction<{
+      loading: boolean;
+      conversation: Conversation | null;
+      conversationHistory: Conversation[] | null;
+      currentAgent: Agent | null;
+    }>
+  >;
 };
 
 const RenameModal = ({
@@ -41,15 +49,18 @@ const RenameModal = ({
       }
 
       setHistory((prv) => {
-        if (!prv) return prv;
+        if (!prv.conversationHistory) return prv;
 
-        return prv?.map((conv) => {
-          if (conv._id === result.conversation._id) {
-            return { ...conv, title: result.conversation.title };
-          }
+        return {
+          ...prv,
+          conversationHistory: prv.conversationHistory!.map((c) => {
+            if (c._id === result.conversation._id) {
+              return { ...c, title: text };
+            }
 
-          return conv;
-        });
+            return c;
+          }),
+        };
       });
     } catch (err) {
       if (err instanceof Error) {
@@ -80,7 +91,6 @@ const RenameModal = ({
         className="w-full rounded-md border border-gray-600 bg-transparent px-3 py-2 text-white outline-none focus:border-blue-500"
       />
 
-      {/* Buttons */}
       <div className="mt-5 flex justify-end gap-2">
         <button
           onClick={onClose}

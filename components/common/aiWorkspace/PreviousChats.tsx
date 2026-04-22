@@ -7,11 +7,19 @@ import { selectSelectedInteractionMode } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSearchParams } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
+import { type Agent } from '@/types/agents';
 
 type PropsType = {
   loading: boolean;
   conversationHistory: Conversation[] | null;
-  setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
+  setHistory: Dispatch<
+    SetStateAction<{
+      loading: boolean;
+      conversation: Conversation | null;
+      conversationHistory: Conversation[] | null;
+      currentAgent: Agent | null;
+    }>
+  >;
   openDropDown: boolean;
   currentConversation: Conversation | null;
 };

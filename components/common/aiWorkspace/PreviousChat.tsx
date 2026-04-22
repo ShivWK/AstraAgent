@@ -4,11 +4,19 @@ import { type Conversation } from '@/types/conversation';
 import { Dispatch, SetStateAction } from 'react';
 import RenameModal from './RenameModal';
 import { useRouter } from 'next/navigation';
+import { type Agent } from '@/types/agents';
 
 type PropsType = {
   chat: string;
   id: string;
-  setHistory: Dispatch<SetStateAction<Conversation[] | null>>;
+  setHistory: Dispatch<
+    SetStateAction<{
+      loading: boolean;
+      conversation: Conversation | null;
+      conversationHistory: Conversation[] | null;
+      currentAgent: Agent | null;
+    }>
+  >;
   currentConversation: Conversation | null;
   agentId: string;
   mode: string | null;
@@ -46,7 +54,16 @@ const PreviousChat = ({
         throw new Error(data.message);
       }
 
-      setHistory((prv) => prv!.filter((chat) => chat._id !== id));
+      setHistory((prv) => {
+        if (!prv.conversationHistory) return prv;
+
+        return {
+          ...prv,
+          conversationHistory: prv.conversationHistory!.filter(
+            (chat) => chat._id !== id,
+          ),
+        };
+      });
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
