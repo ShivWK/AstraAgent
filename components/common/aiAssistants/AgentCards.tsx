@@ -30,6 +30,8 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
   const [openCreationModel, setOpenCreationModel] = useState(false);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
+  console.log(assistants);
+
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;
     return totalViewed;

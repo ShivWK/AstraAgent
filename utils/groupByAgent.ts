@@ -1,7 +1,7 @@
 import { type Conversation } from '@/types/conversation';
 
 const groupByAgent = (conversations: Conversation[]) => {
-  if ((conversations.length = 0)) return null;
+  if (conversations.length === 0) return null;
 
   return conversations.reduce(
     (acc, current) => {

@@ -47,8 +47,6 @@ const AiAssistant = () => {
           history.json(),
         ]);
 
-        console.log('History data', historyData, 'agents', agentData);
-
         setAgents(agentData.agents);
         setHistory(groupByAgent(historyData.conversations));
         setLoading(false);
