@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
-const useAudioRecorder = (onResult: (text: string) => void) => {
+const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
   const [recording, setRecording] = useState(false);
   const [sttLoading, setSttLoading] = useState(false);
 
@@ -35,18 +35,24 @@ const useAudioRecorder = (onResult: (text: string) => void) => {
       const formData = new FormData();
       formData.append('file', audioBlob);
 
-      console.log(audioBlob);
+      setSttLoading(true);
+      const res = await fetch('/api/stt', {
+        method: 'POST',
+        body: formData,
+      });
 
-      // setSttLoading(true);
-      // const res = await fetch('/api/stt', {
-      //   method: 'POST',
-      //   body: formData,
-      // });
-
-      // const data = await res.json();
-      // onResult(data.text);
-      // setSttLoading(false)
+      const data = await res.json();
+      onResult((prv) => {
+        if (prv === '') {
+          return data.text;
+        } else {
+          return prv + ' ' + data.text;
+        }
+      });
+      setSttLoading(false);
     };
+
+    // Error handling in API, also error boundary is remaining to be build
 
     mediaRecorder.start();
     setRecording(true);

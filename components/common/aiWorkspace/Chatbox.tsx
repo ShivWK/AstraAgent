@@ -1,4 +1,4 @@
-import { Copy, CheckCheck, BrainCircuit, User } from 'lucide-react';
+import { Copy, CheckCheck, BrainCircuit, User, Volume2 } from 'lucide-react';
 import ResponseFormatter from './ResponseFormatter';
 import { useState } from 'react';
 
@@ -62,8 +62,14 @@ const ChatBox = ({ writer, chat }: PropsType) => {
             </>
           )}
 
+          {writer !== 'user' && (
+            <button className="absolute right-11 bottom-1.5 transform rounded-full border-none p-1 transition-all duration-150 ease-linear outline-none hover:bg-white/20 active:scale-95">
+              <Volume2 aria-hidden="true" strokeWidth={1.5} size={19} />
+            </button>
+          )}
+
           <div
-            className={`absolute flex ${isUser ? (copied ? 'bottom-3 left-3' : 'bottom-2 left-2') : copied ? 'right-3 bottom-3' : 'right-2 bottom-2'} absolute`}
+            className={`absolute ${isUser ? (copied ? 'bottom-2 left-3' : 'bottom-1 left-2') : copied ? 'right-3 bottom-2' : 'right-2 bottom-1'}`}
           >
             {copied ? (
               <CheckCheck
@@ -77,7 +83,7 @@ const ChatBox = ({ writer, chat }: PropsType) => {
                 aria-label="Copy"
                 title="copy"
                 onClick={handleCopyClick}
-                className={`mt-1.5 transform rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95`}
+                className="mt-1.5 transform rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95"
               >
                 <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
               </button>

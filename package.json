@@ -44,6 +44,7 @@
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "resend": "^6.9.3",
+    "sarvamai": "^1.1.7",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0",
     "ws": "^8.20.0",

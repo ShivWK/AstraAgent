@@ -84,10 +84,10 @@ const TextInputMethod = ({
     }
   };
 
-  const intensity = Math.min(1, level / 180); // normalize mic level
+  const intensity = Math.min(1, level / 180);
 
-  const bgOpacity = 0.25 + intensity * 0.35; // 0.25 → 0.6
-  const glowSize = 10 + intensity * 25; // 10px → 35px
+  const bgOpacity = 0.25 + intensity * 0.35;
+  const glowSize = 10 + intensity * 25;
 
   return (
     <form
@@ -100,8 +100,8 @@ const TextInputMethod = ({
           120deg,
           rgba(59,130,246,${bgOpacity}),
           rgba(99,102,241,0.25)
-        )`
-          : undefined,
+        ), black`
+          : 'black',
 
         boxShadow: recording
           ? `0 0 ${glowSize}px rgba(59,130,246,0.6)`
@@ -120,27 +120,27 @@ const TextInputMethod = ({
       />
 
       <div className="flex items-center gap-1">
-        <button
-          type="button"
-          onClick={micBtnClickHandler}
-          disabled={!!text.trim() || streaming || loading}
-          className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+        <div
+          className="transform rounded-full transition-all duration-75"
           style={{
-            transform: recording
-              ? `scale(${1 + intensity * 0.02})`
-              : 'scale(1)',
+            transform: recording ? `scale(${1 + intensity * 0.5})` : 'scale(1)',
           }}
         >
-          {recording ? (
-            sttLoading ? (
+          <button
+            type="button"
+            onClick={micBtnClickHandler}
+            disabled={streaming || loading}
+            className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          >
+            {recording ? (
+              <X aria-hidden="true" size={18} />
+            ) : sttLoading ? (
               <Spinner className="size-4.5" />
             ) : (
-              <X aria-hidden="true" size={18} />
-            )
-          ) : (
-            <Mic aria-hidden="true" size={18} />
-          )}
-        </button>
+              <Mic aria-hidden="true" size={18} />
+            )}
+          </button>
+        </div>
 
         <button
           type="button"
