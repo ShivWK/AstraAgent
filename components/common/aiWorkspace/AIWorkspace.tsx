@@ -183,6 +183,10 @@ const AiWorkspace = () => {
                           activeId={activeId}
                           stop={stop}
                           loadingId={loadingId}
+                          isPaused={isPaused}
+                          progress={progress}
+                          pause={pause}
+                          resume={resume}
                         />
                       );
                     }

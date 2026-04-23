@@ -2,6 +2,7 @@ import { Copy, CheckCheck, BrainCircuit, User } from 'lucide-react';
 import ResponseFormatter from './ResponseFormatter';
 import { useState } from 'react';
 import PlayButton from './PlayButton';
+import AudioControls from './AudioControls';
 
 type PropsType = UserType | AgentType | SystemType;
 
@@ -20,8 +21,12 @@ type AgentType = {
   chat: Record<string, string>;
   activeId: string | null;
   loadingId: string | null;
+  isPaused: boolean;
+  progress: number;
   play: (id: string, text: string) => Promise<void>;
   stop: () => void;
+  pause: () => void;
+  resume: () => void;
 };
 
 const ChatBox = (props: PropsType) => {
@@ -84,6 +89,17 @@ const ChatBox = (props: PropsType) => {
               />
               <ResponseFormatter chat={chat.content} />
             </>
+          )}
+
+          {writer === 'assistant' && props.loadingId === null && (
+            <AudioControls
+              messageId={chat._id}
+              activeId={props.activeId}
+              isPaused={props.isPaused}
+              progress={props.progress}
+              pause={props.pause}
+              resume={props.resume}
+            />
           )}
 
           {writer === 'assistant' && (

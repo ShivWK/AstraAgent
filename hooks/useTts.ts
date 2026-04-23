@@ -111,7 +111,7 @@ const useTts = (speaker = 'shubh') => {
     if (!audioRef.current) return;
 
     await audioRef.current?.play();
-    setIsPaused(true);
+    setIsPaused(false);
   };
 
   const stop = () => {
