@@ -21,6 +21,7 @@ import useFetchData from '@/hooks/useFetchData';
 import ChatSkeleton from '@/components/skeletons/ChatSkeleton';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
+import useTts from '@/hooks/useTts';
 
 const AiWorkspace = () => {
   const { ToastContainer, triggerToast } = useToast('top-right');
@@ -57,6 +58,9 @@ const AiWorkspace = () => {
     setHasMessage,
     setState,
   } = useFetchData({ conversationId, mode, agentId, setChat, chat });
+
+  const { play, pause, resume, stop, progress, isPaused, loadingId, activeId } =
+    useTts();
 
   useEffect(() => {
     const ele = containerRef.current;
@@ -166,22 +170,42 @@ const AiWorkspace = () => {
                 {loading && <ChatSkeleton />}
 
                 {chat.length > 0 &&
-                  chat.map((item, index) => (
-                    <ChatBox
-                      key={index}
-                      writer={item.role}
-                      chat={item.content}
-                    />
-                  ))}
+                  chat.map((item, index) => {
+                    const writer = item.role as 'assistant' | 'user' | 'system';
+
+                    if (writer === 'assistant') {
+                      return (
+                        <ChatBox
+                          key={index}
+                          writer="assistant"
+                          chat={item}
+                          play={play}
+                          activeId={activeId}
+                          stop={stop}
+                          loadingId={loadingId}
+                        />
+                      );
+                    }
+
+                    if (writer === 'user') {
+                      return <ChatBox key={index} writer="user" chat={item} />;
+                    }
+
+                    return (
+                      <ChatBox
+                        key={index}
+                        writer="system"
+                        chat={item.content} // ⚠️ important (string)
+                      />
+                    );
+                  })}
 
                 {streamMessage !== '' && (
                   <ChatBox writer="system" chat={streamMessage} />
                 )}
               </div>
 
-              <div
-                className={`${mode === 'text' || interactionMode === 'text' ? 'h-30' : 'h-20'} pointer-events-none absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black from-15% to-transparent to-70%`}
-              />
+              <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-30 bg-linear-to-t from-black from-15% to-transparent to-70%" />
             </div>
             <TextInputMethod
               sendMessage={sendMessage}

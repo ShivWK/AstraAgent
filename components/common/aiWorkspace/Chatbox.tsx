@@ -1,18 +1,42 @@
-import { Copy, CheckCheck, BrainCircuit, User, Volume2 } from 'lucide-react';
+import { Copy, CheckCheck, BrainCircuit, User } from 'lucide-react';
 import ResponseFormatter from './ResponseFormatter';
 import { useState } from 'react';
+import PlayButton from './PlayButton';
 
-type PropsType = {
-  writer: string;
+type PropsType = UserType | AgentType | SystemType;
+
+type UserType = {
+  writer: 'user';
+  chat: Record<string, string>;
+};
+
+type SystemType = {
+  writer: 'system';
   chat: string;
 };
 
-const ChatBox = ({ writer, chat }: PropsType) => {
+type AgentType = {
+  writer: 'assistant';
+  chat: Record<string, string>;
+  activeId: string | null;
+  loadingId: string | null;
+  play: (id: string, text: string) => Promise<void>;
+  stop: () => void;
+};
+
+const ChatBox = (props: PropsType) => {
+  const { writer, chat } = props;
+  const isUser = writer === 'user';
+
   const [copied, setCopied] = useState(false);
 
   const handleCopyClick = async () => {
     try {
-      await navigator.clipboard.writeText(chat);
+      if (writer === 'assistant' || writer === 'user') {
+        await navigator.clipboard.writeText(chat.content);
+      } else {
+        await navigator.clipboard.writeText(chat);
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {}
@@ -32,8 +56,6 @@ const ChatBox = ({ writer, chat }: PropsType) => {
     );
   }
 
-  const isUser = writer === 'user';
-
   return (
     <div
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
@@ -48,7 +70,9 @@ const ChatBox = ({ writer, chat }: PropsType) => {
                 size={18}
                 strokeWidth={2.5}
               />
-              <p className="wrap-break-word whitespace-pre-wrap">{chat}</p>
+              <p className="wrap-break-word whitespace-pre-wrap">
+                {chat.content}
+              </p>
             </>
           ) : (
             <>
@@ -58,14 +82,19 @@ const ChatBox = ({ writer, chat }: PropsType) => {
                 size={18}
                 strokeWidth={2.5}
               />
-              <ResponseFormatter chat={chat} />
+              <ResponseFormatter chat={chat.content} />
             </>
           )}
 
-          {writer !== 'user' && (
-            <button className="absolute right-11 bottom-1.5 transform rounded-full border-none p-1 transition-all duration-150 ease-linear outline-none hover:bg-white/20 active:scale-95">
-              <Volume2 aria-hidden="true" strokeWidth={1.5} size={19} />
-            </button>
+          {writer === 'assistant' && (
+            <PlayButton
+              messageId={chat._id}
+              message={chat.content}
+              play={props.play}
+              stop={props.stop}
+              activeId={props.activeId}
+              loadingId={props.loadingId}
+            />
           )}
 
           <div

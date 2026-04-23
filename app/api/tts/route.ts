@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { text } = await req.json();
+    const { text, speaker } = await req.json();
 
     if (!text) {
       return NextResponse.json({ error: 'No text provided' }, { status: 400 });
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     const response = await client.textToSpeech.convert({
       text,
       model: 'bulbul:v3',
-      speaker: 'shubh',
+      speaker,
       target_language_code: 'en-IN',
     });
 
