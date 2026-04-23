@@ -27,6 +27,7 @@ type AgentType = {
   stop: () => void;
   pause: () => void;
   resume: () => void;
+  seek: (val: number) => void;
 };
 
 const ChatBox = (props: PropsType) => {
@@ -65,7 +66,7 @@ const ChatBox = (props: PropsType) => {
     <div
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
-      <div className="relative max-w-[95%] rounded-xl bg-gray-600/50 p-1 pb-10 md:max-w-[85%]">
+      <div className="relative max-w-[95%] rounded-xl bg-gray-800 p-1 pb-10 md:max-w-[85%]">
         <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 p-3 px-4 leading-6 wrap-break-word text-white">
           {writer === 'user' ? (
             <>
@@ -99,6 +100,7 @@ const ChatBox = (props: PropsType) => {
               progress={props.progress}
               pause={props.pause}
               resume={props.resume}
+              seek={props.seek}
             />
           )}
 

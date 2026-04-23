@@ -33,7 +33,6 @@ const useTts = (speaker = 'shubh') => {
     cleanupAudion();
 
     const key = `tts_${id}_${speaker}`;
-    console.log('key', key);
 
     setLoadingId(id);
     setActiveId(null);
@@ -43,7 +42,6 @@ const useTts = (speaker = 'shubh') => {
       let audioBase64: string | null = null;
 
       if (ttsCache.has(key)) {
-        console.log('Called');
         audioBase64 = ttsCache.get(key)!;
 
         setLoadingId(null);
@@ -126,11 +124,18 @@ const useTts = (speaker = 'shubh') => {
     setProgress(0);
   };
 
+  const seek = (percent: number) => {
+    if (!audioRef.current) return;
+
+    audioRef.current.currentTime = percent * audioRef.current.duration;
+  };
+
   return {
     play,
     pause,
     resume,
     stop,
+    seek,
     progress,
     isPaused,
     loadingId,

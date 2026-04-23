@@ -59,8 +59,17 @@ const AiWorkspace = () => {
     setState,
   } = useFetchData({ conversationId, mode, agentId, setChat, chat });
 
-  const { play, pause, resume, stop, progress, isPaused, loadingId, activeId } =
-    useTts();
+  const {
+    play,
+    pause,
+    resume,
+    stop,
+    seek,
+    progress,
+    isPaused,
+    loadingId,
+    activeId,
+  } = useTts();
 
   useEffect(() => {
     const ele = containerRef.current;
@@ -187,6 +196,7 @@ const AiWorkspace = () => {
                           progress={progress}
                           pause={pause}
                           resume={resume}
+                          seek={seek}
                         />
                       );
                     }
