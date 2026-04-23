@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 
+const ttsCache = new Map<string, string>();
+
 const useTts = (speaker = 'shubh') => {
   // voice can be "shubh", "ritu"
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -25,30 +27,29 @@ const useTts = (speaker = 'shubh') => {
         audioRef.current.pause();
         setIsPaused(true);
       }
-
       return;
     }
 
     cleanupAudion();
 
-    const key = `tts_${id}`;
+    const key = `tts_${id}_${speaker}`;
+    console.log('key', key);
 
     setLoadingId(id);
-    setActiveId(id);
+    setActiveId(null);
     setIsPaused(false);
 
     try {
       let audioBase64: string | null = null;
 
-      const cached = localStorage.getItem(key);
-
-      if (cached) {
-        audioBase64 = cached;
+      if (ttsCache.has(key)) {
+        console.log('Called');
+        audioBase64 = ttsCache.get(key)!;
 
         setLoadingId(null);
         setActiveId(id);
       } else {
-        const res = await fetch('api/tts', {
+        const res = await fetch('/api/tts', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -66,12 +67,7 @@ const useTts = (speaker = 'shubh') => {
         }
 
         audioBase64 = result.audio;
-
-        try {
-          localStorage.setItem(key, audioBase64 as string);
-        } catch {
-          console.log('TTS cache full');
-        }
+        ttsCache.set(key, audioBase64!);
 
         setLoadingId(null);
         setActiveId(id);
@@ -93,6 +89,13 @@ const useTts = (speaker = 'shubh') => {
 
       await audio.play();
       setIsPaused(false);
+
+      const MAX_SIZE = 5;
+
+      if (ttsCache.size > MAX_SIZE) {
+        const firstKey = ttsCache.keys().next().value;
+        ttsCache.delete(firstKey!);
+      }
     } catch (err) {
       console.log('Error in TTS', err);
       setLoadingId(null);

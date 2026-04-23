@@ -36,12 +36,10 @@ const PlayButton = ({
       className="absolute right-10 bottom-1.5 transform rounded-full border-none p-1 transition-all duration-150 ease-linear outline-none hover:bg-white/20 active:scale-95 md:right-11"
       onClick={handleClick}
     >
-      {isActive ? (
-        isLoading ? (
-          <Spinner className="size-4.5" />
-        ) : (
-          <X aria-hidden="true" size={18} />
-        )
+      {isLoading ? (
+        <Spinner className="size-4.5" />
+      ) : isActive ? (
+        <X aria-hidden="true" size={18} />
       ) : (
         <Volume2 aria-hidden="true" strokeWidth={1.5} size={19} />
       )}
