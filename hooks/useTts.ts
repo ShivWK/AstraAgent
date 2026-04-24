@@ -19,7 +19,8 @@ const useTts = (speaker = 'shubh') => {
   };
 
   const play = async (id: string, text: string) => {
-    if (activeId == id && audioRef.current && loadingId == null) {
+    if (loadingId) return;
+    if (activeId == id && audioRef.current) {
       if (audioRef.current.paused) {
         await audioRef.current.play();
         setIsPaused(false);
@@ -122,6 +123,7 @@ const useTts = (speaker = 'shubh') => {
     setActiveId(null);
     setLoadingId(null);
     setProgress(0);
+    audioRef.current = null;
   };
 
   const seek = (percent: number) => {
