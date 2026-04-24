@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'arcee-ai/trinity-large-preview:free',
+          model: 'openrouter/free',
           messages: [
             {
               role: 'user',
