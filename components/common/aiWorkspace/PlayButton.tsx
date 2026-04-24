@@ -33,8 +33,9 @@ const PlayButton = ({
 
   return (
     <button
-      className="absolute right-10 bottom-1.5 transform rounded-full border-none p-1 transition-all duration-150 ease-linear outline-none hover:bg-white/20 active:scale-95 md:right-11"
+      className="absolute right-10 bottom-1.5 transform rounded-full border-none p-1 transition-all duration-150 ease-linear outline-none hover:bg-white/20 active:scale-95 disabled:pointer-events-none disabled:opacity-50 md:right-11"
       onClick={handleClick}
+      disabled={isLoading || (loadingId !== null && loadingId !== messageId)}
     >
       {isLoading ? (
         <Spinner className="size-4.5" />
