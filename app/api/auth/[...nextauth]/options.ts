@@ -88,6 +88,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         await connectDB();
         const dbUser = await UserModel.findOne({ email: user.email });
+        // console.log('DB user found in JWT callback:', dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;
@@ -101,6 +102,8 @@ export const authOptions: NextAuthOptions = {
       if (trigger === 'update') {
         await connectDB();
         const dbUser = await UserModel.findById(token.id);
+
+        // console.log('user data:', dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;

@@ -13,7 +13,7 @@ const Page = () => {
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
   const data1 = useSession();
-  console.log('Got session data', data1);
+  // console.log('Got session data', data1);
 
   const { data: session, update } = data1;
 
@@ -25,7 +25,7 @@ const Page = () => {
       const data = await res.json();
 
       if (data.emailVerified) {
-        await update(); // 🔥 refresh session
+        await update();
         clearInterval(interval);
       }
     }, 5000);
@@ -77,7 +77,9 @@ const Page = () => {
 
             <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
               <p className="text-lg font-medium">Current Balance</p>
-              <p className="-mt-2 text-xl font-medium">$900</p>
+              <p className="-mt-2 text-xl font-medium">
+                {session?.user?.token || 0}
+              </p>
               <button
                 onClick={handleRechargeClick}
                 disabled={logoutLoading}

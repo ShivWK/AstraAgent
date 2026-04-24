@@ -32,7 +32,7 @@ const useChatSocket = (conversationId: string) => {
       setError('Something went wrong. Please try after sometime');
     };
 
-    socketRef.current.onmessage = (msg) => {
+    socketRef.current.onmessage = async (msg) => {
       const parsed = JSON.parse(msg.data);
 
       switch (parsed.type) {
@@ -61,6 +61,10 @@ const useChatSocket = (conversationId: string) => {
           setStreamMessage('');
           setStreaming(false);
           setLoading(false);
+          break;
+
+        case 'usage':
+          await session.update();
           break;
 
         case 'error':
