@@ -92,17 +92,19 @@ const ChatBox = (props: PropsType) => {
             </>
           )}
 
-          {writer === 'assistant' && props.loadingId === null && (
-            <AudioControls
-              messageId={chat._id}
-              activeId={props.activeId}
-              isPaused={props.isPaused}
-              progress={props.progress}
-              pause={props.pause}
-              resume={props.resume}
-              seek={props.seek}
-            />
-          )}
+          {writer === 'assistant' &&
+            props.loadingId === null &&
+            props.activeId === chat._id && (
+              <AudioControls
+                messageId={chat._id}
+                activeId={props.activeId}
+                isPaused={props.isPaused}
+                progress={props.progress}
+                pause={props.pause}
+                resume={props.resume}
+                seek={props.seek}
+              />
+            )}
 
           {writer === 'assistant' && (
             <PlayButton

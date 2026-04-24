@@ -11,7 +11,7 @@ const useTts = (speaker = 'shubh') => {
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const cleanupAudion = () => {
+  const cleanupAudio = () => {
     if (!audioRef.current) return;
 
     audioRef.current.pause();
@@ -19,7 +19,7 @@ const useTts = (speaker = 'shubh') => {
   };
 
   const play = async (id: string, text: string) => {
-    if (activeId == id && audioRef.current) {
+    if (activeId == id && audioRef.current && loadingId == null) {
       if (audioRef.current.paused) {
         await audioRef.current.play();
         setIsPaused(false);
@@ -30,7 +30,7 @@ const useTts = (speaker = 'shubh') => {
       return;
     }
 
-    cleanupAudion();
+    cleanupAudio();
 
     const key = `tts_${id}_${speaker}`;
 
@@ -116,7 +116,7 @@ const useTts = (speaker = 'shubh') => {
   };
 
   const stop = () => {
-    cleanupAudion();
+    cleanupAudio();
 
     setIsPaused(false);
     setActiveId(null);
@@ -125,7 +125,7 @@ const useTts = (speaker = 'shubh') => {
   };
 
   const seek = (percent: number) => {
-    if (!audioRef.current) return;
+    if (!audioRef.current || !audioRef.current.duration) return;
 
     audioRef.current.currentTime = percent * audioRef.current.duration;
   };
