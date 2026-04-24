@@ -22,7 +22,7 @@ const PlayButton = ({
   const isLoading = loadingId === messageId;
 
   const handleClick = () => {
-    if (isLoading) return;
+    if (isLoading || loadingId !== null) return;
 
     if (isActive) {
       stop();

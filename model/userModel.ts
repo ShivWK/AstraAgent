@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
 
   token: {
     type: Number,
-    default: 0,
+    default: 10000,
   },
 
   password: {

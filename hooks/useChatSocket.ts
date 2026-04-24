@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { useState, useRef, useEffect } from 'react';
 
 export type Payload = {
@@ -6,6 +7,7 @@ export type Payload = {
 };
 
 const useChatSocket = (conversationId: string) => {
+  const session = useSession();
   const socketRef = useRef<WebSocket | null>(null);
 
   const [loading, setLoading] = useState(false);
@@ -17,7 +19,7 @@ const useChatSocket = (conversationId: string) => {
 
   useEffect(() => {
     const socket = new WebSocket(
-      process.env.NEXT_PUBLIC_WS_SERVER_URL as string,
+      `${process.env.NEXT_PUBLIC_WS_SERVER_URL}?token=${session.data?.accessToken}`,
     );
     socketRef.current = socket;
 
@@ -71,7 +73,7 @@ const useChatSocket = (conversationId: string) => {
     };
 
     return () => socket.close();
-  }, []);
+  }, [session.data?.accessToken, conversationId]);
 
   const msgSender = (payload: Payload) => {
     socketRef.current?.send(

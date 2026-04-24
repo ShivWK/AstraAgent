@@ -6,8 +6,9 @@ import GoogleProvider from 'next-auth/providers/google';
 import { UserModel } from '@/model/userModel';
 import { loginSchema } from '@/lib/validations/auth.schema';
 import bcrypt from 'bcryptjs';
-import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
 import clientPromise from '@/lib/mongodb';
+import jwt from 'jsonwebtoken';
 
 export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -62,6 +63,8 @@ export const authOptions: NextAuthOptions = {
             email: user.email,
             image: user.image ?? null,
             emailVerified: user.emailVerified ?? null,
+            role: user.role ?? 'user',
+            token: user.token ?? 10000,
           };
 
           console.log('Authorization successful for:', email, userToReturn);
@@ -89,7 +92,9 @@ export const authOptions: NextAuthOptions = {
         if (dbUser) {
           token.image = dbUser.image;
           token.id = dbUser._id.toString();
+          token.role = dbUser.role;
           token.emailVerified = dbUser.emailVerified;
+          token.token = dbUser.token;
         }
       }
 
@@ -99,11 +104,21 @@ export const authOptions: NextAuthOptions = {
 
         if (dbUser) {
           token.image = dbUser.image;
-          token.id = dbUser._id.toString();
+          token.token = dbUser.token;
           token.emailVerified = dbUser.emailVerified;
         }
       }
-      // console.log('JWT', token);
+
+      token.accessToken = jwt.sign(
+        {
+          id: token.id,
+          role: token.role,
+        },
+        process.env.NEXTAUTH_SECRET!,
+        { expiresIn: '1d' },
+      );
+
+      // console.log('JWT callback', { token, user, trigger });
       return token;
     },
 
@@ -111,10 +126,13 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user.image = token.image as string;
         session.user.id = token.id as string;
+        session.user.role = token.role as 'user' | 'admin';
+        session.user.token = token.token as number;
         session.user.emailVerified = token.emailVerified as Date | null;
+        session.accessToken = token.accessToken as string;
       }
 
-      // console.log('Session', session);
+      // console.log('Session callback', { session, token });
       return session;
     },
   },
