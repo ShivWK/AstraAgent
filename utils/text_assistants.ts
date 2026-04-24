@@ -326,7 +326,7 @@ export const modelOptions: Record<string, ModelOption> = {
   conversational: {
     id: 'conversational',
     label: '🎭 CONVERSATIONAL',
-    name: 'Trinity Large Preview',
+    name: 'Google: Gemma 3 12B',
     color: 'to-pink-500/60',
     description: 'Natural conversations for chat, relationships, and support.',
   },
