@@ -77,9 +77,7 @@ const ProfileChange = () => {
         trigger: triggerToast,
       });
 
-      await update({
-        image: result.data.fileUrl,
-      });
+      await update();
       setPreviewURl(null);
     } catch (err) {
       console.log(err);

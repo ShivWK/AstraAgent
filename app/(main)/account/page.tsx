@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LogOut, TriangleAlert } from 'lucide-react';
+import { LogOut, TriangleAlert, Crown } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import Chats from '@/components/common/Chats';
 import ProfileChange from '@/components/auth/ProfileChange';
@@ -14,7 +14,7 @@ const Page = () => {
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
   const data1 = useSession();
-  console.log('Got session data', data1);
+  // console.log('Got session data', data1);
 
   const { data: session, update } = data1;
 
@@ -42,10 +42,6 @@ const Page = () => {
     setLogoutLoading(false);
   };
 
-  const handleRechargeClick = () => {
-    if (logoutLoading) return;
-  };
-
   const handleEmailVerificationClick = (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -57,7 +53,13 @@ const Page = () => {
     <>
       <main className="max-md:-mt-4">
         <div className="mx-auto flex max-w-300 flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
-          <aside className="flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+          <aside className="relative flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+            {session?.user?.role === 'admin' && (
+              <Crown
+                aria-hidden="true"
+                className="absolute top-2 right-2 text-yellow-400"
+              />
+            )}
             <ProfileChange />
             <p className="text-lg">{session?.user?.name || 'User Name'}</p>
             <p className="-mt-2 flex items-center gap-2 text-lg">
@@ -75,20 +77,6 @@ const Page = () => {
               )}
               <span>{session?.user?.email || 'User Email Address'}</span>
             </p>
-
-            {/* <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
-              <p className="text-lg font-medium">Current Balance</p>
-              <p className="-mt-2 text-xl font-medium">
-                {session?.user?.token || 0}
-              </p>
-              <button
-                onClick={handleRechargeClick}
-                disabled={logoutLoading}
-                className="w-full rounded-md bg-blue-700 py-1 text-lg tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
-              >
-                Recharge
-              </button>
-            </div> */}
 
             <ProfileCard logoutLoading={logoutLoading} user={session?.user} />
 
