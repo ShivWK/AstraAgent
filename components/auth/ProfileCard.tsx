@@ -6,6 +6,7 @@ interface Props {
         id: string;
         role: 'user' | 'admin';
         token: number;
+        totalTokens?: number | undefined;
         emailVerified: Date | null;
       } & {
         name?: string | null | undefined;

@@ -65,6 +65,7 @@ export const authOptions: NextAuthOptions = {
             emailVerified: user.emailVerified ?? null,
             role: user.role ?? 'user',
             token: user.token ?? 10000,
+            totalTokens: user.totalTokens ?? undefined,
           };
 
           console.log('Authorization successful for:', email, userToReturn);
@@ -96,6 +97,7 @@ export const authOptions: NextAuthOptions = {
           token.role = dbUser.role;
           token.emailVerified = dbUser.emailVerified;
           token.token = dbUser.token;
+          token.totalTokens = dbUser.totalTokens;
         }
       }
 
@@ -108,6 +110,7 @@ export const authOptions: NextAuthOptions = {
         if (dbUser) {
           token.image = dbUser.image;
           token.token = dbUser.token;
+          token.totalTokens = dbUser.totalTokens;
           token.emailVerified = dbUser.emailVerified;
         }
       }
@@ -133,6 +136,7 @@ export const authOptions: NextAuthOptions = {
         session.user.token = token.token as number;
         session.user.emailVerified = token.emailVerified as Date | null;
         session.accessToken = token.accessToken as string;
+        session.user.totalTokens = token.totalTokens as number;
       }
 
       // console.log('Session callback', { session, token });

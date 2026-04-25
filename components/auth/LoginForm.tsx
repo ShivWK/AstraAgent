@@ -72,7 +72,8 @@ export function LoginForm({ setLogin }: PropsType) {
       return;
     }
 
-    console.log('Success');
+    // console.log('Login result:', result);
+
     dispatch(setOpenLoginModel(false));
     dispatch(setGetStartedLoading(false));
 

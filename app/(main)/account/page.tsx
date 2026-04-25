@@ -8,15 +8,13 @@ import ProfileChange from '@/components/auth/ProfileChange';
 import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 import ProfileCard from '@/components/auth/ProfileCard';
+import TokenUsage from '@/components/auth/TokenUsage';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
-  const data1 = useSession();
-  // console.log('Got session data', data1);
-
-  const { data: session, update } = data1;
+  const { data: session, update } = useSession();
 
   useEffect(() => {
     if (session?.user.emailVerified) return;
@@ -51,9 +49,9 @@ const Page = () => {
 
   return (
     <>
-      <main className="max-md:-mt-4">
-        <div className="mx-auto flex max-w-300 flex-col items-center gap-1.5 overflow-hidden rounded-2xl md:flex-row">
-          <aside className="relative flex w-full basis-full flex-col items-center gap-2 bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+      <main className="mb-10 max-md:-mt-4">
+        <div className="mx-auto flex max-w-300 flex-col gap-1.5 overflow-hidden md:flex-row">
+          <aside className="relative flex w-full basis-full flex-col items-center gap-2 rounded-2xl bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
             {session?.user?.role === 'admin' && (
               <Crown
                 aria-hidden="true"
@@ -96,23 +94,26 @@ const Page = () => {
             </button>
           </aside>
           <section className="basis-full self-start p-2">
-            <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
-            <div className="flex flex-col gap-3">
-              <Chats
-                name="Agent Name"
-                chat="The first chat heading..."
-                date="12/02/26"
-              />
-              <Chats
-                name="Agent Name"
-                chat="The first chat heading..."
-                date="12/02/26"
-              />
-              <Chats
-                name="Agent Name"
-                chat="The first chat heading..."
-                date="12/02/26"
-              />
+            <TokenUsage user={session?.user} />
+            <div>
+              <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
+              <div className="flex flex-col gap-3">
+                <Chats
+                  name="Agent Name"
+                  chat="The first chat heading..."
+                  date="12/02/26"
+                />
+                <Chats
+                  name="Agent Name"
+                  chat="The first chat heading..."
+                  date="12/02/26"
+                />
+                <Chats
+                  name="Agent Name"
+                  chat="The first chat heading..."
+                  date="12/02/26"
+                />
+              </div>
             </div>
           </section>
         </div>
