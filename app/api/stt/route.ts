@@ -3,6 +3,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { Readable } from 'stream';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';
+import { UserModel } from '@/model/userModel';
 
 export const runtime = 'nodejs';
 
@@ -37,13 +38,23 @@ export async function POST(req: NextRequest) {
     const stream = Readable.from(buffer);
 
     const response = await client.speechToText.transcribe({
-      file: stream, // SDK expects stream
+      file: stream,
       model: 'saaras:v3',
       mode: 'transcribe',
     });
 
+    const transcript = response?.transcript || '';
+
+    if (transcript.length > 0) {
+      const tokenUsed = Math.ceil(response.transcript.length / 4);
+
+      await UserModel.findByIdAndUpdate(session.user.id, {
+        $inc: { token: -tokenUsed },
+      });
+    }
+
     return NextResponse.json({
-      text: response?.transcript || '',
+      text: transcript,
     });
   } catch (error) {
     console.error('STT Error:', error);

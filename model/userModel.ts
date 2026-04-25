@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
     default: 'user',
   },
 
+  totalTokens: {
+    type: Number,
+    default: 10000,
+  },
+
   token: {
     type: Number,
     default: 10000,

@@ -1,6 +1,9 @@
+import { useSession } from 'next-auth/react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
+  const { update } = useSession();
+
   const [recording, setRecording] = useState(false);
   const [sttLoading, setSttLoading] = useState(false);
 
@@ -50,8 +53,8 @@ const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
         }
       });
       setSttLoading(false);
+      await update();
     };
-
     // Error handling in API, also error boundary is remaining to be build
 
     mediaRecorder.start();

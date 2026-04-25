@@ -7,13 +7,14 @@ import Chats from '@/components/common/Chats';
 import ProfileChange from '@/components/auth/ProfileChange';
 import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
+import ProfileCard from '@/components/auth/ProfileCard';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
   const data1 = useSession();
-  // console.log('Got session data', data1);
+  console.log('Got session data', data1);
 
   const { data: session, update } = data1;
 
@@ -75,7 +76,7 @@ const Page = () => {
               <span>{session?.user?.email || 'User Email Address'}</span>
             </p>
 
-            <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
+            {/* <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
               <p className="text-lg font-medium">Current Balance</p>
               <p className="-mt-2 text-xl font-medium">
                 {session?.user?.token || 0}
@@ -87,7 +88,9 @@ const Page = () => {
               >
                 Recharge
               </button>
-            </div>
+            </div> */}
+
+            <ProfileCard logoutLoading={logoutLoading} user={session?.user} />
 
             <button
               onClick={authClickHandler}

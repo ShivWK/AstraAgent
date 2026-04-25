@@ -1,10 +1,11 @@
+import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
 
 const ttsCache = new Map<string, string>();
 
 const useTts = (speaker = 'shubh') => {
-  // voice can be "shubh", "ritu"
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { update } = useSession();
 
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -20,7 +21,7 @@ const useTts = (speaker = 'shubh') => {
 
   const play = async (id: string, text: string) => {
     if (loadingId) return;
-    if (activeId == id && audioRef.current) {
+    if (activeId === id && audioRef.current) {
       if (audioRef.current.paused) {
         await audioRef.current.play();
         setIsPaused(false);
@@ -67,6 +68,7 @@ const useTts = (speaker = 'shubh') => {
 
         audioBase64 = result.audio;
         ttsCache.set(key, audioBase64!);
+        await update();
 
         setLoadingId(null);
         setActiveId(id);

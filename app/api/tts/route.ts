@@ -2,6 +2,7 @@ import { SarvamAIClient } from 'sarvamai';
 import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';
+import { UserModel } from '@/model/userModel';
 
 export const runtime = 'nodejs';
 
@@ -35,6 +36,14 @@ export async function POST(req: NextRequest) {
       speaker,
       target_language_code: 'en-IN',
     });
+
+    if (response?.audios?.[0]) {
+      const tokenUsed = Math.ceil(text.length / 4);
+
+      await UserModel.findByIdAndUpdate(session.user.id, {
+        $inc: { token: -tokenUsed },
+      });
+    }
 
     return NextResponse.json({
       audio: response.audios?.[0],
