@@ -100,16 +100,16 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
                   </span>
                 )}
 
-                <p className="hidden text-center text-lg font-semibold text-gray-200 md:block md:text-sm">
+                <p className="hidden text-center text-xl font-semibold text-gray-200 md:block md:text-sm">
                   {plan.label}
                 </p>
                 <div className="flex items-center gap-5 md:flex-col md:gap-2">
-                  <p className="mt-1 text-5xl font-bold md:text-2xl">
+                  <p className="mt-1 text-4xl font-bold md:text-2xl">
                     ₹{plan.price}
                   </p>
 
-                  <div className="mt-1 md:mt-0">
-                    <p className="text-lg font-semibold text-gray-200 md:hidden md:text-sm">
+                  <div className="flex flex-col items-start gap-0.5 md:items-center">
+                    <p className="text-xl font-semibold text-gray-200 md:hidden md:text-sm">
                       {plan.label}
                     </p>
                     <p className="text-gray-200 md:text-sm">
