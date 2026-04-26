@@ -1,6 +1,9 @@
 import { ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
 import RechargeModal from './RechargeModal';
+import useToast from '@/hooks/useToast';
+import { showToast } from '@/utils/showToast';
+import { useSession } from 'next-auth/react';
 
 interface Props {
   user:
@@ -19,7 +22,15 @@ interface Props {
   logoutLoading?: boolean;
 }
 
+type RazorpayResponse = {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+};
+
 export default function ProfileCard({ user, logoutLoading }: Props) {
+  const { ToastContainer, triggerToast } = useToast('bottom-mid');
+  const { update } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleRechargeClick = () => {
@@ -27,7 +38,96 @@ export default function ProfileCard({ user, logoutLoading }: Props) {
     setIsOpen(true);
   };
 
-  console.log('User data:', user);
+  const handleProceed = async (
+    amount: number,
+    setVerifyPayment: (value: boolean) => void,
+    setProcessing: (value: boolean) => void,
+  ) => {
+    setProcessing(true);
+    const order = await fetch('/api/payments/create_order', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ amount }),
+    });
+
+    const data = await order.json();
+
+    if (!order.ok) {
+      showToast({
+        message: data.error || 'Failed to create order. Please try again.',
+        type: 'error',
+        trigger: triggerToast,
+      });
+      setProcessing(false);
+      return;
+    }
+
+    const { razorpayOrderId, orderDetailsId } = data;
+
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_API_KEY!,
+      amount: amount * 100,
+      currency: 'INR',
+      name: 'Astra Agent',
+      description: 'Test Transaction',
+      Image: '/logo-solid.jpeg',
+      order_id: razorpayOrderId,
+      theme: {
+        color: '#3399cc',
+      },
+      handler: async (response: RazorpayResponse) => {
+        console.log('Payment Response:', response.razorpay_order_id);
+        setVerifyPayment(true);
+        const verifyRes = await fetch('/api/payments/verify_order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderId: response.razorpay_order_id,
+            paymentId: response.razorpay_payment_id,
+            signature: response.razorpay_signature,
+            orderDetailsId,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+
+        if (!verifyRes.ok) {
+          showToast({
+            message:
+              verifyData.error ||
+              'Payment verification failed. Please contact support.',
+            type: 'error',
+            trigger: triggerToast,
+          });
+          return;
+        }
+
+        setVerifyPayment(false);
+        setProcessing(false);
+        setIsOpen(false);
+        showToast({
+          message: `Payment successful! ${verifyData.tokensAdded} tokens added.`,
+          type: 'success',
+          trigger: triggerToast,
+        });
+        await update();
+      },
+      // modal: {
+      //   ondismiss: () => {
+      //     setIsOpen(false);
+      //     setVerifyPayment(false);
+      //     setProcessing(false);
+      //   }
+      // }
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
 
   if (!user)
     return (
@@ -61,8 +161,10 @@ export default function ProfileCard({ user, logoutLoading }: Props) {
       <RechargeModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        onProceed={() => {}}
+        onProceed={handleProceed}
+        triggerToast={triggerToast}
       />
+      {ToastContainer}
     </>
   );
 }

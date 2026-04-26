@@ -24,7 +24,7 @@ const TokenUsage = ({ user }: Props) => {
 
   if (!user) {
     return (
-      <div className="mb-5 h-45 w-[52%] animate-pulse rounded-2xl bg-gray-900"></div>
+      <div className="mb-5 h-45 w-full animate-pulse rounded-2xl bg-gray-900 md:w-[52%]"></div>
     );
   }
 
