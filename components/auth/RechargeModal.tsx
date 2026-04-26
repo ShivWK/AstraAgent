@@ -62,7 +62,7 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
       onClose={() => setIsOpen(false)}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
-      className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 text-center shadow-lg md:w-[35%]"
+      className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 text-center shadow-lg md:w-[32%]"
     >
       <div className="flex flex-col gap-6 p-4 pt-8 text-white">
         <button
@@ -70,7 +70,7 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
           onClick={() => setIsOpen(false)}
           className="absolute top-3 right-3 rounded-full p-0.5 text-gray-400 transition-all duration-150 ease-linear hover:bg-gray-600 hover:text-white"
         >
-          <X />
+          <X size={21} />
         </button>
 
         <div>
