@@ -15,11 +15,6 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   const [emailSend, setEmailSend] = useState(false);
   const [seconds, setSeconds] = useState(0);
 
-  const closeClickHandler = () => {
-    setOpen(false);
-    window.history.back();
-  };
-
   const sendEmail = async () => {
     try {
       setEmailLoading(true);
@@ -83,7 +78,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
   return (
     <Modal
       open={open}
-      onClose={closeClickHandler}
+      onClose={() => setOpen(false)}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
       className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 p-6 text-center shadow-lg md:w-[30%]"
@@ -91,7 +86,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
       <>
         <button
           aria-label="Close Modal"
-          onClick={closeClickHandler}
+          onClick={() => setOpen(false)}
           className="absolute top-3 right-3 rounded-full bg-gray-900/50 p-1 text-lg font-semibold text-white/70 transition hover:text-white"
         >
           <X aria-hidden="true" size={20} />

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type DrawerProps = {
@@ -21,6 +21,11 @@ const Modal = ({
   const drawer = useRef<HTMLDivElement>(null);
   const lastFocusedElement = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(false);
+
+  const closeHandler = useCallback(() => {
+    // window.history.back();
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
     const call = async () => {
@@ -50,28 +55,28 @@ const Modal = ({
 
     window.history.pushState({ drawer: true }, '');
 
-    const handlePopState = () => {
-      console.log('pop state');
-      onClose();
-    };
+    // const handlePopState = () => {
+    //   console.log('pop state');
+    //   onClose();
+    // };
 
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') closeHandler();
     };
 
     document.addEventListener('keydown', handleKeyPress);
-    window.addEventListener('popstate', handlePopState);
+    // window.addEventListener('popstate', handlePopState);
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
-      window.removeEventListener('popstate', handlePopState);
+      // window.removeEventListener('popstate', handlePopState);
     };
-  }, [open, onClose]);
+  }, [open, onClose, closeHandler]);
 
   if (!mounted) return null;
 
   return createPortal(
     <div
-      onClick={onClose}
+      onClick={closeHandler}
       aria-hidden="true"
       className={`fixed inset-0 z-50 bg-black/50 ${open ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
     >

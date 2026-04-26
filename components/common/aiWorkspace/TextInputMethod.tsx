@@ -6,6 +6,7 @@ import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 type PropType = {
+  setHasMessage: (val: boolean) => void;
   sendMessage: (val: Payload) => void;
   stopStream: () => void;
   streaming: boolean;
@@ -13,6 +14,7 @@ type PropType = {
 };
 
 const TextInputMethod = ({
+  setHasMessage,
   sendMessage,
   stopStream,
   streaming,
@@ -55,6 +57,8 @@ const TextInputMethod = ({
 
     sendMessage({ type: 'text_message', message: text });
     setText('');
+    inputRef.current?.blur();
+    setHasMessage(true);
   };
 
   const handleSubmit = () => {

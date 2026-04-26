@@ -10,7 +10,7 @@ import {
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/common/aiWorkspace/Chatbox';
-import Drawer from '@/components/common/Modal';
+import Modal from '@/components/common/Modal';
 import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -102,11 +102,6 @@ const AiWorkspace = () => {
 
     setError(null);
   }, [error, setError, triggerToast]);
-
-  const closeHandler = () => {
-    dispatch(setOpenSidebar(false));
-    window.history.back();
-  };
 
   useEffect(() => {
     const element = containerRef.current;
@@ -222,6 +217,7 @@ const AiWorkspace = () => {
               <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-30 bg-linear-to-t from-black from-15% to-transparent to-70%" />
             </div>
             <TextInputMethod
+              setHasMessage={setHasMessage}
               sendMessage={sendMessage}
               stopStream={stopStream}
               streaming={streaming}
@@ -238,9 +234,9 @@ const AiWorkspace = () => {
             )}
           </section>
         </div>
-        <Drawer
+        <Modal
           open={isSidebarOpen}
-          onClose={closeHandler}
+          onClose={() => dispatch(setOpenSidebar(false))}
           showClasses="translate-x-0"
           hideClasses="-translate-x-full"
           className="fixed top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
@@ -248,7 +244,7 @@ const AiWorkspace = () => {
           <>
             <button
               className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-              onClick={closeHandler}
+              onClick={() => dispatch(setOpenSidebar(false))}
             >
               <ChevronLeft size={27} aria-hidden="true" />
             </button>
@@ -262,7 +258,7 @@ const AiWorkspace = () => {
               />
             </div>
           </>
-        </Drawer>
+        </Modal>
       </main>
       {ToastContainer}
     </>
