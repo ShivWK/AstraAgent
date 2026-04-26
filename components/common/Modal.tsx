@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-type DrawerProps = {
+type ModalProps = {
   open: boolean;
   onClose: () => void;
   children: ReactNode;
@@ -17,8 +17,8 @@ const Modal = ({
   className,
   showClasses,
   hideClasses,
-}: DrawerProps) => {
-  const drawer = useRef<HTMLDivElement>(null);
+}: ModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
   const lastFocusedElement = useRef<HTMLElement | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -54,7 +54,7 @@ const Modal = ({
       lastFocusedElement.current = document.activeElement as HTMLElement;
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = `${scrollWidth}px`;
-      drawer.current?.focus();
+      modalRef.current?.focus();
     } else {
       if (main) {
         main.removeAttribute('inert');
@@ -74,7 +74,7 @@ const Modal = ({
   useEffect(() => {
     if (!open) return;
 
-    window.history.pushState({ drawer: true }, '');
+    // window.history.pushState({ modal: true }, '');
 
     // const handlePopState = () => {
     //   console.log('pop state');
@@ -103,7 +103,7 @@ const Modal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        ref={drawer}
+        ref={modalRef}
         aria-modal="true"
         aria-hidden={!open}
         role="dialog"
