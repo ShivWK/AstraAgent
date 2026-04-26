@@ -89,9 +89,9 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         await connectDB();
         const dbUser = await UserModel.findOne({ email: user.email });
-        // console.log('DB user found in JWT callback:', dbUser);
 
         if (dbUser) {
+          token.name = dbUser.name;
           token.image = dbUser.image;
           token.id = dbUser._id.toString();
           token.role = dbUser.role;
@@ -104,8 +104,6 @@ export const authOptions: NextAuthOptions = {
       if (trigger === 'update') {
         await connectDB();
         const dbUser = await UserModel.findById(token.id);
-
-        // console.log('user data:', dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;
@@ -124,12 +122,12 @@ export const authOptions: NextAuthOptions = {
         { expiresIn: '1d' },
       );
 
-      // console.log('JWT callback', { token, user, trigger });
       return token;
     },
 
     async session({ session, token }) {
       if (token) {
+        session.user.name = token.name as string;
         session.user.image = token.image as string;
         session.user.id = token.id as string;
         session.user.role = token.role as 'user' | 'admin';
@@ -139,7 +137,6 @@ export const authOptions: NextAuthOptions = {
         session.user.totalTokens = token.totalTokens as number;
       }
 
-      // console.log('Session callback', { session, token });
       return session;
     },
   },

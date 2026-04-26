@@ -5,7 +5,7 @@ import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 import { useSession } from 'next-auth/react';
 
-interface Props {
+type PropsType = {
   user:
     | ({
         id: string;
@@ -20,7 +20,7 @@ interface Props {
       })
     | undefined;
   logoutLoading?: boolean;
-}
+};
 
 type RazorpayResponse = {
   razorpay_order_id: string;
@@ -28,9 +28,9 @@ type RazorpayResponse = {
   razorpay_signature: string;
 };
 
-export default function ProfileCard({ user, logoutLoading }: Props) {
+export default function ProfileCard({ user, logoutLoading }: PropsType) {
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
-  const { update } = useSession();
+  const { data, update } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleRechargeClick = () => {
@@ -52,11 +52,11 @@ export default function ProfileCard({ user, logoutLoading }: Props) {
       body: JSON.stringify({ amount }),
     });
 
-    const data = await order.json();
+    const orderData = await order.json();
 
     if (!order.ok) {
       showToast({
-        message: data.error || 'Failed to create order. Please try again.',
+        message: orderData.error || 'Failed to create order. Please try again.',
         type: 'error',
         trigger: triggerToast,
       });
@@ -64,18 +64,34 @@ export default function ProfileCard({ user, logoutLoading }: Props) {
       return;
     }
 
-    const { razorpayOrderId, orderDetailsId } = data;
+    const { razorpayOrderId, orderDetailsId } = orderData;
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_TEST_API_KEY!,
       amount: amount * 100,
       currency: 'INR',
+
       name: 'Astra Agent',
-      description: 'Test Transaction',
-      Image: '/logo-solid.jpeg',
+      description: 'Recharge Tokens',
+      image:
+        'https://res.cloudinary.com/dis1iphl0/image/upload/v1773068574/My%20Brand/logo-transparent_ouww4n.png',
+
       order_id: razorpayOrderId,
+
+      prefill: {
+        name: data?.user?.name || '',
+        email: data?.user?.email || '',
+        // contact: '9999999999',
+      },
+
+      notes: {
+        userId: data?.user?.id || '',
+        email: data?.user?.email || '',
+        orderDetailsId,
+      },
+
       theme: {
-        color: '#3399cc',
+        color: '#1c398e',
       },
       handler: async (response: RazorpayResponse) => {
         console.log('Payment Response:', response.razorpay_order_id);

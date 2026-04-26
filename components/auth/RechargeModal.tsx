@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Modal from '../common/Modal';
 import { X } from 'lucide-react';
-import Script from 'next/script';
 import { TriggerToastArgumentsType } from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 
@@ -117,7 +116,7 @@ const RechargeModal = ({
           <button
             aria-label="Close recharge modal"
             onClick={() => setIsOpen(false)}
-            className="absolute top-3 right-3 rounded-full p-0.5 text-gray-400 transition-all duration-150 ease-linear hover:bg-gray-600 hover:text-white"
+            className="absolute top-3 right-3 rounded-full bg-gray-700 p-0.5 text-gray-400 transition-all duration-150 ease-linear hover:bg-gray-600 hover:text-white"
           >
             <X size={21} />
           </button>
