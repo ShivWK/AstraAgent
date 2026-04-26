@@ -64,7 +64,7 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
       hideClasses="opacity-0 scale-0"
       className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 text-center shadow-lg md:w-[32%]"
     >
-      <div className="flex flex-col gap-6 p-4 pt-8 text-white">
+      <div className="flex flex-col gap-5 p-4 pt-8 text-white">
         <button
           aria-label="Close recharge modal"
           onClick={() => setIsOpen(false)}
@@ -80,7 +80,7 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="flex flex-col justify-evenly max-md:gap-3 md:flex-row">
           {PLANS.map((plan) => {
             const isActive = selectedPlan?.id === plan.id;
 
@@ -100,9 +100,23 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
                   </span>
                 )}
 
-                <p className="text-sm text-gray-300">{plan.label}</p>
-                <p className="mt-1 text-2xl font-bold">₹{plan.price}</p>
-                <p className="text-sm text-gray-200">{plan.tokens} tokens</p>
+                <p className="hidden text-center text-lg font-semibold text-gray-200 md:block md:text-sm">
+                  {plan.label}
+                </p>
+                <div className="flex items-center gap-5 md:flex-col md:gap-2">
+                  <p className="mt-1 text-5xl font-bold md:text-2xl">
+                    ₹{plan.price}
+                  </p>
+
+                  <div className="mt-1 md:mt-0">
+                    <p className="text-lg font-semibold text-gray-200 md:hidden md:text-sm">
+                      {plan.label}
+                    </p>
+                    <p className="text-gray-200 md:text-sm">
+                      {plan.tokens} tokens
+                    </p>
+                  </div>
+                </div>
               </button>
             );
           })}
@@ -126,7 +140,7 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
           <p className="text-xs text-gray-300">₹1 = 10 tokens</p>
         </div>
 
-        <div className="rounded-lg bg-white/5 p-3 text-sm">
+        <div className="-mt-4 text-sm">
           {tokens > 0 ? (
             <p>
               You will get{' '}
@@ -138,7 +152,6 @@ const RechargeModal = ({ isOpen, setIsOpen, onProceed }: Props) => {
           )}
         </div>
 
-        {/* 🔹 CTA */}
         <button
           onClick={handleProceed}
           disabled={!selectedPlan && !customAmount}
