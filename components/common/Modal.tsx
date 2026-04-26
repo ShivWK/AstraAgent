@@ -36,16 +36,37 @@ const Modal = ({
   }, []);
 
   useEffect(() => {
+    const header = document.getElementsByTagName('header')[0];
+    const main = document.getElementsByTagName('main')[0];
+
     if (open) {
+      const scrollWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      if (main) {
+        main.setAttribute('inert', '');
+      }
+
+      if (header) {
+        header.setAttribute('inert', '');
+        header.style.paddingRight = `${scrollWidth}px`;
+      }
+
       lastFocusedElement.current = document.activeElement as HTMLElement;
-      document.getElementsByTagName('main')[0].setAttribute('inert', '');
-      document.getElementsByTagName('header')[0].setAttribute('inert', '');
       document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollWidth}px`;
       drawer.current?.focus();
     } else {
-      document.getElementsByTagName('main')[0].removeAttribute('inert');
-      document.getElementsByTagName('header')[0].removeAttribute('inert');
+      if (main) {
+        main.removeAttribute('inert');
+      }
+
+      if (header) {
+        header.removeAttribute('inert');
+        header.style.paddingRight = '0px';
+      }
+
       document.body.style.overflow = 'auto';
+      document.body.style.paddingRight = '0px';
       lastFocusedElement.current?.focus();
     }
   }, [open]);
