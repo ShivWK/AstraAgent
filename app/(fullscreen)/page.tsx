@@ -3,7 +3,7 @@
 import styles from './page.module.css';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { ChevronRight, MessagesSquare } from 'lucide-react';
+import { Bot, ChevronRight, MessagesSquare } from 'lucide-react';
 import Image from 'next/image';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex w-full justify-center pt-20 pb-5">
+      <main className="flex w-full justify-center pt-34 pb-5 md:pt-20">
         <section className="flex flex-col items-center gap-4">
           <Image
             src="/logo-transparent.png"
@@ -63,7 +63,7 @@ export default function Home() {
           </Button>
 
           <div className="mt-2 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
-            <button className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-xl transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 max-md:w-full">
+            <button className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 max-md:w-full md:shadow-xl">
               <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
               <div className="relative z-10">
@@ -88,13 +88,13 @@ export default function Home() {
               </div>
             </button>
 
-            <button className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-linear-to-br from-violet-950 via-slate-950 to-black p-5 shadow-xl transition-all duration-150 ease-linear hover:shadow-violet-500/30 active:scale-95 max-md:w-full">
+            <button className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-linear-to-br from-violet-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-violet-500/30 active:scale-95 max-md:w-full md:shadow-xl">
               <div className="absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-violet-500/10 blur-3xl" />
 
               <div className="relative z-10">
                 <div className="flex items-center gap-3 md:mb-3">
                   <div className="flex items-center justify-center rounded-2xl bg-violet-500/15 p-2 text-4xl md:text-2xl">
-                    🤖
+                    <Bot className="size-10" />
                   </div>
 
                   <div className="text-start">
