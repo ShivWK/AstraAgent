@@ -98,7 +98,7 @@ const RechargeModal = ({
       return;
     }
 
-    setIsOpen(false);
+    // setIsOpen(false);
 
     await onProceed(amount, setVerifyPayment, setProcessing);
   };

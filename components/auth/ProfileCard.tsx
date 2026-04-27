@@ -4,6 +4,10 @@ import RechargeModal from './RechargeModal';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 import { useSession } from 'next-auth/react';
+import {
+  type RazorpayResponse,
+  type RazorpayFailedResponse,
+} from '@/types/razorpayTypes';
 
 type PropsType = {
   user:
@@ -20,12 +24,6 @@ type PropsType = {
       })
     | undefined;
   logoutLoading?: boolean;
-};
-
-type RazorpayResponse = {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
 };
 
 export default function ProfileCard({ user, logoutLoading }: PropsType) {
@@ -93,6 +91,9 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
       theme: {
         color: '#1c398e',
       },
+
+      redirect: false,
+
       handler: async (response: RazorpayResponse) => {
         console.log('Payment Response:', response.razorpay_order_id);
         setVerifyPayment(true);
@@ -112,6 +113,8 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
         const verifyData = await verifyRes.json();
 
         if (!verifyRes.ok) {
+          setVerifyPayment(false);
+          setProcessing(false);
           showToast({
             message:
               verifyData.error ||
@@ -132,16 +135,31 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
         });
         await update();
       },
-      // modal: {
-      //   ondismiss: () => {
-      //     setIsOpen(false);
-      //     setVerifyPayment(false);
-      //     setProcessing(false);
-      //   }
-      // }
+
+      modal: {
+        ondismiss: () => {
+          setVerifyPayment(false);
+          setProcessing(false);
+        },
+
+        escape: false,
+        backdropclose: false,
+        confirmclose: true,
+      },
     };
 
     const rzp1 = new window.Razorpay(options);
+    rzp1.on('payment.failed', function (response: RazorpayFailedResponse) {
+      setVerifyPayment(false);
+      setProcessing(false);
+      showToast({
+        message:
+          response?.error?.description || 'Payment failed. Please try again.',
+        type: 'error',
+        trigger: triggerToast,
+      });
+    });
+
     rzp1.open();
   };
 

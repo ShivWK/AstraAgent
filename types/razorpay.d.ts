@@ -1,3 +1,5 @@
+import { RazorpayResponse } from './razorpay';
+import { RazorpayFailedResponse } from './razorpayTypes';
 export {};
 
 declare global {
@@ -25,10 +27,5 @@ interface RazorpayOptions {
 
 interface RazorpayInstance {
   open(): void;
+  on(event: string, callback: (response: RazorpayFailedResponse) => void): void;
 }
-
-type RazorpayResponse = {
-  razorpay_order_id: string;
-  razorpay_payment_id: string;
-  razorpay_signature: string;
-};
