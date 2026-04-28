@@ -10,13 +10,14 @@ import {
   setSelectedInteractionMode,
   selectSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
+import { type Message } from './useChatSocket';
 
 type PropsType = {
   conversationId: string | null;
   mode: string | null;
   agentId: string | null;
   chat: Record<string, string>[];
-  setChat: Dispatch<SetStateAction<Record<string, string>[]>>;
+  setChat: Dispatch<SetStateAction<Message[]>>;
 };
 
 const useFetchData = ({
