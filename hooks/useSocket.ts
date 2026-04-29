@@ -48,6 +48,11 @@ const useSocket = (conversationId: string) => {
     socket.onerror = (event) => {
       console.log('Error in connection', event);
       setError('Something went wrong. Please try after sometime');
+      setConnected(false);
+    };
+
+    socket.onclose = () => {
+      setConnected(false);
     };
 
     socket.onmessage = async (msg) => {
