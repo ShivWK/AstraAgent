@@ -16,13 +16,22 @@ import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
+import { useEffect } from 'react';
 
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    const updateAuth = async () => {
+      await update();
+    };
+
+    updateAuth();
+  }, []);
 
   const authClickHandler = async () => {
     if (errorMessage) {
