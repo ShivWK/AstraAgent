@@ -11,6 +11,7 @@ type PropType = {
   stopStream: () => void;
   streaming: boolean;
   loading: boolean;
+  connected: boolean;
 };
 
 const TextInputMethod = ({
@@ -19,6 +20,7 @@ const TextInputMethod = ({
   stopStream,
   streaming,
   loading,
+  connected,
 }: PropType) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState('');
@@ -114,7 +116,7 @@ const TextInputMethod = ({
     >
       <textarea
         ref={inputRef}
-        disabled={recording}
+        disabled={recording || !connected}
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
@@ -133,7 +135,7 @@ const TextInputMethod = ({
           <button
             type="button"
             onClick={micBtnClickHandler}
-            disabled={streaming || loading}
+            disabled={streaming || loading || !connected}
             className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
@@ -149,7 +151,7 @@ const TextInputMethod = ({
         <button
           type="button"
           onClick={handleSubmit}
-          disabled={!text.trim() && !streaming}
+          disabled={(!text.trim() && !streaming) || !connected}
           className={`rounded-lg bg-blue-900 p-2 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (

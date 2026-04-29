@@ -15,7 +15,6 @@ import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';
-import useChatSocket from '@/hooks/useChatSocket';
 import SampleQuestions from './SampleQuestions';
 import useFetchData from '@/hooks/useFetchData';
 import ChatSkeleton from '@/components/skeletons/ChatSkeleton';
@@ -57,7 +56,7 @@ const AiWorkspace = () => {
     sendMessage,
     stopStream,
     setChat,
-    setStreamMessage,
+    connected,
     streaming,
     modelLoading,
     setError,
@@ -177,6 +176,7 @@ const AiWorkspace = () => {
                   setHasMessages={setHasMessage}
                   sendMessage={sendMessage}
                   loading={loading}
+                  connected={connected}
                   sampleQuestions={currentAgent?.sampleQuestions}
                   mode={mode || interactionMode}
                 />
@@ -186,7 +186,7 @@ const AiWorkspace = () => {
                 onScroll={scrollHandler}
                 className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
               >
-                {loading && <ChatSkeleton />}
+                {(loading || !connected) && <ChatSkeleton />}
 
                 {chat.length > 0 &&
                   chat.map((item, index) => {
@@ -237,6 +237,7 @@ const AiWorkspace = () => {
               stopStream={stopStream}
               streaming={streaming}
               loading={modelLoading}
+              connected={connected}
             />
             {!isAtBottom && !loading && hasMessage && (
               <button

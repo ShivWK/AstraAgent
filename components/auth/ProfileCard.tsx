@@ -8,6 +8,8 @@ import {
   type RazorpayResponse,
   type RazorpayFailedResponse,
 } from '@/types/razorpayTypes';
+import useAppSelector from '@/hooks/useAppSelector';
+import { selectTokens } from '@/features/auth/authSlice';
 
 type PropsType = {
   user:
@@ -30,6 +32,7 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
   const { data, update } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const { totalTokens, currentToken } = useAppSelector(selectTokens);
 
   const handleRechargeClick = () => {
     if (logoutLoading) return;
@@ -183,7 +186,7 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
     <>
       <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
         <p className="text-lg font-medium">Current Balance</p>
-        <p className="-mt-2 text-xl font-medium">{user!.token || 0}</p>
+        <p className="-mt-2 text-xl font-medium">{currentToken || 0}</p>
         <button
           onClick={handleRechargeClick}
           disabled={logoutLoading}

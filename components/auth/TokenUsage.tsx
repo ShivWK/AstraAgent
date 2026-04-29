@@ -1,3 +1,6 @@
+import { selectTokens } from '@/features/auth/authSlice';
+import useAppSelector from '@/hooks/useAppSelector';
+
 type Props = {
   user:
     | ({
@@ -15,9 +18,9 @@ type Props = {
 };
 
 const TokenUsage = ({ user }: Props) => {
-  const totalTokens = user?.totalTokens;
-  const remainingTokens = user?.token;
-  const usedTokens = totalTokens ? totalTokens - remainingTokens! : 0;
+  const { totalTokens, currentToken } = useAppSelector(selectTokens);
+
+  const usedTokens = totalTokens ? totalTokens - currentToken! : 0;
   const progress = totalTokens! > 0 ? (usedTokens / totalTokens!) * 100 : 0;
 
   if (user?.role === 'admin') return null;
@@ -45,7 +48,7 @@ const TokenUsage = ({ user }: Props) => {
 
       <div className="mb-4">
         <p className="text-2xl font-semibold text-white">
-          {remainingTokens?.toLocaleString()}
+          {currentToken?.toLocaleString()}
         </p>
         <p className="text-xs text-gray-400">tokens remaining</p>
       </div>
@@ -59,9 +62,7 @@ const TokenUsage = ({ user }: Props) => {
 
       <div className="mt-3 flex justify-between text-xs text-gray-400">
         <span>{progress.toFixed(1)}% used</span>
-        <span>
-          {remainingTokens && remainingTokens > 0 ? 'Active' : 'Exhausted'}
-        </span>
+        <span>{currentToken && currentToken > 0 ? 'Active' : 'Exhausted'}</span>
       </div>
     </div>
   );

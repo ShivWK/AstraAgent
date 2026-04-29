@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useState, useRef, useEffect } from 'react';
+import useAppDispatch from './useAppDispatch';
+import { setTokens } from '@/features/auth/authSlice';
 
 export type Payload = {
   type: 'text_message';
@@ -13,6 +15,7 @@ export type Message = {
 
 const useSocket = (conversationId: string) => {
   const { data: sessionData, update } = useSession();
+  const dispatch = useAppDispatch();
 
   const updateRef = useRef(update);
   useEffect(() => {
@@ -80,7 +83,12 @@ const useSocket = (conversationId: string) => {
         }
 
         case 'usage':
-          await updateRef.current();
+          dispatch(
+            setTokens({
+              type: 'decrement',
+              currentValue: parsed.tokensUsed,
+            }),
+          );
           break;
 
         case 'error':
@@ -95,7 +103,7 @@ const useSocket = (conversationId: string) => {
     return () => {
       socket.close();
     };
-  }, [sessionData?.accessToken]);
+  }, [sessionData?.accessToken, dispatch]);
 
   const msgSender = (payload: Payload) => {
     socketRef.current?.send(

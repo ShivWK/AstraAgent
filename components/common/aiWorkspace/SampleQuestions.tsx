@@ -6,6 +6,7 @@ type PropsType = {
   setHasMessages: (val: boolean) => void;
   sendMessage: (val: Payload) => void;
   mode: string | null;
+  connected: boolean;
 };
 
 const SampleQuestions = ({
@@ -14,8 +15,9 @@ const SampleQuestions = ({
   setHasMessages,
   sendMessage,
   mode,
+  connected,
 }: PropsType) => {
-  if (loading) return null;
+  if (loading || !connected) return null;
 
   const clickHandler = (q: string) => {
     sendMessage({ type: 'text_message', message: q });

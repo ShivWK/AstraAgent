@@ -9,12 +9,26 @@ import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 import ProfileCard from '@/components/auth/ProfileCard';
 import TokenUsage from '@/components/auth/TokenUsage';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import { setTokens } from '@/features/auth/authSlice';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
   const { data: session, update } = useSession();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!session?.user.token || !session?.user.totalTokens) return;
+    dispatch(
+      setTokens({
+        type: 'main',
+        totalValue: session?.user.totalTokens,
+        currentValue: session?.user.token,
+      }),
+    );
+  }, [session?.user, dispatch]);
 
   useEffect(() => {
     if (session?.user.emailVerified) return;
