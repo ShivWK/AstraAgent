@@ -8,7 +8,7 @@ const Attribution = () => {
       </p>
       <div className="flex w-fit gap-2.5">
         <Image
-          className="border-primary h-[14vh] w-[14vh] rounded-[50%] border-2 object-cover p-1"
+          className="h-[14vh] w-[14vh] rounded-full border-2 border-red-500 object-cover p-1"
           src="/images/MY-min.jpeg"
           alt="Developer image"
           width={100}

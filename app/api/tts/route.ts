@@ -12,13 +12,11 @@ const client = new SarvamAIClient({
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
+  const user = await UserModel.findById(session?.user.id);
 
-  if (!session?.user.id) {
+  if (!session || !user) {
     return NextResponse.json(
-      {
-        message: 'Unauthorized',
-        success: false,
-      },
+      { success: false, message: 'Unauthorized' },
       { status: 401 },
     );
   }

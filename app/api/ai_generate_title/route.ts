@@ -1,6 +1,19 @@
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../auth/[...nextauth]/options';
+import { UserModel } from '@/model/userModel';
 
 export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+  const user = await UserModel.findById(session?.user.id);
+
+  if (!session || !user) {
+    return NextResponse.json(
+      { success: false, message: 'Unauthorized' },
+      { status: 401 },
+    );
+  }
+
   try {
     const { messages } = await req.json();
 

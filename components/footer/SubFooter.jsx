@@ -5,14 +5,14 @@ const SubFooter = () => {
   return (
     <div className="max-w-302.8 mx-auto my-1.5 flex w-full flex-col justify-between gap-3 p-2 font-bold text-white md:my-3 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-col justify-center gap-2 md:basis-[40%]">
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
           <Image
             src="/logo-solid.jpeg"
             alt="Astra agent logo"
             width={300}
             height={300}
             quality={100}
-            className={`h-12 w-13 rounded`}
+            className={`h-13 w-13 rounded md:h-14 md:w-14`}
           />
           <p className="text-3xl font-semibold tracking-wide">Astra Agent</p>
         </div>

@@ -4,6 +4,7 @@ import { ConversationModel } from '@/model/conversationModel';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/options';
 import mongoose from 'mongoose';
+import { UserModel } from '@/model/userModel';
 
 export async function GET(
   req: Request,
@@ -11,7 +12,9 @@ export async function GET(
 ) {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  const user = await UserModel.findById(session?.user.id);
+
+  if (!session || !user) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },

@@ -12,8 +12,13 @@ import { authOptions } from '../auth/[...nextauth]/options';
 
 export const POST = async function GET(req: Request) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  const user = await UserModel.findById(session?.user.id);
+
+  if (!session || !user) {
+    return NextResponse.json(
+      { success: false, message: 'Unauthorized' },
+      { status: 401 },
+    );
   }
 
   try {

@@ -141,6 +141,22 @@ export const authOptions: NextAuthOptions = {
     },
   },
 
+  events: {
+    async createUser({ user }) {
+      await connectDB();
+      await UserModel.updateOne(
+        { email: user.email },
+        {
+          $set: {
+            role: 'user',
+            token: 10000,
+            totalTokens: 10000,
+          },
+        },
+      );
+    },
+  },
+
   debug: process.env.NODE_ENV === 'development',
   secret: process.env.NEXTAUTH_SECRET,
 };

@@ -4,6 +4,7 @@ import { authOptions } from '../../auth/[...nextauth]/options';
 import { getServerSession } from 'next-auth/next';
 import OrdersModel from '@/model/ordersModel';
 import { connectDB } from '@/lib/db/connectDb';
+import { UserModel } from '@/model/userModel';
 
 const PLAN_MAP: Record<number, number> = {
   99: 1000,
@@ -14,9 +15,13 @@ const PLAN_MAP: Record<number, number> = {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
+    const user = await UserModel.findById(session?.user.id);
 
-    if (!session?.user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session || !user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
     }
     const { amount } = await request.json();
 

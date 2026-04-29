@@ -48,8 +48,12 @@ export const POST = async function POST(req: Request) {
 
     const { purpose, email } = parsed.data;
 
-    if (purpose === 'email_verification' && !session) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    const user = await UserModel.findById(session?.user.id);
+    if (purpose === 'email_verification' && !session && !user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
     }
 
     await connectDB();

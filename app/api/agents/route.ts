@@ -5,11 +5,13 @@ import { authOptions } from '../auth/[...nextauth]/options';
 import { UserAgentsModel } from '@/model/userAgentModel';
 import { agentCreationSchema } from '@/lib/validations/agents.schema';
 import { AgentsTemplateModel } from '@/model/agentsModel';
+import { UserModel } from '@/model/userModel';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
+  const user = await UserModel.findById(session?.user.id);
 
-  if (!session) {
+  if (!session || !user) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -46,8 +48,9 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
+    const user = await UserModel.findById(session?.user.id);
 
-    if (!session) {
+    if (!session || !user) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 },
@@ -122,55 +125,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
-// export async function POST(req: NextRequest) {
-//   try {
-//     const body = await req.json();
-
-//     const {
-//       title,
-//       icon,
-//       subHeading,
-//       placeholder,
-//       description,
-//       model,
-//       placeHolder,
-//       instruction,
-//       userInstruction,
-//       fallbackMessage,
-//       themeColor,
-//       sampleQuestions,
-//     } = body;
-
-//     if (!title || !instruction || !model) {
-//       return NextResponse.json(
-//         { error: 'Missing required fields' },
-//         { status: 400 },
-//       );
-//     }
-
-//     await connectDB();
-//     const agent = await AgentsTemplateModel.create({
-//       title,
-//       icon,
-//       description,
-//       model,
-//       placeholder,
-//       instruction,
-//       userInstruction,
-//       fallbackMessage,
-//       themeColor,
-//       sampleQuestions,
-//       subHeading,
-//     });
-
-//     return NextResponse.json({ success: true, data: agent }, { status: 201 });
-//   } catch (error) {
-//     console.error('Error creating agent:', error);
-
-//     return NextResponse.json(
-//       { error: 'Internal Server Error' },
-//       { status: 500 },
-//     );
-//   }
-// }
