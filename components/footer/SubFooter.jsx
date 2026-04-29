@@ -1,10 +1,9 @@
-// import LogoAndMenu from "../header/LogoAndMenu"
 import Attribution from './Attribution';
 import Image from 'next/image';
 
 const SubFooter = () => {
   return (
-    <div className="mx-auto my-1.5 flex w-full max-w-[1210px] flex-col justify-between gap-3 p-2 font-bold text-white md:my-3 md:flex-row md:items-center md:justify-between">
+    <div className="max-w-302.8 mx-auto my-1.5 flex w-full flex-col justify-between gap-3 p-2 font-bold text-white md:my-3 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-col justify-center gap-2 md:basis-[40%]">
         <div className="flex items-center gap-5">
           <Image
@@ -15,9 +14,7 @@ const SubFooter = () => {
             quality={100}
             className={`h-12 w-13 rounded`}
           />
-          <p className="hidden text-3xl font-semibold tracking-wide lg:block">
-            Astra Agent
-          </p>
+          <p className="text-3xl font-semibold tracking-wide">Astra Agent</p>
         </div>
         <p className="text-white">
           <span className="font-medium tracking-wide whitespace-normal">
