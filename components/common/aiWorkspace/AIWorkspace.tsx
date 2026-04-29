@@ -23,6 +23,8 @@ import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 import useTts from '@/hooks/useTts';
 
+import useSocket from '@/hooks/useSocket';
+
 const AiWorkspace = () => {
   const { ToastContainer, triggerToast } = useToast('top-right');
   const searchParam = useSearchParams();
@@ -36,6 +38,18 @@ const AiWorkspace = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
+  // const {
+  //   chat,
+  //   streamMessage,
+  //   error,
+  //   sendMessage,
+  //   stopStream,
+  //   setChat,
+  //   streaming,
+  //   modelLoading,
+  //   setError,
+  // } = useChatSocket(conversationId as string);
+
   const {
     chat,
     streamMessage,
@@ -43,10 +57,11 @@ const AiWorkspace = () => {
     sendMessage,
     stopStream,
     setChat,
+    setStreamMessage,
     streaming,
     modelLoading,
     setError,
-  } = useChatSocket(conversationId as string);
+  } = useSocket(conversationId as string);
 
   const {
     loading,

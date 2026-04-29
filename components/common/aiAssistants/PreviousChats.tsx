@@ -18,8 +18,6 @@ type PropsType = {
 const PreviousChats = ({ history, setHistory }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
-  console.log(history);
-
   const toggleGroup = (agentId: string) => {
     setOpenGroups((prev) => ({
       ...prev,

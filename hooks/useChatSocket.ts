@@ -24,6 +24,12 @@ const RECONNECT_INTERVAL = 2000;
 const useChatSocket = (conversationId: string) => {
   const { data: session, update } = useSession();
 
+  // 1. Keep a stable reference to `update` to prevent dependency cascades
+  const updateRef = useRef(update);
+  useEffect(() => {
+    updateRef.current = update;
+  }, [update]);
+
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectAttemptsRef = useRef(0);
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -44,12 +50,13 @@ const useChatSocket = (conversationId: string) => {
     }
   };
 
-  const resetStreamingState = () => {
+  // 2. Wrap in useCallback to make it referentially stable
+  const resetStreamingState = useCallback(() => {
     setStreaming(false);
     setModelLoading(false);
     streamRef.current = '';
     setStreamMessage('');
-  };
+  }, []);
 
   const cleanupSocket = () => {
     const socket = socketRef.current;
@@ -78,6 +85,7 @@ const useChatSocket = (conversationId: string) => {
     }, RECONNECT_INTERVAL);
   }, []);
 
+  // 3. Remove `update` from dependencies. It is completely stable now.
   const handleMessage = useCallback(
     async (e: MessageEvent) => {
       try {
@@ -97,6 +105,7 @@ const useChatSocket = (conversationId: string) => {
 
           case 'ai_end': {
             const finalAnswer = streamRef.current;
+            console.log('End called with', finalAnswer);
 
             if (finalAnswer.trim()) {
               setChat((prv) => [
@@ -110,7 +119,8 @@ const useChatSocket = (conversationId: string) => {
           }
 
           case 'usage':
-            await update();
+            // Call via ref to avoid putting `update` in the dependency array
+            await updateRef.current();
             break;
 
           case 'error':
@@ -125,7 +135,7 @@ const useChatSocket = (conversationId: string) => {
         resetStreamingState();
       }
     },
-    [update],
+    [resetStreamingState],
   );
 
   const connect = useCallback(() => {
@@ -167,7 +177,12 @@ const useChatSocket = (conversationId: string) => {
       console.error('WebSocket connection error:', err);
       return;
     }
-  }, [session?.accessToken, handleMessage, scheduleReconnect]);
+  }, [
+    session?.accessToken,
+    handleMessage,
+    resetStreamingState,
+    scheduleReconnect,
+  ]);
 
   useEffect(() => {
     connectRef.current = connect;
