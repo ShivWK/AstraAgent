@@ -99,19 +99,25 @@ const TextInputMethod = ({
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 transition-all duration-200 md:bottom-6 md:w-[88%]`}
+      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 transition-all duration-150 md:bottom-6 md:w-[88%]`}
       style={{
         background: recording
           ? `linear-gradient(
-          120deg,
-          rgba(59,130,246,${bgOpacity}),
-          rgba(99,102,241,0.25)
-        ), black`
+        120deg,
+        rgba(${90 + intensity * 120},130,255,${0.45 + intensity * 0.35}),
+        rgba(139,92,246,${0.3 + intensity * 0.35}),
+        rgba(59,130,246,${0.2 + intensity * 0.25})
+      )`
           : 'black',
 
         boxShadow: recording
-          ? `0 0 ${glowSize}px rgba(59,130,246,0.6)`
+          ? `
+      0 0 ${12 + intensity * 20}px rgba(59,130,246,0.8),
+      0 0 ${20 + intensity * 25}px rgba(139,92,246,0.35)
+    `
           : undefined,
+
+        transition: 'all 80ms linear',
       }}
     >
       <textarea
