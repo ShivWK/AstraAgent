@@ -12,9 +12,8 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const session = await getServerSession(authOptions);
-  const user = await UserModel.findById(session?.user.id);
 
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -23,7 +22,6 @@ export async function GET(
 
   try {
     const { id } = await params;
-    console.log('Got id', id);
 
     if (!id) {
       return NextResponse.json(

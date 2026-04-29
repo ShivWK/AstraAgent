@@ -12,9 +12,7 @@ export async function GET(
 ) {
   const session = await getServerSession(authOptions);
 
-  const user = await UserModel.findById(session?.user.id);
-
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -22,6 +20,15 @@ export async function GET(
   }
 
   try {
+    await connectDB();
+    const user = await UserModel.findById(session?.user.id);
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
+
     const { id } = await params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -31,7 +38,6 @@ export async function GET(
       );
     }
 
-    await connectDB();
     const conversation = await ConversationModel.findById(id);
 
     if (!conversation) {

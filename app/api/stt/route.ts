@@ -4,6 +4,7 @@ import { Readable } from 'stream';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';
 import { UserModel } from '@/model/userModel';
+import { connectDB } from '@/lib/db/connectDb';
 
 export const runtime = 'nodejs';
 
@@ -13,9 +14,8 @@ const client = new SarvamAIClient({
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  const user = await UserModel.findById(session?.user.id);
 
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -23,6 +23,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    await connectDB();
+    const user = await UserModel.findById(session?.user.id);
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
     const formData = await req.formData();
     const file = formData.get('file') as File | null;
 

@@ -7,9 +7,8 @@ import { UserModel } from '@/model/userModel';
 
 export async function PATCH(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  const user = await UserModel.findById(session?.user.id);
 
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -17,6 +16,15 @@ export async function PATCH(req: NextRequest) {
   }
 
   try {
+    await connectDB();
+    const user = await UserModel.findById(session?.user.id);
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
     const body = await req.json();
     const { title, conversationId } = body;
 
@@ -26,8 +34,6 @@ export async function PATCH(req: NextRequest) {
         { status: 400 },
       );
     }
-
-    await connectDB();
 
     const updated = await ConversationModel.findByIdAndUpdate(
       conversationId,

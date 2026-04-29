@@ -2,12 +2,12 @@ import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/options';
 import { UserModel } from '@/model/userModel';
+import { connectDB } from '@/lib/db/connectDb';
 
 export async function POST(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  const user = await UserModel.findById(session?.user.id);
 
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },
@@ -15,6 +15,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    await connectDB();
+    const user = await UserModel.findById(session?.user.id);
+
+    if (!session || !user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
     const { messages } = await req.json();
 
     if (!messages) {
@@ -75,7 +84,6 @@ export async function POST(req: NextRequest) {
     }
 
     const aiText = data?.choices?.[0]?.message?.content || 'New Chat';
-    console.log(aiText);
 
     return NextResponse.json({
       success: true,

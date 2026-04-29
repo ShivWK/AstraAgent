@@ -4,16 +4,14 @@ import { MessagesModel } from '@/model/messagesModel';
 import mongoose from 'mongoose';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/options';
-import { UserModel } from '@/model/userModel';
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ conversationId: string }> },
 ) {
   const session = await getServerSession(authOptions);
-  const user = await UserModel.findById(session?.user.id);
 
-  if (!session || !user) {
+  if (!session) {
     return NextResponse.json(
       { success: false, message: 'Unauthorized' },
       { status: 401 },

@@ -9,9 +9,18 @@ import { connectDB } from '@/lib/db/connectDb';
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
+
+    await connectDB();
     const user = await UserModel.findById(session?.user.id);
 
-    if (!session || !user) {
+    if (!user) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 },
@@ -41,7 +50,6 @@ export async function POST(request: Request) {
       );
     }
 
-    await connectDB();
     const orderDetails = await OrdersModel.findById(orderDetailsId);
 
     if (!orderDetails) {

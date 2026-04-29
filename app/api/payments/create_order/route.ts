@@ -15,14 +15,24 @@ const PLAN_MAP: Record<number, number> = {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    const user = await UserModel.findById(session?.user.id);
 
-    if (!session || !user) {
+    if (!session) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 },
       );
     }
+
+    await connectDB();
+    const user = await UserModel.findById(session?.user.id);
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
+
     const { amount } = await request.json();
 
     if (!amount || amount < 10) {
@@ -51,7 +61,6 @@ export async function POST(request: Request) {
       tokensToAdd = amount * 10;
     }
 
-    await connectDB();
     const orderDetails = await OrdersModel.create({
       userId: session.user?.id,
       orderId: order.id,

@@ -11,9 +11,18 @@ export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
     const session = await getServerSession(authOptions);
+
+    if (!session) {
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 401 },
+      );
+    }
+
+    await connectDB();
     const user = await UserModel.findById(session?.user.id);
 
-    if (!session || !user) {
+    if (!user) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 401 },
@@ -21,9 +30,6 @@ export async function DELETE(req: NextRequest) {
     }
 
     const userId = session.user.id;
-
-    await connectDB();
-
     const conversation = await ConversationModel.findOne({
       _id: id,
       userId,
