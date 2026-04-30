@@ -79,7 +79,7 @@ const QuickAccess = () => {
         console.log('Unknown error', err);
       }
     } finally {
-      setConversationLoading(false);
+      // setConversationLoading(false);
     }
   };
 

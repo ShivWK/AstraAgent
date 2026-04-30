@@ -125,7 +125,7 @@ const AiAssistant = () => {
         console.log('Unknown error', err);
       }
     } finally {
-      setConversationLoading(false);
+      // setConversationLoading(false);
     }
   };
 
