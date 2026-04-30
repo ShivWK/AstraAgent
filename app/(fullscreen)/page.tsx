@@ -14,6 +14,7 @@ import {
 import { Spinner } from '@/components/ui/spinner';
 import { useSession } from 'next-auth/react';
 import Footer from '@/components/footer/Footer';
+import QuickAccess from '@/components/common/QuickAccess';
 
 export default function Home() {
   const { status } = useSession();
@@ -65,8 +66,9 @@ export default function Home() {
               <ChevronRight className="animate-ping" />
             )}
           </Button>
+          <QuickAccess />
 
-          <div className="mt-2 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
+          {/* <div className="mt-2 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
             <button className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 max-md:w-full md:shadow-xl">
               <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
@@ -119,7 +121,7 @@ export default function Home() {
                 <p className="hidden md:block">Create Now →</p>
               </div>
             </button>
-          </div>
+          </div> */}
         </section>
       </main>
       <Footer />

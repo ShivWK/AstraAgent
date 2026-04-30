@@ -37,18 +37,6 @@ const AiWorkspace = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
-  // const {
-  //   chat,
-  //   streamMessage,
-  //   error,
-  //   sendMessage,
-  //   stopStream,
-  //   setChat,
-  //   streaming,
-  //   modelLoading,
-  //   setError,
-  // } = useChatSocket(conversationId as string);
-
   const {
     chat,
     streamMessage,

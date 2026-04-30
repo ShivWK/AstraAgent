@@ -31,7 +31,7 @@ export async function GET() {
     const userId = session.user.id;
 
     const agents = await UserAgentsModel.find({
-      $or: [{ createdBy: userId }, { createdBy: null }],
+      $or: [{ createdBy: userId }, { isDefault: true }],
     })
       .sort({ createdAt: -1 })
       .lean();
