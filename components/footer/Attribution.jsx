@@ -17,14 +17,14 @@ const Attribution = () => {
         <div className="flex flex-col justify-center italic dark:text-white">
           <p className="text-lg tracking-wide">Shivendra Dwivedi</p>
           <p className="flex items-center gap-2 text-sm">
-            <span>Web Developer</span>
+            <span className="font-normal">Web Developer</span>
             <span className="text-gray-800 lg:hidden dark:text-gray-300">
               •
             </span>
             <a
               href="https://portfolio.shivendra.site"
               target="__blank"
-              className="text-sm tracking-wider text-red-500 underline underline-offset-2 lg:hidden"
+              className="tracking-wider text-red-500 underline underline-offset-2 lg:hidden"
             >
               Portfolio
             </a>
@@ -32,7 +32,7 @@ const Attribution = () => {
           <a
             href="https://portfolio.shivendra.site"
             target="__blank"
-            className="hidden text-sm tracking-wider text-red-500 underline underline-offset-2 lg:inline"
+            className="hidden tracking-wider text-red-500 underline underline-offset-2 lg:inline"
           >
             Portfolio
           </a>

@@ -16,7 +16,7 @@ const Footer = () => {
         }}
       ></div>
 
-      <div className="f-full w-full bg-black/40 px-2 py-1 backdrop-blur-2xl md:py-4">
+      <div className="f-full w-full bg-black/40 px-2 py-1 pb-10 backdrop-blur-2xl md:pt-4">
         <SubFooter />
       </div>
     </footer>
