@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const Attribution = () => {
   return (
-    <div className="w-fit text-gray-800 max-md:mb-3">
+    <div className="mt-4 w-fit text-gray-800 max-md:mb-3">
       <p className="mb-2 text-lg font-medium tracking-wide dark:text-white">
         Developed By
       </p>
