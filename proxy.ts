@@ -11,9 +11,11 @@ export default withAuth(
       pathname.startsWith(route),
     );
 
+    const fullPath = pathname + req.nextUrl.search;
+
     if (isProtected && !req.nextauth.token) {
       const redirectUrl = new URL('/', req.nextUrl.origin);
-      redirectUrl.searchParams.set('callbackUrl', pathname);
+      redirectUrl.searchParams.set('callbackUrl', fullPath);
       redirectUrl.searchParams.set('auth', 'required');
 
       return NextResponse.redirect(redirectUrl);
@@ -23,7 +25,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: () => true, // we handle logic manually
+      authorized: () => true, // handling logic manually
     },
   },
 );

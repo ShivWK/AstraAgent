@@ -29,6 +29,10 @@ export default function Home() {
     }
   };
 
+  const handleAgentCreation = () => {
+    router.push('/ai-assistant?createAgent=true');
+  };
+
   return (
     <>
       <main className="flex w-full justify-center pt-34 pb-5 md:pt-20">
@@ -88,7 +92,10 @@ export default function Home() {
               </div>
             </button>
 
-            <button className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-linear-to-br from-violet-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-violet-500/30 active:scale-95 max-md:w-full md:shadow-xl">
+            <button
+              onClick={handleAgentCreation}
+              className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-linear-to-br from-violet-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-violet-500/30 active:scale-95 max-md:w-full md:shadow-xl"
+            >
               <div className="absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-violet-500/10 blur-3xl" />
 
               <div className="relative z-10">
