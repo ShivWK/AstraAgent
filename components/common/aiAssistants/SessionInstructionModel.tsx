@@ -28,7 +28,7 @@ type PropsType = {
 
 type FormType = z.infer<typeof agentInstructionSchema>;
 
-const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
+const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
   const currentAgent = useAppSelector(selectSelectedAgent);
   const dispatch = useAppDispatch();
   const agent = currentAgent!;
@@ -104,7 +104,7 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
             <div className="ml-auto flex items-center gap-2">
               <DialogClose type="button" asChild>
                 <Button variant={'outline'} className="">
-                  Cancel
+                  Skip
                 </Button>
               </DialogClose>
               <Button
@@ -122,4 +122,4 @@ const SpeechInstructionModel = ({ open, setOpen }: PropsType) => {
   );
 };
 
-export default SpeechInstructionModel;
+export default SessionInstructionModal;

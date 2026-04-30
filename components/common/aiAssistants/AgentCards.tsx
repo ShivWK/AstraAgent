@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { type Agent } from '@/types/agents';
-import SpeechInstructionModel from './SpeechInstructionModel';
+import SessionInstructionModal from './SessionInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
 import AgentCard from './AgentCard';
 import { Conversation } from '@/types/conversation';
@@ -181,7 +181,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
           </div>
         )}
       </section>
-      <SpeechInstructionModel
+      <SessionInstructionModal
         open={openInstructionModel}
         setOpen={setOpenInstructionModel}
       />
