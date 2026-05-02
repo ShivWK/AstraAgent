@@ -65,7 +65,7 @@ const PreviousChats = () => {
 
   return (
     <div>
-      <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
+      <h2 className="mb-4 w-full text-xl font-medium">Previous Chats</h2>
       <div className="bg-primary-dark-bg rounded p-1">
         {!loading ? (
           Object.entries(previousChatsToShow!).length !== 0 && (

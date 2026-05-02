@@ -107,7 +107,7 @@ const Page = () => {
               </p>
             </button>
           </aside>
-          <section className="basis-full self-start p-2">
+          <section className="w-full self-start p-2 md:basis-full">
             <TokenUsage user={session?.user} />
             <PreviousChats />
           </section>
