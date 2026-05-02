@@ -66,7 +66,7 @@ const PreviousChats = () => {
   return (
     <div>
       <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
-      <div className="bg-primary-dark-bg flex flex-col gap-3 rounded p-1">
+      <div className="bg-primary-dark-bg rounded p-1">
         {!loading ? (
           Object.entries(previousChatsToShow!).length !== 0 && (
             <Chats
@@ -76,10 +76,10 @@ const PreviousChats = () => {
             />
           )
         ) : (
-          <div className="flex flex-col gap-3">
-            <div className="h-16 w-full animate-pulse rounded bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded bg-gray-500/70" />
+          <div className="flex flex-col gap-3 p-1">
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
           </div>
         )}
       </div>
