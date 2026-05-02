@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react';
 import { LogOut, TriangleAlert, Crown } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
-import Chats from '@/components/common/Chats';
-import ProfileChange from '@/components/auth/ProfileChange';
+import ProfileChange from '@/components/common/account/ProfileChange';
 import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
-import ProfileCard from '@/components/auth/ProfileCard';
-import TokenUsage from '@/components/auth/TokenUsage';
+import ProfileCard from '@/components/common/account/ProfileCard';
+import TokenUsage from '@/components/common/account/TokenUsage';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { setTokens } from '@/features/auth/authSlice';
+import PreviousChats from '@/components/common/account/PreviousChats';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -109,26 +109,7 @@ const Page = () => {
           </aside>
           <section className="basis-full self-start p-2">
             <TokenUsage user={session?.user} />
-            <div>
-              <h2 className="mb-4 text-xl font-medium">Previous Chats</h2>
-              <div className="flex flex-col gap-3">
-                <Chats
-                  name="Agent Name"
-                  chat="The first chat heading..."
-                  date="12/02/26"
-                />
-                <Chats
-                  name="Agent Name"
-                  chat="The first chat heading..."
-                  date="12/02/26"
-                />
-                <Chats
-                  name="Agent Name"
-                  chat="The first chat heading..."
-                  date="12/02/26"
-                />
-              </div>
-            </div>
+            <PreviousChats />
           </section>
         </div>
       </main>

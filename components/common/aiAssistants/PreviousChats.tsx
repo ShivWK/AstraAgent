@@ -7,6 +7,7 @@ import PreviousChat from './PreviousChat';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
+  hideHeading?: boolean;
   setHistory: Dispatch<
     SetStateAction<Record<
       string,
@@ -15,7 +16,11 @@ type PropsType = {
   >;
 };
 
-const PreviousChats = ({ history, setHistory }: PropsType) => {
+const PreviousChats = ({
+  history,
+  setHistory,
+  hideHeading = false,
+}: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (agentId: string) => {
@@ -38,7 +43,9 @@ const PreviousChats = ({ history, setHistory }: PropsType) => {
 
   return (
     <div>
-      <h2 className="mb-2 text-xl font-semibold md:text-2xl dark:text-white">
+      <h2
+        className={`mb-2 text-xl font-semibold md:text-2xl dark:text-white ${hideHeading && 'hidden'}`}
+      >
         Previous Conversations
       </h2>
       {Object.keys(history!).length === 0 ? (
