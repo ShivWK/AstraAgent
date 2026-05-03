@@ -143,7 +143,7 @@ const TextInputMethod = ({
         </div>
 
         {streaming && (
-          <p className="text-xs text-gray-300">Writing response...</p>
+          <p className="text-sm text-gray-300">Writing response...</p>
         )}
 
         <button

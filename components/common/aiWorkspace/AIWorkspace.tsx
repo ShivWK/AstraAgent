@@ -211,13 +211,13 @@ const AiWorkspace = () => {
                       <ChatBox
                         key={index}
                         writer="system"
-                        chat={item.content} // ⚠️ important (string)
+                        chat={item.content}
                       />
                     );
                   })}
 
                 {modelLoading && !streaming && (
-                  <div className="flex items-center gap-2 py-1">
+                  <div className="mb-8 flex items-center gap-2">
                     <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-white/70" />
                     <p className="text-gray-400">
                       {aiStarted ? 'Astra is typing...' : 'Thinking...'}
