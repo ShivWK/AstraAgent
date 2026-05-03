@@ -110,7 +110,7 @@ const PreviousChats = () => {
         <button
           onClick={moreClickHandler}
           disabled={isFull || loading}
-          className="mx-auto mt-4 mb-1 block rounded bg-blue-700 px-4 py-1 tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+          className="mx-auto mt-4 mb-1 block rounded bg-blue-700 px-4 py-1 font-normal tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
         >
           {isFull ? 'No More Chats' : 'More'}
         </button>
