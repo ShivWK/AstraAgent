@@ -101,11 +101,11 @@ export const authOptions: NextAuthOptions = {
         }
       }
 
-      if (trigger === 'update') {
+      if (trigger === 'update' && token.id) {
         await connectDB();
         const dbUser = await UserModel.findById(token.id);
 
-        console.log("dbUser in 'update' trigger:", dbUser);
+        // console.log("dbUser in 'update' trigger:", dbUser);
 
         if (dbUser) {
           token.image = dbUser.image;
