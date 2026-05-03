@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative bottom-0 left-0 z-20 mt-4 w-full md:mt-6"
+      className="relative bottom-0 left-0 z-20 mt-7 w-full md:mt-6"
     >
       <div
         className="absolute top-0 left-0 -z-100 flex h-52 w-full flex-col items-center bg-linear-to-tr from-green-400 via-blue-500 to-violet-900 p-6 max-md:pb-11 lg:h-72"
