@@ -11,6 +11,7 @@ type PropType = {
   stopStream: () => void;
   streaming: boolean;
   loading: boolean;
+  dbLoading: boolean;
   connected: boolean;
 };
 
@@ -20,6 +21,7 @@ const TextInputMethod = ({
   stopStream,
   streaming,
   loading,
+  dbLoading,
   connected,
 }: PropType) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -123,7 +125,7 @@ const TextInputMethod = ({
         value={text}
         className={`wrap-break-words resize-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full text-lg outline-none`}
         aria-label="Enter Query"
-        placeholder={connected ? 'Enter query' : 'Connecting...'}
+        placeholder={!connected || dbLoading ? 'Connecting...' : 'Enter query'}
       />
 
       <div className="flex items-center gap-1">

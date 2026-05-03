@@ -9,6 +9,7 @@ type Props = {
   initialValue: string;
   onClose: () => void;
   conversationId: string;
+  setRenameLoading: Dispatch<SetStateAction<boolean>>;
   setHistory: Dispatch<
     SetStateAction<{
       loading: boolean;
@@ -25,12 +26,14 @@ const RenameModal = ({
   onClose,
   conversationId,
   setHistory,
+  setRenameLoading,
 }: Props) => {
   const [value, setValue] = useState(initialValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSave = async (text: string) => {
     try {
+      setRenameLoading(true);
       const response = await fetch('/api/conversation/update_title', {
         method: 'PATCH',
         headers: {
@@ -68,6 +71,8 @@ const RenameModal = ({
       } else {
         console.log('Random error', err);
       }
+    } finally {
+      setRenameLoading(false);
     }
   };
 

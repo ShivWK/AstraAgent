@@ -162,7 +162,7 @@ const AiWorkspace = () => {
             className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
           >
             <div className="section__chat-box relative w-full basis-full overflow-auto">
-              {!hasMessage && (
+              {!hasMessage && connected && (
                 <SampleQuestions
                   setHasMessages={setHasMessage}
                   sendMessage={sendMessage}
@@ -180,6 +180,7 @@ const AiWorkspace = () => {
                 {(loading || !connected) && <ChatSkeleton />}
 
                 {chat.length > 0 &&
+                  connected &&
                   chat.map((item, index) => {
                     const writer = item.role as 'assistant' | 'user' | 'system';
 
@@ -237,6 +238,7 @@ const AiWorkspace = () => {
               stopStream={stopStream}
               streaming={streaming}
               loading={modelLoading}
+              dbLoading={loading}
               connected={connected}
             />
             {!isAtBottom && !loading && hasMessage && (

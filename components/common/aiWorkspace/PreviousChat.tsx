@@ -32,6 +32,7 @@ const PreviousChat = ({
 }: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [renameLoading, setRenameLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
 
@@ -42,6 +43,7 @@ const PreviousChat = ({
 
   const handleDeleteOperation = async () => {
     try {
+      setOpenDropdown(false);
       setDeleteLoading(true);
       const response = await fetch(
         `/api/conversation/delete_conversation?id=${id}`,
@@ -95,7 +97,7 @@ const PreviousChat = ({
       >
         <button
           onClick={handleOpenConversation}
-          className="line-clamp-1 basis-full text-start disabled:opacity-50"
+          className={`line-clamp-1 basis-full text-start disabled:opacity-50 ${renameLoading && 'opacity-50'}`}
           disabled={deleteLoading}
         >
           {chat}
@@ -139,6 +141,7 @@ const PreviousChat = ({
         initialValue={chat}
         conversationId={id}
         setHistory={setHistory}
+        setRenameLoading={setRenameLoading}
       />
     </>
   );

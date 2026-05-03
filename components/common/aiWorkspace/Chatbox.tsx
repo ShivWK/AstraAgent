@@ -48,20 +48,6 @@ const ChatBox = (props: PropsType) => {
     } catch {}
   };
 
-  // if (writer === 'generating') {
-  //   return (
-  //     <div className="relative mr-auto mb-8 max-w-[95%] animate-pulse overflow-x-auto rounded-lg border px-5 py-4 text-gray-400 md:max-w-[85%]">
-  //       <BrainCircuit
-  //         aria-hidden="true"
-  //         className="absolute top-2 left-2 text-gray-400"
-  //         size={18}
-  //         strokeWidth={2.5}
-  //       />
-  //       <ResponseFormatter chat={chat} />
-  //     </div>
-  //   );
-  // }
-
   if (writer === 'system') {
     return (
       <div className="relative mr-auto mb-8 max-w-[95%] animate-pulse overflow-x-auto rounded-lg border px-5 py-4 text-gray-400 md:max-w-[85%]">
