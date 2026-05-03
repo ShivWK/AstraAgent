@@ -63,6 +63,28 @@ const PreviousChats = () => {
     setLastIndex((prv) => prv + 3);
   };
 
+  useEffect(() => {
+    setPreviousChatsToShow((prev) => {
+      if (!prev) return prev;
+
+      let hasChange = false;
+
+      const cleaned = Object.entries(prev).reduce(
+        (acc, [agentId, agentData]) => {
+          if (agentData?.conversations?.length > 0) {
+            acc[agentId] = agentData;
+          } else {
+            hasChange = true;
+          }
+          return acc;
+        },
+        {} as typeof prev,
+      );
+
+      return hasChange ? cleaned : prev;
+    });
+  }, [previousChatsToShow]);
+
   return (
     <div>
       <h2 className="mb-4 w-full text-xl font-medium">Previous Chats</h2>
