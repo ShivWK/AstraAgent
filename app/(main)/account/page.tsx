@@ -20,6 +20,14 @@ const Page = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const call = async () => {
+      await update();
+    };
+
+    call();
+  }, []);
+
+  useEffect(() => {
     if (!session?.user.token || !session?.user.totalTokens) return;
     dispatch(
       setTokens({
