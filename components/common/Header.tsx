@@ -16,7 +16,7 @@ import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
@@ -25,13 +25,14 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    const updateAuth = async () => {
-      await update();
-    };
+  const hasUpdated = useRef(false);
 
-    updateAuth();
-  }, []);
+  useEffect(() => {
+    if (status === 'authenticated' && !hasUpdated.current) {
+      hasUpdated.current = true;
+      update();
+    }
+  }, [status, update]);
 
   const authClickHandler = async () => {
     if (errorMessage) {

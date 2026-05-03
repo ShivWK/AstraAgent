@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { LogOut, TriangleAlert, Crown } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import ProfileChange from '@/components/common/account/ProfileChange';
@@ -18,14 +18,14 @@ const Page = () => {
     useState(false);
   const { data: session, update, status } = useSession();
   const dispatch = useAppDispatch();
+  const hasUpdated = useRef(false);
 
   useEffect(() => {
-    const call = async () => {
-      await update();
-    };
-
-    call();
-  }, []);
+    if (status === 'authenticated' && !hasUpdated.current) {
+      hasUpdated.current = true;
+      update();
+    }
+  }, [status, update]);
 
   useEffect(() => {
     if (!session?.user.token || !session?.user.totalTokens) return;
