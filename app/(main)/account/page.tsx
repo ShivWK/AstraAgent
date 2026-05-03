@@ -19,14 +19,14 @@ const Page = () => {
   const { data: session, update, status } = useSession();
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const call = async () => {
-      if (status !== 'authenticated') return;
-      await update();
-    };
+  // useEffect(() => {
+  //   const call = async () => {
+  //     if (status !== 'authenticated') return;
+  //     await update();
+  //   };
 
-    call();
-  }, [status]);
+  //   call();
+  // }, [status]);
 
   useEffect(() => {
     if (!session?.user.token || !session?.user.totalTokens) return;

@@ -25,14 +25,14 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    const updateAuth = async () => {
-      if (status !== 'authenticated') return;
-      await update();
-    };
+  // useEffect(() => {
+  //   const updateAuth = async () => {
+  //     if (status !== 'authenticated') return;
+  //     await update();
+  //   };
 
-    updateAuth();
-  }, [status]);
+  //   updateAuth();
+  // }, [status]);
 
   const authClickHandler = async () => {
     if (errorMessage) {

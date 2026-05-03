@@ -149,7 +149,7 @@ const AiWorkspace = () => {
     <>
       <main className="md:pr-1 md:pl-2">
         <div className="flex items-center gap-2">
-          <aside className="hidden h-screen w-104 overflow-x-visible pt-18 pb-0.5 md:block">
+          <aside className="hidden h-dvh w-104 overflow-x-visible pt-18 pb-0.5 md:block">
             <AISideBar
               loading={loading}
               conversation={conversation}
@@ -159,7 +159,7 @@ const AiWorkspace = () => {
             />
           </aside>
           <section
-            className={`section__chat rounded-primary relative flex h-screen w-full flex-col items-center`}
+            className={`section__chat rounded-primary relative flex h-dvh w-full flex-col items-center`}
           >
             <div className="section__chat-box relative w-full basis-full overflow-auto">
               {!hasMessage && connected && (
@@ -245,7 +245,7 @@ const AiWorkspace = () => {
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
-                className="absolute bottom-22 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/70 p-1 opacity-90 md:bottom-28"
+                className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/70 p-1 opacity-90 md:bottom-28"
               >
                 <ArrowDown aria-hidden="true" strokeWidth={1.5} />
               </button>
@@ -257,7 +257,7 @@ const AiWorkspace = () => {
           onClose={() => dispatch(setOpenSidebar(false))}
           showClasses="translate-x-0"
           hideClasses="-translate-x-full"
-          className="fixed top-0 left-0 h-screen w-3/4 py-2 backdrop-blur-xl"
+          className="fixed top-0 left-0 h-dvh w-3/4 py-2 backdrop-blur-xl"
         >
           <>
             <button
