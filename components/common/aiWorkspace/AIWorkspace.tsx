@@ -48,6 +48,7 @@ const AiWorkspace = () => {
     streaming,
     modelLoading,
     setError,
+    aiStarted,
   } = useSocket(conversationId as string);
 
   const {
@@ -142,6 +143,8 @@ const AiWorkspace = () => {
     setIsAtBottom(true);
   };
 
+  console.log('Modal Loading', modelLoading);
+
   return (
     <>
       <main className="md:pr-1 md:pl-2">
@@ -211,6 +214,15 @@ const AiWorkspace = () => {
                       />
                     );
                   })}
+
+                {modelLoading && !streaming && (
+                  <div className="flex items-center gap-2 py-1">
+                    <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-white/70" />
+                    <p className="text-gray-400">
+                      {aiStarted ? 'Astra is typing...' : 'Thinking...'}
+                    </p>
+                  </div>
+                )}
 
                 {streamMessage !== '' && (
                   <ChatBox writer="system" chat={streamMessage} />

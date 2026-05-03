@@ -24,6 +24,7 @@ const useSocket = (conversationId: string) => {
 
   const socketRef = useRef<WebSocket | null>(null);
   const [loading, setLoading] = useState(false);
+  const [aiStarted, setAiStarted] = useState(false);
   const [streaming, setStreaming] = useState(false);
   const [chat, setChat] = useState<Message[]>([]);
   const [streamMessage, setStreamMessage] = useState('');
@@ -60,20 +61,22 @@ const useSocket = (conversationId: string) => {
 
       switch (parsed.type) {
         case 'ai_start':
-          console.log('Ai start');
+          // console.log('Ai start');
           streamRef.current = '';
           setStreamMessage('');
+          setAiStarted(true);
           break;
 
         case 'ai_stream':
-          console.log('Ai streaming');
+          // console.log('Ai streaming');
+          setAiStarted(false);
           streamRef.current += parsed.chunk;
           setStreamMessage(streamRef.current);
           setStreaming(true);
           break;
 
         case 'ai_end': {
-          console.log('Ai end');
+          // console.log('Ai end');
           const finalAnswer = streamRef.current;
 
           setChat((prv) => {
@@ -82,6 +85,7 @@ const useSocket = (conversationId: string) => {
 
           streamRef.current = '';
           setStreamMessage('');
+          setAiStarted(false);
           setStreaming(false);
           setLoading(false);
           break;
@@ -144,6 +148,7 @@ const useSocket = (conversationId: string) => {
     streaming,
     modelLoading: loading,
     setError,
+    aiStarted,
   };
 };
 

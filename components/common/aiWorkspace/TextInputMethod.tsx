@@ -92,9 +92,6 @@ const TextInputMethod = ({
 
   const intensity = Math.min(1, level / 180);
 
-  const bgOpacity = 0.25 + intensity * 0.35;
-  const glowSize = 10 + intensity * 25;
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -109,14 +106,12 @@ const TextInputMethod = ({
         rgba(59,130,246,${0.2 + intensity * 0.25})
       )`
           : 'black',
-
         boxShadow: recording
           ? `
       0 0 ${12 + intensity * 20}px rgba(59,130,246,0.8),
       0 0 ${20 + intensity * 25}px rgba(139,92,246,0.35)
     `
           : undefined,
-
         transition: 'all 80ms linear',
       }}
     >
@@ -128,7 +123,7 @@ const TextInputMethod = ({
         value={text}
         className={`wrap-break-words resize-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full text-lg outline-none`}
         aria-label="Enter Query"
-        placeholder="Enter query"
+        placeholder={connected ? 'Enter query' : 'Connecting...'}
       />
 
       <div className="flex items-center gap-1">

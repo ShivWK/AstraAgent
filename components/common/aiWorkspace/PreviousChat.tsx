@@ -31,6 +31,7 @@ const PreviousChat = ({
   mode,
 }: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
 
@@ -41,6 +42,7 @@ const PreviousChat = ({
 
   const handleDeleteOperation = async () => {
     try {
+      setDeleteLoading(true);
       const response = await fetch(
         `/api/conversation/delete_conversation?id=${id}`,
         {
@@ -70,6 +72,8 @@ const PreviousChat = ({
       } else {
         console.log('Random error in delete', err);
       }
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -91,12 +95,14 @@ const PreviousChat = ({
       >
         <button
           onClick={handleOpenConversation}
-          className="line-clamp-1 basis-full text-start"
+          className="line-clamp-1 basis-full text-start disabled:opacity-50"
+          disabled={deleteLoading}
         >
           {chat}
         </button>
         <button
           onClick={moreOptionsClickHandler}
+          disabled={deleteLoading}
           aria-haspopup="menu"
           aria-controls="chat-menu"
           aria-label="More options"
@@ -111,14 +117,16 @@ const PreviousChat = ({
         >
           <button
             onClick={handleRenameClick}
-            className="rounded-primary flex transform items-center gap-1 py-1 pr-4 pl-2 text-start transition-all duration-100 ease-linear hover:bg-white/20 active:scale-95"
+            disabled={deleteLoading}
+            className="rounded-primary flex transform items-center gap-1 py-1 pr-4 pl-2 text-start transition-all duration-100 ease-linear hover:bg-white/20 active:scale-95 disabled:opacity-50"
           >
             <Pencil size={16} />
             <span>Rename</span>
           </button>
           <button
             onClick={handleDeleteOperation}
-            className="rounded-primary flex transform items-center gap-1 py-1 pr-4 pl-2 text-start text-red-400 transition-all duration-100 ease-linear hover:bg-white/20 active:scale-95"
+            disabled={deleteLoading}
+            className="rounded-primary flex transform items-center gap-1 py-1 pr-4 pl-2 text-start text-red-400 transition-all duration-100 ease-linear hover:bg-white/20 active:scale-95 disabled:opacity-50"
           >
             <Trash size={16} />
             <span>Delete</span>
