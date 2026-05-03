@@ -142,6 +142,10 @@ const TextInputMethod = ({
           </button>
         </div>
 
+        {streaming && (
+          <p className="text-xs text-gray-300">Writing response...</p>
+        )}
+
         <button
           type="button"
           onClick={handleSubmit}
