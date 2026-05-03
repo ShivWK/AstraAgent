@@ -27,11 +27,12 @@ const Header = () => {
 
   useEffect(() => {
     const updateAuth = async () => {
+      if (status !== 'authenticated') return;
       await update();
     };
 
     updateAuth();
-  }, []);
+  }, [status]);
 
   const authClickHandler = async () => {
     if (errorMessage) {
