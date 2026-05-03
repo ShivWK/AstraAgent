@@ -142,8 +142,8 @@ const TextInputMethod = ({
           </button>
         </div>
 
-        {streaming && (
-          <p className="text-sm text-gray-300">Writing response...</p>
+        {!streaming && (
+          <p className="text-sm text-gray-400">Writing response...</p>
         )}
 
         <button
