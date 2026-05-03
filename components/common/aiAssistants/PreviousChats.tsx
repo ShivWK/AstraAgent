@@ -61,7 +61,7 @@ const PreviousChats = ({
               >
                 <div
                   onClick={() => toggleGroup(agentId)}
-                  className="mb-2 flex cursor-pointer items-center justify-between rounded-md bg-white/20 p-2 transition hover:bg-gray-700/30"
+                  className="mb-2 flex cursor-pointer items-center justify-between rounded-md bg-white/20 px-3 py-2 transition hover:bg-gray-500/30"
                 >
                   <div className="flex items-center gap-3">
                     <Image
@@ -72,14 +72,14 @@ const PreviousChats = ({
                       alt="Agent"
                       height={300}
                       width={300}
-                      className="h-12 w-12 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+                      className="h-12 w-12 rounded-full border-2 border-blue-400 object-cover md:h-15 md:w-15"
                     />
 
                     <div className="flex flex-col items-start leading-tight">
-                      <span className="text-sm font-semibold text-white">
+                      <span className="font-semibold text-white">
                         {group.agentName as string}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-sm text-gray-300">
                         {group.agentTitle as string}
                       </span>
                     </div>
