@@ -26,7 +26,6 @@ const TextInputMethod = ({
 }: PropType) => {
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const [text, setText] = useState('');
-  const [columnLayout, setColumnLayout] = useState(false);
   const { startRecording, stopRecording, recording, stream, sttLoading } =
     useAudioRecorder(setText);
   const level = useMicLevel(stream);
@@ -42,14 +41,6 @@ const TextInputMethod = ({
       const newHeight = Math.min(ele.scrollHeight, MAX_HEIGHT);
       ele.style.height = newHeight + 'px';
       ele.style.overflowY = ele.scrollHeight > MAX_HEIGHT ? 'auto' : 'hidden';
-
-      const BUFFER = 10;
-
-      setColumnLayout((prev) => {
-        if (ele.scrollHeight > MAX_HEIGHT + BUFFER) return true;
-        if (ele.scrollHeight < MAX_HEIGHT - BUFFER) return false;
-        return prev;
-      });
     };
 
     call();
@@ -98,7 +89,7 @@ const TextInputMethod = ({
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-5 left-1/2 z-40 flex ${columnLayout ? 'flex-col gap-1 p-3' : 'flex-row gap-1 p-2 pl-3'} w-[95%] -translate-x-1/2 items-end rounded-2xl border-2 border-blue-900 transition-all duration-150 md:bottom-6 md:w-[88%]`}
+      className={`absolute bottom-5 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-2 rounded-xl border-2 border-blue-900 p-2 transition-all duration-150 md:bottom-6 md:w-[88%]`}
       style={{
         background: recording
           ? `linear-gradient(
@@ -123,12 +114,12 @@ const TextInputMethod = ({
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className={`wrap-break-words resize-none ${!columnLayout ? 'self-center' : 'pr-1'} pretty-scrollbar w-full text-lg outline-none`}
+        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none outline-none`}
         aria-label="Enter Query"
         placeholder={!connected || dbLoading ? 'Connecting...' : 'Enter query'}
       />
 
-      <div className="flex items-center gap-1">
+      <div className="flex w-full items-center justify-between">
         <div
           className="transform rounded-full transition-all duration-75"
           style={{
@@ -155,16 +146,16 @@ const TextInputMethod = ({
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`rounded-lg bg-blue-900 p-2 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`rounded-md bg-blue-900 p-1.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (
-              <X aria-hidden="true" />
+              <X aria-hidden="true" size={18} />
             ) : (
-              <Spinner className="size-6" />
+              <Spinner className="size-4.5" />
             )
           ) : (
-            <ArrowUpFromDot aria-hidden="true" />
+            <ArrowUpFromDot aria-hidden="true" size={18} />
           )}
         </button>
       </div>

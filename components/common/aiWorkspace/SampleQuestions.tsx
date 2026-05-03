@@ -25,8 +25,8 @@ const SampleQuestions = ({
   };
 
   return (
-    <div className="animate-fadeIn pointer-events-auto absolute inset-0 z-30 flex flex-col items-center justify-center px-4 text-center">
-      <h2 className="mb-6 text-2xl font-semibold text-white md:text-3xl">
+    <div className="animate-fadeIn pointer-events-auto absolute inset-0 z-30 -mt-6 flex flex-col items-center justify-center px-4 text-center">
+      <h2 className="mb-4 text-2xl font-semibold text-white md:text-3xl">
         How can I help you today?
       </h2>
 

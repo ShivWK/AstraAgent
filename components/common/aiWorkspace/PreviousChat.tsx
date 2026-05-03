@@ -104,7 +104,7 @@ const PreviousChat = ({
         </button>
         <button
           onClick={moreOptionsClickHandler}
-          disabled={deleteLoading}
+          disabled={deleteLoading || renameLoading}
           aria-haspopup="menu"
           aria-controls="chat-menu"
           aria-label="More options"
