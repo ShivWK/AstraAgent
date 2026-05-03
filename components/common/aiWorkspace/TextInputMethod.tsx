@@ -89,7 +89,7 @@ const TextInputMethod = ({
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-4 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-2 rounded-xl border-2 border-blue-900 p-2 transition-all duration-150 md:w-[88%]`}
+      className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-2 rounded-xl border-2 border-blue-900 p-2 transition-all duration-150 md:bottom-4 md:w-[88%]`}
       style={{
         background: recording
           ? `linear-gradient(
