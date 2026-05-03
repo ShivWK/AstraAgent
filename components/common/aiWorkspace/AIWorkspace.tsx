@@ -175,7 +175,7 @@ const AiWorkspace = () => {
               <div
                 ref={containerRef}
                 onScroll={scrollHandler}
-                className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 ${interactionMode === 'text' || mode === 'text' ? 'pb-24' : 'pb-8'} md:px-4`}
+                className={`pretty-scrollbar relative h-full w-full overflow-auto px-2 pt-20 pb-32 md:px-4`}
               >
                 {(loading || !connected) && <ChatSkeleton />}
 
@@ -217,7 +217,7 @@ const AiWorkspace = () => {
                   })}
 
                 {modelLoading && !streaming && (
-                  <div className="mb-8 flex items-center gap-2">
+                  <div className="mb-4 flex items-center gap-2">
                     <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-white/70" />
                     <p className="text-gray-400">
                       {aiStarted ? 'Astra is typing...' : 'Thinking...'}

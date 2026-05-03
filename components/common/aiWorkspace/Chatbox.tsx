@@ -64,7 +64,7 @@ const ChatBox = (props: PropsType) => {
 
   return (
     <div
-      className={`mb-10 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
+      className={`mb-4 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
       <div className="relative max-w-[95%] rounded-xl bg-gray-800 p-1 pb-10 md:max-w-[85%]">
         <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 px-4 py-3 leading-6 wrap-break-word text-white">
