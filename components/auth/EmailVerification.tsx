@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
 import { useSession } from 'next-auth/react';
 
 export default function EmailVerification() {
   const { update } = useSession();
+  const updateRef = useRef(update);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get('token');
@@ -17,6 +19,10 @@ export default function EmailVerification() {
   const [status, setStatus] = useState<
     'loading' | 'success' | 'error' | 'TooManyRequests'
   >(hasParam ? 'loading' : 'error');
+
+  useEffect(() => {
+    updateRef.current = update;
+  }, [update]);
 
   useEffect(() => {
     if (!hasParam) return;
@@ -35,17 +41,19 @@ export default function EmailVerification() {
           }),
         });
 
+        if (res.status === 429) {
+          setStatus('TooManyRequests');
+          return;
+        }
+
         if (!res.ok) {
           setStatus('error');
           return;
         }
 
-        if (res.status === 429) {
-          setStatus('TooManyRequests');
-        }
-
         setStatus('success');
-        await update();
+        await updateRef.current();
+
         timer = setTimeout(() => {
           router.replace('/');
         }, 3000);
@@ -60,7 +68,7 @@ export default function EmailVerification() {
     return () => {
       clearTimeout(timer);
     };
-  }, [token, purpose, hasParam, router, update]);
+  }, [token, purpose, hasParam, router]);
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
@@ -104,9 +112,8 @@ export default function EmailVerification() {
 
         {status === 'TooManyRequests' && (
           <>
-            <p className="mt-2 text-gray-200">
-              Too many requests. Try again after some time.
-            </p>
+            <h2 className="text-xl text-yellow-400">Slow down ⚠️</h2>
+            <p>Too many requests. Try again later.</p>
           </>
         )}
       </div>

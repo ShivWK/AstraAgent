@@ -45,8 +45,10 @@ export async function POST(req: NextRequest) {
       target_language_code: 'en-IN',
     });
 
+    let tokenUsed: number = 0;
+
     if (response?.audios?.[0]) {
-      const tokenUsed = Math.ceil(text.length / 4);
+      tokenUsed = Math.ceil(text.length / 4);
 
       await UserModel.findByIdAndUpdate(session.user.id, {
         $inc: { token: -tokenUsed },
@@ -55,6 +57,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       audio: response.audios?.[0],
+      tokenUsed,
     });
   } catch (error) {
     console.error('TTS Error:', error);

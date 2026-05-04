@@ -1,8 +1,9 @@
-import { useSession } from 'next-auth/react';
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import useAppDispatch from './useAppDispatch';
+import { setTokens } from '@/features/auth/authSlice';
 
 const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
-  const { update } = useSession();
+  const dispatch = useAppDispatch();
 
   const [recording, setRecording] = useState(false);
   const [sttLoading, setSttLoading] = useState(false);
@@ -53,7 +54,13 @@ const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
         }
       });
       setSttLoading(false);
-      await update();
+
+      dispatch(
+        setTokens({
+          type: 'decrement',
+          currentValue: data.tokenUsed,
+        }),
+      );
     };
     // Error handling in API, also error boundary is remaining to be build
 

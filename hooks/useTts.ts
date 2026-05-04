@@ -1,11 +1,12 @@
-import { useSession } from 'next-auth/react';
 import { useRef, useState } from 'react';
+import { setTokens } from '@/features/auth/authSlice';
+import useAppDispatch from './useAppDispatch';
 
 const ttsCache = new Map<string, string>();
 
 const useTts = (speaker = 'shubh') => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const { update } = useSession();
+  const dispatch = useAppDispatch();
 
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -68,7 +69,13 @@ const useTts = (speaker = 'shubh') => {
 
         audioBase64 = result.audio;
         ttsCache.set(key, audioBase64!);
-        await update();
+
+        dispatch(
+          setTokens({
+            type: 'decrement',
+            currentValue: result.tokenUsed,
+          }),
+        );
 
         setLoadingId(null);
         setActiveId(id);

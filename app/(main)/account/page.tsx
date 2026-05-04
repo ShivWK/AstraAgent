@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { LogOut, TriangleAlert, Crown } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import ProfileChange from '@/components/common/account/ProfileChange';
@@ -16,16 +16,8 @@ const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
-  const { data: session, update, status } = useSession();
+  const { data: session, update } = useSession();
   const dispatch = useAppDispatch();
-  const hasUpdated = useRef(false);
-
-  useEffect(() => {
-    if (status === 'authenticated' && !hasUpdated.current) {
-      hasUpdated.current = true;
-      update();
-    }
-  }, [status, update]);
 
   useEffect(() => {
     if (!session?.user.token || !session?.user.totalTokens) return;

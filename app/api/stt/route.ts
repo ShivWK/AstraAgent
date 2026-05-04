@@ -51,9 +51,10 @@ export async function POST(req: NextRequest) {
     });
 
     const transcript = response?.transcript || '';
+    let tokenUsed: number = 0;
 
     if (transcript.length > 0) {
-      const tokenUsed = Math.ceil(response.transcript.length / 4);
+      tokenUsed = Math.ceil(response.transcript.length / 4);
 
       await UserModel.findByIdAndUpdate(session.user.id, {
         $inc: { token: -tokenUsed },
@@ -62,6 +63,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       text: transcript,
+      tokenUsed,
     });
   } catch (error) {
     console.error('STT Error:', error);

@@ -1,6 +1,6 @@
 import { Spinner } from '@/components/ui/spinner';
 import useAudioRecorder from '@/hooks/useAudioRecorder';
-import { Payload } from '@/hooks/useChatSocket';
+import { Payload } from '@/hooks/useSocket';
 import useMicLevel from '@/hooks/useMicLevel';
 import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
