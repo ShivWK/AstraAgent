@@ -10,7 +10,7 @@ import {
   setSelectedInteractionMode,
   selectSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
-import { type Message } from './useChatSocket';
+import { type Message } from './useSocket';
 
 type PropsType = {
   conversationId: string | null;
