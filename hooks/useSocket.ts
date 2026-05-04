@@ -92,12 +92,7 @@ const useSocket = (conversationId: string) => {
         }
 
         case 'usage':
-          dispatch(
-            setTokens({
-              type: 'decrement',
-              currentValue: parsed.tokensUsed,
-            }),
-          );
+          dispatch(setTokens(parsed.tokensUsed));
           break;
 
         case 'error':

@@ -143,8 +143,6 @@ const AiWorkspace = () => {
     setIsAtBottom(true);
   };
 
-  console.log('Modal Loading', modelLoading);
-
   return (
     <>
       <main className="md:pr-1 md:pl-2">

@@ -1,31 +1,21 @@
-import { selectTokens } from '@/features/auth/authSlice';
+import { selectUser } from '@/features/auth/authSlice';
 import useAppSelector from '@/hooks/useAppSelector';
+import { User } from '@/types/user';
 
 type Props = {
-  user:
-    | ({
-        id: string;
-        role: 'user' | 'admin';
-        token: number;
-        totalTokens?: number | undefined;
-        emailVerified: Date | null;
-      } & {
-        name?: string | null | undefined;
-        email?: string | null | undefined;
-        image?: string | null | undefined;
-      })
-    | undefined;
+  user: User;
+  authLoader: boolean;
 };
 
-const TokenUsage = ({ user }: Props) => {
-  const { totalTokens, currentToken } = useAppSelector(selectTokens);
+const TokenUsage = ({ user, authLoader }: Props) => {
+  const { totalTokens, tokens } = useAppSelector(selectUser);
 
-  const usedTokens = totalTokens ? totalTokens - currentToken! : 0;
+  const usedTokens = totalTokens ? totalTokens - tokens! : 0;
   const progress = totalTokens! > 0 ? (usedTokens / totalTokens!) * 100 : 0;
 
   if (user?.role === 'admin') return null;
 
-  if (!user) {
+  if (authLoader) {
     return (
       <div className="mb-5 h-45 w-full animate-pulse rounded-2xl bg-gray-900 md:w-[52%]"></div>
     );
@@ -48,7 +38,7 @@ const TokenUsage = ({ user }: Props) => {
 
       <div className="mb-4">
         <p className="text-2xl font-semibold text-white">
-          {currentToken?.toLocaleString()}
+          {tokens?.toLocaleString()}
         </p>
         <p className="text-xs text-gray-400">tokens remaining</p>
       </div>
@@ -62,7 +52,7 @@ const TokenUsage = ({ user }: Props) => {
 
       <div className="mt-3 flex justify-between text-xs text-gray-400">
         <span>{progress.toFixed(1)}% used</span>
-        <span>{currentToken && currentToken > 0 ? 'Active' : 'Exhausted'}</span>
+        <span>{tokens && tokens > 0 ? 'Active' : 'Exhausted'}</span>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 export type User = {
   name: string;
-  role: string;
+  role: 'user' | 'admin';
   email: string;
   tokens: number;
   totalTokens: number;

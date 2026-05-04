@@ -6,12 +6,13 @@ import * as z from 'zod';
 import { profileFormSchema } from '@/lib/validations/auth.schema';
 import { Spinner } from '../ui/spinner';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
+import { User } from '@/types/user';
+import useRefresher from '@/hooks/useRefreshAuth';
 
-const ProfileChange = () => {
-  const { data: session, update } = useSession();
+const ProfileChange = ({ user }: { user: User }) => {
+  const refresh = useRefresher();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
 
@@ -77,7 +78,7 @@ const ProfileChange = () => {
         trigger: triggerToast,
       });
 
-      await update();
+      await refresh();
       setPreviewURl(null);
     } catch (err) {
       console.log(err);
@@ -125,8 +126,8 @@ const ProfileChange = () => {
               src={
                 previewURL
                   ? previewURL
-                  : session?.user?.image
-                    ? session?.user?.image
+                  : user?.image
+                    ? user?.image
                     : '/assistants/general_ai.png'
               }
               alt="Profile picture"

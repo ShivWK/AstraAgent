@@ -70,12 +70,7 @@ const useTts = (speaker = 'shubh') => {
         audioBase64 = result.audio;
         ttsCache.set(key, audioBase64!);
 
-        dispatch(
-          setTokens({
-            type: 'decrement',
-            currentValue: result.tokenUsed,
-          }),
-        );
+        dispatch(setTokens(result.tokenUsed));
 
         setLoadingId(null);
         setActiveId(id);

@@ -31,8 +31,9 @@ const PreviousChats = () => {
         if (err instanceof Error) {
           console.log(err.message);
         }
-
         console.log('Unexpected Error:', err);
+      } finally {
+        // setLoading(false);
       }
     };
 
@@ -45,7 +46,6 @@ const PreviousChats = () => {
     const toShow = Object.entries(previousChats).slice(0, lastIndex);
     const final = Object.fromEntries(toShow);
 
-    console.log('1st 3', final);
     setPreviousChatsToShow(final);
     setLoading(false);
   }, [previousChats, lastIndex]);
@@ -85,11 +85,19 @@ const PreviousChats = () => {
     });
   }, [previousChatsToShow]);
 
+  console.log('Loading', loading);
+
   return (
     <div>
       <h2 className="mb-4 w-full text-xl font-medium">Previous Chats</h2>
       <div className="bg-primary-dark-bg rounded-md p-1">
-        {!loading ? (
+        {loading ? (
+          <div className="flex flex-col gap-3 p-1">
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+          </div>
+        ) : (
           Object.entries(previousChatsToShow!).length !== 0 && (
             <Chats
               history={previousChatsToShow!}
@@ -97,12 +105,6 @@ const PreviousChats = () => {
               hideHeading={true}
             />
           )
-        ) : (
-          <div className="flex flex-col gap-3 p-1">
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
-          </div>
         )}
       </div>
 

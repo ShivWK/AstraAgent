@@ -7,10 +7,6 @@ type InitialStateType = {
   loginError: string | null;
   getStartedLoading: boolean;
   globalAuthLoader: boolean;
-  tokens: {
-    totalTokens: number;
-    currentToken: number;
-  };
   user: User;
 };
 
@@ -19,13 +15,9 @@ const initialState: InitialStateType = {
   loginError: '',
   getStartedLoading: false,
   globalAuthLoader: true,
-  tokens: {
-    totalTokens: 0,
-    currentToken: 0,
-  },
   user: {
     name: '',
-    role: '',
+    role: 'user',
     email: '',
     tokens: 0,
     totalTokens: 0,
@@ -54,28 +46,8 @@ const authSlice = createSlice({
       state.globalAuthLoader = action.payload;
     },
 
-    setTokens: (
-      state,
-      action: PayloadAction<{
-        type: string;
-        currentValue: number;
-        totalValue?: number;
-      }>,
-    ) => {
-      const payload = action.payload;
-      if (payload.type === 'main') {
-        state.tokens = payload.totalValue
-          ? {
-              totalTokens: payload.totalValue,
-              currentToken: payload.currentValue,
-            }
-          : {
-              totalTokens: 0,
-              currentToken: 0,
-            };
-      } else if (payload.type === 'decrement') {
-        state.tokens.currentToken -= payload.currentValue;
-      }
+    setTokens: (state, action: PayloadAction<number>) => {
+      state.user.tokens -= action.payload;
     },
 
     setUser: (state, action: PayloadAction<User>) => {
@@ -93,7 +65,6 @@ export const selectGetStartedLoading = (state: RootState) =>
   state.auth.getStartedLoading;
 export const selectGlobalAuthLoader = (state: RootState) =>
   state.auth.globalAuthLoader;
-export const selectTokens = (state: RootState) => state.auth.tokens;
 export const selectUser = (state: RootState) => state.auth.user;
 
 export const {

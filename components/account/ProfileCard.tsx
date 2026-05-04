@@ -8,31 +8,24 @@ import {
   type RazorpayResponse,
   type RazorpayFailedResponse,
 } from '@/types/razorpayTypes';
-import useAppSelector from '@/hooks/useAppSelector';
-import { selectTokens } from '@/features/auth/authSlice';
+import { User } from '@/types/user';
+import useRefresher from '@/hooks/useRefreshAuth';
 
 type PropsType = {
-  user:
-    | ({
-        id: string;
-        role: 'user' | 'admin';
-        token: number;
-        totalTokens?: number | undefined;
-        emailVerified: Date | null;
-      } & {
-        name?: string | null | undefined;
-        email?: string | null | undefined;
-        image?: string | null | undefined;
-      })
-    | undefined;
+  user: User;
   logoutLoading?: boolean;
+  authLoader: boolean;
 };
 
-export default function ProfileCard({ user, logoutLoading }: PropsType) {
+export default function ProfileCard({
+  user,
+  logoutLoading,
+  authLoader,
+}: PropsType) {
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
-  const { data, update } = useSession();
+  const { data } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const { totalTokens, currentToken } = useAppSelector(selectTokens);
+  const refresh = useRefresher();
 
   const handleRechargeClick = () => {
     if (logoutLoading) return;
@@ -80,14 +73,14 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
       order_id: razorpayOrderId,
 
       prefill: {
-        name: data?.user?.name || '',
-        email: data?.user?.email || '',
+        name: user.name || '',
+        email: user.email || '',
         contact: '+919876543210',
       },
 
       notes: {
         userId: data?.user?.id || '',
-        email: data?.user?.email || '',
+        email: user.email || '',
         orderDetailsId,
       },
 
@@ -136,7 +129,7 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
           type: 'success',
           trigger: triggerToast,
         });
-        await update();
+        await refresh();
       },
 
       modal: {
@@ -166,7 +159,7 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
     rzp1.open();
   };
 
-  if (!user)
+  if (authLoader)
     return (
       <div className="mt-2 h-24 w-full animate-pulse rounded-2xl bg-gray-900"></div>
     );
@@ -186,7 +179,7 @@ export default function ProfileCard({ user, logoutLoading }: PropsType) {
     <>
       <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
         <p className="text-lg font-medium">Current Balance</p>
-        <p className="-mt-2 text-xl font-medium">{currentToken || 0}</p>
+        <p className="-mt-2 text-xl font-medium">{user.tokens || 0}</p>
         <button
           onClick={handleRechargeClick}
           disabled={logoutLoading}

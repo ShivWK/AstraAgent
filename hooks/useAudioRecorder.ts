@@ -55,12 +55,7 @@ const useAudioRecorder = (onResult: Dispatch<SetStateAction<string>>) => {
       });
       setSttLoading(false);
 
-      dispatch(
-        setTokens({
-          type: 'decrement',
-          currentValue: data.tokenUsed,
-        }),
-      );
+      dispatch(setTokens(data.tokenUsed));
     };
     // Error handling in API, also error boundary is remaining to be build
 

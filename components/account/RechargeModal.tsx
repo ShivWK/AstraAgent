@@ -223,5 +223,3 @@ const RechargeModal = ({
 };
 
 export default RechargeModal;
-
-// 4100 2800 0000 1007

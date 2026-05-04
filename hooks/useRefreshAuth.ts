@@ -14,7 +14,7 @@ const useRefresher = () => {
         throw new Error(user.message);
       }
 
-      dispatch(setUser(user));
+      dispatch(setUser(user.user));
     } catch (err) {
       if (err instanceof Error) {
         console.log('Error occurred:', err.message);

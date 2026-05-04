@@ -17,22 +17,25 @@ import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
+import useRefresher from '@/hooks/useRefreshAuth';
 
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
-  const { data: session, status, update } = useSession();
+
+  const { data: session, status } = useSession();
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
   const hasUpdated = useRef(false);
+  const refresh = useRefresher();
 
   useEffect(() => {
     if (status === 'authenticated' && !hasUpdated.current) {
       hasUpdated.current = true;
-      update();
+      refresh();
     }
-  }, [status, update]);
+  }, [status, refresh]);
 
   const authClickHandler = async () => {
     if (errorMessage) {
@@ -72,7 +75,10 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-4">
           <ThemeChanger />
-          {status !== 'authenticated' ? (
+          {status === 'loading' && (
+            <div className="h-12 w-12 animate-pulse rounded-full bg-gray-700" />
+          )}
+          {status === 'unauthenticated' ? (
             <Button
               onClick={authClickHandler}
               variant="secondary"
@@ -82,28 +88,30 @@ const Header = () => {
               Sign In
             </Button>
           ) : (
-            <button
-              aria-label="Account"
-              onClick={() => router.push('/account')}
-              className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
-            >
-              {session?.user?.image ? (
-                <Image
-                  src={session.user.image!}
-                  alt="Profile picture"
-                  width={300}
-                  height={300}
-                  quality={100}
-                  className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
-                />
-              ) : (
-                <CircleUserRound
-                  size={48}
-                  strokeWidth={1}
-                  className="rounded-full text-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]"
-                />
-              )}
-            </button>
+            status === 'authenticated' && (
+              <button
+                aria-label="Account"
+                onClick={() => router.push('/account')}
+                className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
+              >
+                {session?.user?.image ? (
+                  <Image
+                    src={session.user.image!}
+                    alt="Profile picture"
+                    width={300}
+                    height={300}
+                    quality={100}
+                    className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
+                  />
+                ) : (
+                  <CircleUserRound
+                    size={48}
+                    strokeWidth={1}
+                    className="rounded-full text-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]"
+                  />
+                )}
+              </button>
+            )
           )}
         </div>
       </header>
