@@ -1,4 +1,4 @@
-import { Payload } from '@/hooks/useChatSocket';
+import { Payload } from '@/hooks/useSocket';
 
 type PropsType = {
   loading: boolean;
