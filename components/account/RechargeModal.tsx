@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 import { X } from 'lucide-react';
 import { TriggerToastArgumentsType } from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';

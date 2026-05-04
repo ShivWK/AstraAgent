@@ -38,7 +38,7 @@ export async function GET(
     console.error('Fetch messages error:', error);
 
     return NextResponse.json(
-      { message: 'Internal Server Error' },
+      { success: false, message: 'Internal Server Error' },
       { status: 500 },
     );
   }

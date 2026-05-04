@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react';
 import { LogOut, TriangleAlert, Crown } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
-import ProfileChange from '@/components/common/account/ProfileChange';
+import ProfileChange from '@/components/account/ProfileChange';
 import { signOut, useSession } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
-import ProfileCard from '@/components/common/account/ProfileCard';
-import TokenUsage from '@/components/common/account/TokenUsage';
+import ProfileCard from '@/components/account/ProfileCard';
+import TokenUsage from '@/components/account/TokenUsage';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { setTokens } from '@/features/auth/authSlice';
-import PreviousChats from '@/components/common/account/PreviousChats';
+import PreviousChats from '@/components/account/PreviousChats';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);

@@ -14,10 +14,10 @@ import {
   DialogFooter,
   DialogTitle,
   DialogClose,
-} from '../../ui/dialog';
-import { DialogContent } from '../../ui/dialog';
-import { Textarea } from '../../ui/textarea';
-import { Button } from '../../ui/button';
+} from '../ui/dialog';
+import { DialogContent } from '../ui/dialog';
+import { Textarea } from '../ui/textarea';
+import { Button } from '../ui/button';
 import Image from 'next/image';
 import useAppSelector from '@/hooks/useAppSelector';
 

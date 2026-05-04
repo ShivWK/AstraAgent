@@ -131,6 +131,8 @@ const AiAssistant = () => {
 
   if (loading) return <AiAssistantSkeleton />;
 
+  console.log('Look at this', agents, history);
+
   return (
     <main className="pb-18">
       <div className="mx-auto max-w-300">

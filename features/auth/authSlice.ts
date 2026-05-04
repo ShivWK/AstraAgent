@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/lib/store';
+import { User } from '@/types/user';
 
 type InitialStateType = {
   openLoginModel: boolean;
@@ -10,16 +11,26 @@ type InitialStateType = {
     totalTokens: number;
     currentToken: number;
   };
+  user: User;
 };
 
 const initialState: InitialStateType = {
   openLoginModel: false,
   loginError: '',
   getStartedLoading: false,
-  globalAuthLoader: false,
+  globalAuthLoader: true,
   tokens: {
     totalTokens: 0,
     currentToken: 0,
+  },
+  user: {
+    name: '',
+    role: '',
+    email: '',
+    tokens: 0,
+    totalTokens: 0,
+    image: '',
+    emailVerified: null,
   },
 };
 
@@ -66,6 +77,10 @@ const authSlice = createSlice({
         state.tokens.currentToken -= payload.currentValue;
       }
     },
+
+    setUser: (state, action: PayloadAction<User>) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -79,6 +94,7 @@ export const selectGetStartedLoading = (state: RootState) =>
 export const selectGlobalAuthLoader = (state: RootState) =>
   state.auth.globalAuthLoader;
 export const selectTokens = (state: RootState) => state.auth.tokens;
+export const selectUser = (state: RootState) => state.auth.user;
 
 export const {
   setOpenLoginModel,
@@ -86,4 +102,5 @@ export const {
   setGetStartedLoading,
   setGlobalAuthLoader,
   setTokens,
+  setUser,
 } = authSlice.actions;

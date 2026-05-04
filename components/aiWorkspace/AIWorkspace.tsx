@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeft, ArrowDown } from 'lucide-react';
-import AISideBar from '@/components/common/aiWorkspace/AISideBar';
+import AISideBar from '@/components/aiWorkspace/AISideBar';
 import {
   selectOpenSidebar,
   setOpenSidebar,
@@ -9,9 +9,9 @@ import {
 } from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import useAppDispatch from '@/hooks/useAppDispatch';
-import ChatBox from '@/components/common/aiWorkspace/Chatbox';
+import ChatBox from '@/components/aiWorkspace/Chatbox';
 import Modal from '@/components/common/Modal';
-import TextInputMethod from '@/components/common/aiWorkspace/TextInputMethod';
+import TextInputMethod from '@/components/aiWorkspace/TextInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { type Mode } from '@/features/agents/agentsSlice';

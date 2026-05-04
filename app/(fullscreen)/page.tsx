@@ -3,7 +3,7 @@
 import styles from './page.module.css';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-import { Bot, ChevronRight, MessagesSquare } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';

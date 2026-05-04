@@ -130,7 +130,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
               </p>
             </div>
 
-            {assistants.map((ai) => {
+            {assistants?.map((ai) => {
               return (
                 <AgentCard
                   key={ai._id}

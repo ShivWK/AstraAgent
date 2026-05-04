@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { BrainCircuit, ChevronDown } from 'lucide-react';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import ReadMore from '../ReadMore';
+import ReadMore from '../common/ReadMore';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 

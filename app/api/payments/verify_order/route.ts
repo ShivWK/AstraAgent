@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 
     if (generatedSignature !== signature) {
       return NextResponse.json(
-        { success: false, error: 'Invalid signature' },
+        { success: false, message: 'Invalid signature' },
         { status: 400 },
       );
     }
@@ -54,20 +54,23 @@ export async function POST(request: Request) {
 
     if (!orderDetails) {
       return NextResponse.json(
-        { error: 'Order details not found' },
+        { success: false, message: 'Order details not found' },
         { status: 404 },
       );
     }
 
     if (orderDetails.userId.toString() !== session.user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+      return NextResponse.json(
+        { success: false, message: 'Unauthorized' },
+        { status: 403 },
+      );
     }
 
-    console.log('Order ID from Razorpay:', orderId);
-    console.log('Order ID from DB:', orderDetails.orderId);
-
     if (orderDetails.orderId !== orderId) {
-      return NextResponse.json({ error: 'Order mismatch' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, message: 'Order mismatch' },
+        { status: 400 },
+      );
     }
 
     if (orderDetails.status === 'success') {
@@ -91,7 +94,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Error verifying payment:', error);
     return NextResponse.json(
-      { error: 'Failed to verify payment' },
+      { success: false, message: 'Failed to verify payment' },
       { status: 500 },
     );
   }

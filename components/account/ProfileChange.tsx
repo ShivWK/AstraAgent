@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Pencil, Save } from 'lucide-react';
 import * as z from 'zod';
 import { profileFormSchema } from '@/lib/validations/auth.schema';
-import { Spinner } from '../../ui/spinner';
+import { Spinner } from '../ui/spinner';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import useToast from '@/hooks/useToast';

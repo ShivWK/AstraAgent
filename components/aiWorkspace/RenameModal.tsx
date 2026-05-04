@@ -1,4 +1,4 @@
-import Modal from '../Modal';
+import Modal from '../common/Modal';
 import { useState, useRef } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { Conversation } from '@/types/conversation';
