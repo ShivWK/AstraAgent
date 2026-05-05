@@ -46,75 +46,77 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed z-50 flex w-full justify-between px-2.5 py-2.5 backdrop-blur-md">
-        <button
-          onClick={() => dispatch(setOpenSidebar(true))}
-          className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
-        >
-          <Kanban
-            className="-rotate-90 transform"
-            size={24}
-            aria-hidden="true"
-          />
-        </button>
-        <div
-          className="flex cursor-pointer items-center gap-5"
-          onClick={() => router.push('/')}
-        >
-          <Image
-            src="/logo-solid.jpeg"
-            alt="Astra agent logo"
-            width={300}
-            height={300}
-            quality={100}
-            className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-13 rounded`}
-          />
-          <p className="hidden text-2xl font-semibold tracking-wide lg:block">
-            Astra Agent
-          </p>
-        </div>
-        <div className="flex items-center gap-4">
-          <ThemeChanger />
-          {status === 'loading' && (
-            <div className="h-12 w-12 animate-pulse rounded-full bg-gray-700" />
-          )}
-          {status === 'unauthenticated' ? (
-            <Button
-              onClick={authClickHandler}
-              variant="secondary"
-              size="lg"
-              className="text-md text-lg tracking-wide transition-all duration-75 active:scale-90"
-            >
-              Sign In
-            </Button>
-          ) : (
-            status === 'authenticated' && (
-              <button
-                aria-label="Account"
-                onClick={() => router.push('/account')}
-                className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
+      <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50 shadow-[0_0_20px_1px_#5be3fe59]">
+        <header className="flex w-full justify-between px-2.5 py-2.5 backdrop-blur-md">
+          <button
+            onClick={() => dispatch(setOpenSidebar(true))}
+            className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
+          >
+            <Kanban
+              className="-rotate-90 transform"
+              size={24}
+              aria-hidden="true"
+            />
+          </button>
+          <div
+            className="flex cursor-pointer items-center gap-5"
+            onClick={() => router.push('/')}
+          >
+            <Image
+              src="/logo-solid.jpeg"
+              alt="Astra agent logo"
+              width={300}
+              height={300}
+              quality={100}
+              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-13 rounded`}
+            />
+            <p className="hidden text-2xl font-semibold tracking-wide lg:block">
+              Astra Agent
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <ThemeChanger />
+            {status === 'loading' && (
+              <div className="h-12 w-12 animate-pulse rounded-full bg-gray-700" />
+            )}
+            {status === 'unauthenticated' ? (
+              <Button
+                onClick={authClickHandler}
+                variant="secondary"
+                size="lg"
+                className="text-md text-lg tracking-wide transition-all duration-75 active:scale-90"
               >
-                {session?.user?.image ? (
-                  <Image
-                    src={session.user.image!}
-                    alt="Profile picture"
-                    width={300}
-                    height={300}
-                    quality={100}
-                    className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
-                  />
-                ) : (
-                  <CircleUserRound
-                    size={48}
-                    strokeWidth={1}
-                    className="rounded-full text-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]"
-                  />
-                )}
-              </button>
-            )
-          )}
-        </div>
-      </header>
+                Sign In
+              </Button>
+            ) : (
+              status === 'authenticated' && (
+                <button
+                  aria-label="Account"
+                  onClick={() => router.push('/account')}
+                  className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
+                >
+                  {session?.user?.image ? (
+                    <Image
+                      src={session.user.image!}
+                      alt="Profile picture"
+                      width={300}
+                      height={300}
+                      quality={100}
+                      className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
+                    />
+                  ) : (
+                    <CircleUserRound
+                      size={48}
+                      strokeWidth={1}
+                      className="rounded-full text-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]"
+                    />
+                  )}
+                </button>
+              )
+            )}
+          </div>
+        </header>
+      </div>
       <AuthForm />
     </>
   );
