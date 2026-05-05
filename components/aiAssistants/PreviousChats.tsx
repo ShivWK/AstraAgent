@@ -72,7 +72,7 @@ const PreviousChats = ({
                       alt="Agent"
                       height={300}
                       width={300}
-                      className="h-12 w-12 rounded-full border-2 border-blue-400 object-cover md:h-15 md:w-15"
+                      className="h-13.5 w-13.5 rounded-full border-2 border-blue-400 object-cover md:h-15 md:w-15"
                     />
 
                     <div className="flex flex-col items-start leading-tight">
