@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <>
       <main className="flex w-full justify-center pt-34 pb-5 md:pt-20">
-        <section className="flex flex-col items-center gap-4">
+        <section className="flex flex-col items-center gap-8">
           <Image
             src="/logo-transparent.png"
             alt="Astra agent site logo, an start in blue shade"
@@ -43,7 +43,7 @@ export default function Home() {
             className="h-50 w-52 md:h-60 md:w-62"
           ></Image>
 
-          <div className="mb-2 flex w-full max-w-2xl flex-col items-center gap-2">
+          <div className="-mt-4 flex w-full max-w-2xl flex-col items-center gap-2">
             <span className="font-primary text-center text-4xl font-extrabold">
               Your AI task Force
             </span>

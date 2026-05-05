@@ -84,7 +84,7 @@ const QuickAccess = () => {
   };
 
   return (
-    <div className="mt-2 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
+    <div className="mt-1 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
       <button
         onClick={handleTalkToAgentBtnClick}
         disabled={loading || conversationLoading}
