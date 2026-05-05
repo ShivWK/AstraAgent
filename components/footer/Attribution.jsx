@@ -40,7 +40,7 @@ const Attribution = () => {
           {/* Mobile */}
           <div className="mt-2 hidden gap-3 max-md:flex">
             <a
-              href="https://www.linkedin.com/in/shivendra-dwivedi"
+              href="www.linkedin.com/in/shivwk"
               className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
               target="__block"
             >
@@ -88,7 +88,7 @@ const Attribution = () => {
         <p className="dark:text-white">Social Links</p>
         <div className="flex gap-3">
           <a
-            href="https://www.linkedin.com/in/shivendra-dwivedi"
+            href="www.linkedin.com/in/shivwk"
             className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
             target="__block"
           >
