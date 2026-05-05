@@ -32,6 +32,7 @@ export const logoForAgents: Record<string, string> = {
   virtual_boyfriend: '/assistants/virtual_boy.png',
   virtual_girlfriend: '/assistants/virtual_girl.png',
   custom_assistant: '/assistants/general_ai.png',
+  astraBot: '/assistants/astraBot.png',
 };
 
 export const TEXT_AGENT_DOMAINS: domainType = [
