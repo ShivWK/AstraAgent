@@ -33,7 +33,7 @@ const PreviousChats = () => {
         }
         console.log('Unexpected Error:', err);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
 
@@ -85,8 +85,6 @@ const PreviousChats = () => {
     });
   }, [previousChatsToShow]);
 
-  console.log('Loading', loading);
-
   return (
     <div>
       <h2 className="mb-4 w-full text-xl font-medium">Previous Chats</h2>
@@ -98,6 +96,7 @@ const PreviousChats = () => {
             <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
           </div>
         ) : (
+          previousChatsToShow &&
           Object.entries(previousChatsToShow!).length !== 0 && (
             <Chats
               history={previousChatsToShow!}
@@ -106,15 +105,19 @@ const PreviousChats = () => {
             />
           )
         )}
+
+        {!previousChatsToShow && (
+          <p className="py-6 text-center">No previous chats available</p>
+        )}
       </div>
 
-      {!loading && (
+      {!loading && previousChatsToShow && !isFull && (
         <button
           onClick={moreClickHandler}
           disabled={isFull || loading}
           className="mx-auto mt-4 mb-1 block rounded bg-blue-700 px-4 py-1 font-normal tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
         >
-          {isFull ? 'No More Chats' : 'More'}
+          More
         </button>
       )}
     </div>
