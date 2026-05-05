@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <>
       <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
-        <header className="flex w-full justify-between px-2.5 py-2.5 backdrop-blur-md">
+        <header className="flex w-full justify-between px-2 py-2.5 backdrop-blur-md">
           <button
             onClick={() => dispatch(setOpenSidebar(true))}
             className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
@@ -68,7 +68,7 @@ const Header = () => {
               width={300}
               height={300}
               quality={100}
-              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-13 rounded`}
+              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-13 w-13 rounded`}
             />
             <p className="hidden text-2xl font-semibold tracking-wide lg:block">
               Astra Agent
