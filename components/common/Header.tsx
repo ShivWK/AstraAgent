@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <>
       <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
-        <header className="flex w-full justify-between px-2 py-2.5 backdrop-blur-md">
+        <header className="flex w-full justify-between px-2 pt-2.5 pb-2 backdrop-blur-md">
           <button
             onClick={() => dispatch(setOpenSidebar(true))}
             className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
