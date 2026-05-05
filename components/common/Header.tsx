@@ -46,7 +46,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50 shadow-[0_0_20px_1px_#5be3fe59]">
+      <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
         <header className="flex w-full justify-between px-2.5 py-2.5 backdrop-blur-md">
           <button
             onClick={() => dispatch(setOpenSidebar(true))}
