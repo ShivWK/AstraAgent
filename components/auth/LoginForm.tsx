@@ -10,7 +10,7 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Spinner } from '../ui/spinner';
 import { loginSchema } from '@/lib/validations/auth.schema';
-import { useEffect, useState, Suspense } from 'react';
+import { useEffect, useState, Suspense, Dispatch, SetStateAction } from 'react';
 import EyeButton from './EyeButton';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
@@ -29,9 +29,10 @@ type FormType = z.infer<typeof loginSchema>;
 
 type PropsType = {
   setLogin: (value: 'login' | 'signup' | 'reset_password') => void;
+  setAuthDone: Dispatch<SetStateAction<boolean>>;
 };
 
-export function LoginForm({ setLogin }: PropsType) {
+export function LoginForm({ setLogin, setAuthDone }: PropsType) {
   const [eyeOpen, setEyeOpen] = useState(false);
   const searchParams = useSearchParams();
   const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
@@ -72,8 +73,7 @@ export function LoginForm({ setLogin }: PropsType) {
       return;
     }
 
-    // console.log('Login result:', result);
-
+    setAuthDone(true);
     dispatch(setOpenLoginModel(false));
     dispatch(setGetStartedLoading(false));
 

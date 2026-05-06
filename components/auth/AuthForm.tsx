@@ -12,19 +12,27 @@ import {
   selectLoginModelOpenState,
   setGetStartedLoading,
 } from '@/features/auth/authSlice';
+import { useRouter } from 'next/navigation';
 
 const AuthForm = () => {
   const [isLogIn, setLogin] = useState<'login' | 'signup' | 'reset_password'>(
     'login',
   );
+  const [authDone, setAuthDone] = useState(false);
   const dispatch = useAppDispatch();
   const open = useAppSelector(selectLoginModelOpenState);
   const error = useAppSelector(selectLoginError);
+
+  const router = useRouter();
 
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
     dispatch(setGetStartedLoading(false));
     setTimeout(() => setLogin('login'), 150);
+
+    if (!authDone) {
+      router.replace('/');
+    }
   };
 
   const formChangeClickHandler = () => {
@@ -42,11 +50,11 @@ const AuthForm = () => {
       >
         {isLogIn === 'login' ? (
           <Suspense fallback={null}>
-            <LoginForm setLogin={setLogin} />
+            <LoginForm setLogin={setLogin} setAuthDone={setAuthDone} />
           </Suspense>
         ) : isLogIn === 'signup' ? (
           <Suspense fallback={null}>
-            <SignUpForm />
+            <SignUpForm setAuthDone={setAuthDone} />
           </Suspense>
         ) : (
           <ForgotPasswordForm />

@@ -11,7 +11,7 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema } from '@/lib/validations/auth.schema';
 import EyeButton from './EyeButton';
-import { Suspense, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, Suspense, useEffect, useState } from 'react';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import {
   setGetStartedLoading,
@@ -26,7 +26,11 @@ import { signIn } from 'next-auth/react';
 
 type FormType = z.infer<typeof signUpSchema>;
 
-export function SignUpForm() {
+export function SignUpForm({
+  setAuthDone,
+}: {
+  setAuthDone: Dispatch<SetStateAction<boolean>>;
+}) {
   const [eyeOpen, setEyeOpen] = useState(false);
   const globalAuthLoader = useAppSelector(selectGlobalAuthLoader);
   const dispatch = useAppDispatch();
@@ -97,6 +101,7 @@ export function SignUpForm() {
         redirect: false,
       });
 
+      setAuthDone(true);
       dispatch(setOpenLoginModel(false));
       dispatch(setGetStartedLoading(false));
 
