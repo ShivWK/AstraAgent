@@ -8,7 +8,7 @@ import { signOut } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 import ProfileCard from '@/components/account/ProfileCard';
 import TokenUsage from '@/components/account/TokenUsage';
-import { selectGlobalAuthLoader, selectUser } from '@/features/auth/authSlice';
+import { selectDbLoader, selectUser } from '@/features/auth/authSlice';
 import PreviousChats from '@/components/account/PreviousChats';
 import useAppSelector from '@/hooks/useAppSelector';
 
@@ -17,7 +17,7 @@ const Page = () => {
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
   const userDetails = useAppSelector(selectUser);
-  const authLoader = useAppSelector(selectGlobalAuthLoader);
+  const authLoader = useAppSelector(selectDbLoader);
 
   const authClickHandler = async () => {
     if (logoutLoading) return;

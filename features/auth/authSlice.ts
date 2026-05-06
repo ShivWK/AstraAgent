@@ -7,6 +7,7 @@ type InitialStateType = {
   loginError: string | null;
   getStartedLoading: boolean;
   globalAuthLoader: boolean;
+  globalDbLoading: boolean;
   user: User;
 };
 
@@ -15,6 +16,7 @@ const initialState: InitialStateType = {
   loginError: '',
   getStartedLoading: false,
   globalAuthLoader: false,
+  globalDbLoading: false,
   user: {
     name: '',
     role: 'user',
@@ -45,6 +47,9 @@ const authSlice = createSlice({
     setGlobalAuthLoader: (state, action: PayloadAction<boolean>) => {
       state.globalAuthLoader = action.payload;
     },
+    setDbLoader: (state, action: PayloadAction<boolean>) => {
+      state.globalDbLoading = action.payload;
+    },
 
     setTokens: (state, action: PayloadAction<number>) => {
       state.user.tokens -= action.payload;
@@ -66,6 +71,7 @@ export const selectGetStartedLoading = (state: RootState) =>
 export const selectGlobalAuthLoader = (state: RootState) =>
   state.auth.globalAuthLoader;
 export const selectUser = (state: RootState) => state.auth.user;
+export const selectDbLoader = (state: RootState) => state.auth.globalDbLoading;
 
 export const {
   setOpenLoginModel,
@@ -74,4 +80,5 @@ export const {
   setGlobalAuthLoader,
   setTokens,
   setUser,
+  setDbLoader,
 } = authSlice.actions;

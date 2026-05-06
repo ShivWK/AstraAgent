@@ -12,7 +12,7 @@ import {
   selectLoginError,
   setLoginError,
   selectUser,
-  selectGlobalAuthLoader,
+  selectDbLoader,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -26,7 +26,7 @@ const Header = () => {
 
   const { status } = useSession();
   const userDetails = useAppSelector(selectUser);
-  const globalLoader = useAppSelector(selectGlobalAuthLoader);
+  const globalDbLoader = useAppSelector(selectDbLoader);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -80,7 +80,7 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-4">
             <ThemeChanger />
-            {status === 'loading' || globalLoader ? (
+            {status === 'loading' || globalDbLoader ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
             ) : status === 'unauthenticated' ? (
               <Button
