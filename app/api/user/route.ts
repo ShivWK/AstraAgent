@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/options';
 import { UserModel } from '@/model/userModel';
+import { connectDB } from '@/lib/db/connectDb';
 
 export const GET = async () => {
   const session = await getServerSession(authOptions);
@@ -14,6 +15,7 @@ export const GET = async () => {
   }
 
   try {
+    await connectDB();
     const foundUser = await UserModel.findById(session.user.id);
 
     if (!foundUser) {
