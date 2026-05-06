@@ -96,8 +96,8 @@ const PreviousChats = ({
   };
 
   return (
-    <div className="pretty-scrollbar basis-full overflow-auto">
-      <h2 className="mt-3 mb-2 text-lg font-medium tracking-wide">
+    <div className="pretty-scrollbar mt-2 basis-full overflow-auto">
+      <h2 className="mt-0 mb-2 pt-0 text-lg font-medium tracking-wide">
         Your Chats with this agent
       </h2>
 

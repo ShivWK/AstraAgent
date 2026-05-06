@@ -97,35 +97,41 @@ const QuickAccess = () => {
 
   return (
     <div className="mt-1.5 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
-      <button
-        onClick={handleTalkToAgentBtnClick}
-        disabled={loading || conversationLoading}
-        className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 disabled:opacity-50 disabled:hover:shadow-none max-md:w-full md:shadow-xl"
+      <div
+        className={`${loading || conversationLoading ? 'pointer-events-none' : 'pointer-events-auto'} relative overflow-hidden rounded-3xl`}
       >
         {(loading || conversationLoading) && (
-          <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center">
+          <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center bg-gray-900/20">
             <DotBounceLoader allColor={'text-gray-100'} nmSize="text-3xl" />
           </div>
         )}
-        <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
+        <button
+          onClick={handleTalkToAgentBtnClick}
+          disabled={loading || conversationLoading}
+          className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 disabled:opacity-50 disabled:hover:shadow-none max-md:w-full md:shadow-xl"
+        >
+          <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 md:mb-3">
-            <div className="flex items-center justify-center rounded-2xl bg-blue-500/15 p-2 text-5xl md:text-2xl">
-              <MessagesSquare className="size-10" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 md:mb-3">
+              <div className="flex items-center justify-center rounded-2xl bg-blue-500/15 p-2 text-5xl md:text-2xl">
+                <MessagesSquare className="size-10" />
+              </div>
+
+              <div className="text-start">
+                <p className="text-xl font-semibold text-white">
+                  Talk to Astra
+                </p>
+                <p className="text-sm text-gray-400">Your smart AI assistant</p>
+              </div>
+
+              <p className="ml-auto animate-pulse text-2xl md:hidden">→</p>
             </div>
 
-            <div className="text-start">
-              <p className="text-xl font-semibold text-white">Talk to Astra</p>
-              <p className="text-sm text-gray-400">Your smart AI assistant</p>
-            </div>
-
-            <p className="ml-auto animate-pulse text-2xl md:hidden">→</p>
+            <p className="hidden md:block">Start Chat →</p>
           </div>
-
-          <p className="hidden md:block">Start Chat →</p>
-        </div>
-      </button>
+        </button>
+      </div>
 
       <button
         onClick={handleAgentCreation}

@@ -145,7 +145,7 @@ const AiWorkspace = () => {
 
   return (
     <>
-      <main className="md:pr-1 md:pl-2">
+      <main className="md:px-1">
         <div className="flex items-center gap-2">
           <aside className="hidden h-dvh w-104 overflow-x-visible pt-19 pb-0.5 md:block">
             <AISideBar

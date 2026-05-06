@@ -11,6 +11,7 @@ import {
   setOpenLoginModel,
   selectLoginError,
   setLoginError,
+  selectUser,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -23,6 +24,7 @@ const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
 
   const { data: session, status } = useSession();
+  const userDetails = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -47,7 +49,7 @@ const Header = () => {
   return (
     <>
       <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
-        <header className="flex w-full justify-between px-2 pt-2.5 pb-2 backdrop-blur-md">
+        <header className="flex w-full justify-between px-2 pt-2 pb-1.5 backdrop-blur-md">
           <button
             onClick={() => dispatch(setOpenSidebar(true))}
             className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
@@ -68,7 +70,7 @@ const Header = () => {
               width={300}
               height={300}
               quality={100}
-              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-13 w-13 rounded`}
+              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-11 w-11 rounded md:h-12 md:w-12`}
             />
             <p className="hidden text-2xl font-semibold tracking-wide lg:block">
               Astra Agent
@@ -95,14 +97,14 @@ const Header = () => {
                   onClick={() => router.push('/account')}
                   className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
                 >
-                  {session?.user?.image ? (
+                  {userDetails.image ? (
                     <Image
-                      src={session.user.image!}
+                      src={userDetails.image!}
                       alt="Profile picture"
                       width={300}
                       height={300}
                       quality={100}
-                      className={`h-12 w-12 rounded-full border-2 border-blue-400 hover:shadow-[0_0_15px_1px_#51a2ff]`}
+                      className={`h-12 w-12 rounded-full border-2 border-blue-700 hover:shadow-[0_0_15px_1px_#51a2ff]`}
                     />
                   ) : (
                     <CircleUserRound

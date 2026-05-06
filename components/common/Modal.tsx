@@ -48,7 +48,7 @@ const Modal = ({
 
       if (header) {
         header.setAttribute('inert', '');
-        header.style.paddingRight = `${scrollWidth + 10}px`;
+        header.style.paddingRight = `${scrollWidth + 8}px`;
       }
 
       lastFocusedElement.current = document.activeElement as HTMLElement;
@@ -62,7 +62,7 @@ const Modal = ({
 
       if (header) {
         header.removeAttribute('inert');
-        header.style.paddingRight = '0.625rem';
+        header.style.paddingRight = '0.5rem';
       }
 
       document.body.style.overflow = 'auto';
