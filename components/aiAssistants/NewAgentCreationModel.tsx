@@ -33,8 +33,6 @@ import { Textarea } from '../ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
 import { Agent } from '@/types/agents';
 import { Dispatch, SetStateAction } from 'react';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 
 type PropsType = {
   open: boolean;
