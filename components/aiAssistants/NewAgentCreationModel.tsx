@@ -33,6 +33,8 @@ import { Textarea } from '../ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
 import { Agent } from '@/types/agents';
 import { Dispatch, SetStateAction } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   open: boolean;
@@ -43,6 +45,10 @@ type PropsType = {
 type FromType = z.infer<typeof agentCreationSchema>;
 
 const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const {
     register,
     watch,
@@ -95,8 +101,26 @@ const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
     setOpen(false);
   };
 
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+
+    if (!open) {
+      const params = new URLSearchParams(searchParams.toString());
+
+      if (params.has('createAgent')) {
+        params.delete('createAgent');
+      }
+
+      const query = params.toString();
+
+      const url = query ? `${pathname}${query}` : pathname;
+
+      router.replace(url);
+    }
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
