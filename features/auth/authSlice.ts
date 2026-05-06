@@ -14,7 +14,7 @@ const initialState: InitialStateType = {
   openLoginModel: false,
   loginError: '',
   getStartedLoading: false,
-  globalAuthLoader: true,
+  globalAuthLoader: false,
   user: {
     name: '',
     role: 'user',
