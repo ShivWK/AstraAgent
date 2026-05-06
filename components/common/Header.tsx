@@ -77,7 +77,7 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <ThemeChanger />
             {status === 'loading' && (
-              <div className="h-12 w-12 animate-pulse rounded-full bg-gray-700" />
+              <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
             )}
             {status === 'unauthenticated' ? (
               <Button
