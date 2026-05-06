@@ -134,11 +134,11 @@ const TextInputMethod = ({
             className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
-              <X aria-hidden="true" size={18} />
+              <X aria-hidden="true" className="size-5 md:size-4.5" />
             ) : sttLoading ? (
-              <Spinner className="size-4.5" />
+              <Spinner className="size-5 md:size-4.5" />
             ) : (
-              <Mic aria-hidden="true" size={18} />
+              <Mic aria-hidden="true" className="size-5 md:size-4.5" />
             )}
           </button>
         </div>
@@ -149,7 +149,7 @@ const TextInputMethod = ({
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 text-sm disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 disabled:opacity-50 md:text-sm ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (
