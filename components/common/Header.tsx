@@ -70,7 +70,7 @@ const Header = () => {
               width={300}
               height={300}
               quality={100}
-              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-11 w-11 rounded md:h-12 md:w-12`}
+              className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-12 rounded`}
             />
             <p className="hidden text-2xl font-semibold tracking-wide lg:block">
               Astra Agent
