@@ -12,7 +12,6 @@ import {
   selectLoginModelOpenState,
   setGetStartedLoading,
 } from '@/features/auth/authSlice';
-import { useRouter } from 'next/navigation';
 
 const AuthForm = () => {
   const [isLogIn, setLogin] = useState<'login' | 'signup' | 'reset_password'>(
@@ -23,15 +22,13 @@ const AuthForm = () => {
   const open = useAppSelector(selectLoginModelOpenState);
   const error = useAppSelector(selectLoginError);
 
-  const router = useRouter();
-
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
     dispatch(setGetStartedLoading(false));
     setTimeout(() => setLogin('login'), 150);
 
     if (!authDone) {
-      router.replace('/');
+      window.history.back();
     }
   };
 
