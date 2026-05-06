@@ -12,6 +12,7 @@ type InitialState = {
   selectedAgent: Assistant;
   openSidebar: boolean;
   conversationHistory: Conversation[] | null;
+  openAgentCreationModal: boolean;
 };
 
 const initialState: InitialState = {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
   selectedAgent: null,
   openSidebar: false,
   conversationHistory: null,
+  openAgentCreationModal: false,
 };
 
 const agentsSlice = createSlice({
@@ -50,6 +52,10 @@ const agentsSlice = createSlice({
     setConversationHistory: (state, action: PayloadAction<Conversation[]>) => {
       state.conversationHistory = action.payload;
     },
+
+    setOpenAgentCreationModel: (state, action: PayloadAction<boolean>) => {
+      state.openAgentCreationModal = action.payload;
+    },
   },
 });
 
@@ -64,6 +70,8 @@ export const selectAgentInstruction = (state: RootState) =>
   state.agents.agentInstruction;
 export const selectConversationHistory = (state: RootState) =>
   state.agents.conversationHistory;
+export const selectOpenAgentCreationModal = (state: RootState) =>
+  state.agents.openAgentCreationModal;
 
 export const {
   setSelectedAgent,
@@ -71,4 +79,5 @@ export const {
   setOpenSidebar,
   setAgentInstruction,
   setConversationHistory,
+  setOpenAgentCreationModel,
 } = agentsSlice.actions;

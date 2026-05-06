@@ -33,16 +33,23 @@ import { Textarea } from '../ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
 import { Agent } from '@/types/agents';
 import { Dispatch, SetStateAction } from 'react';
+import useAppSelector from '@/hooks/useAppSelector';
+import {
+  selectOpenAgentCreationModal,
+  setOpenAgentCreationModel,
+} from '@/features/agents/agentsSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 type PropsType = {
-  open: boolean;
-  setOpen: (val: boolean) => void;
   setAgents: Dispatch<SetStateAction<Agent[]>>;
 };
 
 type FromType = z.infer<typeof agentCreationSchema>;
 
-const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
+const NewAgentCreationModel = ({ setAgents }: PropsType) => {
+  const open = useAppSelector(selectOpenAgentCreationModal);
+  const dispatch = useAppDispatch();
+
   const {
     register,
     watch,
@@ -92,11 +99,15 @@ const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
       }
     }
 
-    setOpen(false);
+    dispatch(setOpenAgentCreationModel(false));
+  };
+
+  const handleOpenChange = (state: boolean) => {
+    dispatch(setOpenAgentCreationModel(state));
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}

@@ -1,4 +1,7 @@
-import { setSelectedAgent } from '@/features/agents/agentsSlice';
+import {
+  setOpenAgentCreationModel,
+  setSelectedAgent,
+} from '@/features/agents/agentsSlice';
 
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
@@ -9,8 +12,6 @@ import SessionInstructionModal from './SessionInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
 import AgentCard from './AgentCard';
 import { Conversation } from '@/types/conversation';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 
 type PropsType = {
   assistants: Agent[];
@@ -24,31 +25,13 @@ type PropsType = {
 };
 
 const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
-  const searchParams = useSearchParams();
-  const createAgent = searchParams.get('createAgent');
-  const pathname = usePathname();
-  const router = useRouter();
-
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const [scrollPercentage, setScrollPercentage] = useState<number | null>(null);
   const [isOverflowing, setIsOverFlowing] = useState<boolean>(false);
   const [openInstructionModel, setOpenInstructionModel] = useState(false);
-  const [openCreationModel, setOpenCreationModel] = useState(false);
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const call = () => {
-      if (createAgent) {
-        setOpenCreationModel(true);
-
-        router.replace(pathname);
-      }
-    };
-
-    call();
-  }, [createAgent, router, pathname]);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;
@@ -96,7 +79,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
   };
 
   const newAgentCreationClickHandler = () => {
-    setOpenCreationModel(true);
+    dispatch(setOpenAgentCreationModel(true));
   };
 
   return (
@@ -192,11 +175,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
         setOpen={setOpenInstructionModel}
       />
 
-      <NewAgentCreationModel
-        open={openCreationModel}
-        setOpen={setOpenCreationModel}
-        setAgents={setAgents}
-      />
+      <NewAgentCreationModel setAgents={setAgents} />
     </>
   );
 };

@@ -4,6 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { useEffect } from 'react';
+import { setOpenAgentCreationModel } from '@/features/agents/agentsSlice';
 
 const AuthIntentHandler = () => {
   const searchParams = useSearchParams();
@@ -17,6 +18,11 @@ const AuthIntentHandler = () => {
       dispatch(setOpenLoginModel(true));
 
       router.replace(`/?callbackUrl=${callbackUrl}`);
+    }
+
+    if (searchParams.get('createAgent') === 'true') {
+      dispatch(setOpenAgentCreationModel(true));
+      router.replace('/ai-assistant');
     }
   }, [searchParams, router, dispatch, callbackUrl]);
 
