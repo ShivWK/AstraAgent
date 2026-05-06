@@ -22,9 +22,9 @@ const Page = () => {
   const authClickHandler = async () => {
     if (logoutLoading) return;
     setLogoutLoading(true);
-    await signOut({ callbackUrl: '/' });
+    await signOut({ redirect: false });
 
-    setLogoutLoading(false);
+    window.location.replace('/');
   };
 
   const handleEmailVerificationClick = (
