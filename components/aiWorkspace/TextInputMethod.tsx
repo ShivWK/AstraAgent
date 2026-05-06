@@ -4,6 +4,7 @@ import { Payload } from '@/hooks/useSocket';
 import useMicLevel from '@/hooks/useMicLevel';
 import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import DotBounceLoader from '../common/DotBounceLoader';
 
 type PropType = {
   setHasMessage: (val: boolean) => void;
@@ -142,24 +143,35 @@ const TextInputMethod = ({
           </button>
         </div>
 
-        {streaming && (
-          <p className="text-sm text-gray-400">Writing response...</p>
-        )}
+        {streaming && <DotBounceLoader allColor="text-gray-400" />}
 
         <button
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`rounded-md bg-blue-900 p-1.5 disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 text-sm disabled:opacity-50 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (
-              <X aria-hidden="true" size={18} />
+              <>
+                <span>Writing...</span>
+                <X aria-hidden="true" size={18} />
+              </>
             ) : (
-              <Spinner className="size-4.5" />
+              <>
+                <span>Processing...</span>
+                <Spinner className="size-4.5" />
+              </>
             )
           ) : (
-            <ArrowUpFromDot aria-hidden="true" size={18} />
+            <>
+              <span>Send</span>
+              <ArrowUpFromDot
+                aria-hidden="true"
+                size={18}
+                className="rotate-45 transform"
+              />
+            </>
           )}
         </button>
       </div>
