@@ -3,8 +3,13 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Agent } from '@/types/agents';
 import DotBounceLoader from './DotBounceLoader';
+import { useSession } from 'next-auth/react';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
 
 const QuickAccess = () => {
+  const { status } = useSession();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
@@ -45,6 +50,12 @@ const QuickAccess = () => {
 
   const handleTalkToAgentBtnClick = async () => {
     if (conversationLoading) return;
+
+    if (status === 'unauthenticated') {
+      dispatch(setLoginError('Please sign in or sign up to continue'));
+      dispatch(setOpenLoginModel(true));
+      return;
+    }
 
     try {
       setConversationLoading(true);

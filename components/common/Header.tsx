@@ -37,7 +37,7 @@ const Header = () => {
     }
   }, [status, refresh]);
 
-  const authClickHandler = async () => {
+  const authClickHandler = () => {
     if (errorMessage) {
       dispatch(setLoginError(''));
     }
