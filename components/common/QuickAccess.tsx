@@ -2,6 +2,7 @@ import { Bot, MessagesSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Agent } from '@/types/agents';
+import DotBounceLoader from './DotBounceLoader';
 
 const QuickAccess = () => {
   const router = useRouter();
@@ -88,8 +89,13 @@ const QuickAccess = () => {
       <button
         onClick={handleTalkToAgentBtnClick}
         disabled={loading || conversationLoading}
-        className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 disabled:opacity-30 max-md:w-full md:shadow-xl"
+        className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 disabled:opacity-50 disabled:hover:shadow-none max-md:w-full md:shadow-xl"
       >
+        {(loading || conversationLoading) && (
+          <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center">
+            <DotBounceLoader allColor={'text-gray-100'} nmSize="text-3xl" />
+          </div>
+        )}
         <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
         <div className="relative z-10">
