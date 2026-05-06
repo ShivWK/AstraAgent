@@ -9,7 +9,8 @@ import SessionInstructionModal from './SessionInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
 import AgentCard from './AgentCard';
 import { Conversation } from '@/types/conversation';
-import { useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 type PropsType = {
   assistants: Agent[];
@@ -25,6 +26,9 @@ type PropsType = {
 const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
   const searchParams = useSearchParams();
   const createAgent = searchParams.get('createAgent');
+  const pathname = usePathname();
+  const router = useRouter();
+
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,11 +42,13 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
     const call = () => {
       if (createAgent) {
         setOpenCreationModel(true);
+
+        router.replace(pathname);
       }
     };
 
     call();
-  }, [createAgent]);
+  }, [createAgent, router, pathname]);
 
   const calPercentage = (sl: number, sw: number, cw: number) => {
     const totalViewed = ((sl + cw) / sw) * 100;

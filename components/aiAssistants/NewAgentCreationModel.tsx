@@ -45,9 +45,6 @@ type PropsType = {
 type FromType = z.infer<typeof agentCreationSchema>;
 
 const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
-  const pathname = usePathname();
-  const router = useRouter();
-
   const {
     register,
     watch,
@@ -100,26 +97,8 @@ const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
     setOpen(false);
   };
 
-  const handleOpenChange = (open: boolean) => {
-    setOpen(open);
-
-    if (!open) {
-      const params = new URLSearchParams(window.location.search);
-
-      if (params.has('createAgent')) {
-        params.delete('createAgent');
-      }
-
-      const query = params.toString();
-
-      const url = query ? `${pathname}?${query}` : pathname;
-
-      router.replace(url);
-    }
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
