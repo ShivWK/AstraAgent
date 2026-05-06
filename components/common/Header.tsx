@@ -80,7 +80,8 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-4">
             <ThemeChanger />
-            {status === 'loading' || globalDbLoader ? (
+            {status === 'loading' ||
+            (globalDbLoader && status === 'authenticated') ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
             ) : status === 'unauthenticated' ? (
               <Button

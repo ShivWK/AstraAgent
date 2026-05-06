@@ -1,12 +1,12 @@
 import useAppDispatch from './useAppDispatch';
-import { setUser, setGlobalAuthLoader } from '@/features/auth/authSlice';
+import { setUser, setDbLoader } from '@/features/auth/authSlice';
 
 const useRefresher = () => {
   const dispatch = useAppDispatch();
 
   const refresh = async () => {
     try {
-      dispatch(setGlobalAuthLoader(true));
+      dispatch(setDbLoader(true));
       const response = await fetch('/api/user');
       const user = await response.json();
 
@@ -22,7 +22,7 @@ const useRefresher = () => {
 
       console.log('Error', err);
     } finally {
-      dispatch(setGlobalAuthLoader(false));
+      dispatch(setDbLoader(false));
     }
   };
 

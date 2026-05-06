@@ -18,7 +18,7 @@ const QuickAccess = () => {
 
   useEffect(() => {
     const fetchAgent = async () => {
-      if (status === 'loading' || status === 'authenticated') return;
+      if (status === 'loading' || status === 'unauthenticated') return;
       try {
         setLoading(true);
         const response = await fetch(

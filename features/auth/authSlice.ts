@@ -16,7 +16,7 @@ const initialState: InitialStateType = {
   loginError: '',
   getStartedLoading: false,
   globalAuthLoader: false,
-  globalDbLoading: false,
+  globalDbLoading: true,
   user: {
     name: '',
     role: 'user',
