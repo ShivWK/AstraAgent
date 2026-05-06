@@ -33,7 +33,7 @@ import { Textarea } from '../ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
 import { Agent } from '@/types/agents';
 import { Dispatch, SetStateAction } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 type PropsType = {
@@ -47,7 +47,6 @@ type FromType = z.infer<typeof agentCreationSchema>;
 const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const {
     register,
@@ -105,7 +104,7 @@ const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
     setOpen(open);
 
     if (!open) {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(window.location.search);
 
       if (params.has('createAgent')) {
         params.delete('createAgent');
@@ -113,7 +112,7 @@ const NewAgentCreationModel = ({ open, setOpen, setAgents }: PropsType) => {
 
       const query = params.toString();
 
-      const url = query ? `${pathname}${query}` : pathname;
+      const url = query ? `${pathname}?${query}` : pathname;
 
       router.replace(url);
     }
