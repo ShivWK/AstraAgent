@@ -12,6 +12,7 @@ import {
   selectLoginError,
   setLoginError,
   selectUser,
+  selectGlobalAuthLoader,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
@@ -23,8 +24,9 @@ import useRefresher from '@/hooks/useRefreshAuth';
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const userDetails = useAppSelector(selectUser);
+  const globalLoader = useAppSelector(selectGlobalAuthLoader);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -78,10 +80,9 @@ const Header = () => {
           </div>
           <div className="flex items-center gap-4">
             <ThemeChanger />
-            {status === 'loading' && (
+            {status === 'loading' || globalLoader ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
-            )}
-            {status === 'unauthenticated' ? (
+            ) : status === 'unauthenticated' ? (
               <Button
                 onClick={authClickHandler}
                 variant="secondary"
