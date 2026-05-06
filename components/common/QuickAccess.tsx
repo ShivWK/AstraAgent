@@ -49,7 +49,7 @@ const QuickAccess = () => {
   };
 
   const handleTalkToAgentBtnClick = async () => {
-    if (conversationLoading) return;
+    if (conversationLoading || loading) return;
 
     if (status === 'unauthenticated') {
       dispatch(setLoginError('Please sign in or sign up to continue'));
@@ -98,7 +98,7 @@ const QuickAccess = () => {
   return (
     <div className="mt-1.5 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
       <div
-        className={`${loading || conversationLoading ? 'pointer-events-none' : 'pointer-events-auto'} relative overflow-hidden rounded-3xl`}
+        className={`${loading || conversationLoading ? 'pointer-events-none' : 'pointer-events-auto shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:shadow-blue-500/30 active:scale-95'} relative overflow-hidden rounded-3xl transition-all duration-150 ease-linear`}
       >
         {(loading || conversationLoading) && (
           <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center bg-gray-900/20">
@@ -108,7 +108,7 @@ const QuickAccess = () => {
         <button
           onClick={handleTalkToAgentBtnClick}
           disabled={loading || conversationLoading}
-          className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-blue-500/30 active:scale-95 disabled:opacity-50 disabled:hover:shadow-none max-md:w-full md:shadow-xl"
+          className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 disabled:opacity-50 max-md:w-full md:shadow-xl"
         >
           <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
