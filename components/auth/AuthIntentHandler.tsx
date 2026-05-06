@@ -18,11 +18,16 @@ const AuthIntentHandler = () => {
       dispatch(setOpenLoginModel(true));
 
       router.replace(`/?callbackUrl=${callbackUrl}`);
+      return;
     }
 
     if (searchParams.get('createAgent') === 'true') {
       dispatch(setOpenAgentCreationModel(true));
-      router.replace('/ai-assistant');
+
+      // delay helps avoid race condition
+      setTimeout(() => {
+        router.replace('/ai-assistant');
+      }, 0);
     }
   }, [searchParams, router, dispatch, callbackUrl]);
 
