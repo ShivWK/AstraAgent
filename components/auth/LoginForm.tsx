@@ -144,6 +144,7 @@ export function LoginForm({ setLogin }: PropsType) {
 
           <button
             onClick={() => setLogin('reset_password')}
+            disabled={isSubmitting || globalAuthLoader}
             type="button"
             className="mt-1 text-sm underline underline-offset-2 transition-all duration-75 ease-out active:text-gray-300"
           >
