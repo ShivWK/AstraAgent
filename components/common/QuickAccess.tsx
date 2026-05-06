@@ -18,6 +18,7 @@ const QuickAccess = () => {
 
   useEffect(() => {
     const fetchAgent = async () => {
+      if (status === 'loading' || status === 'authenticated') return;
       try {
         setLoading(true);
         const response = await fetch(
@@ -42,7 +43,7 @@ const QuickAccess = () => {
     };
 
     fetchAgent();
-  }, []);
+  }, [status]);
 
   const handleAgentCreation = () => {
     router.push('/ai-assistant?createAgent=true');

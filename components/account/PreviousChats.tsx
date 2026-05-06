@@ -106,7 +106,7 @@ const PreviousChats = () => {
           )
         )}
 
-        {!previousChatsToShow && (
+        {!previousChatsToShow && !loading && (
           <p className="py-6 text-center">No previous chats available</p>
         )}
       </div>

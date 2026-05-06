@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { logoForAgents } from '@/utils/text_assistants';
 import { Conversation } from '@/types/conversation';
-import { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import { useState, SetStateAction, Dispatch } from 'react';
 import { ChevronDown } from 'lucide-react';
 import PreviousChat from './PreviousChat';
 
@@ -29,17 +29,6 @@ const PreviousChats = ({
       [agentId]: !prev[agentId],
     }));
   };
-
-  useEffect(() => {
-    const call = () => {
-      const firstKey = Object.keys(history)[0];
-      if (firstKey) {
-        setOpenGroups({ [firstKey]: true });
-      }
-    };
-
-    call();
-  }, [history]);
 
   return (
     <div>

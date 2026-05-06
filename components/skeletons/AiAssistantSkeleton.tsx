@@ -24,11 +24,6 @@ const AiAssistantSkeleton = () => {
             <div className="mb-2 h-5 w-40 rounded bg-gray-400 dark:bg-gray-600" />
             <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-600" />
           </div>
-
-          <div className="rounded-xl bg-gray-300 p-4 md:basis-1/2 dark:bg-gray-700">
-            <div className="mb-2 h-5 w-40 rounded bg-gray-400 dark:bg-gray-600" />
-            <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-600" />
-          </div>
         </section>
       </div>
     </main>
