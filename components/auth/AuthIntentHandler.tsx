@@ -23,6 +23,8 @@ const AuthIntentHandler = () => {
 
     if (searchParams.get('createAgent') === 'true') {
       dispatch(setOpenAgentCreationModel(true));
+
+      // useRouter don't always work if page is cached or something
       window.history.replaceState({}, '', '/ai-assistant');
     }
   }, [searchParams, router, dispatch, callbackUrl]);

@@ -98,7 +98,7 @@ const TextInputMethod = ({
         rgba(${90 + intensity * 120},130,255,${0.45 + intensity * 0.35}),
         rgba(139,92,246,${0.3 + intensity * 0.35}),
         rgba(59,130,246,${0.2 + intensity * 0.25})
-      )`
+      ), black`
           : 'black',
         boxShadow: recording
           ? `
@@ -117,7 +117,15 @@ const TextInputMethod = ({
         value={text}
         className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none outline-none`}
         aria-label="Enter Query"
-        placeholder={!connected || dbLoading ? 'Connecting...' : 'Enter query'}
+        placeholder={
+          sttLoading
+            ? 'Transcribing...'
+            : !connected || dbLoading
+              ? 'Connecting...'
+              : recording
+                ? 'Listening...'
+                : 'Enter query'
+        }
       />
 
       <div className="flex w-full items-center justify-between">
@@ -134,11 +142,11 @@ const TextInputMethod = ({
             className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
-              <X aria-hidden="true" className="size-5 md:size-4.5" />
+              <X aria-hidden="true" className="size-5.5 md:size-4.5" />
             ) : sttLoading ? (
-              <Spinner className="size-5 md:size-4.5" />
+              <Spinner className="size-5.5 md:size-4.5" />
             ) : (
-              <Mic aria-hidden="true" className="size-5 md:size-4.5" />
+              <Mic aria-hidden="true" className="size-5.5 md:size-4.5" />
             )}
           </button>
         </div>

@@ -75,8 +75,6 @@ export async function POST(req: NextRequest) {
       },
     );
 
-    console.log('Agent response for title', JSON.stringify(response));
-
     const data = await response.json();
 
     if (!response.ok) {

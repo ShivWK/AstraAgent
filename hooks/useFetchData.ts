@@ -171,7 +171,7 @@ const useFetchData = ({
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ messages }),
+          body: JSON.stringify({ messages, id: conversationId }),
         });
 
         const result = await response.json();
