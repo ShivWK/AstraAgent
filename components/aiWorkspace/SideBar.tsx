@@ -40,7 +40,7 @@ const SideBar = ({
   const slideOpenSidebar = useAppSelector(selectSlideSidebar);
 
   const divClickHandler = () => {
-    dispatch(setOpenSidebar(false));
+    dispatch(setSlideSidebar(false));
   };
 
   const animationENdHandler = (e: React.AnimationEvent<HTMLDivElement>) => {

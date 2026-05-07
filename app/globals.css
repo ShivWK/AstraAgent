@@ -119,7 +119,7 @@
   }
 
   .animate-slideHide {
-    animation: slideHide 0.4s ease forwards;
+    animation: slideHide 0.35s ease forwards;
   }
 
   @keyframes slideHide {
@@ -133,7 +133,7 @@
   }
 
   .animate-slideShow {
-    animation: slideShow 0.4s ease forwards;
+    animation: slideShow 0.35s ease forwards;
   }
 
   @keyframes slideShow {
