@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { setTokens } from '@/features/auth/authSlice';
 import useAppDispatch from './useAppDispatch';
+import { createKey } from '@/utils/createKey';
 
 const ttsCache = new Map<string, string>();
 
@@ -35,7 +36,7 @@ const useTts = (speaker = 'shubh') => {
 
     cleanupAudio();
 
-    const key = `tts_${id}_${speaker}`;
+    const key = await createKey(text, speaker);
 
     setLoadingId(id);
     setActiveId(null);
