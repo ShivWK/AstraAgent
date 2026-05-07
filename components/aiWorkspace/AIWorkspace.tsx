@@ -116,10 +116,29 @@ const AiWorkspace = () => {
     if (shouldAutoScrollRef.current) {
       element.scrollTo({
         top: element.scrollHeight,
-        behavior: 'smooth',
+        behavior: streaming ? 'auto' : 'smooth',
       });
     }
-  }, [streamMessage, chat]);
+  }, [streamMessage, chat, streaming]);
+
+  useEffect(() => {
+    const ele = containerRef.current;
+    if (!ele) return;
+
+    const wheelHandler = (e: WheelEvent) => {
+      if (e.deltaY < 0) {
+        shouldAutoScrollRef.current = false;
+      }
+    };
+
+    ele.addEventListener('wheel', wheelHandler, { passive: true });
+
+    return () => ele.removeEventListener('wheel', wheelHandler);
+  }, []);
+
+  const ENABLE_THRESHOLD = 80;
+  const DISABLE_THRESHOLD = 160;
+  const SCROLL_BUFFER = 5;
 
   const scrollHandler = () => {
     const ele = containerRef.current;
@@ -127,18 +146,24 @@ const AiWorkspace = () => {
 
     const currentScrollTop = ele.scrollTop;
 
-    if (currentScrollTop < lastScrollTopRef.current) {
+    if (currentScrollTop < lastScrollTopRef.current - SCROLL_BUFFER) {
       shouldAutoScrollRef.current = false;
     }
 
-    const nearBottom =
-      ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;
+    const distanceFromBottom =
+      ele.scrollHeight - ele.scrollTop - ele.clientHeight;
 
-    if (nearBottom) {
-      shouldAutoScrollRef.current = true;
+    if (shouldAutoScrollRef.current) {
+      if (distanceFromBottom > DISABLE_THRESHOLD) {
+        shouldAutoScrollRef.current = false;
+      }
+    } else {
+      if (distanceFromBottom < ENABLE_THRESHOLD) {
+        shouldAutoScrollRef.current = true;
+      }
     }
 
-    setIsAtBottom(nearBottom);
+    setIsAtBottom(distanceFromBottom < ENABLE_THRESHOLD);
     lastScrollTopRef.current = currentScrollTop;
   };
 
@@ -153,6 +178,7 @@ const AiWorkspace = () => {
       behavior: 'smooth',
     });
 
+    lastScrollTopRef.current = ele.scrollTop;
     setIsAtBottom(true);
   };
 
