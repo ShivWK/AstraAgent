@@ -12,6 +12,7 @@
   width: 300px;
   max-width: 400px;
   overflow: hidden;
+  z-index: 99999999;
 }
 
 .toast-msg {
@@ -143,25 +144,25 @@
 .top-right {
   position: fixed;
   top: 4rem;
-  right: 20px;
+  right: 10px;
 }
 
 .bottom-right {
   position: fixed;
   bottom: 10px;
-  right: 20px;
+  right: 10px;
 }
 
 .top-left {
   position: fixed;
   top: 4rem;
-  left: 20px;
+  left: 10px;
 }
 
 .bottom-left {
   position: fixed;
   bottom: 10px;
-  left: 20px;
+  left: 10px;
 }
 
 .top-mid {
