@@ -1,16 +1,9 @@
 'use client';
 
-import { ChevronLeft, ArrowDown } from 'lucide-react';
-import AISideBar from '@/components/aiWorkspace/AISideBar';
-import {
-  selectOpenSidebar,
-  setOpenSidebar,
-  setSelectedInteractionMode,
-} from '@/features/agents/agentsSlice';
-import useAppSelector from '@/hooks/useAppSelector';
+import { ArrowDown } from 'lucide-react';
+import { setSelectedInteractionMode } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import ChatBox from '@/components/aiWorkspace/Chatbox';
-import Modal from '@/components/common/Modal';
 import TextInputMethod from '@/components/aiWorkspace/TextInputMethod';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -23,6 +16,7 @@ import { showToast } from '@/utils/showToast';
 import useTts from '@/hooks/useTts';
 
 import useSocket from '@/hooks/useSocket';
+import SideBar from './SideBar';
 
 const AiWorkspace = () => {
   const { ToastContainer, triggerToast } = useToast('top-right');
@@ -31,7 +25,6 @@ const AiWorkspace = () => {
   const agentId = searchParam.get('agentId');
   const mode = searchParam.get('mode');
 
-  const isSidebarOpen = useAppSelector(selectOpenSidebar);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -186,15 +179,13 @@ const AiWorkspace = () => {
     <>
       <main className="md:px-1">
         <div className="flex items-center gap-2">
-          <aside className="hidden h-dvh w-104 overflow-x-visible pt-19 pb-0.5 md:block">
-            <AISideBar
-              loading={loading}
-              conversation={conversation}
-              conversationHistory={conversationHistory}
-              setHistory={setState}
-              currentAgent={currentAgent}
-            />
-          </aside>
+          <SideBar
+            loading={loading}
+            conversation={conversation}
+            conversationHistory={conversationHistory}
+            setHistory={setState}
+            currentAgent={currentAgent}
+          />
           <section
             className={`section__chat rounded-primary relative flex h-dvh w-full flex-col items-center`}
           >
@@ -289,31 +280,6 @@ const AiWorkspace = () => {
             )}
           </section>
         </div>
-        <Modal
-          open={isSidebarOpen}
-          onClose={() => dispatch(setOpenSidebar(false))}
-          showClasses="translate-x-0"
-          hideClasses="-translate-x-full"
-          className="fixed top-0 left-0 h-dvh w-3/4 py-2 backdrop-blur-xl"
-        >
-          <>
-            <button
-              className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
-              onClick={() => dispatch(setOpenSidebar(false))}
-            >
-              <ChevronLeft size={27} aria-hidden="true" />
-            </button>
-            <div className="h-[92%] w-full p-1">
-              <AISideBar
-                loading={loading}
-                conversation={conversation}
-                conversationHistory={conversationHistory}
-                setHistory={setState}
-                currentAgent={currentAgent}
-              />
-            </div>
-          </>
-        </Modal>
       </main>
       {ToastContainer}
     </>

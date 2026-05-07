@@ -14,7 +14,7 @@ import {
   selectUser,
   selectDbLoader,
 } from '@/features/auth/authSlice';
-import { setOpenSidebar } from '@/features/agents/agentsSlice';
+import { setOpenSidebar, setSlideSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
@@ -48,12 +48,17 @@ const Header = () => {
     dispatch(setOpenLoginModel(true));
   };
 
+  const openSidebarBtnClickHandler = () => {
+    dispatch(setOpenSidebar(true));
+    dispatch(setSlideSidebar(true));
+  };
+
   return (
     <>
       <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
         <header className="flex w-full justify-between px-2 pt-2 pb-1.5 backdrop-blur-md">
           <button
-            onClick={() => dispatch(setOpenSidebar(true))}
+            onClick={openSidebarBtnClickHandler}
             className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
           >
             <Kanban

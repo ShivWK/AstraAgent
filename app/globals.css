@@ -117,6 +117,34 @@
       transform: translateY(-5px);
     }
   }
+
+  .animate-slideHide {
+    animation: slideHide 0.4s ease forwards;
+  }
+
+  @keyframes slideHide {
+    0% {
+      left: 0%;
+    }
+
+    100% {
+      left: -100%;
+    }
+  }
+
+  .animate-slideShow {
+    animation: slideShow 0.4s ease forwards;
+  }
+
+  @keyframes slideShow {
+    0% {
+      left: -100%;
+    }
+
+    100% {
+      left: 0%;
+    }
+  }
 }
 
 :root {
