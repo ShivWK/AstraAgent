@@ -37,6 +37,9 @@ const AiWorkspace = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
 
+  const shouldAutoScrollRef = useRef(true);
+  const lastScrollTopRef = useRef(0);
+
   const {
     chat,
     streamMessage,
@@ -110,30 +113,40 @@ const AiWorkspace = () => {
     const element = containerRef.current;
     if (!element) return;
 
-    if (isAtBottom) {
+    if (shouldAutoScrollRef.current) {
       element.scrollTo({
         top: element.scrollHeight,
         behavior: 'smooth',
       });
     }
-  }, [streamMessage, chat, isAtBottom]);
-
-  const isNearBottom = (ele: HTMLDivElement) => {
-    const THRESHOLD = 100;
-    return ele.scrollHeight - ele.scrollTop - ele.clientHeight < THRESHOLD;
-  };
+  }, [streamMessage, chat]);
 
   const scrollHandler = () => {
-    const el = containerRef.current;
-    if (!el) return;
+    const ele = containerRef.current;
+    if (!ele) return;
 
-    const atBottom = isNearBottom(el);
-    setIsAtBottom(atBottom);
+    const currentScrollTop = ele.scrollTop;
+
+    if (currentScrollTop < lastScrollTopRef.current) {
+      shouldAutoScrollRef.current = false;
+    }
+
+    const nearBottom =
+      ele.scrollHeight - ele.scrollTop - ele.clientHeight < 100;
+
+    if (nearBottom) {
+      shouldAutoScrollRef.current = true;
+    }
+
+    setIsAtBottom(nearBottom);
+    lastScrollTopRef.current = currentScrollTop;
   };
 
   const downButtonClickHandler = () => {
     const ele = containerRef.current;
     if (!ele) return;
+
+    shouldAutoScrollRef.current = true;
 
     ele.scrollTo({
       top: ele.scrollHeight,
