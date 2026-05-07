@@ -278,7 +278,7 @@ const AiWorkspace = () => {
               dbLoading={loading}
               connected={connected}
             />
-            {!isAtBottom && !loading && hasMessage && (
+            {!isAtBottom && !loading && hasMessage && connected && (
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
