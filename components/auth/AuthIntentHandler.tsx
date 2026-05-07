@@ -23,11 +23,7 @@ const AuthIntentHandler = () => {
 
     if (searchParams.get('createAgent') === 'true') {
       dispatch(setOpenAgentCreationModel(true));
-
-      // delay helps avoid race condition
-      setTimeout(() => {
-        router.replace('/ai-assistant');
-      }, 0);
+      window.history.replaceState({}, '', '/ai-assistant');
     }
   }, [searchParams, router, dispatch, callbackUrl]);
 
