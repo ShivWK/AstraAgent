@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema({
     default: 10000,
   },
 
+  reservedTokens: {
+    type: Number,
+    default: 0,
+  },
+
   password: {
     type: String,
     default: null,
