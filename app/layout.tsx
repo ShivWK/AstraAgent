@@ -1,5 +1,4 @@
 import { Geist, Geist_Mono } from 'next/font/google';
-import ThemeProvider from '@/components/common/theme-provider';
 import Providers from './providers';
 import Header from '@/components/common/Header';
 import './globals.css';
@@ -48,20 +47,13 @@ export default async function RootLayout({ children }: PropsType) {
         className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-linear-tr from-red-400 via-blue-500 to-green-400 antialiased`}
       >
         <SessionProviders>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Providers>
-              <Suspense fallback={null}>
-                <AuthIntentHandler />
-              </Suspense>
-              <Header />
-              {children}
-            </Providers>
-          </ThemeProvider>
+          <Providers>
+            <Suspense fallback={null}>
+              <AuthIntentHandler />
+            </Suspense>
+            <Header />
+            {children}
+          </Providers>
         </SessionProviders>
       </body>
     </html>

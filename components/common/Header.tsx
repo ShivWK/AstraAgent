@@ -3,7 +3,6 @@
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import ThemeChanger from './ThemeChanger';
 import AuthForm from '../auth/AuthForm';
 import { usePathname } from 'next/navigation';
 import { Kanban, CircleUserRound } from 'lucide-react';
@@ -84,7 +83,6 @@ const Header = () => {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <ThemeChanger />
             {status === 'loading' ||
             (globalDbLoader && status === 'authenticated') ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
