@@ -1,10 +1,11 @@
 import { Ellipsis, Pencil, Trash } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { type Conversation } from '@/types/conversation';
 import { Dispatch, SetStateAction } from 'react';
 import RenameModal from './RenameModal';
 import { useRouter } from 'next/navigation';
 import { type Agent } from '@/types/agents';
+import useClickOutside from '@/hooks/useClickOutside';
 
 type PropsType = {
   chat: string;
@@ -35,6 +36,9 @@ const PreviousChat = ({
   const [renameLoading, setRenameLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
+
+  const popupRef = useRef<HTMLDivElement | null>(null);
+  useClickOutside(popupRef, () => setOpenDropdown(false), openDropdown);
 
   const moreOptionsClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -114,6 +118,7 @@ const PreviousChat = ({
         </button>
 
         <div
+          ref={popupRef}
           className={`${openDropdown ? 'block' : 'hidden'} rounded-primary absolute top-7 right-1 z-50 flex flex-col p-2 dark:bg-blue-900`}
           id="chat-menu"
         >
