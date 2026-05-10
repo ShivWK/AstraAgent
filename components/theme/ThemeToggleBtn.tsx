@@ -1,7 +1,7 @@
 import { selectTheme, setTheme } from '@/features/theme/themeSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { LaptopMinimal, Smartphone, Moon, Sun } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
 
@@ -10,11 +10,21 @@ const ThemeToggleBtn = () => {
   const dispatch = useAppDispatch();
 
   const [showDropDown, setShowDropDown] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
-  const isSmall = window.innerWidth <= 760;
-
   useClickOutside(popupRef, () => setShowDropDown(false), showDropDown);
+
+  useEffect(() => {
+    const call = async () => {
+      setMounted(true);
+    };
+
+    call();
+  }, []);
+
+  if (!mounted) return null;
+  const isSmall = window.innerWidth <= 760;
 
   return (
     <div className="group relative">

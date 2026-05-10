@@ -10,7 +10,11 @@ const ThemeInit = () => {
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
 
-    if (savedTheme) {
+    if (
+      savedTheme === 'light' ||
+      savedTheme === 'dark' ||
+      savedTheme === 'system'
+    ) {
       dispatch(setTheme(savedTheme as Theme));
     }
   }, [dispatch]);
