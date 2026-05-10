@@ -30,7 +30,7 @@ const ThemeToggleBtn = () => {
     <div className="group relative">
       <button
         onClick={() => setShowDropDown(!showDropDown)}
-        className="flex cursor-pointer items-center justify-center rounded-md border-2 p-1.5 dark:border-gray-500"
+        className="flex cursor-pointer items-center justify-center rounded-md border p-1.5 dark:border-blue-400"
       >
         {themeIcon === 'light' ? (
           <Sun
