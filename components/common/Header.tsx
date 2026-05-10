@@ -83,7 +83,7 @@ const Header = () => {
               Astra Agent
             </p>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-5">
             <ThemeToggleBtn />
             {status === 'loading' ||
             (globalDbLoader && status === 'authenticated') ? (
