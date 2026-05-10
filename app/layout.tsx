@@ -50,8 +50,8 @@ export default async function RootLayout({ children }: PropsType) {
       >
         <SessionProviders>
           <Providers>
-            <ThemeSync />
             <ThemeInit />
+            <ThemeSync />
             <Suspense fallback={null}>
               <AuthIntentHandler />
             </Suspense>

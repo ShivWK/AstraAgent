@@ -2,27 +2,36 @@
 
 import { useEffect } from 'react';
 import useAppSelector from '@/hooks/useAppSelector';
-import { selectTheme } from '@/features/theme/themeSlice';
+import { selectTheme, setThemeIcon } from '@/features/theme/themeSlice';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 const ThemeSync = () => {
   const currentTheme = useAppSelector(selectTheme);
+  const dispatch = useAppDispatch();
   console.log('theme', currentTheme);
 
   useEffect(() => {
     const root = document.documentElement;
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    console.log('DO match', mediaQuery.matches);
 
     const applyTheme = () => {
       let isDark = false;
 
       if (currentTheme === 'dark') {
         isDark = true;
+        dispatch(setThemeIcon('dark'));
       } else if (currentTheme === 'light') {
         isDark = false;
+        dispatch(setThemeIcon('light'));
       } else {
         isDark = mediaQuery.matches;
+
+        if (isDark) {
+          dispatch(setThemeIcon('dark'));
+        } else {
+          dispatch(setThemeIcon('light'));
+        }
       }
 
       root.classList.toggle('dark', isDark);

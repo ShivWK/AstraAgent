@@ -1,54 +1,44 @@
-import { selectTheme, setTheme } from '@/features/theme/themeSlice';
+import {
+  selectTheme,
+  selectThemeIcon,
+  setTheme,
+  Theme,
+} from '@/features/theme/themeSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { LaptopMinimal, Smartphone, Moon, Sun } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const ThemeToggleBtn = () => {
   const theme = useAppSelector(selectTheme);
+  const themeIcon = useAppSelector(selectThemeIcon);
+
   const dispatch = useAppDispatch();
 
   const [showDropDown, setShowDropDown] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   useClickOutside(popupRef, () => setShowDropDown(false), showDropDown);
 
-  useEffect(() => {
-    const call = async () => {
-      setMounted(true);
-    };
-
-    call();
-  }, []);
-
-  if (!mounted) return null;
-  const isSmall = window.innerWidth <= 760;
+  const clickHandler = (mode: Theme) => {
+    dispatch(setTheme(mode));
+    setShowDropDown(false);
+  };
 
   return (
     <div className="group relative">
       <button
         onClick={() => setShowDropDown(!showDropDown)}
-        className="flex cursor-pointer items-center justify-center rounded-md border-2 px-1 py-1 dark:border-gray-500"
+        className="flex cursor-pointer items-center justify-center rounded-md border-2 p-1.5 dark:border-gray-500"
       >
-        {theme === 'light' ? (
+        {themeIcon === 'light' ? (
           <Sun
             strokeWidth={1.5}
             className="size-5 transform transition-transform duration-150 ease-linear group-hover:text-[#ff5200] active:scale-95"
           />
-        ) : theme === 'dark' ? (
-          <Moon
-            strokeWidth={1.5}
-            className="size-5 transform transition-transform duration-150 ease-linear group-hover:text-[#ff5200] active:scale-95"
-          />
-        ) : isSmall ? (
-          <Smartphone
-            strokeWidth={1.5}
-            className="size-5 transition-all duration-150 ease-linear active:scale-95"
-          />
         ) : (
-          <LaptopMinimal
+          <Moon
             strokeWidth={1.5}
             className="size-5 transform transition-transform duration-150 ease-linear group-hover:text-[#ff5200] active:scale-95"
           />
@@ -65,7 +55,7 @@ const ThemeToggleBtn = () => {
         <div className="relative text-sm">
           <ul className="list-none">
             <li
-              onClick={() => dispatch(setTheme('light'))}
+              onClick={() => clickHandler('light')}
               className="hover:bg-primary flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'light' ? '#e5e7eb' : '',
@@ -76,7 +66,7 @@ const ThemeToggleBtn = () => {
               <span>Light</span>
             </li>
             <li
-              onClick={() => dispatch(setTheme('dark'))}
+              onClick={() => clickHandler('dark')}
               className="hover:bg-primary mt-0.5 flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'dark' ? '#e5e7eb' : '',
@@ -87,18 +77,21 @@ const ThemeToggleBtn = () => {
               <span>Dark</span>
             </li>
             <li
-              onClick={() => dispatch(setTheme('system'))}
+              onClick={() => clickHandler('system')}
               className="hover:bg-primary mt-0.5 flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'system' ? '#e5e7eb' : '',
                 color: theme === 'system' ? 'black' : '',
               }}
             >
-              {isSmall ? (
-                <Smartphone strokeWidth={1.5} size={20} />
-              ) : (
-                <LaptopMinimal strokeWidth={1.5} size={20} />
-              )}
+              <>
+                <Smartphone strokeWidth={1.5} size={20} className="md:hidden" />
+                <LaptopMinimal
+                  strokeWidth={1.5}
+                  size={20}
+                  className="hidden md:block"
+                />
+              </>
               <span>System</span>
             </li>
           </ul>
