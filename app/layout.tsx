@@ -44,6 +44,33 @@ export default async function RootLayout({ children }: PropsType) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        (function() {
+          try {
+            const savedTheme = localStorage.getItem('theme') || 'system';
+
+            let isDark = false;
+
+            if (savedTheme === 'dark') {
+              isDark = true;
+            } else if (savedTheme === 'light') {
+              isDark = false;
+            } else {
+              isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            }
+
+            if (isDark) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          } catch (e) {}
+        })();
+      `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-linear-tr from-red-400 via-blue-500 to-green-400 antialiased`}
