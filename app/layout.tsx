@@ -73,7 +73,7 @@ export default async function RootLayout({ children }: PropsType) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-linear-tr from-red-400 via-blue-500 to-green-400 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background antialiased`}
       >
         <SessionProviders>
           <Providers>

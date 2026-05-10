@@ -8,7 +8,7 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  mode: 'system',
+  mode: 'dark',
 };
 
 const themeSlice = createSlice({

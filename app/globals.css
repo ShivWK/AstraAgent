@@ -148,8 +148,31 @@
 }
 
 :root {
+  --primary-background:
+    radial-gradient(
+      circle at top left,
+      rgba(125, 211, 252, 0.45),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(168, 85, 247, 0.28),
+      transparent 38%
+    ),
+    linear-gradient(135deg, #8fd3ff 0%, #60a5fa 38%, #4f7cff 72%, #6366f1 100%);
+
+  --button-gradient: linear-gradient(
+    135deg,
+    #3b82f6 0%,
+    #4f46e5 55%,
+    #7c3aed 100%
+  );
+
+  --text-primary-foreground: #071226;
+  --text-muted-foreground: #1f3347;
+  --text-subtle-foreground: #486581;
+
   --radius: 0.625rem;
-  --background: oklch(84.991% 0.00219 14.769);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -183,6 +206,13 @@
 }
 
 @theme inline {
+  --background-image-primary-background: var(--primary-background);
+  --background-image-button-background: var(--button-gradient);
+
+  --color-text-primary-foreground: var(--text-primary-foreground);
+  --color-text-muted-foreground: var(--text-muted-foreground);
+  --color-text-subtle-foreground: var(--text-subtle-foreground);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -229,7 +259,23 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --primary-background:
+    radial-gradient(
+      circle at top left,
+      rgba(96, 165, 250, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(139, 92, 246, 0.16),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #020617 0%, #0f172a 42%, #1e1b4b 100%);
+
+  --text-primary-foreground: #f8fbff;
+  --text-muted-foreground: #c7d2fe;
+  --text-subtle-foreground: #93a4c3;
+
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);

@@ -40,19 +40,21 @@ export default function Home() {
             width={300}
             height={300}
             quality={100}
-            className="h-50 w-52 md:h-60 md:w-62"
+            className="h-50 w-52 drop-shadow-[0_0_12px_rgba(255,255,255,0.18)] md:h-60 md:w-62"
           ></Image>
 
           <div className="-mt-4 flex w-full max-w-2xl flex-col items-center gap-2">
-            <span className="font-primary text-center text-4xl font-extrabold">
+            <span className="font-primary text-text-primary-foreground text-center text-4xl font-extrabold md:text-5xl">
               Your AI task Force
             </span>
-            <span className="text-center text-xl">Unlock powerful agents</span>
+            <span className="text-text-muted-foreground text-center text-xl md:text-2xl md:font-medium">
+              Unlock powerful agents
+            </span>
           </div>
 
           <Button
             onClick={getStartedClickHandler}
-            className={`${styles['btn--start']} rounded-full py-5.5 text-lg font-medium transition-all duration-75 active:scale-95 md:py-5 dark:bg-blue-600 dark:text-white`}
+            className={`${styles['btn--start']} bg-button-background rounded-full py-5.5 text-lg font-medium text-white transition-all duration-75 hover:text-gray-900 active:scale-95 md:py-5`}
             disabled={loading}
           >
             Get Started

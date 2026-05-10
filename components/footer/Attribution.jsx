@@ -1,9 +1,10 @@
 import Image from 'next/image';
+import SocialLinks from './SocailLinks';
 
 const Attribution = () => {
   return (
     <div className="mt-4 w-fit text-gray-800 max-md:mb-3">
-      <p className="mb-2 text-lg font-medium tracking-wide dark:text-white">
+      <p className="mb-2 text-lg font-medium tracking-wide text-white">
         Developed By
       </p>
       <div className="flex w-fit gap-2.5">
@@ -14,13 +15,11 @@ const Attribution = () => {
           width={100}
           height={100}
         />
-        <div className="flex flex-col justify-center italic dark:text-white">
+        <div className="flex flex-col justify-center text-white italic">
           <p className="text-lg tracking-wide">Shivendra Dwivedi</p>
           <p className="flex items-center gap-2 text-sm">
-            <span className="font-normal">Web Developer</span>
-            <span className="text-gray-800 lg:hidden dark:text-gray-300">
-              •
-            </span>
+            <span className="font-normal tracking-wider">Web Developer</span>
+            <span className="text-gray-300 lg:hidden">•</span>
             <a
               href="https://portfolio.shivendra.site"
               target="__blank"
@@ -38,7 +37,11 @@ const Attribution = () => {
           </a>
 
           {/* Mobile */}
-          <div className="mt-2 hidden gap-3 max-md:flex">
+          <div className="flex md:hidden">
+            <SocialLinks wrapper={false} />
+          </div>
+
+          {/* <div className="mt-2 hidden gap-3 max-md:flex">
             <a
               href="https://www.linkedin.com/in/shivwk"
               className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
@@ -79,14 +82,18 @@ const Attribution = () => {
                 style={{ color: '#d93025' }}
               ></i>
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* PC */}
       <div className="mt-7 hidden w-full flex-col gap-2 md:flex">
-        <p className="dark:text-white">Social Links</p>
-        <div className="flex gap-3">
+        <p className="text-lg font-medium tracking-wider text-white">
+          Social Links
+        </p>
+        <SocialLinks />
+
+        {/* <div className="flex gap-3 bg-blue-950 rounded-full w-fit p-2 px-4">
           <a
             href="https://www.linkedin.com/in/shivwk"
             className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
@@ -99,14 +106,14 @@ const Attribution = () => {
             className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
             target="__block"
           >
-            <i className="fa-brands fa-square-github text-2xl dark:text-gray-300"></i>
+            <i className="fa-brands fa-square-github text-2xl text-gray-300"></i>
           </a>
           <a
             href="https://x.com/Shivendrawk"
             className="transition-all duration-100 ease-in hover:scale-[1.3] hover:shadow-lg"
             target="__block"
           >
-            <i className="fa-brands fa-square-x-twitter text-2xl dark:text-gray-300"></i>
+            <i className="fa-brands fa-square-x-twitter text-2xl text-gray-300"></i>
           </a>
           <a
             href="https://instagram.com/shivendrawk"
@@ -124,7 +131,7 @@ const Attribution = () => {
           >
             <i className="fa-solid fa-envelope text-2xl text-[#d93025]"></i>
           </a>
-        </div>
+        </div> */}
       </div>
     </div>
   );
