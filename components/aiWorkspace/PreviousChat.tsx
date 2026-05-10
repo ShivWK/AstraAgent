@@ -42,7 +42,7 @@ const PreviousChat = ({
 
   const moreOptionsClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setOpenDropdown(!openDropdown);
+    setOpenDropdown(true);
   };
 
   const handleDeleteOperation = async () => {
@@ -119,9 +119,14 @@ const PreviousChat = ({
 
         <div
           ref={popupRef}
-          className={`${openDropdown ? 'block' : 'hidden'} rounded-primary absolute top-7 right-1 z-50 flex flex-col p-2 dark:bg-blue-900`}
+          className={`${openDropdown ? 'block' : 'hidden'} absolute top-7.5 right-1 z-50 flex flex-col rounded-md p-2 dark:bg-blue-900`}
           id="chat-menu"
         >
+          <div
+            id="triangle"
+            className="absolute -top-2 left-1/2 h-0 w-0 translate-x-[145%] border-r-12 border-b-12 border-l-12 border-r-transparent border-b-blue-900 border-l-transparent"
+          ></div>
+
           <button
             onClick={handleRenameClick}
             disabled={deleteLoading}
