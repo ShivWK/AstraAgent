@@ -139,7 +139,7 @@ const TextInputMethod = ({
             type="button"
             onClick={micBtnClickHandler}
             disabled={streaming || loading || !connected}
-            className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+            className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
               <X aria-hidden="true" className="size-5.5 md:size-4.5" />
@@ -151,7 +151,11 @@ const TextInputMethod = ({
           </button>
         </div>
 
-        {streaming && <DotBounceLoader allColor="text-gray-400" />}
+        {streaming && (
+          <div className="mt-0.5">
+            <DotBounceLoader allColor="text-gray-400" />
+          </div>
+        )}
 
         <button
           type="button"
