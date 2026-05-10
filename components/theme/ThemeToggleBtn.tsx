@@ -1,24 +1,27 @@
 import { selectTheme, setTheme } from '@/features/theme/themeSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { LaptopMinimal, Smartphone, Moon, Sun } from 'lucide-react';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const ThemeToggleBtn = () => {
   const theme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
 
   const [showDropDown, setShowDropDown] = useState(false);
+  const popupRef = useRef<HTMLDivElement | null>(null);
 
   const isSmall = window.innerWidth <= 760;
 
+  useClickOutside(popupRef, () => setShowDropDown(false), showDropDown);
+
   return (
-    <button
-      onBlur={() => setShowDropDown(false)}
-      onClick={() => setShowDropDown(!showDropDown)}
-      className="group relative flex cursor-pointer items-center justify-center rounded-md border-2 px-1 py-1 dark:border-gray-500"
-    >
-      <p className="group flex items-center justify-between gap-3 hover:cursor-pointer">
+    <div className="group relative">
+      <button
+        onClick={() => setShowDropDown(!showDropDown)}
+        className="flex cursor-pointer items-center justify-center rounded-md border-2 px-1 py-1 dark:border-gray-500"
+      >
         {theme === 'light' ? (
           <Sun
             strokeWidth={1.5}
@@ -40,9 +43,10 @@ const ThemeToggleBtn = () => {
             className="size-5 transform transition-transform duration-150 ease-linear group-hover:text-[#ff5200] active:scale-95"
           />
         )}
-      </p>
+      </button>
 
       <div
+        ref={popupRef}
         className="absolute top-11 left-1/2 -translate-x-1/2 transform rounded bg-white p-1 drop-shadow-[0_0_5px_#6a7282] dark:bg-gray-800"
         style={{
           display: showDropDown ? 'block' : 'none',
@@ -52,7 +56,7 @@ const ThemeToggleBtn = () => {
           <ul className="list-none">
             <li
               onClick={() => dispatch(setTheme('light'))}
-              className="hover:bg-primary flex items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
+              className="hover:bg-primary flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'light' ? '#e5e7eb' : '',
                 color: theme === 'light' ? 'black' : '',
@@ -63,7 +67,7 @@ const ThemeToggleBtn = () => {
             </li>
             <li
               onClick={() => dispatch(setTheme('dark'))}
-              className="hover:bg-primary mt-0.5 flex items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
+              className="hover:bg-primary mt-0.5 flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'dark' ? '#e5e7eb' : '',
                 color: theme === 'dark' ? 'black' : '',
@@ -74,7 +78,7 @@ const ThemeToggleBtn = () => {
             </li>
             <li
               onClick={() => dispatch(setTheme('system'))}
-              className="hover:bg-primary mt-0.5 flex items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
+              className="hover:bg-primary mt-0.5 flex cursor-pointer items-center gap-2 rounded px-3.5 py-1.5 transition-all duration-100 hover:text-white md:px-3 md:py-1"
               style={{
                 backgroundColor: theme === 'system' ? '#e5e7eb' : '',
                 color: theme === 'system' ? 'black' : '',
@@ -94,7 +98,7 @@ const ThemeToggleBtn = () => {
           ></div>
         </div>
       </div>
-    </button>
+    </div>
   );
 };
 
