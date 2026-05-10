@@ -5,6 +5,8 @@ import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 import SessionProviders from '@/components/auth/SessionProviders';
+import ThemeSync from '@/components/theme/theme-sync';
+import ThemeInit from '@/components/theme/theme-init';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -48,6 +50,8 @@ export default async function RootLayout({ children }: PropsType) {
       >
         <SessionProviders>
           <Providers>
+            <ThemeSync />
+            <ThemeInit />
             <Suspense fallback={null}>
               <AuthIntentHandler />
             </Suspense>

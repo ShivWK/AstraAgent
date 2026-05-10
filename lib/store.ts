@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
 import agentsReducer from '../features/agents/agentsSlice';
+import themeReducer from '../features/theme/themeSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     agents: agentsReducer,
+    theme: themeReducer,
   },
 });
 
