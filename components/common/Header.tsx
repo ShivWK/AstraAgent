@@ -19,6 +19,7 @@ import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
 import useRefresher from '@/hooks/useRefreshAuth';
+import ThemeToggleBtn from '../theme/ThemeToggleBtn';
 
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
@@ -82,7 +83,8 @@ const Header = () => {
               Astra Agent
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
+            <ThemeToggleBtn />
             {status === 'loading' ||
             (globalDbLoader && status === 'authenticated') ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
