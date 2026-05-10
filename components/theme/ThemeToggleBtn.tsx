@@ -1,30 +1,45 @@
-import {
-  selectTheme,
-  selectThemeIcon,
-  setTheme,
-  Theme,
-} from '@/features/theme/themeSlice';
+import { selectTheme, setTheme, Theme } from '@/features/theme/themeSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LaptopMinimal, Smartphone, Moon, Sun } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const ThemeToggleBtn = () => {
   const theme = useAppSelector(selectTheme);
-  const themeIcon = useAppSelector(selectThemeIcon);
-
   const dispatch = useAppDispatch();
 
   const [showDropDown, setShowDropDown] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   useClickOutside(popupRef, () => setShowDropDown(false), showDropDown);
+
+  useEffect(() => {
+    const call = () => {
+      setMounted(true);
+    };
+
+    call();
+  }, []);
 
   const clickHandler = (mode: Theme) => {
     dispatch(setTheme(mode));
     setShowDropDown(false);
   };
+
+  const resolveTheme = () => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    if (mediaQuery.matches) {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  };
+
+  if (!mounted) return null;
+  const resolvedTheme = theme === 'system' ? resolveTheme() : theme;
 
   return (
     <div className="group relative">
@@ -32,7 +47,7 @@ const ThemeToggleBtn = () => {
         onClick={() => setShowDropDown(!showDropDown)}
         className="flex cursor-pointer items-center justify-center rounded-md border p-1.5 dark:border-blue-400"
       >
-        {themeIcon === 'light' ? (
+        {resolvedTheme === 'light' ? (
           <Sun
             strokeWidth={1.5}
             className="size-5 transform transition-transform duration-150 ease-linear group-hover:text-[#ff5200] active:scale-95"
