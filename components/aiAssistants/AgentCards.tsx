@@ -146,13 +146,13 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
               <ChevronLeft
                 size={35}
                 strokeWidth={2}
-                className="text-blue-400"
+                className="text-white dark:text-blue-400"
               />
             </button>
 
-            <div className="h-2 w-full rounded-2xl border border-blue-400">
+            <div className="h-2 w-full rounded-2xl border border-white dark:border-blue-400">
               <div
-                className={`h-full rounded-2xl bg-blue-400 transition-all duration-200 ease-linear`}
+                className={`h-full rounded-2xl bg-white transition-all duration-200 ease-linear dark:bg-blue-400`}
                 style={{
                   width: `${scrollPercentage}%`,
                 }}
@@ -166,7 +166,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
               <ChevronRight
                 size={35}
                 strokeWidth={2}
-                className="text-blue-400"
+                className="text-white dark:text-blue-400"
               />
             </button>
           </div>

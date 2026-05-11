@@ -165,7 +165,7 @@ const AiAssistant = () => {
             variant={'secondary'}
             onClick={startSessionClickHandler}
             disabled={selectedAgent === null || conversationLoading}
-            className={`${selectedAgent !== null && 'btn-continue'} mx-auto mt-8 flex rounded-full py-6 text-lg font-normal active:scale-95 md:hidden`}
+            className={`${selectedAgent !== null && 'btn-continue'} bg-button-background mx-auto mt-8 flex rounded-full py-6 text-lg font-normal text-white hover:-translate-y-0.5 hover:text-black active:scale-95 md:hidden`}
           >
             Start Session
             {conversationLoading && (

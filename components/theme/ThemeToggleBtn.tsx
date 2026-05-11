@@ -2,7 +2,7 @@ import { selectTheme, setTheme, Theme } from '@/features/theme/themeSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useEffect, useRef, useState } from 'react';
-import { LaptopMinimal, Smartphone, Moon, Sun } from 'lucide-react';
+import { LaptopMinimal, Smartphone, Moon, SunMedium } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
 
 const ThemeToggleBtn = () => {
@@ -45,12 +45,12 @@ const ThemeToggleBtn = () => {
     <div className="group relative">
       <button
         onClick={() => setShowDropDown(!showDropDown)}
-        className="border-theme-btn-border bg-theme-btn-background hover:bg-theme-btn-hover-bg shadow-theme-btn-shadow flex transform items-center justify-center rounded-md border-2 p-1.5 transition-all duration-100 ease-linear hover:-translate-y-0.5 active:translate-y-0"
+        className="border-theme-btn-border bg-theme-btn-background hover:bg-theme-btn-hover-bg shadow-theme-btn-shadow flex transform items-center justify-center rounded-md border-2 p-2 transition-all duration-100 ease-linear hover:-translate-y-0.5 active:translate-y-0"
       >
         {resolvedTheme === 'light' ? (
-          <Sun
+          <SunMedium
             strokeWidth={1.5}
-            className="text-theme-btn-icon size-5 transform transition-transform duration-150 ease-linear"
+            className="text-theme-btn-icon size-6 transform transition-transform duration-150 ease-linear"
           />
         ) : (
           <Moon
@@ -75,7 +75,7 @@ const ThemeToggleBtn = () => {
                   color: theme === 'light' ? 'black' : '',
                 }}
               >
-                <Sun strokeWidth={1.5} size={20} />
+                <SunMedium strokeWidth={1.5} size={22} />
                 <span>Light</span>
               </li>
               <li
