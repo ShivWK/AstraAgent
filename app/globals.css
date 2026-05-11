@@ -193,6 +193,17 @@
   --text-muted-foreground: #1f3347;
   --text-subtle-foreground: #486581;
 
+  --theme-btn-background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(220, 235, 255, 0.58)
+  );
+  --theme-btn-border: rgba(130, 170, 255, 0.38);
+  --theme-btn-icon: #1e293b;
+  --theme-btn-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+  --theme-btn-hover-bg: #24336d;
+  --theme-btn-dropdown-bg: rgb(255, 255, 255);
+
   --radius: 0.625rem;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -233,11 +244,11 @@
   --background-image-talk-card-iconBox-background: var(
     --talk-card-iconBox-background
   );
-
   --background-image-agent-card-background: var(--agent-card-background);
   --background-image-agent-card-iconBox-background: var(
     --agent-card-iconBox-background
   );
+  --background-image-theme-btn-background: var(--theme-btn-background);
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
@@ -245,13 +256,20 @@
 
   --color-talk-card-border: var(--talk-card-border);
   --color-agent-card-border: var(--agent-card-border);
+  --color-theme-btn-border: var(--theme-btn-border);
 
   --color-quick-cards-heading: var(--quick-cards-heading);
   --color-quick-cards-subheading: var(--quick-cards-subheading);
 
+  --color-theme-btn-hover-bg: var(--theme-btn-hover-bg);
+  --color-theme-btn-icon: var(--theme-btn-icon);
+  --color-theme-btn-dropdown: var(--theme-btn-dropdown-bg);
+
   --shadow-talk-card-shadow: var(--talk-card-shadow);
   --shadow-agent-card-shadow: var(--agent-card-shadow);
+  --shadow-theme-btn-shadow: var(--theme-btn-shadow);
 
+  --color-primary: oklch(70.7% 0.165 254.624);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -337,6 +355,18 @@
 
   --talk-card-shadow: 0 10px 30px #2b80ff80;
   --agent-card-shadow: 0 10px 30px #8e51ff85;
+
+  --theme-btn-background: linear-gradient(
+    135deg,
+    rgba(32, 45, 95, 0.95),
+    rgba(20, 28, 60, 0.88)
+  );
+  --theme-btn-border: rgba(120, 170, 255, 0.45);
+  --theme-btn-icon: #e2e8f0;
+  --theme-btn-shadow:
+    0 0 18px rgba(72, 118, 255, 0.22), 0 4px 16px rgba(0, 0, 0, 0.35);
+  --theme-btn-hover-bg: #f8fbff;
+  --theme-btn-dropdown-bg: rgb(62, 108, 236);
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
