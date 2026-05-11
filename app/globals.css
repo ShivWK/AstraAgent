@@ -161,6 +161,27 @@
     ),
     linear-gradient(135deg, #8fd3ff 0%, #60a5fa 38%, #4f7cff 72%, #6366f1 100%);
 
+  --talk-card-background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.78),
+    rgba(180, 220, 255, 0.28)
+  );
+  --talk-card-iconBox-background: linear-gradient(135deg, #c5ddf0, #79aff1);
+  --talk-card-border: rgba(120, 190, 255, 0.45);
+
+  --talk-card-shadow: 0 10px 30px rgba(80, 141, 255, 0.678);
+  --agent-card-shadow: 0 10px 30px rgba(150, 80, 255, 0.568);
+
+  --agent-card-background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.75),
+    rgba(210, 180, 255, 0.25)
+  );
+  --agent-card-border: rgba(180, 120, 255, 0.4);
+
+  --quick-cards-heading: #0b1020;
+  --quick-cards-subheading: #444c58;
+
   --button-gradient: linear-gradient(
     135deg,
     #3b82f6 0%,
@@ -208,10 +229,28 @@
 @theme inline {
   --background-image-primary-background: var(--primary-background);
   --background-image-button-background: var(--button-gradient);
+  --background-image-talk-card-background: var(--talk-card-background);
+  --background-image-talk-card-iconBox-background: var(
+    --talk-card-iconBox-background
+  );
+
+  --background-image-agent-card-background: var(--agent-card-background);
+  --background-image-agent-card-iconBox-background: var(
+    --agent-card-iconBox-background
+  );
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
   --color-text-subtle-foreground: var(--text-subtle-foreground);
+
+  --color-talk-card-border: var(--talk-card-border);
+  --color-agent-card-border: var(--agent-card-border);
+
+  --color-quick-cards-heading: var(--quick-cards-heading);
+  --color-quick-cards-subheading: var(--quick-cards-subheading);
+
+  --shadow-talk-card-shadow: var(--talk-card-shadow);
+  --shadow-agent-card-shadow: var(--agent-card-shadow);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -275,6 +314,29 @@
   --text-primary-foreground: #f8fbff;
   --text-muted-foreground: #c7d2fe;
   --text-subtle-foreground: #93a4c3;
+
+  --talk-card-background: linear-gradient(
+    to bottom right,
+    #162456,
+    #020618,
+    #000000
+  );
+  --talk-card-iconBox-background: linear-gradient(135deg, #79aff1, #2b7fff);
+  --talk-card-border: #2b7fff;
+
+  --agent-card-background: linear-gradient(
+    to bottom right,
+    #2f0d68,
+    #020618,
+    #000000
+  );
+  --agent-card-border: #8e51ff;
+
+  --quick-cards-heading: #ffffff;
+  --quick-cards-subheading: #bbbdbe;
+
+  --talk-card-shadow: 0 10px 30px #2b80ff80;
+  --agent-card-shadow: 0 10px 30px #8e51ff85;
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

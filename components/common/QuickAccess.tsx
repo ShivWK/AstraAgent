@@ -91,15 +91,13 @@ const QuickAccess = () => {
       } else {
         console.log('Unknown error', err);
       }
-    } finally {
-      // setConversationLoading(false);
     }
   };
 
   return (
     <div className="mt-1.5 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
       <div
-        className={`${loading || conversationLoading ? 'pointer-events-none' : 'pointer-events-auto shadow-[0_10px_20px_rgba(0,0,0,0.5)] hover:shadow-blue-500/30 active:scale-95'} relative overflow-hidden rounded-3xl transition-all duration-150 ease-linear`}
+        className={`${loading || conversationLoading ? 'pointer-events-none' : 'hover:shadow-talk-card-shadow pointer-events-auto shadow-[0_10px_20px_rgba(0,0,0,0.5)] active:scale-95'} relative overflow-hidden rounded-3xl transition-all duration-150 ease-linear`}
       >
         {(loading || conversationLoading) && (
           <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center bg-gray-900/20">
@@ -109,34 +107,39 @@ const QuickAccess = () => {
         <button
           onClick={handleTalkToAgentBtnClick}
           disabled={loading || conversationLoading}
-          className="relative overflow-hidden rounded-3xl border border-blue-500/20 bg-linear-to-br from-blue-950 via-slate-950 to-black p-5 disabled:opacity-50 max-md:w-full md:shadow-xl"
+          className="border-talk-card-border bg-talk-card-background relative overflow-hidden rounded-3xl border p-5 disabled:opacity-50 max-md:w-full md:shadow-xl"
         >
           <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
 
           <div className="relative z-10">
             <div className="flex items-center gap-3 md:mb-3">
-              <div className="flex items-center justify-center rounded-2xl bg-blue-500/15 p-2 text-5xl md:text-2xl">
+              <div className="bg-talk-card-iconBox-background flex items-center justify-center rounded-2xl p-2 text-5xl md:text-2xl">
                 <MessagesSquare className="size-10" />
               </div>
 
               <div className="text-start">
-                <p className="text-xl font-semibold text-white">
+                <p className="text-quick-cards-heading text-xl font-semibold">
                   Talk to Astra
                 </p>
-                <p className="text-sm text-gray-400">Your smart AI assistant</p>
+                <p className="text-quick-cards-subheading text-sm">
+                  Your smart AI assistant
+                </p>
               </div>
 
               <p className="ml-auto animate-pulse text-2xl md:hidden">→</p>
             </div>
 
-            <p className="hidden md:block">Start Chat →</p>
+            <div className="text-quick-cards-heading hidden items-center gap-2 justify-self-center font-medium tracking-wide md:flex">
+              <span>Start Chat</span>
+              <span className="text-xl font-medium">→</span>
+            </div>
           </div>
         </button>
       </div>
 
       <button
         onClick={handleAgentCreation}
-        className="relative overflow-hidden rounded-3xl border border-violet-500/20 bg-linear-to-br from-violet-950 via-slate-950 to-black p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear hover:shadow-violet-500/30 active:scale-95 max-md:w-full md:shadow-xl"
+        className="border-agent-card-border bg-agent-card-background hover:shadow-agent-card-shadow relative overflow-hidden rounded-3xl border p-5 shadow-[0_10px_20px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear active:scale-95 max-md:w-full"
       >
         <div className="absolute -right-8 -bottom-8 h-28 w-28 rounded-full bg-violet-500/10 blur-3xl" />
 
@@ -147,8 +150,10 @@ const QuickAccess = () => {
             </div>
 
             <div className="text-start">
-              <p className="text-xl font-semibold text-white">Create Agent</p>
-              <p className="text-sm text-gray-400">
+              <p className="text-quick-cards-heading text-xl font-semibold">
+                Create Agent
+              </p>
+              <p className="text-quick-cards-subheading text-sm">
                 Build your custom AI expert
               </p>
             </div>
@@ -156,7 +161,10 @@ const QuickAccess = () => {
             <p className="ml-auto animate-pulse text-2xl md:hidden">→</p>
           </div>
 
-          <p className="hidden md:block">Create Now →</p>
+          <div className="text-quick-cards-heading hidden items-center gap-2 justify-self-center font-medium tracking-wide md:flex">
+            <span>Create Now</span>
+            <span className="text-xl font-medium">→</span>
+          </div>
         </div>
       </button>
     </div>
