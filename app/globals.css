@@ -206,8 +206,8 @@
 
   --modal-background: linear-gradient(
     135deg,
-    rgb(214, 209, 209),
-    rgb(159, 160, 161)
+    rgb(126, 182, 247),
+    rgb(105, 174, 243)
   );
   --modal-border: rgba(130, 170, 255, 0.26);
   --modal-shadow: 0 18px 50px rgba(70, 120, 255, 0.16);

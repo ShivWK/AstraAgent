@@ -109,7 +109,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="sm:max-w-106.25"
+        className="bg-modal-background border-modal-border border sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <form
@@ -145,7 +145,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger
-                        className="w-45"
+                        className="border-input-primary-border w-45 border-2"
                         aria-invalid={!!errors.domain}
                       >
                         <SelectValue placeholder="Select Domain" />
@@ -187,7 +187,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-45">
+                      <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-blue-500">
                         <SelectValue placeholder="Select Style" />
                       </SelectTrigger>
                       <SelectContent position="popper">
@@ -219,6 +219,8 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
               {...register('name', {
                 required: 'Name is required',
               })}
+              placeholder="Enter agent name"
+              className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder border"
             />
           </div>
 
@@ -227,7 +229,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
             <Textarea
               id="role"
               placeholder={dynamicPlaceholder}
-              className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
+              className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder max-h-36 min-h-26 break-after-all overflow-auto border max-md:text-sm md:min-h-24"
               {...register('purpose', {
                 required: 'Role / Purpose is required',
               })}
@@ -246,7 +248,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="w-45">
+                  <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-blue-500">
                     <SelectValue placeholder="Select Level" />
                   </SelectTrigger>
                   <SelectContent position="popper">
@@ -267,7 +269,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
               <DialogClose type="button" asChild>
                 <Button
                   variant={'outline'}
-                  className=""
+                  className="border-input-primary-border border-2 bg-black text-white"
                   disabled={isSubmitting}
                 >
                   Cancel
@@ -278,7 +280,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                 type="submit"
                 variant={'secondary'}
                 disabled={isSubmitting}
-                className=""
+                className="border-input-primary-border bg-button-background border-2 tracking-wider text-white"
               >
                 {isSubmitting ? (
                   <>
