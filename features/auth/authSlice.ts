@@ -4,6 +4,7 @@ import { User } from '@/types/user';
 
 type InitialStateType = {
   openLoginModel: boolean;
+  authRequired: boolean;
   loginError: string | null;
   getStartedLoading: boolean;
   globalAuthLoader: boolean;
@@ -13,6 +14,7 @@ type InitialStateType = {
 
 const initialState: InitialStateType = {
   openLoginModel: false,
+  authRequired: false,
   loginError: '',
   getStartedLoading: false,
   globalAuthLoader: false,
@@ -34,6 +36,10 @@ const authSlice = createSlice({
   reducers: {
     setOpenLoginModel: (state, action: PayloadAction<boolean>) => {
       state.openLoginModel = action.payload;
+    },
+
+    setAuthRequired: (state, action: PayloadAction<boolean>) => {
+      state.authRequired = action.payload;
     },
 
     setLoginError: (state, action: PayloadAction<string | null>) => {
@@ -72,6 +78,7 @@ export const selectGlobalAuthLoader = (state: RootState) =>
   state.auth.globalAuthLoader;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectDbLoader = (state: RootState) => state.auth.globalDbLoading;
+export const selectAuthRequired = (state: RootState) => state.auth.authRequired;
 
 export const {
   setOpenLoginModel,
@@ -81,4 +88,5 @@ export const {
   setTokens,
   setUser,
   setDbLoader,
+  setAuthRequired,
 } = authSlice.actions;

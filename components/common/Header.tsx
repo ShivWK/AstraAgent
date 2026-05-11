@@ -89,14 +89,12 @@ const Header = () => {
             (globalDbLoader && status === 'authenticated') ? (
               <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
             ) : status === 'unauthenticated' ? (
-              <Button
+              <button
                 onClick={authClickHandler}
-                variant="secondary"
-                size="lg"
-                className="text-md text-lg tracking-wide transition-all duration-75 active:scale-90"
+                className="text-md bg-button-background border-theme-btn-border rounded-md border-2 px-5 py-1 text-lg tracking-wide text-white transition-all duration-100 hover:translate-y-0.5 active:scale-90"
               >
                 Sign In
-              </Button>
+              </button>
             ) : (
               status === 'authenticated' && (
                 <button

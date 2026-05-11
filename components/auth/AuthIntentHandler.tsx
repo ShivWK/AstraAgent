@@ -1,7 +1,11 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import {
+  setAuthRequired,
+  setLoginError,
+  setOpenLoginModel,
+} from '@/features/auth/authSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { useEffect } from 'react';
 import { setOpenAgentCreationModel } from '@/features/agents/agentsSlice';
@@ -16,6 +20,7 @@ const AuthIntentHandler = () => {
     if (searchParams.get('auth') === 'required') {
       dispatch(setLoginError('Please sign in or sign up to continue'));
       dispatch(setOpenLoginModel(true));
+      dispatch(setAuthRequired(true));
 
       router.replace(`/?callbackUrl=${callbackUrl}`);
       return;

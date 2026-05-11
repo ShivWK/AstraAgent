@@ -11,6 +11,8 @@ import {
   setOpenLoginModel,
   selectLoginModelOpenState,
   setGetStartedLoading,
+  selectAuthRequired,
+  setAuthRequired,
 } from '@/features/auth/authSlice';
 
 const AuthForm = () => {
@@ -21,14 +23,16 @@ const AuthForm = () => {
   const dispatch = useAppDispatch();
   const open = useAppSelector(selectLoginModelOpenState);
   const error = useAppSelector(selectLoginError);
+  const isAuthRequired = useAppSelector(selectAuthRequired);
 
   const openChangeHandler = (state: boolean) => {
     dispatch(setOpenLoginModel(state));
     dispatch(setGetStartedLoading(false));
     setTimeout(() => setLogin('login'), 150);
 
-    if (!authDone) {
+    if (!authDone && isAuthRequired) {
       window.history.back();
+      dispatch(setAuthRequired(false));
     }
   };
 
@@ -42,7 +46,7 @@ const AuthForm = () => {
   return (
     <Dialog open={open} onOpenChange={openChangeHandler}>
       <DialogContent
-        className="sm:max-w-106.25"
+        className="bg-modal-background border-modal-border shadow-modal-shadow border-2 sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         {isLogIn === 'login' ? (
@@ -57,7 +61,7 @@ const AuthForm = () => {
           <ForgotPasswordForm />
         )}
         <p className="mt-2 flex items-center gap-1">
-          <span className="text-gray-300">
+          <span className="text-gray-900 dark:text-gray-300">
             {isLogIn === 'signup'
               ? 'Already registered?'
               : isLogIn === 'login'
@@ -67,7 +71,7 @@ const AuthForm = () => {
           <button
             type="button"
             onClick={formChangeClickHandler}
-            className="cursor-pointer text-white underline underline-offset-2"
+            className="cursor-pointer font-medium text-black underline underline-offset-2 dark:text-white"
           >
             {isLogIn === 'signup' || isLogIn === 'reset_password'
               ? 'Sign in now'

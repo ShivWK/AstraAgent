@@ -78,7 +78,7 @@ const AgentCard = ({
     <div
       onClick={handleCardClick}
       key={ai._id}
-      className={`group rounded-primary relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none hover:scale-105 ${deleteLoading && 'opacity-50'}`}
+      className={`group rounded-primary border-agent-card-border hover:shadow-agent-card-hover bg-agent-card-bg relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] transition-all duration-100 ease-linear select-none hover:scale-105 ${deleteLoading && 'opacity-50'}`}
     >
       {ai.createdBy && (
         <button
@@ -98,7 +98,7 @@ const AgentCard = ({
         quality={100}
         placeholder="blur"
         blurDataURL="/blurImage.png"
-        className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+        className="h-34 w-34 rounded-full border-4 border-blue-400 object-cover"
       />
       {selectedAgent?._id === ai._id && (
         <Check
@@ -107,8 +107,10 @@ const AgentCard = ({
           className="absolute top-2 right-2 overflow-hidden rounded-full bg-linear-to-br from-[#8B75FE] via-[#5BDDFD] to-[#1F58FD] p-1"
         />
       )}
-      <p className="mt-2 w-[99%] truncate text-center">{ai.name}</p>
-      <p className="w-[99%] truncate text-center font-medium">{ai.title}</p>
+      <p className="mt-2 w-[99%] truncate text-center text-white">{ai.name}</p>
+      <p className="w-[99%] truncate text-center font-medium text-gray-200">
+        {ai.title}
+      </p>
     </div>
   );
 };

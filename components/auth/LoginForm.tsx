@@ -100,6 +100,7 @@ export function LoginForm({ setLogin, setAuthDone }: PropsType) {
             disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Email"
             {...register('email')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder border"
           />
           {errors.email && (
             <p className="-mt-0.5 text-sm text-red-400">
@@ -123,6 +124,7 @@ export function LoginForm({ setLogin, setAuthDone }: PropsType) {
             disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Password"
             {...register('password')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder border"
           />
           {errors.password && (
             <p className="-mt-0.5 text-sm text-red-400">

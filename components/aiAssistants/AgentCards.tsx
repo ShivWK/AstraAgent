@@ -89,10 +89,10 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
           <div className="carousel_group hide-scrollbar my-5 gap-5 text-lg md:my-6 md:gap-8 md:pr-8 md:pl-4">
             <div
               onClick={newAgentCreationClickHandler}
-              className={`rounded-primary flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] backdrop-blur-md transition-all duration-100 ease-linear select-none`}
+              className={`rounded-primary hover:shadow-agent-card-hover bg-agent-card-bg flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 transition-all duration-100 ease-linear select-none`}
             >
-              <div className="relative overflow-hidden rounded-full">
-                <div className="absolute h-full w-full bg-blue-400/65">
+              <div className="bg-agent-card-bg relative overflow-hidden rounded-full">
+                <div className="absolute h-full w-full bg-blue-400/50">
                   &nbsp;
                 </div>
                 <Image
@@ -103,18 +103,20 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
                   quality={100}
                   placeholder="blur"
                   blurDataURL="/blurImage.png"
-                  className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc]"
+                  className="h-34 w-34 rounded-full border-4 border-blue-400 object-cover"
                   loading="lazy"
                 />
                 <CirclePlus
                   size={60}
                   strokeWidth={1}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-medium text-blue-900 dark:text-white"
                 />
               </div>
 
-              <p className="mt-2 w-[99%] truncate text-center">Your Agent</p>
-              <p className="w-[99%] truncate text-center font-medium">
+              <p className="mt-2 w-[99%] truncate text-center text-white">
+                Your Agent
+              </p>
+              <p className="w-[99%] truncate text-center font-medium text-gray-200">
                 Create New
               </p>
             </div>

@@ -129,6 +129,7 @@ export function SignUpForm({
             disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Name"
             {...register('name')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow border"
           />
           {errors.name && (
             <p className="-mt-0.5 text-sm text-red-400">
@@ -145,6 +146,7 @@ export function SignUpForm({
             disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Email"
             {...register('email')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow border"
           />
           {errors.email && (
             <p className="-mt-0.5 text-sm text-red-400">
@@ -168,6 +170,7 @@ export function SignUpForm({
             disabled={isSubmitting || globalAuthLoader}
             placeholder="Enter Your Password"
             {...register('password')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow border"
           />
           {errors.password && (
             <p className="-mt-0.5 text-sm text-red-400">

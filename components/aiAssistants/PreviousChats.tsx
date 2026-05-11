@@ -33,7 +33,7 @@ const PreviousChats = ({
   return (
     <div>
       <h2
-        className={`mb-2 text-xl font-semibold md:text-2xl dark:text-white ${hideHeading && 'hidden'}`}
+        className={`mb-2 text-xl font-semibold text-white md:text-2xl ${hideHeading && 'hidden'}`}
       >
         Previous Conversations
       </h2>
