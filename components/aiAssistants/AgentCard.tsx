@@ -98,7 +98,7 @@ const AgentCard = ({
         quality={100}
         placeholder="blur"
         blurDataURL="/blurImage.png"
-        className="h-34 w-34 rounded-full border-2 border-blue-400 object-cover md:border-4"
+        className="h-34 w-34 rounded-full border-3 border-blue-400 object-cover md:border-4"
       />
       {selectedAgent?._id === ai._id && (
         <Check

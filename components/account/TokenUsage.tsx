@@ -28,19 +28,19 @@ const TokenUsage = ({ user, authLoader }: Props) => {
   };
 
   return (
-    <div className="mb-5 w-full max-w-md rounded-2xl border border-gray-700 bg-gray-900 p-5 shadow-lg">
+    <div className="mb-5 w-full max-w-md rounded-2xl border border-[rgba(120,160,255,0.22)] bg-[#B2DEF8] p-5 shadow-lg dark:border-gray-700 dark:bg-gray-900">
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-gray-400">Token Usage</p>
-        <p className="text-xs text-gray-500">
+        <p className="text-quick-cards-heading text-sm">Token Usage</p>
+        <p className="text-quick-cards-subheading text-xs">
           {usedTokens} / {totalTokens}
         </p>
       </div>
 
       <div className="mb-4">
-        <p className="text-2xl font-semibold text-white">
+        <p className="text-quick-cards-heading text-2xl font-semibold">
           {tokens?.toLocaleString()}
         </p>
-        <p className="text-xs text-gray-400">tokens remaining</p>
+        <p className="text-quick-cards-heading text-xs">tokens remaining</p>
       </div>
 
       <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-700">
@@ -50,7 +50,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
         />
       </div>
 
-      <div className="mt-3 flex justify-between text-xs text-gray-400">
+      <div className="text-quick-cards-subheading mt-3 flex justify-between text-xs">
         <span>{progress.toFixed(1)}% used</span>
         <span>{tokens && tokens > 0 ? 'Active' : 'Exhausted'}</span>
       </div>

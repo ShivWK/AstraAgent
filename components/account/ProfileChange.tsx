@@ -142,7 +142,7 @@ const ProfileChange = ({ user }: { user: User }) => {
             aria-label="Upload profile picture"
             className="cursor-pointer"
           >
-            <div className="absolute top-25 left-23 inline-block rounded-full bg-gray-900 p-2 transition-all duration-150 ease-linear active:scale-90">
+            <div className="absolute top-25 left-23 inline-block rounded-full bg-blue-500 p-2 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900">
               <Pencil aria-hidden="true" strokeWidth={1.5} size={20} />
             </div>
           </label>

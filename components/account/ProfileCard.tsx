@@ -177,15 +177,15 @@ export default function ProfileCard({
     </div>
   ) : (
     <>
-      <div className="mt-2 flex w-full flex-col items-center gap-3 rounded-2xl bg-gray-900 px-6 py-2 pb-3.5">
-        <p className="text-lg font-medium">Current Balance</p>
-        <p className="-mt-2 text-xl font-medium">
+      <div className="bg-token-card mt-2 flex w-full flex-col items-center gap-3 rounded-2xl px-6 py-2 pb-3.5">
+        <p className="text-lg font-medium text-white">Current Balance</p>
+        <p className="-mt-2 text-xl font-medium text-white">
           {user.tokens.toLocaleString() || 0}
         </p>
         <button
           onClick={handleRechargeClick}
           disabled={logoutLoading}
-          className="w-full rounded-md bg-blue-700 py-1 text-lg tracking-wider transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+          className="w-full rounded-md bg-green-500 py-1 text-lg tracking-wider text-white transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0 dark:bg-blue-700"
         >
           Recharge
         </button>

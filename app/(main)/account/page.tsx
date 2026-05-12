@@ -38,7 +38,7 @@ const Page = () => {
     <>
       <main className="mb-10 max-md:-mt-4">
         <div className="mx-auto flex max-w-300 flex-col gap-5 overflow-hidden md:flex-row md:gap-1.5">
-          <aside className="relative flex w-full basis-full flex-col items-center gap-2 rounded-2xl bg-blue-900 p-4 pt-4.5 md:basis-[35%]">
+          <aside className="bg-profile-card relative flex w-full basis-full flex-col items-center gap-2 rounded-2xl p-4 pt-4.5 md:basis-[35%]">
             {userDetails?.role === 'admin' && (
               <Crown
                 aria-hidden="true"
@@ -72,7 +72,7 @@ const Page = () => {
             <button
               onClick={authClickHandler}
               disabled={logoutLoading}
-              className="mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+              className="mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 text-white transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
             >
               <p className="mx-auto flex items-center gap-2 text-lg font-medium">
                 {logoutLoading ? (

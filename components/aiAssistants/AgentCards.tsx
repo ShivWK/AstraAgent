@@ -103,7 +103,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
                   quality={100}
                   placeholder="blur"
                   blurDataURL="/blurImage.png"
-                  className="h-34 w-34 rounded-full border-4 border-blue-400 object-cover"
+                  className="h-34 w-34 rounded-full border-3 border-blue-400 object-cover md:border-4"
                   loading="lazy"
                 />
                 <CirclePlus
