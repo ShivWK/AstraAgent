@@ -45,7 +45,7 @@ const ThemeToggleBtn = () => {
     <div className="group relative">
       <button
         onClick={() => setShowDropDown(!showDropDown)}
-        className="border-theme-btn-border bg-theme-btn-background hover:bg-theme-btn-hover-bg shadow-theme-btn-shadow flex transform items-center justify-center rounded-md border-2 p-1.5 transition-all duration-100 ease-linear hover:-translate-y-0.5 active:translate-y-0"
+        className="border-theme-btn-border bg-theme-btn-background hover:bg-theme-btn-hover-bg shadow-theme-btn-shadow flex transform items-center justify-center rounded-md border-2 p-1.5 transition-all duration-100 ease-linear hover:translate-y-0.5 active:translate-y-0"
       >
         {resolvedTheme === 'light' ? (
           <SunMedium
