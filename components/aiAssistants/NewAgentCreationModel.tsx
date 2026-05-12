@@ -269,7 +269,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
               <DialogClose type="button" asChild>
                 <Button
                   variant={'outline'}
-                  className="border-input-primary-border border-2 bg-black text-white"
+                  className="border-input-primary-border border bg-black text-white"
                   disabled={isSubmitting}
                 >
                   Cancel
@@ -280,7 +280,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                 type="submit"
                 variant={'secondary'}
                 disabled={isSubmitting}
-                className="border-input-primary-border bg-button-background border-2 tracking-wider text-white"
+                className="border-input-primary-border bg-button-background border tracking-wider text-white"
               >
                 {isSubmitting ? (
                   <>

@@ -56,7 +56,7 @@ const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
-        className="sm:max-w-106.25"
+        className="bg-modal-background border-modal-border border sm:max-w-106.25"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <form
@@ -92,7 +92,7 @@ const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
           <Textarea
             {...register('instruction')}
             aria-invalid={!!errors.instruction}
-            className="max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder max-h-36 min-h-26 break-after-all overflow-auto max-md:text-sm md:min-h-24"
             placeholder={agent.placeholder}
           ></Textarea>
           {errors.instruction && (
@@ -103,14 +103,17 @@ const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
           <DialogFooter>
             <div className="ml-auto flex items-center gap-2">
               <DialogClose type="button" asChild>
-                <Button variant={'outline'} className="">
+                <Button
+                  variant={'outline'}
+                  className="border-input-primary-border border bg-black text-white"
+                >
                   Skip
                 </Button>
               </DialogClose>
               <Button
                 type="submit"
                 variant={'secondary'}
-                className="transition-all duration-100 ease-linear active:translate-y-0.5"
+                className="border-input-primary-border bg-button-background border transition-all duration-100 ease-linear active:translate-y-0.5"
               >
                 Continue
               </Button>
