@@ -87,7 +87,9 @@ const PreviousChats = () => {
 
   return (
     <div>
-      <h2 className="mb-4 w-full text-xl font-medium">Previous Chats</h2>
+      <h2 className="mb-4 w-full text-xl font-medium text-white">
+        Previous Chats
+      </h2>
       <div className="bg-primary-dark-bg rounded-md p-1">
         {loading ? (
           <div className="flex flex-col gap-3 p-1">
