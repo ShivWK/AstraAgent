@@ -129,7 +129,7 @@ const AiAssistant = () => {
     }
   };
 
-  if (loading) return <AiAssistantSkeleton />;
+  if (!loading) return <AiAssistantSkeleton />;
 
   return (
     <main className="pb-18">

@@ -54,7 +54,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="fixed z-50 w-full bg-linear-to-tr from-[#5be3fe82] via-blue-500/50 to-violet-900/50">
+      <div className="bg-header fixed z-50 w-full">
         <header className="flex w-full justify-between px-2 pt-2 pb-1.5 backdrop-blur-md">
           <button
             onClick={openSidebarBtnClickHandler}

@@ -237,6 +237,13 @@
 
   --previous-chat-bg: #2b7fff;
 
+  --header-bg: linear-gradient(
+    to top right,
+    rgba(220, 240, 255, 0.568) 0%,
+    rgba(135, 205, 255, 0.562) 45%,
+    rgba(40, 71, 184, 0.562) 100%
+  );
+
   --radius: 0.625rem;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -285,6 +292,7 @@
   --background-image-modal-background: var(--modal-background);
   --background-image-profile-card: var(--profile-card-bg);
   --background-image-token-card: var(--token-card-bg);
+  --background-image-header: var(--header-bg);
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
@@ -393,7 +401,7 @@
     #000000
   );
   --talk-card-iconBox-background: linear-gradient(135deg, #79aff1, #2b7fff);
-  --talk-card-border: #2b7fff;
+  --talk-card-border: #0b2a58;
 
   --agent-card-background: linear-gradient(
     to bottom right,
@@ -447,6 +455,8 @@
   --token-card-bg: linear-gradient(#101828);
 
   --previous-chat-bg: #1c398e;
+
+  --header-bg: linear-gradient(to top right, #5be3fe82, #2b80ff85, #4e179a81);
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
