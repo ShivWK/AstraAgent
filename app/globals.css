@@ -161,7 +161,7 @@
       rgba(168, 85, 247, 0.18),
       transparent 54%
     ),
-    linear-gradient(135deg, #61c2fd 0%, #5997ca 40%, #5c8fff 72%, #6b6dff 100%);
+    linear-gradient(135deg, #82c9f5 0%, #64a5da 40%, #588dff 72%, #6b6dff 100%);
 
   --talk-card-background: linear-gradient(
     135deg,
@@ -238,8 +238,8 @@
   --previous-chat-bg: #2b7fff;
 
   --header-bg: linear-gradient(
-    to top right,
-    rgba(220, 240, 255, 0.568) 0%,
+    to top,
+    rgba(220, 240, 255, 0.589) 0%,
     rgba(135, 205, 255, 0.562) 45%,
     rgba(40, 71, 184, 0.562) 100%
   );
@@ -456,7 +456,7 @@
 
   --previous-chat-bg: #1c398e;
 
-  --header-bg: linear-gradient(to top right, #5be3fe82, #2b80ff85, #4e179a81);
+  --header-bg: linear-gradient(to top, #5be3fe82, #2b80ff85, #4e179a81);
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
