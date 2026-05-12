@@ -66,17 +66,17 @@ export default function ResetPassword() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4 dark:bg-gray-900">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-md dark:bg-gray-800">
-        <h1 className="text-center text-2xl font-semibold text-gray-800 dark:text-gray-100">
+    <main className="flex min-h-screen items-center justify-center px-4">
+      <div className="bg-modal-background border-modal-border shadow-modal-shadow w-full max-w-md rounded-xl border-2 p-8">
+        <h1 className="text-quick-cards-heading text-center text-2xl font-semibold">
           Reset your password
         </h1>
 
-        <p className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-quick-cards-subheading mt-2 text-center text-sm">
           Enter your new password below.
         </p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-5">
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
               New Password
@@ -87,13 +87,13 @@ export default function ResetPassword() {
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter new password"
                 {...register('password')}
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 pr-10 text-gray-800 outline-none placeholder:text-gray-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-400 dark:focus:border-gray-300"
+                className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder w-full rounded-lg border px-3 py-2 pr-10 outline-none"
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-2 -translate-y-1/2 text-sm text-gray-500 dark:text-gray-400"
+                className="text-quick-cards-subheading absolute top-1/2 right-2 -translate-y-1/2 text-sm"
               >
                 {showPassword ? 'Hide' : 'Show'}
               </button>
@@ -115,7 +115,7 @@ export default function ResetPassword() {
               type={showPassword ? 'text' : 'password'}
               placeholder="Confirm password"
               {...register('confirmPassword')}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-800 outline-none placeholder:text-gray-500 focus:border-blue-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-400 dark:focus:border-gray-300"
+              className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder w-full rounded-lg border px-3 py-2 outline-none"
             />
 
             {errors.confirmPassword && (
@@ -133,9 +133,11 @@ export default function ResetPassword() {
             {isSubmitting ? 'Resetting...' : 'Reset Password'}
           </button>
 
-          <p className="mt-4 text-center text-sm text-red-400 select-none">
-            {error}
-          </p>
+          {error && (
+            <p className="mt-4 text-center text-sm text-red-400 select-none">
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </main>

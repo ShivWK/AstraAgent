@@ -119,6 +119,7 @@ export function ForgotPasswordForm() {
             placeholder="Enter your email"
             disabled={isSubmitting}
             {...register('email')}
+            className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder border"
           />
 
           {errors.email && (
