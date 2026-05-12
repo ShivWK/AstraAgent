@@ -153,15 +153,15 @@
   --primary-background:
     radial-gradient(
       circle at top left,
-      rgba(125, 211, 252, 0.45),
-      transparent 30%
+      rgba(125, 211, 252, 0.3),
+      transparent 48%
     ),
     radial-gradient(
       circle at bottom right,
-      rgba(168, 85, 247, 0.28),
-      transparent 38%
+      rgba(168, 85, 247, 0.18),
+      transparent 54%
     ),
-    linear-gradient(135deg, #8fd3ff 0%, #60a5fa 38%, #4f7cff 72%, #6366f1 100%);
+    linear-gradient(135deg, #61c2fd 0%, #5997ca 40%, #5c8fff 72%, #6b6dff 100%);
 
   --talk-card-background: linear-gradient(
     135deg,
@@ -380,15 +380,15 @@
   --primary-background:
     radial-gradient(
       circle at top left,
-      rgba(96, 165, 250, 0.18),
-      transparent 28%
+      rgba(96, 165, 250, 0.16),
+      transparent 42%
     ),
     radial-gradient(
       circle at bottom right,
-      rgba(139, 92, 246, 0.16),
-      transparent 35%
+      rgba(139, 92, 246, 0.14),
+      transparent 48%
     ),
-    linear-gradient(135deg, #020617 0%, #0f172a 42%, #1e1b4b 100%);
+    linear-gradient(135deg, #020617 0%, #0b1228 38%, #151a3d 72%, #1e1b4b 100%);
 
   --text-primary-foreground: #f8fbff;
   --text-muted-foreground: #c7d2fe;

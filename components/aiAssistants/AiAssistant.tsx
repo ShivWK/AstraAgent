@@ -124,12 +124,10 @@ const AiAssistant = () => {
       } else {
         console.log('Unknown error', err);
       }
-    } finally {
-      // setConversationLoading(false);
     }
   };
 
-  if (!loading) return <AiAssistantSkeleton />;
+  if (loading) return <AiAssistantSkeleton />;
 
   return (
     <main className="pb-18">

@@ -46,7 +46,7 @@ const PreviousChats = ({
             return (
               <div
                 key={agentId}
-                className={`${openGroups[agentId] ? 'border-2' : 'border-none'} rounded-2xl p-1`}
+                className={`${openGroups[agentId] ? 'border-2' : 'border-none'} rounded-2xl border-gray-500 p-1`}
               >
                 <div
                   onClick={() => toggleGroup(agentId)}
@@ -75,7 +75,7 @@ const PreviousChats = ({
                   </div>
 
                   <ChevronDown
-                    className={`transition-transform duration-300 ${
+                    className={`text-white transition-transform duration-300 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                     size={18}

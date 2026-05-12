@@ -87,7 +87,7 @@ const PreviousChat = ({ conversation, setHistory }: PropsType) => {
       }
       className={`flex cursor-pointer items-center justify-between rounded-md bg-gray-500/40 px-2 py-1.5 text-start text-sm text-gray-200 transition hover:bg-gray-600/50 ${deleteLoading && 'opacity-50'}`}
     >
-      <span className="line-clamp-1 basis-full">
+      <span className="line-clamp-1 basis-full select-none">
         {conversation.title || 'Untitled Conversation'}
       </span>
       <button
