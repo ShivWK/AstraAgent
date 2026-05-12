@@ -145,7 +145,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                       defaultValue={field.value}
                     >
                       <SelectTrigger
-                        className="border-input-primary-border w-45 border-2"
+                        className="border-input-primary-border w-45 border-2 bg-gray-100"
                         aria-invalid={!!errors.domain}
                       >
                         <SelectValue placeholder="Select Domain" />
@@ -187,7 +187,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-blue-500">
+                      <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-gray-100">
                         <SelectValue placeholder="Select Style" />
                       </SelectTrigger>
                       <SelectContent position="popper">
@@ -248,7 +248,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-blue-500">
+                  <SelectTrigger className="border-input-primary-border placeholder:text-input-placeholder w-45 border-2 bg-gray-100">
                     <SelectValue placeholder="Select Level" />
                   </SelectTrigger>
                   <SelectContent position="popper">
