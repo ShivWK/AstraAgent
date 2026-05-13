@@ -161,7 +161,7 @@ const TextInputMethod = ({
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 disabled:opacity-50 md:text-sm ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 text-white disabled:opacity-50 md:text-sm ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (

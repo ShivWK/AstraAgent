@@ -10,7 +10,7 @@ type Props = {
 const TokenUsage = ({ user, authLoader }: Props) => {
   const { totalTokens, tokens } = useAppSelector(selectUser);
 
-  const usedTokens = totalTokens ? totalTokens - tokens! : 0;
+  const usedTokens = totalTokens ? totalTokens - Math.max(0, tokens!) : 0;
   const progress = totalTokens! > 0 ? (usedTokens / totalTokens!) * 100 : 0;
 
   if (user?.role === 'admin') return null;
@@ -38,7 +38,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
 
       <div className="mb-4">
         <p className="text-quick-cards-heading text-2xl font-semibold">
-          {tokens?.toLocaleString()}
+          {Math.max(0, tokens)?.toLocaleString()}
         </p>
         <p className="text-quick-cards-heading text-xs">tokens remaining</p>
       </div>
