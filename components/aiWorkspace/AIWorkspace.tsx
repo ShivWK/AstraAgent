@@ -245,9 +245,9 @@ const AiWorkspace = () => {
                   })}
 
                 {modelLoading && !streaming && (
-                  <div className="mb-4 flex items-center gap-2">
-                    <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-white/70" />
-                    <p className="text-gray-400">
+                  <div className="mb-5 flex items-center gap-2">
+                    <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-black dark:bg-white/70" />
+                    <p className="font-medium tracking-wider text-black dark:text-gray-400">
                       {aiStarted ? 'Astra is typing...' : 'Thinking...'}
                     </p>
                   </div>
@@ -273,7 +273,7 @@ const AiWorkspace = () => {
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
-                className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full border-2 bg-gray-200/60 p-1 text-black opacity-90 md:bottom-28"
+                className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full border-2 border-white bg-gray-200/60 p-1 text-black opacity-90 md:bottom-28"
               >
                 <ArrowDown aria-hidden="true" strokeWidth={1.5} />
               </button>

@@ -46,7 +46,7 @@ const PreviousChats = ({
             return (
               <div
                 key={agentId}
-                className={`${openGroups[agentId] ? 'border-2' : 'border-none'} rounded-2xl border-gray-500 p-1`}
+                className={`${openGroups[agentId] ? 'border md:border-2' : 'border-none'} rounded-lg border-gray-500 p-1 md:rounded-xl`}
               >
                 <div
                   onClick={() => toggleGroup(agentId)}

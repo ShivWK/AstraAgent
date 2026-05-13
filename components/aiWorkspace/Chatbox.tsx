@@ -50,7 +50,7 @@ const ChatBox = (props: PropsType) => {
 
   if (writer === 'system') {
     return (
-      <div className="relative mr-auto mb-8 max-w-[95%] animate-pulse overflow-x-auto rounded-lg border px-5 py-4 text-gray-400 md:max-w-[85%]">
+      <div className="relative mr-auto mb-8 max-w-[95%] animate-pulse overflow-x-auto rounded-lg border bg-white/50 px-5 py-4 text-black md:max-w-[85%] dark:bg-black/50 dark:text-gray-400">
         <BrainCircuit
           aria-hidden="true"
           className="absolute top-2 left-2 text-gray-400"
@@ -64,9 +64,9 @@ const ChatBox = (props: PropsType) => {
 
   return (
     <div
-      className={`mb-4 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
+      className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
-      <div className="relative max-w-[95%] rounded-xl bg-gray-800 p-1 pb-10 md:max-w-[85%]">
+      <div className="relative max-w-[95%] rounded-xl bg-gray-700 p-1 pb-10 md:max-w-[85%] dark:bg-gray-800">
         <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 px-4 py-3 leading-6 wrap-break-word text-white">
           {writer === 'user' ? (
             <>

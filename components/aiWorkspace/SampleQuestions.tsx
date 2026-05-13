@@ -26,16 +26,16 @@ const SampleQuestions = ({
 
   return (
     <div className="animate-fadeIn pointer-events-auto absolute inset-0 z-30 -mt-6 flex flex-col items-center justify-center px-4 text-center">
-      <h2 className="mb-4 text-2xl font-semibold text-white md:text-3xl">
+      <h2 className="text-quick-cards-heading mb-4 text-2xl font-semibold md:text-3xl">
         How can I help you today?
       </h2>
 
-      <div className="flex w-fit max-w-2xl flex-col items-center justify-center gap-3">
+      <div className="flex w-fit max-w-2xl flex-col items-center justify-center gap-3.5 md:gap-3">
         {sampleQuestions?.map((q, i) => (
           <button
             key={i}
             onClick={() => clickHandler(q)}
-            className="w-fit cursor-pointer rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-left text-sm text-white transition-all duration-150 hover:bg-white/10"
+            className="text-quick-cards-subheading w-fit cursor-pointer rounded-lg border border-white/20 bg-white/50 px-3 py-2 text-left transition-all duration-150 hover:bg-white/20 md:px-4 md:py-2.5 md:font-medium dark:bg-white/5 hover:dark:bg-white/20"
           >
             {mode === 'voice' ? `Say "${q}"` : q}
           </button>
