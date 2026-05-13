@@ -255,6 +255,20 @@
     rgb(126, 182, 247),
     rgb(105, 174, 243)
   );
+  --workspace-fade-bg: linear-gradient(
+    to top,
+    rgba(99, 165, 206, 0.96) 10%,
+    rgba(110, 170, 255, 0.82) 30%,
+    rgba(120, 190, 255, 0.52) 52%,
+    rgba(168, 85, 247, 0.1) 76%,
+    transparent 100%
+  );
+  --workspace-sidebar-bg: linear-gradient(
+    180deg,
+    rgba(235, 245, 255, 0.82) 0%,
+    rgba(215, 232, 255, 0.76) 52%,
+    rgba(205, 225, 255, 0.72) 100%
+  );
 
   --radius: 0.625rem;
   --foreground: oklch(0.145 0 0);
@@ -307,6 +321,8 @@
   --background-image-header: var(--header-bg);
   --background-image-workspace-bg: var(--workspace-profile-bg);
   --background-image-model-details: var(--workspace-model-details-bg);
+  --background-image-workspace-fade: var(--workspace-fade-bg);
+  --background-image-workspace-sidebar: var(--workspace-sidebar-bg);
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
@@ -477,6 +493,21 @@
     to bottom right,
     oklch(62.3% 0.214 259.815),
     oklch(70.708% 0.02244 261.79 / 0.685)
+  );
+
+  --workspace-fade-bg: linear-gradient(
+    to top,
+    rgba(4, 8, 24, 0.98) 8%,
+    rgba(8, 14, 36, 0.92) 24%,
+    rgba(14, 22, 52, 0.72) 46%,
+    rgba(20, 28, 60, 0.32) 70%,
+    transparent 100%
+  );
+  --workspace-sidebar-bg: linear-gradient(
+    180deg,
+    rgba(5, 10, 28, 0.96) 0%,
+    rgba(8, 14, 36, 0.94) 48%,
+    rgba(12, 18, 45, 0.92) 100%
   );
 
   --foreground: oklch(0.985 0 0);

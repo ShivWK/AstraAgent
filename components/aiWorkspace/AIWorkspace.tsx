@@ -197,8 +197,8 @@ const AiWorkspace = () => {
 
   return (
     <>
-      <main className="md:pl-1">
-        <div className="flex items-center gap-2">
+      <main className="">
+        <div className="flex items-center">
           <SideBar
             loading={loading}
             conversation={conversation}
@@ -278,7 +278,7 @@ const AiWorkspace = () => {
                 )}
               </div>
 
-              <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-30 bg-linear-to-t from-black from-15% to-transparent to-70%" />
+              <div className="bg-workspace-fade pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-30" />
             </div>
             <TextInputMethod
               setHasMessage={setHasMessage}

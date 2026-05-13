@@ -53,7 +53,7 @@ const SideBar = ({
 
   return (
     <>
-      <aside className="hidden h-dvh w-104 overflow-x-visible pt-19 pb-0.5 md:block">
+      <aside className="bg-workspace-sidebar hidden h-dvh w-104 overflow-x-visible px-1 pt-19 pb-0.5 md:block">
         <AISideBar
           loading={loading}
           conversation={conversation}
