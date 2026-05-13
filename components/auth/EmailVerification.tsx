@@ -72,11 +72,13 @@ export default function EmailVerification() {
 
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
-      <div className="w-full max-w-md rounded-lg bg-blue-900 p-8 text-center shadow-md">
+      <div className="bg-modal-background w-full max-w-md rounded-lg p-8 text-center shadow-md">
         {status === 'loading' && (
           <>
-            <Spinner className="mx-auto block size-18" />
-            <h2 className="text-xl font-semibold">Verifying your email...</h2>
+            <Spinner className="mx-auto block size-18 text-white" />
+            <h2 className="text-xl font-semibold text-white">
+              Verifying your email...
+            </h2>
             <p className="mt-2 text-gray-200">
               Please wait while we verify your email address.
             </p>
