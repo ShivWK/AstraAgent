@@ -180,7 +180,7 @@ export default function ProfileCard({
       <div className="bg-token-card mt-2 flex w-full flex-col items-center gap-3 rounded-2xl px-6 py-2 pb-3.5">
         <p className="text-lg font-medium text-white">Current Balance</p>
         <p className="-mt-2 text-xl font-medium text-white">
-          {user.tokens.toLocaleString() || 0}
+          {Math.max(0, user.tokens).toLocaleString() || 0}
         </p>
         <button
           onClick={handleRechargeClick}

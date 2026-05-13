@@ -32,6 +32,21 @@ const useSocket = (conversationId: string) => {
   const [connected, setConnected] = useState(false);
   const streamRef = useRef('');
 
+  const endChat = () => {
+    // console.log('Ai end');
+    const finalAnswer = streamRef.current;
+
+    setChat((prv) => {
+      return [...prv, { role: 'assistant', content: finalAnswer }];
+    });
+
+    streamRef.current = '';
+    setStreamMessage('');
+    setAiStarted(false);
+    setStreaming(false);
+    setLoading(false);
+  };
+
   useEffect(() => {
     const token = sessionData?.accessToken;
     if (!token) return;
@@ -76,18 +91,7 @@ const useSocket = (conversationId: string) => {
           break;
 
         case 'ai_end': {
-          // console.log('Ai end');
-          const finalAnswer = streamRef.current;
-
-          setChat((prv) => {
-            return [...prv, { role: 'assistant', content: finalAnswer }];
-          });
-
-          streamRef.current = '';
-          setStreamMessage('');
-          setAiStarted(false);
-          setStreaming(false);
-          setLoading(false);
+          endChat();
           break;
         }
 
@@ -106,6 +110,7 @@ const useSocket = (conversationId: string) => {
 
     return () => {
       socket.close();
+      endChat();
     };
   }, [sessionData?.accessToken, dispatch]);
 

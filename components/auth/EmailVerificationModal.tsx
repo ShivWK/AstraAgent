@@ -81,7 +81,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
       onClose={() => setOpen(false)}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
-      className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 p-6 text-center shadow-lg md:w-[30%]"
+      className="bg-modal-background fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl p-6 text-center shadow-lg md:w-[30%]"
     >
       <>
         <button
@@ -95,7 +95,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
           Email Verification Required
         </h2>
 
-        <p className="mb-4 text-gray-600 select-none dark:text-gray-200">
+        <p className="mb-4 text-gray-900 select-none dark:text-gray-200">
           Your email address is not verified yet. Please verify your email to
           continue using your account.
         </p>
@@ -128,7 +128,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
 
         {!error ? (
           emailSend && (
-            <p className="mt-4 text-sm text-green-400 select-none">
+            <p className="mt-4 font-medium text-green-700 select-none dark:text-green-400">
               Verification email sent. Check your inbox to verify your account.
               If not found, check spam or promotions.
             </p>
@@ -141,7 +141,7 @@ const EmailVerificationModal = ({ open, setOpen, email }: PropsType) => {
           <button
             onClick={resendLinkClickHandler}
             disabled={seconds > 0 || emailLoading}
-            className={`mx-auto mt-4 block text-sm font-medium text-white underline-offset-3 transition-all duration-75 ease-linear select-none disabled:cursor-not-allowed disabled:text-gray-400 ${!emailLoading && seconds === 0 && 'hover:underline'} active:text-gray-40`}
+            className={`text-quick-cards-heading mx-auto mt-4 block text-sm font-medium underline-offset-3 transition-all duration-75 ease-linear select-none disabled:cursor-not-allowed disabled:text-gray-700 disabled:dark:text-gray-400 ${!emailLoading && seconds === 0 && 'hover:underline'} active:text-gray-40`}
           >
             {seconds > 0
               ? `Resend in ${seconds}s`

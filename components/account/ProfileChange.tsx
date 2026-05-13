@@ -158,7 +158,7 @@ const ProfileChange = ({ user }: { user: User }) => {
           >
             <button
               type="submit"
-              className="mx-auto mt-4 flex items-center gap-2 rounded-md bg-gray-900 px-3 py-1 transition-all duration-150 ease-linear active:scale-90"
+              className="mx-auto mt-4 flex items-center gap-2 rounded-md bg-blue-500 px-3 py-1 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
