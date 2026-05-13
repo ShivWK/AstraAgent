@@ -28,7 +28,9 @@ const AiWorkspace = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [overflowing, setOverflowing] = useState(false);
 
   const shouldAutoScrollRef = useRef(true);
   const lastScrollTopRef = useRef(0);
@@ -128,6 +130,24 @@ const AiWorkspace = () => {
 
     return () => ele.removeEventListener('wheel', wheelHandler);
   }, []);
+
+  useEffect(() => {
+    const call = () => {
+      const ele = containerRef.current;
+      if (!ele) return;
+
+      const scrollH = ele.scrollHeight;
+      const clientH = ele.clientHeight;
+
+      // console.log("SH", scrollH,"CH", clientH)
+
+      if (scrollH > clientH) {
+        setOverflowing(true);
+      }
+    };
+
+    call();
+  }, [chat, hasMessage]);
 
   const ENABLE_THRESHOLD = 80;
   const DISABLE_THRESHOLD = 160;
@@ -269,7 +289,7 @@ const AiWorkspace = () => {
               dbLoading={loading}
               connected={connected}
             />
-            {!isAtBottom && !loading && hasMessage && connected && (
+            {!isAtBottom && !loading && overflowing && (
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
