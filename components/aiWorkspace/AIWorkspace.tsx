@@ -177,7 +177,7 @@ const AiWorkspace = () => {
 
   return (
     <>
-      <main className="md:px-1">
+      <main className="md:pl-1">
         <div className="flex items-center gap-2">
           <SideBar
             loading={loading}
@@ -273,7 +273,7 @@ const AiWorkspace = () => {
               <button
                 onClick={downButtonClickHandler}
                 aria-label="Go to bottom"
-                className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full bg-gray-700/70 p-1 opacity-90 md:bottom-28"
+                className="absolute bottom-28 left-1/2 -translate-x-1/2 transform animate-bounce rounded-full border-2 bg-gray-200/60 p-1 text-black opacity-90 md:bottom-28"
               >
                 <ArrowDown aria-hidden="true" strokeWidth={1.5} />
               </button>

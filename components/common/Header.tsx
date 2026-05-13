@@ -61,7 +61,7 @@ const Header = () => {
             className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
           >
             <Kanban
-              className="-rotate-90 transform"
+              className="-rotate-90 transform text-white"
               size={24}
               aria-hidden="true"
             />

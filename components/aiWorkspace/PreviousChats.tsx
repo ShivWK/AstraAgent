@@ -97,7 +97,7 @@ const PreviousChats = ({
 
   return (
     <div className="pretty-scrollbar mt-2 basis-full overflow-auto">
-      <h2 className="mt-0 mb-2 pt-0 text-lg font-medium tracking-wide">
+      <h2 className="mt-0 mb-2 pt-0 text-lg font-medium tracking-wide text-white md:text-black md:dark:text-white">
         Your Chats with this agent
       </h2>
 
@@ -109,7 +109,7 @@ const PreviousChats = ({
             <button
               disabled={conversationLoading}
               onClick={handleNewConversationCreation}
-              className="rounded-primary dark:bg-primary-dark-bg/70 flex shrink-0 cursor-pointer items-center gap-2 px-2 py-0.5 transition-all duration-100 ease-linear active:scale-95"
+              className="rounded-primary dark:bg-primary-dark-bg/70 flex shrink-0 cursor-pointer items-center gap-2 bg-blue-500 px-2 py-0.5 text-white transition-all duration-100 ease-linear active:scale-95"
             >
               <span>Create New chat</span>
               {conversationLoading && <Spinner className="size-5" />}

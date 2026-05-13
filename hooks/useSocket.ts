@@ -36,9 +36,11 @@ const useSocket = (conversationId: string) => {
     // console.log('Ai end');
     const finalAnswer = streamRef.current;
 
-    setChat((prv) => {
-      return [...prv, { role: 'assistant', content: finalAnswer }];
-    });
+    if (finalAnswer) {
+      setChat((prv) => {
+        return [...prv, { role: 'assistant', content: finalAnswer }];
+      });
+    }
 
     streamRef.current = '';
     setStreamMessage('');

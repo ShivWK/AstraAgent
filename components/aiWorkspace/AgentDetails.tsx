@@ -103,10 +103,10 @@ const AgentDetails = ({
 
   return (
     <>
-      <div className="section__agent-card dark:bg-primary-dark-bg h-auto rounded-lg p-2">
+      <div className="section__agent-card bg-workspace-bg h-auto rounded-lg p-2">
         <div
           onClick={(e) => e.stopPropagation()}
-          className="section__agent-card rounded-primary dark:bg-primary-dark-bg mt-1 flex w-full flex-col items-center gap-2 md:flex-row md:gap-4 md:pl-2"
+          className="section__agent-card rounded-primary mt-1 flex w-full flex-col items-center gap-2 md:flex-row md:gap-4 md:pl-2"
         >
           <Image
             src={selectedAgent?.icon || '/assistants/general_ai.png'}
@@ -119,7 +119,7 @@ const AgentDetails = ({
             className="h-28 w-28 rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc] md:h-23 md:w-23"
           />
 
-          <div>
+          <div className="text-white">
             <p className="line-clamp-1 text-xl font-semibold max-md:text-center md:text-2xl">
               {(selectedAgent?.name[0] as string)?.toUpperCase() +
                 selectedAgent?.name.slice(1)}
@@ -141,7 +141,7 @@ const AgentDetails = ({
         </div>
 
         <div
-          className="mt-3 w-full overflow-hidden rounded-lg bg-linear-to-tr from-blue-500 to-gray-400/30 backdrop-blur-md"
+          className="bg-model-details mt-3 w-full overflow-hidden rounded-lg backdrop-blur-md"
           style={{
             height: height === 0 ? '3.5rem' : `${height}px`,
             transition: 'height 0.25s linear',
@@ -164,7 +164,7 @@ const AgentDetails = ({
                 className={`mb-2 flex items-center gap-1 ${openDropDown ? 'block' : 'hidden'}`}
               >
                 <BrainCircuit
-                  className="text-green-400"
+                  className="text-green-600 dark:text-green-400"
                   size={22}
                   strokeWidth={2.5}
                 />
@@ -186,7 +186,7 @@ const AgentDetails = ({
                 {currentModel?.label}
               </p>
 
-              <p className="line-clamp-2 leading-4.5 text-white">
+              <p className="line-clamp-2 leading-4.5 text-black dark:text-white">
                 {currentModel?.description}
               </p>
             </div>
@@ -196,7 +196,7 @@ const AgentDetails = ({
                 onValueChange={(value) => handleModelChange(value)}
                 disabled={isSwitchingModel}
               >
-                <SelectTrigger className="mt-4 w-full rounded-md px-3 py-2 shadow-[0_0_10px_0px_#05df72] placeholder:text-gray-400 hover:bg-gray-600/50 dark:bg-gray-700">
+                <SelectTrigger className="mt-4 w-full rounded-md bg-blue-500 px-3 py-2 placeholder:text-white hover:bg-gray-600/50 dark:bg-gray-700 dark:shadow-[0_0_10px_0px_#05df72] placeholder:dark:text-gray-400">
                   <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
                 </SelectTrigger>
                 <SelectContent position="popper" className="z-10000">

@@ -211,6 +211,7 @@
     rgb(126, 182, 247),
     rgb(105, 174, 243)
   );
+
   --modal-border: rgba(130, 170, 255, 0.26);
   --modal-shadow: 0 18px 50px rgba(70, 120, 255, 0.16);
 
@@ -239,9 +240,20 @@
 
   --header-bg: linear-gradient(
     to top,
-    rgba(220, 240, 255, 0.589) 0%,
-    rgba(135, 205, 255, 0.562) 45%,
-    rgba(40, 71, 184, 0.562) 100%
+    rgba(220, 240, 255, 0.479) 0%,
+    rgb(135, 205, 255) 45%,
+    rgb(40, 71, 184) 100%
+  );
+
+  --workspace-profile-bg: linear-gradient(
+    135deg,
+    rgb(139, 95, 240),
+    rgb(20, 107, 194)
+  );
+  --workspace-model-details-bg: linear-gradient(
+    135deg,
+    rgb(126, 182, 247),
+    rgb(105, 174, 243)
   );
 
   --radius: 0.625rem;
@@ -293,6 +305,8 @@
   --background-image-profile-card: var(--profile-card-bg);
   --background-image-token-card: var(--token-card-bg);
   --background-image-header: var(--header-bg);
+  --background-image-workspace-bg: var(--workspace-profile-bg);
+  --background-image-model-details: var(--workspace-model-details-bg);
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
@@ -457,6 +471,13 @@
   --previous-chat-bg: #1c398e;
 
   --header-bg: linear-gradient(to top, #5be3fe82, #2b80ff85, #4e179a81);
+
+  --workspace-profile-bg: linear-gradient(135deg, #1c398e);
+  --workspace-model-details-bg: linear-gradient(
+    to bottom right,
+    oklch(62.3% 0.214 259.815),
+    oklch(70.708% 0.02244 261.79 / 0.685)
+  );
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);

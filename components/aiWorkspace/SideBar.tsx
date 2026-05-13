@@ -73,7 +73,7 @@ const SideBar = ({
             className={`fixed top-0 left-0 h-dvh w-3/4 py-2 backdrop-blur-xl ${slideOpenSidebar ? 'animate-slideShow' : 'animate-slideHide'}`}
           >
             <button
-              className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2"
+              className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2 text-white"
               onClick={() => dispatch(setSlideSidebar(false))}
             >
               <ChevronLeft size={27} aria-hidden="true" />

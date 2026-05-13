@@ -115,7 +115,7 @@ const TextInputMethod = ({
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none outline-none`}
+        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none text-white outline-none placeholder:text-white/50`}
         aria-label="Enter Query"
         placeholder={
           sttLoading
@@ -139,7 +139,7 @@ const TextInputMethod = ({
             type="button"
             onClick={micBtnClickHandler}
             disabled={streaming || loading || !connected}
-            className={`transform rounded-full bg-gray-900 p-1.5 transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+            className={`transform rounded-full bg-gray-900 p-1.5 text-white transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
               <X aria-hidden="true" className="size-5.5 md:size-4.5" />
