@@ -183,7 +183,7 @@ export function SignUpForm({
         <div className="flex w-full flex-col items-center gap-3">
           <Button
             type="submit"
-            className="w-full text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
+            className="w-full transform text-white transition-all duration-100 ease-linear hover:translate-y-0.5 active:scale-95 dark:bg-[#0c2e96]"
             disabled={isSubmitting || globalAuthLoader}
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}

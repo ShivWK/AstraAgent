@@ -137,7 +137,7 @@ export function LoginForm({ setLogin, setAuthDone }: PropsType) {
         <div className="flex w-full flex-col items-center gap-3">
           <Button
             type="submit"
-            className="w-full text-white transition-all duration-75 active:scale-95 dark:bg-[#0c2e96]"
+            className="w-full transform text-white transition-all duration-100 ease-linear hover:translate-y-0.5 active:scale-95 dark:bg-[#0c2e96]"
             disabled={isSubmitting || globalAuthLoader}
           >
             {isSubmitting && <Spinner data-icon="inline-start" />}
@@ -148,7 +148,7 @@ export function LoginForm({ setLogin, setAuthDone }: PropsType) {
             onClick={() => setLogin('reset_password')}
             disabled={isSubmitting || globalAuthLoader}
             type="button"
-            className="mt-1 text-sm underline underline-offset-2 transition-all duration-75 ease-out active:text-gray-300"
+            className="mt-1 text-sm underline underline-offset-2 transition-all duration-100 ease-out active:text-gray-300 disabled:opacity-70"
           >
             forgot password
           </button>

@@ -280,7 +280,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                 type="submit"
                 variant={'secondary'}
                 disabled={isSubmitting}
-                className="border-input-primary-border bg-button-background border tracking-wider text-white"
+                className="border-input-primary-border bg-button-background transform border tracking-wider text-white transition-all duration-100 ease-linear hover:translate-y-0.5"
               >
                 {isSubmitting ? (
                   <>

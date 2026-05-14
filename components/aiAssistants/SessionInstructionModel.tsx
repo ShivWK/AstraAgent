@@ -113,7 +113,7 @@ const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
               <Button
                 type="submit"
                 variant={'secondary'}
-                className="border-input-primary-border bg-button-background border text-white transition-all duration-100 ease-linear active:translate-y-0.5"
+                className="border-input-primary-border bg-button-background transform border text-white transition-all duration-100 ease-linear hover:translate-y-0.5"
               >
                 Continue
               </Button>

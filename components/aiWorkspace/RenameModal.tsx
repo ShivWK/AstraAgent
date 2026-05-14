@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { Conversation } from '@/types/conversation';
 import { type Agent } from '@/types/agents';
+import { Button } from '../ui/button';
 
 type Props = {
   isOpen: boolean;
@@ -82,9 +83,9 @@ const RenameModal = ({
       onClose={onClose}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
-      className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 p-6 text-center shadow-lg md:w-[30%]"
+      className="bg-modal-background fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl p-6 text-center shadow-lg md:w-[30%]"
     >
-      <h3 className="mb-4 text-lg font-semibold text-white">
+      <h3 className="text-quick-cards-heading mb-4 text-lg font-semibold">
         Rename Conversation
       </h3>
 
@@ -93,27 +94,27 @@ const RenameModal = ({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Enter new name"
-        className="w-full rounded-md border border-gray-600 bg-transparent px-3 py-2 text-white outline-none focus:border-blue-500"
+        className="bg-input-primary-bg border-input-primary-border focus:border-input-focus-border focus:shadow-input-focus-shadow placeholder:text-input-placeholder w-full rounded-md border px-3 py-2 outline-none"
       />
 
       <div className="mt-5 flex justify-end gap-2">
-        <button
+        <Button
           onClick={onClose}
-          className="rounded-md px-4 py-2 text-sm text-gray-300 hover:bg-white/10"
+          className="border-input-primary-border border bg-black text-white hover:bg-white/10"
         >
           Cancel
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={() => {
             if (!value.trim()) return;
             onSave(value.trim());
             onClose();
           }}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700"
+          className="border-input-primary-border bg-button-background transform rounded-md border text-sm tracking-wider text-white transition-all duration-100 ease-linear hover:translate-y-0.5"
         >
           Save
-        </button>
+        </Button>
       </div>
     </Modal>
   );
