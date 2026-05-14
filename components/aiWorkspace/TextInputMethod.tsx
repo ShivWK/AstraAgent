@@ -5,6 +5,9 @@ import useMicLevel from '@/hooks/useMicLevel';
 import { ArrowUpFromDot, X, Mic } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import DotBounceLoader from '../common/DotBounceLoader';
+import useAppSelector from '@/hooks/useAppSelector';
+import { selectTheme } from '@/features/theme/themeSlice';
+import themeResolver from '@/utils/themeResolver';
 
 type PropType = {
   setHasMessage: (val: boolean) => void;
@@ -30,6 +33,8 @@ const TextInputMethod = ({
   const { startRecording, stopRecording, recording, stream, sttLoading } =
     useAudioRecorder(setText);
   const level = useMicLevel(stream);
+
+  const currentTheme = useAppSelector(selectTheme);
 
   const MAX_HEIGHT = 200;
 
@@ -98,8 +103,14 @@ const TextInputMethod = ({
         rgba(${90 + intensity * 120},130,255,${0.45 + intensity * 0.35}),
         rgba(139,92,246,${0.3 + intensity * 0.35}),
         rgba(59,130,246,${0.2 + intensity * 0.25})
-      ), black`
-          : 'black',
+      ), ${currentTheme === 'dark' ? 'black' : currentTheme === 'light' ? '#B1D0F5' : themeResolver() === 'light' ? '#B1D0F5' : 'black'}`
+          : currentTheme === 'dark'
+            ? 'black'
+            : currentTheme === 'light'
+              ? '#B1D0F5'
+              : themeResolver() === 'light'
+                ? '#B1D0F5'
+                : 'black',
         boxShadow: recording
           ? `
       0 0 ${12 + intensity * 20}px rgba(59,130,246,0.8),
@@ -115,7 +126,7 @@ const TextInputMethod = ({
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none text-white outline-none placeholder:text-white/50`}
+        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none text-black outline-none placeholder:text-gray-700 dark:text-white placeholder:dark:text-white/50`}
         aria-label="Enter Query"
         placeholder={
           sttLoading
@@ -139,7 +150,7 @@ const TextInputMethod = ({
             type="button"
             onClick={micBtnClickHandler}
             disabled={streaming || loading || !connected}
-            className={`transform rounded-full bg-gray-900 p-1.5 text-white transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+            className={`transform rounded-full bg-blue-500 p-1.5 text-white transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 dark:bg-gray-900 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
               <X aria-hidden="true" className="size-5.5 md:size-4.5" />
@@ -161,7 +172,7 @@ const TextInputMethod = ({
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`flex items-center gap-1.5 rounded-md bg-blue-900 p-1.5 px-2.5 text-white disabled:opacity-50 md:text-sm ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`flex items-center gap-1.5 rounded-md bg-blue-500 p-1.5 px-2.5 text-white disabled:cursor-not-allowed disabled:opacity-70 md:text-sm dark:bg-blue-900 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (

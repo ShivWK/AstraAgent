@@ -4,6 +4,7 @@ import useAppSelector from '@/hooks/useAppSelector';
 import { useEffect, useRef, useState } from 'react';
 import { LaptopMinimal, Smartphone, Moon, SunMedium } from 'lucide-react';
 import useClickOutside from '@/hooks/useClickOutside';
+import themeResolver from '../../utils/themeResolver';
 
 const ThemeToggleBtn = () => {
   const theme = useAppSelector(selectTheme);
@@ -28,18 +29,8 @@ const ThemeToggleBtn = () => {
     setShowDropDown(false);
   };
 
-  const resolveTheme = () => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    if (mediaQuery.matches) {
-      return 'dark';
-    } else {
-      return 'light';
-    }
-  };
-
   if (!mounted) return null;
-  const resolvedTheme = theme === 'system' ? resolveTheme() : theme;
+  const resolvedTheme = theme === 'system' ? themeResolver() : theme;
 
   return (
     <div className="group relative">

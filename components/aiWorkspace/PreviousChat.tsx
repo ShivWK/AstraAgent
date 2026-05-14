@@ -97,7 +97,7 @@ const PreviousChat = ({
   return (
     <>
       <li
-        className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between gap-1 px-1 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-gray-200 dark:bg-white/20' : 'text-white hover:bg-gray-300/70 md:text-black hover:dark:bg-white/20 md:dark:text-white'}`}
+        className={`rounded-primary relative flex shrink-0 cursor-pointer items-center justify-between gap-1 px-1 py-1 transition-all duration-150 ease-linear ${currentConversation?._id === id ? 'bg-blue-400 text-white dark:bg-white/20' : 'text-white hover:bg-gray-100 md:text-black hover:dark:bg-white/20 md:dark:text-white'}`}
       >
         <button
           onClick={handleOpenConversation}
