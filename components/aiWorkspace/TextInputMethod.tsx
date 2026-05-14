@@ -91,31 +91,32 @@ const TextInputMethod = ({
 
   const intensity = Math.min(1, level / 180);
 
+  const resolvedTheme =
+    currentTheme === 'system' ? themeResolver() : currentTheme;
+  const isLight = resolvedTheme === 'light';
+
   return (
     <form
       onSubmit={handleSubmit}
       onKeyDown={keyDownHandler}
-      className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-2 rounded-xl border-2 border-blue-900 p-2 transition-all duration-150 md:bottom-4 md:w-[88%]`}
+      className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-2 rounded-xl border-2 border-white p-2 transition-all duration-150 md:bottom-4 md:w-[88%] dark:border-blue-900`}
       style={{
         background: recording
           ? `linear-gradient(
-        120deg,
-        rgba(${90 + intensity * 120},130,255,${0.45 + intensity * 0.35}),
-        rgba(139,92,246,${0.3 + intensity * 0.35}),
-        rgba(59,130,246,${0.2 + intensity * 0.25})
-      ), ${currentTheme === 'dark' ? 'black' : currentTheme === 'light' ? '#B1D0F5' : themeResolver() === 'light' ? '#B1D0F5' : 'black'}`
-          : currentTheme === 'dark'
-            ? 'black'
-            : currentTheme === 'light'
-              ? '#B1D0F5'
-              : themeResolver() === 'light'
-                ? '#B1D0F5'
-                : 'black',
+              120deg,
+              rgba(${90 + intensity * 120},130,255,${0.45 + intensity * 0.35}),
+              rgba(139,92,246,${0.3 + intensity * 0.35}),
+              rgba(59,130,246,${0.2 + intensity * 0.25})
+            ), 
+            ${isLight ? '#B1D0F5' : '#000'}`
+          : isLight
+            ? '#B1D0F5'
+            : '#000',
         boxShadow: recording
           ? `
-      0 0 ${12 + intensity * 20}px rgba(59,130,246,0.8),
-      0 0 ${20 + intensity * 25}px rgba(139,92,246,0.35)
-    `
+              0 0 ${12 + intensity * 20}px rgba(59,130,246,0.8),
+              0 0 ${20 + intensity * 25}px rgba(139,92,246,0.35)
+            `
           : undefined,
         transition: 'all 80ms linear',
       }}

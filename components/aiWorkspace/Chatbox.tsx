@@ -67,7 +67,7 @@ const ChatBox = (props: PropsType) => {
       className={`mb-5 flex w-full ${isUser ? 'justify-end' : 'w-full justify-start'}`}
     >
       <div className="relative max-w-[95%] rounded-xl bg-gray-700 p-1 pb-10 md:max-w-[85%] dark:bg-gray-800">
-        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-blue-900 px-4 py-3 leading-6 wrap-break-word text-white">
+        <div className="pretty-scrollbar w-full overflow-x-auto rounded-xl bg-[#B1D0F5] px-4 py-3 leading-6 wrap-break-word text-black dark:bg-blue-900 dark:text-white">
           {writer === 'user' ? (
             <>
               <User
@@ -84,7 +84,7 @@ const ChatBox = (props: PropsType) => {
             <>
               <BrainCircuit
                 aria-hidden="true"
-                className="absolute top-2 left-2 text-green-400"
+                className="absolute top-2 left-2 text-green-500 dark:text-green-400"
                 size={18}
                 strokeWidth={2.5}
               />
@@ -122,7 +122,7 @@ const ChatBox = (props: PropsType) => {
           >
             {copied ? (
               <CheckCheck
-                className="mt-3.5"
+                className="mt-3.5 text-white"
                 aria-hidden="true"
                 strokeWidth={1.5}
                 size={18}
@@ -132,7 +132,7 @@ const ChatBox = (props: PropsType) => {
                 aria-label="Copy"
                 title="copy"
                 onClick={handleCopyClick}
-                className="mt-1.5 transform rounded-md p-1 transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95"
+                className="mt-1.5 transform rounded-md p-1 text-white transition-all duration-150 ease-linear hover:bg-white/20 active:scale-95"
               >
                 <Copy aria-hidden="true" strokeWidth={1.5} size={18} />
               </button>

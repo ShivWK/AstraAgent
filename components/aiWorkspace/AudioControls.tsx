@@ -34,7 +34,7 @@ const AudioControls = ({
   };
 
   return (
-    <div className="animate-fadeIn absolute bottom-1.5 left-1 flex w-[77%] items-center gap-2 rounded-md bg-white/10 py-1.5 pr-2.5 pl-2 backdrop-blur-md md:w-[75%]">
+    <div className="animate-fadeIn absolute bottom-1.5 left-1 flex w-[77%] items-center gap-2 rounded-md bg-white/10 py-1.5 pr-2.5 pl-2 text-white backdrop-blur-md md:w-[75%]">
       {isPaused ? (
         <button onClick={resume} className="transition active:scale-95">
           <Play size={16} />
