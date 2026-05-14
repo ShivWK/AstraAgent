@@ -127,7 +127,7 @@ const TextInputMethod = ({
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none text-black outline-none placeholder:text-gray-700 dark:text-white placeholder:dark:text-white/50`}
+        className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none text-black outline-none placeholder:text-gray-600 dark:text-white dark:placeholder:text-gray-500`}
         aria-label="Enter Query"
         placeholder={
           sttLoading
