@@ -52,7 +52,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
             <p className="ml-auto text-2xl font-semibold text-red-500">
               {tokens.toLocaleString()}
             </p>
-            <div className="text-quick-cards-heading relative flex items-center gap-2 text-xs">
+            <div className="text-quick-cards-heading relative flex items-center gap-1 text-xs md:gap-2">
               <span>Pending Adjustment</span>
               <button
                 aria-label="Know about pending adjustment"
