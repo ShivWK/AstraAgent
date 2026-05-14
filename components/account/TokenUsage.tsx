@@ -67,14 +67,14 @@ const TokenUsage = ({ user, authLoader }: Props) => {
               </button>
 
               {openInfoBox && (
-                <div className="4 absolute top-8 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800">
+                <div className="absolute top-8 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800">
                   <p>
                     Pending usage appears when an AI response finishes after
                     your available balance is exhausted. This amount will be
                     adjusted automatically during your next recharge.
                   </p>
 
-                  <div className="absolute -top-3.75 right-3 border-t-8 border-r-8 border-b-8 border-l-8 border-t-transparent border-r-transparent border-b-[#2B7FFF] border-l-transparent dark:border-b-blue-800" />
+                  <div className="absolute -top-3.75 right-3.5 border-t-8 border-r-8 border-b-8 border-l-8 border-t-transparent border-r-transparent border-b-[#2B7FFF] border-l-transparent md:right-3 dark:border-b-blue-800" />
                 </div>
               )}
             </div>
