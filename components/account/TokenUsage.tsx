@@ -74,7 +74,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
                     adjusted automatically during your next recharge.
                   </p>
 
-                  <div className="absolute -top-3.75 right-3.5 border-t-8 border-r-8 border-b-8 border-l-8 border-t-transparent border-r-transparent border-b-[#2B7FFF] border-l-transparent md:right-3 dark:border-b-blue-800" />
+                  <div className="absolute -top-3.75 right-4 border-t-8 border-r-8 border-b-8 border-l-8 border-t-transparent border-r-transparent border-b-[#2B7FFF] border-l-transparent md:right-3 dark:border-b-blue-800" />
                 </div>
               )}
             </div>
