@@ -1,8 +1,9 @@
 import { selectUser } from '@/features/auth/authSlice';
 import useAppSelector from '@/hooks/useAppSelector';
+import useClickOutside from '@/hooks/useClickOutside';
 import { User } from '@/types/user';
 import { Info, CircleX } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 type Props = {
   user: User;
@@ -12,6 +13,10 @@ type Props = {
 const TokenUsage = ({ user, authLoader }: Props) => {
   const { totalTokens, tokens } = useAppSelector(selectUser);
   const [openInfoBox, setOpenInfoBox] = useState(false);
+
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  useClickOutside(popupRef, () => setOpenInfoBox(false), openInfoBox);
 
   const usedTokens = totalTokens ? totalTokens - Math.max(0, tokens!) : 0;
   const progress = totalTokens! > 0 ? (usedTokens / totalTokens!) * 100 : 0;
@@ -57,7 +62,6 @@ const TokenUsage = ({ user, authLoader }: Props) => {
               <button
                 aria-label="Know about pending adjustment"
                 onClick={() => setOpenInfoBox(!openInfoBox)}
-                onBlur={() => setOpenInfoBox(false)}
               >
                 {openInfoBox ? (
                   <CircleX aria-hidden="true" className="size-4.5" />
@@ -67,7 +71,10 @@ const TokenUsage = ({ user, authLoader }: Props) => {
               </button>
 
               {openInfoBox && (
-                <div className="absolute top-8 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800">
+                <div
+                  ref={popupRef}
+                  className="absolute top-8 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800"
+                >
                   <p>
                     Pending usage appears when an AI response finishes after
                     your available balance is exhausted. This amount will be
