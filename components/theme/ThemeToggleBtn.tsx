@@ -54,7 +54,7 @@ const ThemeToggleBtn = () => {
       {showDropDown && (
         <div
           ref={popupRef}
-          className="bg-theme-btn-dropdown absolute top-11 left-1/2 -translate-x-1/2 transform rounded p-1 drop-shadow-[0_0_5px_#6a7282] backdrop-blur-md"
+          className="bg-theme-btn-dropdown absolute top-11 left-1/2 -translate-x-1/2 transform rounded p-1 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] backdrop-blur-md"
         >
           <div className="relative text-sm">
             <ul className="list-none">
