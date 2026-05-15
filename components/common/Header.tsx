@@ -86,7 +86,7 @@ const Header = () => {
             <ThemeToggleBtn />
             {status === 'loading' ||
             (globalDbLoader && status === 'authenticated') ? (
-              <div className="h-12 w-12 animate-pulse rounded-full bg-blue-400/70" />
+              <div className="bg-recharge-btn h-12 w-12 animate-pulse rounded-full" />
             ) : status === 'unauthenticated' ? (
               <button
                 onClick={authClickHandler}
