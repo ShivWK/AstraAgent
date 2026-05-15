@@ -58,7 +58,7 @@ const Header = () => {
         <header className="flex w-full justify-between px-2 pt-2 pb-1.5 backdrop-blur-md">
           <button
             onClick={openSidebarBtnClickHandler}
-            className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-900 p-3`}
+            className={`${pathname === '/ai-workspace' ? 'block md:hidden' : 'hidden'} rounded-full bg-blue-500 p-3 dark:bg-blue-900`}
           >
             <Kanban
               className="-rotate-90 transform text-white"
