@@ -2,7 +2,7 @@ import AgentCardsSkeleton from './AgentCardsSkeleton';
 
 const AiAssistantSkeleton = () => {
   return (
-    <main className="min-h-dvh animate-pulse pb-18">
+    <main className="min-h-dvh animate-pulse pt-24 pb-18 max-md:px-2 md:pt-28">
       <div className="mx-auto max-w-300">
         <section className="w-full">
           <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
