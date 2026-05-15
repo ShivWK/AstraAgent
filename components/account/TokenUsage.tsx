@@ -54,8 +54,8 @@ const TokenUsage = ({ user, authLoader }: Props) => {
 
         {tokens < 0 && (
           <div className="flex flex-col">
-            <p className="ml-auto text-2xl font-semibold text-red-500">
-              {tokens.toLocaleString()}
+            <p className="ml-auto text-2xl font-semibold text-orange-400">
+              {tokens.toLocaleString().slice(1)}
             </p>
             <div className="text-quick-cards-heading relative flex items-center gap-1 text-xs md:gap-2">
               <span>Pending Adjustment</span>
@@ -73,7 +73,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
               {openInfoBox && (
                 <div
                   ref={popupRef}
-                  className="absolute top-8 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800"
+                  className="absolute top-7 -left-12 z-10 w-48 rounded-md bg-[#2B7FFF] p-2 text-white drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] dark:bg-blue-800"
                 >
                   <p>
                     Pending usage appears when an AI response finishes after
