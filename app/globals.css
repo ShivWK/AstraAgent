@@ -204,7 +204,7 @@
   --theme-btn-icon: #1e293b;
   --theme-btn-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
   --theme-btn-hover-bg: #24336d;
-  --theme-btn-dropdown-bg: rgb(255, 255, 255);
+  --theme-btn-dropdown-bg: rgb(224, 220, 220);
 
   --modal-background: linear-gradient(
     135deg,
