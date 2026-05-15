@@ -36,7 +36,7 @@ const Page = () => {
 
   return (
     <>
-      <main className="min-h-dvh pt-20 pb-10 max-md:px-2 md:pt-26">
+      <main className="min-h-dvh pt-20 pb-8 max-md:px-2 md:pt-26">
         <div className="mx-auto flex max-w-300 flex-col gap-5 overflow-hidden md:flex-row md:gap-1.5">
           <aside className="bg-profile-card relative flex w-full basis-full flex-col items-center gap-2 rounded-2xl p-4 pt-4.5 md:basis-[35%]">
             {userDetails?.role === 'admin' && (

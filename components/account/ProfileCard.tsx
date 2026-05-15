@@ -161,7 +161,7 @@ export default function ProfileCard({
 
   if (authLoader)
     return (
-      <div className="mt-2 h-24 w-full animate-pulse rounded-2xl bg-gray-900"></div>
+      <div className="mt-2 h-24 w-full animate-pulse rounded-2xl bg-gray-500"></div>
     );
 
   return user!.role === 'admin' ? (

@@ -93,9 +93,8 @@ const PreviousChats = () => {
       <div className="bg-primary-dark-bg rounded-md p-1">
         {loading ? (
           <div className="flex flex-col gap-3 p-1">
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500/70" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
+            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
           </div>
         ) : (
           previousChatsToShow &&
