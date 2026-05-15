@@ -72,7 +72,7 @@ const Page = () => {
             <button
               onClick={authClickHandler}
               disabled={logoutLoading}
-              className="mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 text-white transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
+              className="shadow-recharge-btn mt-4 flex w-full items-center justify-center rounded-lg bg-red-800 py-2 text-white transition-all duration-150 ease-linear hover:translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:active:translate-y-0"
             >
               <p className="mx-auto flex items-center gap-2 text-lg font-medium">
                 {logoutLoading ? (

@@ -185,7 +185,7 @@ export default function ProfileCard({
         <button
           onClick={handleRechargeClick}
           disabled={logoutLoading}
-          className="w-full rounded-md bg-green-500 py-1 text-lg tracking-wider text-white transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0 dark:bg-blue-700"
+          className="bg-recharge-btn shadow-recharge-btn w-full rounded-md bg-green-500 py-1 text-lg tracking-wider text-white transition-all duration-150 ease-linear hover:translate-y-0.5 active:scale-95 disabled:opacity-50 disabled:active:translate-y-0"
         >
           Recharge
         </button>

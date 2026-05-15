@@ -270,6 +270,10 @@
     rgba(205, 225, 255, 0.72) 100%
   );
 
+  --recharge-btn-bg: linear-gradient(135deg, #12398f 0%, #433bd3 100%);
+
+  --recharge-btn-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
   --radius: 0.625rem;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -323,6 +327,7 @@
   --background-image-model-details: var(--workspace-model-details-bg);
   --background-image-workspace-fade: var(--workspace-fade-bg);
   --background-image-workspace-sidebar: var(--workspace-sidebar-bg);
+  --background-image-recharge-btn: var(--recharge-btn-bg);
 
   --color-text-primary-foreground: var(--text-primary-foreground);
   --color-text-muted-foreground: var(--text-muted-foreground);
@@ -346,6 +351,7 @@
   --shadow-modal-shadow: var(--modal-shadow);
   --shadow-input-focus-shadow: var(--input-focus-shadow);
   --shadow-agent-card-hover: var(--agent-card-hover-shadow);
+  --shadow-recharge-btn: var(--recharge-btn-shadow);
 
   --color-input-primary-bg: var(--input-primary-bg);
   --color-input-primary-border: var(--input-primary-border);
@@ -509,6 +515,14 @@
     rgba(8, 14, 36, 0.94) 48%,
     rgba(12, 18, 45, 0.92) 100%
   );
+
+  --recharge-btn-bg: linear-gradient(
+    135deg,
+    #1d4ed8 0%,
+    #2563eb 42%,
+    #4338ca 100%
+  );
+  --recharge-btn-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
 
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
