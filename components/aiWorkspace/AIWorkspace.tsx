@@ -271,7 +271,12 @@ const AiWorkspace = () => {
                   <div className="mb-5 flex items-center gap-2">
                     <div className="h-3.5 w-3.5 animate-pulse rounded-full bg-white dark:bg-white/70" />
                     <p className="font-medium tracking-wider text-white dark:text-gray-400">
-                      {aiStarted ? 'Astra is typing...' : 'Thinking...'}
+                      {aiStarted
+                        ? `${
+                            (currentAgent?.name[0] as string)?.toUpperCase() +
+                            currentAgent?.name.slice(1)
+                          } Astra is typing...`
+                        : 'Thinking...'}
                     </p>
                   </div>
                 )}
