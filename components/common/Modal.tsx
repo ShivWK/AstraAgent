@@ -23,7 +23,6 @@ const Modal = ({
   const [mounted, setMounted] = useState(false);
 
   const closeHandler = useCallback(() => {
-    // window.history.back();
     onClose();
   }, [onClose]);
 
@@ -74,22 +73,13 @@ const Modal = ({
   useEffect(() => {
     if (!open) return;
 
-    // window.history.pushState({ modal: true }, '');
-
-    // const handlePopState = () => {
-    //   console.log('pop state');
-    //   onClose();
-    // };
-
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Escape') closeHandler();
     };
 
     document.addEventListener('keydown', handleKeyPress);
-    // window.addEventListener('popstate', handlePopState);
     return () => {
       document.removeEventListener('keydown', handleKeyPress);
-      // window.removeEventListener('popstate', handlePopState);
     };
   }, [open, onClose, closeHandler]);
 

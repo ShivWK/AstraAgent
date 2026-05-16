@@ -117,7 +117,7 @@ const RenameModal = ({
   return (
     <Modal
       open={isOpen}
-      onClose={onClose}
+      onClose={closeClickHandler}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
       className="bg-modal-background fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl p-6 text-center shadow-lg md:w-[30%]"
