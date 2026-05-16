@@ -148,6 +148,7 @@ const RenameModal = ({
             onSave(value.trim());
             onClose();
           }}
+          type="submit"
           disabled={renameLoading}
           className="border-input-primary-border bg-button-background transform rounded-md border text-sm tracking-wider text-white transition-all duration-100 ease-linear hover:translate-y-0.5"
         >

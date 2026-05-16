@@ -125,7 +125,9 @@ const AgentDetails = ({
                 selectedAgent?.name.slice(1)}
             </p>
             <div className="flex items-center max-md:gap-1 max-md:text-sm md:flex-col md:items-start">
-              <p className="max-md:text-center md:font-medium">Current Agent</p>
+              <p className="text-sm max-md:text-center md:font-medium">
+                Current Agent
+              </p>
               <span className="md:hidden">:</span>
               <p className="line-clamp-1 italic max-md:text-center md:-mt-1">
                 {selectedAgent?.title}

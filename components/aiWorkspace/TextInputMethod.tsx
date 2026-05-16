@@ -164,8 +164,8 @@ const TextInputMethod = ({
         </div>
 
         {streaming && (
-          <div className="mt-0.5">
-            <DotBounceLoader allColor="text-gray-400" />
+          <div className="-mb-0.5">
+            <DotBounceLoader allColor="text-black dark:text-gray-400" />
           </div>
         )}
 
