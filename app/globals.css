@@ -191,9 +191,9 @@
     #7c3aed 100%
   );
 
-  --text-primary-foreground: #071226;
-  --text-muted-foreground: #1f3347;
-  --text-subtle-foreground: #486581;
+  --text-primary-foreground: #ffffff;
+  --text-muted-foreground: #edeef0;
+  --text-subtle-foreground: #caccce;
 
   --theme-btn-background: linear-gradient(
     135deg,

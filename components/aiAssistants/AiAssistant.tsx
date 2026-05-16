@@ -135,10 +135,10 @@ const AiAssistant = () => {
         <section className="w-full">
           <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
             <div>
-              <h1 className="text-3xl font-bold md:text-2xl dark:text-white">
+              <h1 className="text-text-primary-foreground text-3xl font-bold md:text-2xl">
                 Welcome to the world of AI Assistant
               </h1>
-              <p className="text-xl">
+              <p className="text-text-muted-foreground text-xl">
                 Choose your AI companion to simplify your task
               </p>
             </div>

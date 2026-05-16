@@ -78,7 +78,7 @@ const Header = () => {
               quality={100}
               className={`${pathname === '/ai-workspace' ? 'hidden md:block' : 'block'} h-12 w-12 rounded`}
             />
-            <p className="hidden text-2xl font-semibold tracking-wide lg:block">
+            <p className="text-text-primary-foreground hidden text-2xl font-semibold tracking-wide lg:block">
               Astra Agent
             </p>
           </div>
