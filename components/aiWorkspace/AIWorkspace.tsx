@@ -101,7 +101,7 @@ const AiWorkspace = () => {
     if (!error) return;
 
     showToast({
-      message: 'Something went wrong. Try after changing AI Model.',
+      message: error || 'Something went wrong. Try after changing AI Model.',
       type: 'error',
       trigger: triggerToast,
     });
