@@ -101,7 +101,7 @@ const AiWorkspace = () => {
     if (!error) return;
 
     showToast({
-      message: 'Something went wrong. Try changing AI Model.',
+      message: 'Something went wrong. Try after changing AI Model.',
       type: 'error',
       trigger: triggerToast,
     });
@@ -275,7 +275,7 @@ const AiWorkspace = () => {
                         ? `${
                             (currentAgent?.name[0] as string)?.toUpperCase() +
                             currentAgent?.name.slice(1)
-                          } Astra is typing...`
+                          } is typing...`
                         : 'Thinking...'}
                     </p>
                   </div>
