@@ -121,6 +121,7 @@ const PreviousChat = ({
   };
 
   const handleOpenConversation = () => {
+    dispatch(setSlideSidebar(false));
     router.push(
       `/ai-workspace?conversation_id=${id}&mode=${mode}&agentId=${agentId}`,
     );
