@@ -17,6 +17,12 @@ import useTts from '@/hooks/useTts';
 
 import useSocket from '@/hooks/useSocket';
 import SideBar from './SideBar';
+import RenameModal from './RenameModal';
+import useAppSelector from '@/hooks/useAppSelector';
+import {
+  closeRenameModal,
+  selectRenameModalData,
+} from '@/features/workspace/workspaceSlice';
 
 const AiWorkspace = () => {
   const { ToastContainer, triggerToast } = useToast('top-right');
@@ -26,6 +32,7 @@ const AiWorkspace = () => {
   const mode = searchParam.get('mode');
 
   const dispatch = useAppDispatch();
+  const renameModalData = useAppSelector(selectRenameModalData);
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -138,8 +145,6 @@ const AiWorkspace = () => {
 
       const scrollH = ele.scrollHeight;
       const clientH = ele.clientHeight;
-
-      // console.log("SH", scrollH,"CH", clientH)
 
       if (scrollH > clientH) {
         setOverflowing(true);
@@ -302,6 +307,13 @@ const AiWorkspace = () => {
         </div>
       </main>
       {ToastContainer}
+      <RenameModal
+        isOpen={renameModalData.open}
+        onClose={() => dispatch(closeRenameModal())}
+        initialValue={renameModalData.chat}
+        conversationId={renameModalData.conversationId}
+        setHistory={setState}
+      />
     </>
   );
 };

@@ -3,11 +3,15 @@ import PreviousChat from './PreviousChat';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import PreviousChatSkeleton from '@/components/skeletons/PreviousChatSkeleton';
 import { useRouter } from 'next/navigation';
-import { selectSelectedInteractionMode } from '@/features/agents/agentsSlice';
+import {
+  selectSelectedInteractionMode,
+  setSlideSidebar,
+} from '@/features/agents/agentsSlice';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSearchParams } from 'next/navigation';
 import { Spinner } from '@/components/ui/spinner';
 import { type Agent } from '@/types/agents';
+import useAppDispatch from '@/hooks/useAppDispatch';
 
 type PropsType = {
   loading: boolean;
@@ -37,6 +41,8 @@ const PreviousChats = ({
   const searchParams = useSearchParams();
   const mode2 = searchParams.get('mode');
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -81,6 +87,7 @@ const PreviousChats = ({
       }
 
       const conversationID = result.conversation._id;
+      dispatch(setSlideSidebar(false));
       router.push(
         `/ai-workspace?conversation_id=${conversationID}&mode=${mode2 || mode1}&agentId=${result.conversation.agentId}`,
       );

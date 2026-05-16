@@ -43,7 +43,7 @@ const SideBar = ({
     dispatch(setSlideSidebar(false));
   };
 
-  const animationENdHandler = (e: React.AnimationEvent<HTMLDivElement>) => {
+  const animationEndHandler = (e: React.AnimationEvent<HTMLDivElement>) => {
     const classList = e.currentTarget.classList;
 
     if (classList.contains('animate-slideHide')) {
@@ -51,46 +51,43 @@ const SideBar = ({
     }
   };
 
-  return (
-    <>
-      <aside className="bg-workspace-sidebar hidden h-dvh w-104 overflow-x-visible px-1 pt-19 pb-0.5 md:block">
-        <AISideBar
-          loading={loading}
-          conversation={conversation}
-          conversationHistory={conversationHistory}
-          setHistory={setHistory}
-          currentAgent={currentAgent}
-        />
-      </aside>
-      {openSidebar && (
-        <div
-          onClick={divClickHandler}
-          className="fixed top-0 left-0 z-60 flex h-full w-full items-center justify-center bg-black/60 md:hidden"
+  return openSidebar ? (
+    <div
+      onClick={divClickHandler}
+      className="fixed top-0 left-0 z-60 flex h-full w-full items-center justify-center bg-black/60 md:hidden"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        onAnimationEnd={animationEndHandler}
+        className={`fixed top-0 left-0 h-dvh w-3/4 py-2 backdrop-blur-xl ${slideOpenSidebar ? 'animate-slideShow' : 'animate-slideHide'}`}
+      >
+        <button
+          className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2 text-white"
+          onClick={() => dispatch(setSlideSidebar(false))}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            onAnimationEnd={animationENdHandler}
-            className={`fixed top-0 left-0 h-dvh w-3/4 py-2 backdrop-blur-xl ${slideOpenSidebar ? 'animate-slideShow' : 'animate-slideHide'}`}
-          >
-            <button
-              className="mt-2 mb-2 ml-3 w-fit rounded-full bg-blue-900 p-2 text-white"
-              onClick={() => dispatch(setSlideSidebar(false))}
-            >
-              <ChevronLeft size={27} aria-hidden="true" />
-            </button>
-            <div className="h-[92%] w-full p-1">
-              <AISideBar
-                loading={loading}
-                conversation={conversation}
-                conversationHistory={conversationHistory}
-                setHistory={setHistory}
-                currentAgent={currentAgent}
-              />
-            </div>
-          </div>
+          <ChevronLeft size={27} aria-hidden="true" />
+        </button>
+        <div className="h-[92%] w-full p-1">
+          <AISideBar
+            loading={loading}
+            conversation={conversation}
+            conversationHistory={conversationHistory}
+            setHistory={setHistory}
+            currentAgent={currentAgent}
+          />
         </div>
-      )}
-    </>
+      </div>
+    </div>
+  ) : (
+    <aside className="bg-workspace-sidebar hidden h-dvh w-104 overflow-x-visible px-1 pt-19 pb-0.5 md:block">
+      <AISideBar
+        loading={loading}
+        conversation={conversation}
+        conversationHistory={conversationHistory}
+        setHistory={setHistory}
+        currentAgent={currentAgent}
+      />
+    </aside>
   );
 };
 

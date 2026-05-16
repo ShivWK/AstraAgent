@@ -6,6 +6,16 @@ import RenameModal from './RenameModal';
 import { useRouter } from 'next/navigation';
 import { type Agent } from '@/types/agents';
 import useClickOutside from '@/hooks/useClickOutside';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import {
+  selectOpenSidebar,
+  setSlideSidebar,
+} from '@/features/agents/agentsSlice';
+import useAppSelector from '@/hooks/useAppSelector';
+import {
+  selectRenameLoading,
+  openRenameModal,
+} from '@/features/workspace/workspaceSlice';
 
 type PropsType = {
   chat: string;
@@ -33,9 +43,11 @@ const PreviousChat = ({
 }: PropsType) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [renameLoading, setRenameLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
+  const sidebarOpen = useAppSelector(selectOpenSidebar);
+  const renameLoading = useAppSelector(selectRenameLoading);
 
   const popupRef = useRef<HTMLDivElement | null>(null);
   useClickOutside(popupRef, () => setOpenDropdown(false), openDropdown);
@@ -84,8 +96,28 @@ const PreviousChat = ({
   };
 
   const handleRenameClick = () => {
-    setOpenModal(true);
     setOpenDropdown(false);
+
+    if (sidebarOpen) {
+      dispatch(setSlideSidebar(false));
+      setTimeout(() => {
+        dispatch(
+          openRenameModal({
+            open: true,
+            chat,
+            conversationId: id,
+          }),
+        );
+      }, 345);
+    } else {
+      dispatch(
+        openRenameModal({
+          open: true,
+          chat,
+          conversationId: id,
+        }),
+      );
+    }
   };
 
   const handleOpenConversation = () => {
@@ -145,14 +177,6 @@ const PreviousChat = ({
           </button>
         </div>
       </li>
-      <RenameModal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        initialValue={chat}
-        conversationId={id}
-        setHistory={setHistory}
-        setRenameLoading={setRenameLoading}
-      />
     </>
   );
 };

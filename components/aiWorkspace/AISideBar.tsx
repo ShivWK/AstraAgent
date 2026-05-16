@@ -29,7 +29,7 @@ const AISideBar = ({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <div className="section__agent rounded-primary flex h-full w-full flex-col pb-2">
+    <div className="section__agent rounded-primary flex h-full w-full flex-col pb-1">
       <AgentDetails
         openDropDown={openDropdown}
         setOpenDropDown={setOpenDropdown}
