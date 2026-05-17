@@ -86,7 +86,7 @@ const AgentCard = ({
           onClick={crossClickHandler}
           className={`absolute top-2 left-2 opacity-0 transition-all duration-100 ease-linear group-hover:opacity-100 ${activeCardId === ai._id ? 'opacity-100' : ''}`}
         >
-          <TrashIcon aria-hidden="true" size={16} />
+          <TrashIcon aria-hidden="true" size={16} className="text-white" />
         </button>
       )}
 
