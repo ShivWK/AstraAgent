@@ -92,7 +92,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
               className={`rounded-primary hover:shadow-agent-card-hover bg-agent-card-bg flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 border-blue-400 px-4 py-3 transition-all duration-100 ease-linear select-none`}
             >
               <div className="bg-agent-card-bg relative overflow-hidden rounded-full">
-                <div className="absolute h-full w-full bg-blue-400/50 dark:bg-blue-500/50">
+                <div className="absolute h-full w-full bg-blue-500/50">
                   &nbsp;
                 </div>
                 <Image
@@ -109,7 +109,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
                 <CirclePlus
                   size={60}
                   strokeWidth={1}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-medium text-blue-900 dark:text-white"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform font-medium text-white"
                 />
               </div>
 
