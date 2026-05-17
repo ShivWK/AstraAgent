@@ -130,7 +130,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
               quality={100}
               placeholder="blur"
               blurDataURL="/blurImage.png"
-              className="h-26 w-26 self-center rounded-full border-2 border-blue-400 object-cover shadow-[0_0_15px_2px_#155dfc] md:h-34 md:w-34"
+              className="h-26 w-26 self-center rounded-full border-2 border-blue-400 object-cover shadow-[0_0_10px_1px_rgba(0,0,0,0.5)] md:h-34 md:w-34 dark:shadow-[0_0_10px_2px_#155dfc]"
             />
             <div className="flex flex-col gap-4 text-center">
               <div className="flex flex-col gap-2 text-center">
