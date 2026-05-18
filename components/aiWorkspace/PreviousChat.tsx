@@ -2,7 +2,6 @@ import { Ellipsis, Pencil, Trash } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { type Conversation } from '@/types/conversation';
 import { Dispatch, SetStateAction } from 'react';
-import RenameModal from './RenameModal';
 import { useRouter } from 'next/navigation';
 import { type Agent } from '@/types/agents';
 import useClickOutside from '@/hooks/useClickOutside';
