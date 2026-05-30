@@ -35,7 +35,7 @@ const SampleQuestions = ({
           <button
             key={i}
             onClick={() => clickHandler(q)}
-            className="text-quick-cards-subheading w-fit cursor-pointer rounded-lg border border-white/20 bg-white/50 px-3 py-1.5 text-left transition-all duration-150 hover:bg-white/20 md:px-4 md:py-2 md:font-medium dark:bg-white/5 hover:dark:bg-white/20"
+            className="text-quick-cards-subheading w-fit cursor-pointer rounded-lg border border-white/20 bg-white/70 px-3 py-1.5 text-left transition-all duration-150 hover:bg-white/20 md:px-4 md:py-2 dark:bg-white/5 hover:dark:bg-white/20"
           >
             {q}
           </button>

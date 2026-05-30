@@ -170,7 +170,6 @@
   );
   --talk-card-iconBox-background: linear-gradient(135deg, #c5ddf0, #79aff1);
   --talk-card-border: rgba(120, 190, 255, 0.45);
-
   --talk-card-shadow: 0 10px 30px rgba(80, 141, 255, 0.678);
   --agent-card-shadow: 0 10px 30px rgba(150, 80, 255, 0.568);
 
@@ -179,6 +178,7 @@
     rgba(255, 255, 255, 0.75),
     rgba(210, 180, 255, 0.25)
   );
+
   --agent-card-border: rgba(180, 120, 255, 0.4);
 
   --quick-cards-heading: #0b1020;
@@ -200,6 +200,7 @@
     rgba(255, 255, 255, 0.72),
     rgba(220, 235, 255, 0.58)
   );
+
   --theme-btn-border: rgba(130, 170, 255, 0.38);
   --theme-btn-icon: #1e293b;
   --theme-btn-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
@@ -247,13 +248,13 @@
 
   --workspace-profile-bg: linear-gradient(
     135deg,
-    rgb(139, 95, 240),
-    rgb(20, 107, 194)
+    rgb(144, 104, 240),
+    rgb(122, 184, 247)
   );
   --workspace-model-details-bg: linear-gradient(
     135deg,
-    rgb(126, 182, 247),
-    rgb(105, 174, 243)
+    rgb(63, 141, 230),
+    rgb(168, 85, 236)
   );
   --workspace-fade-bg: linear-gradient(
     to top,

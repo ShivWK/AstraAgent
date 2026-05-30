@@ -62,7 +62,8 @@ const TextInputMethod = ({
     setHasMessage(true);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (streaming) stopStream();
     else {
       messageSender();
@@ -70,7 +71,7 @@ const TextInputMethod = ({
     }
   };
 
-  const keyDownHandler = (e: React.KeyboardEvent) => {
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (!streaming) {
@@ -80,8 +81,9 @@ const TextInputMethod = ({
     }
   };
 
-  const micBtnClickHandler = () => {
-    console.log('Clicked');
+  const micBtnClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
     if (!recording) {
       startRecording();
     } else {
@@ -97,9 +99,8 @@ const TextInputMethod = ({
 
   return (
     <form
-      onSubmit={handleSubmit}
-      onKeyDown={keyDownHandler}
       className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-0.5 rounded-xl border-2 border-white p-1 transition-all duration-150 md:bottom-4 md:w-[88%] dark:border-blue-900`}
+      onClick={() => inputRef.current?.focus()}
       style={{
         background: recording
           ? `linear-gradient(
@@ -127,6 +128,7 @@ const TextInputMethod = ({
         rows={1}
         onChange={(e) => setText(e.target.value)}
         value={text}
+        onKeyDown={keyDownHandler}
         className={`wrap-break-words 'self-center' pretty-scrollbar w-full resize-none p-1 text-black outline-none placeholder:text-gray-600 dark:text-white dark:placeholder:text-gray-500`}
         aria-label="Enter Query"
         placeholder={

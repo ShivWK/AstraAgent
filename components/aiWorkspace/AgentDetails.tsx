@@ -143,7 +143,7 @@ const AgentDetails = ({
         </div>
 
         <div
-          className="bg-model-details mt-3 w-full overflow-hidden rounded-lg backdrop-blur-md"
+          className="bg-model-details mt-3 w-full overflow-hidden rounded-lg border border-gray-300 backdrop-blur-md dark:border-gray-600"
           style={{
             height: height === 0 ? '3.5rem' : `${height}px`,
             transition: 'height 0.25s linear',
@@ -155,25 +155,26 @@ const AgentDetails = ({
             className={`relative p-2 ${openDropDown ? 'cursor-default' : 'cursor-pointer'}`}
           >
             <button
-              className={`absolute top-2 right-2 transform transition-all duration-250 ease-linear ${openDropDown ? '-rotate-180' : ''}`}
+              className={`absolute top-2 right-2 transform text-white transition-all duration-250 ease-linear ${openDropDown ? '-rotate-180' : ''}`}
               aria-label="Open Drop Down"
               onClick={() => setOpenDropDown(!openDropDown)}
             >
               <ChevronDown aria-hidden="true" size={20} />
             </button>
+
             <div className="rounded-primary w-full">
               <div
                 className={`mb-2 flex items-center gap-1 ${openDropDown ? 'block' : 'hidden'}`}
               >
                 <BrainCircuit
-                  className="text-green-600 dark:text-green-400"
+                  className="text-green-400"
                   size={22}
                   strokeWidth={2.5}
                 />
-                <p className="text-lg font-medium">Model Details</p>
+                <p className="text-lg font-medium text-white">Model Details</p>
               </div>
 
-              <div className="flex w-[85%] flex-wrap items-center gap-0.5">
+              <div className="flex w-[85%] flex-wrap items-center gap-0.5 text-white">
                 <p className="text-sm">Current Model</p>
                 <span>:</span>
                 <p className="text-md -mt-0.5 font-medium">
@@ -183,12 +184,12 @@ const AgentDetails = ({
               </div>
 
               <p
-                className={`my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-400/40 ${currentModel?.color} px-2 py-0.5 font-medium`}
+                className={`my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-400/40 text-white ${currentModel?.color} px-2 py-0.5 font-medium`}
               >
                 {currentModel?.label}
               </p>
 
-              <p className="line-clamp-2 leading-4.5 text-black dark:text-white">
+              <p className="line-clamp-2 leading-4.5 text-white">
                 {currentModel?.description}
               </p>
             </div>
@@ -198,7 +199,7 @@ const AgentDetails = ({
                 onValueChange={(value) => handleModelChange(value)}
                 disabled={isSwitchingModel}
               >
-                <SelectTrigger className="mt-4 w-full rounded-md bg-blue-500 px-3 py-2 placeholder:text-white hover:bg-gray-600/50 dark:bg-gray-700 dark:shadow-[0_0_10px_0px_#05df72] placeholder:dark:text-gray-400">
+                <SelectTrigger className="mt-4 w-full rounded-md bg-[#8accf8] px-3 py-2 placeholder:text-white hover:bg-gray-600/50 dark:bg-gray-700 dark:shadow-[0_0_10px_0px_#05df72] placeholder:dark:text-gray-400">
                   <SelectValue placeholder="SELECT A DIFFERENT MODEL..." />
                 </SelectTrigger>
                 <SelectContent position="popper" className="z-10000">
