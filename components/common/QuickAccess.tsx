@@ -6,44 +6,49 @@ import DotBounceLoader from './DotBounceLoader';
 import { useSession } from 'next-auth/react';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
+import { useAgent } from '@/hooks/queries/useAgent';
 
 const QuickAccess = () => {
   const { status } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
-  const [loading, setLoading] = useState(false);
+  // const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
+  // const [loading, setLoading] = useState(false);
   const [conversationLoading, setConversationLoading] = useState(false);
+  const { agent: selectedAgent, isLoading: loading } = useAgent(
+    '69f379dc374e6de2592d01f3',
+    status === 'authenticated',
+  );
 
-  useEffect(() => {
-    const fetchAgent = async () => {
-      if (status === 'loading' || status === 'unauthenticated') return;
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `/api/agents/${'69f379dc374e6de2592d01f3'}`,
-        );
-        const result = await response.json();
+  // useEffect(() => {
+  //   const fetchAgent = async () => {
+  //     if (status === 'loading' || status === 'unauthenticated') return;
+  //     try {
+  //       setLoading(true);
+  //       const response = await fetch(
+  //         `/api/agents/${'69f379dc374e6de2592d01f3'}`,
+  //       );
+  //       const result = await response.json();
 
-        if (!response.ok) {
-          throw new Error('Something went wrong. While fetching Astra details');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Something went wrong. While fetching Astra details');
+  //       }
 
-        setSelectedAgent(result.agent);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.log(err.message);
-        }
+  //       setSelectedAgent(result.agent);
+  //     } catch (err: unknown) {
+  //       if (err instanceof Error) {
+  //         console.log(err.message);
+  //       }
 
-        console.log('Error in fetch', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //       console.log('Error in fetch', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchAgent();
-  }, [status]);
+  //   fetchAgent();
+  // }, [status]);
 
   const handleAgentCreation = () => {
     router.push('/ai-assistant?createAgent=true');
