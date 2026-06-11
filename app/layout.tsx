@@ -1,12 +1,11 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import Providers from './providers';
 import Header from '@/components/common/Header';
-import './globals.css';
 import { ReactNode, Suspense } from 'react';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
-import SessionProviders from '@/components/auth/SessionProviders';
 import ThemeSync from '@/components/theme/theme-sync';
 import ThemeInit from '@/components/theme/theme-init';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -75,17 +74,15 @@ export default async function RootLayout({ children }: PropsType) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background antialiased`}
       >
-        <SessionProviders>
-          <Providers>
-            <ThemeInit />
-            <ThemeSync />
-            <Suspense fallback={null}>
-              <AuthIntentHandler />
-            </Suspense>
-            <Header />
-            {children}
-          </Providers>
-        </SessionProviders>
+        <Providers>
+          <ThemeInit />
+          <ThemeSync />
+          <Suspense fallback={null}>
+            <AuthIntentHandler />
+          </Suspense>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );
