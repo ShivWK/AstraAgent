@@ -3,10 +3,12 @@ import { agentsApi } from '@/lib/api/agents';
 import { queryKeys } from '@/lib/react_query/query-keys';
 
 export const useAgents = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: queryKeys.agents,
     queryFn: agentsApi.getAgents,
   });
 
-  return { data, isLoading, error };
+  const agents = data?.agents || [];
+
+  return { agents, isLoading, isError, error };
 };

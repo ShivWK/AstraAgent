@@ -18,19 +18,28 @@ import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
 import { Agent } from '@/types/agents';
+import { useAgents } from '@/hooks/queries/agent/useAgents';
+import { useConversations } from '@/hooks/queries/conversation/useConversations';
 
 const AiAssistant = () => {
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const agentInstruction = useAppSelector(selectAgentInstruction);
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
+
   const [agents, setAgents] = useState<Agent[]>([]);
   const [history, setHistory] = useState<Record<
     string,
     Record<string, string | Conversation[]>
   > | null>(null);
+
+  const { agents: NewAgents } = useAgents();
+  console.log('NewAgents', NewAgents);
+  const { conversations: NewConversations } = useConversations();
+  console.log('NewConversations', NewConversations);
 
   useEffect(() => {
     const fetchAgents = async () => {

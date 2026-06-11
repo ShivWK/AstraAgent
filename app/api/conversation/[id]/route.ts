@@ -6,10 +6,7 @@ import { authOptions } from '../../auth/[...nextauth]/options';
 import mongoose from 'mongoose';
 import { UserModel } from '@/model/userModel';
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function GET({ params }: { params: Promise<{ id: string }> }) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
