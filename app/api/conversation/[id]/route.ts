@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db/connectDb';
 import { ConversationModel } from '@/model/conversationModel';
 import { getServerSession } from 'next-auth';
@@ -6,7 +6,10 @@ import { authOptions } from '../../auth/[...nextauth]/options';
 import mongoose from 'mongoose';
 import { UserModel } from '@/model/userModel';
 
-export async function GET({ params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
