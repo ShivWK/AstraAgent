@@ -6,24 +6,17 @@ import {
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { ChevronLeft, ChevronRight, CirclePlus } from 'lucide-react';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type Agent } from '@/types/agents';
 import SessionInstructionModal from './SessionInstructionModel';
 import NewAgentCreationModel from './NewAgentCreationModel';
 import AgentCard from './AgentCard';
-import { Conversation } from '@/types/conversation';
 
 type PropsType = {
   assistants: Agent[];
-  setHistory: Dispatch<
-    SetStateAction<Record<
-      string,
-      Record<string, string | Conversation[]>
-    > | null>
-  >;
 };
 
-const AgentCards = ({ assistants, setHistory }: PropsType) => {
+const AgentCards = ({ assistants }: PropsType) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -128,7 +121,6 @@ const AgentCards = ({ assistants, setHistory }: PropsType) => {
                   activeCardId={activeCardId}
                   ai={ai}
                   cardClickHandler={cardClickHandler}
-                  setHistory={setHistory}
                 />
               );
             })}

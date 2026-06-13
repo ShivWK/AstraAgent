@@ -1,10 +1,9 @@
 import { Agent } from '@/types/agents';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import { TrashIcon, Check } from 'lucide-react';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
-import { Conversation } from '@/types/conversation';
 import { useDeleteAgent } from '@/hooks/queries/agent/useDeleteAgent';
 
 type PropsType = {
@@ -12,12 +11,6 @@ type PropsType = {
   activeCardId: string | null;
   setActiveCardId: Dispatch<SetStateAction<string | null>>;
   ai: Agent;
-  setHistory: Dispatch<
-    SetStateAction<Record<
-      string,
-      Record<string, string | Conversation[]>
-    > | null>
-  >;
 };
 
 const AgentCard = ({
@@ -25,7 +18,6 @@ const AgentCard = ({
   ai,
   setActiveCardId,
   activeCardId,
-  setHistory,
 }: PropsType) => {
   const { mutate, isPending, reset } = useDeleteAgent();
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -38,40 +30,6 @@ const AgentCard = ({
         reset();
       },
     });
-
-    // if (deleteLoading) return;
-    // setDeleteLoading(true);
-
-    // try {
-    //   const response = await fetch(`/api/agents/${ai._id}`, {
-    //     method: 'DELETE',
-    //   });
-
-    //   const data = await response.json();
-
-    //   if (!response.ok) {
-    //     throw new Error(data.message);
-    //   }
-
-    //   setAgents((prv) => {
-    //     return [...prv.filter((obj) => obj._id !== ai._id)];
-    //   });
-
-    //   setHistory((prev) => {
-    //     if (!prev) return prev;
-
-    //     const { [ai._id]: _, ...rest } = prev;
-    //     return rest;
-    //   });
-    // } catch (err) {
-    //   if (err instanceof Error) {
-    //     console.log(err.message);
-    //   } else {
-    //     console.log('Random error in delete', err);
-    //   }
-    // } finally {
-    //   setDeleteLoading(false);
-    // }
   };
 
   const handleCardClick = () => {

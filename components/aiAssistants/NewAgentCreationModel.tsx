@@ -31,8 +31,6 @@ import {
 import Image from 'next/image';
 import { Textarea } from '../ui/textarea';
 import { Spinner } from '@/components/ui/spinner';
-import { Agent } from '@/types/agents';
-import { Dispatch, SetStateAction } from 'react';
 import useAppSelector from '@/hooks/useAppSelector';
 import {
   selectOpenAgentCreationModal,

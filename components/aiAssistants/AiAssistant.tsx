@@ -13,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
-import groupByAgent from '@/utils/groupByAgent';
 import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
@@ -26,7 +25,6 @@ const AiAssistant = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
 
   const [history, setHistory] = useState<Record<
@@ -37,49 +35,27 @@ const AiAssistant = () => {
   const { agents, isLoading } = useAgents();
   const { conversations } = useConversations();
 
-  useEffect(() => {
-    const fetchAgents = async () => {
-      try {
-        setLoading(true);
+  // useEffect(() => {
+  //   setHistory((prev) => {
+  //     if (!prev) return prev;
 
-        const history = await fetch(`/api/conversation?mode=text`);
-        const historyData = await history.json();
+  //     let hasChange = false;
 
-        setHistory(groupByAgent(historyData.conversations));
-        setLoading(false);
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log(err.message);
-        } else {
-          console.log('Random error', err);
-        }
-      }
-    };
+  //     const cleaned = Object.entries(prev).reduce(
+  //       (acc, [agentId, agentData]) => {
+  //         if (agentData?.conversations?.length > 0) {
+  //           acc[agentId] = agentData;
+  //         } else {
+  //           hasChange = true;
+  //         }
+  //         return acc;
+  //       },
+  //       {} as typeof prev,
+  //     );
 
-    fetchAgents();
-  }, []);
-
-  useEffect(() => {
-    setHistory((prev) => {
-      if (!prev) return prev;
-
-      let hasChange = false;
-
-      const cleaned = Object.entries(prev).reduce(
-        (acc, [agentId, agentData]) => {
-          if (agentData?.conversations?.length > 0) {
-            acc[agentId] = agentData;
-          } else {
-            hasChange = true;
-          }
-          return acc;
-        },
-        {} as typeof prev,
-      );
-
-      return hasChange ? cleaned : prev;
-    });
-  }, [history]);
+  //     return hasChange ? cleaned : prev;
+  //   });
+  // }, [history]);
 
   useEffect(() => {
     dispatch(setSelectedInteractionMode('text'));
@@ -151,7 +127,7 @@ const AiAssistant = () => {
               )}
             </Button>
           </div>
-          <AgentCards assistants={agents} setHistory={setHistory} />
+          <AgentCards assistants={agents} />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}
