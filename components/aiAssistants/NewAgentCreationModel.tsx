@@ -39,14 +39,12 @@ import {
   setOpenAgentCreationModel,
 } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
-
-type PropsType = {
-  setAgents: Dispatch<SetStateAction<Agent[]>>;
-};
+import { useCreateAgent } from '@/hooks/queries/agent/useCreateAgent';
 
 export type FormType = z.infer<typeof agentCreationSchema>;
 
-const NewAgentCreationModel = ({ setAgents }: PropsType) => {
+const NewAgentCreationModel = () => {
+  const { mutate, isPending } = useCreateAgent();
   const open = useAppSelector(selectOpenAgentCreationModal);
   const dispatch = useAppDispatch();
 
@@ -55,7 +53,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
     watch,
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FormType>({
     resolver: zodResolver(agentCreationSchema),
     mode: 'onBlur',
@@ -75,31 +73,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
     'e.g. Describe the role you want this assistant to play';
 
   const submitHandler = async (data: FormType) => {
-    try {
-      const response = await fetch('/api/agents', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Failed to create agent');
-      }
-
-      setAgents((prev) => [result.agent, ...prev]);
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error('Error creating agent:', err.message);
-      } else {
-        console.error('Unknown error creating agent:', err);
-      }
-    }
-
-    dispatch(setOpenAgentCreationModel(false));
+    mutate(data);
   };
 
   const handleOpenChange = (state: boolean) => {
@@ -270,7 +244,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                 <Button
                   variant={'outline'}
                   className="border-input-primary-border border bg-black text-white"
-                  disabled={isSubmitting}
+                  disabled={isPending}
                 >
                   Cancel
                 </Button>
@@ -279,10 +253,10 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
                 onClick={() => {}}
                 type="submit"
                 variant={'secondary'}
-                disabled={isSubmitting}
+                disabled={isPending}
                 className="border-input-primary-border bg-button-background transform border tracking-wider text-white transition-all duration-100 ease-linear hover:translate-y-0.5"
               >
-                {isSubmitting ? (
+                {isPending ? (
                   <>
                     <span>Create</span>
                     <Spinner />

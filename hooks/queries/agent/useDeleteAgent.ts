@@ -2,6 +2,7 @@ import { agentsApi } from '@/lib/api/agents';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/react_query/query-keys';
 import { type Agent } from '@/types/agents';
+import { Conversation } from '@/types/conversation';
 
 export const useDeleteAgent = () => {
   const queryClient = useQueryClient();
@@ -51,6 +52,16 @@ export const useDeleteAgent = () => {
           queryKey: queryKeys.agents,
           exact: true,
         });
+
+        queryClient.setQueryData(
+          queryKeys.conversations,
+          (oldData: { conversations: Conversation[] }) => {
+            const newConversations = oldData.conversations.filter(
+              (cn) => cn.agentId !== data.agentId,
+            );
+            return { conversations: newConversations };
+          },
+        );
       }
     },
   });

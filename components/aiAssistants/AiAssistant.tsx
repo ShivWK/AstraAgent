@@ -17,7 +17,6 @@ import groupByAgent from '@/utils/groupByAgent';
 import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
-import { Agent } from '@/types/agents';
 import { useAgents } from '@/hooks/queries/agent/useAgents';
 import { useConversations } from '@/hooks/queries/conversation/useConversations';
 
@@ -30,33 +29,22 @@ const AiAssistant = () => {
   const [loading, setLoading] = useState(true);
   const [conversationLoading, setConversationLoading] = useState(false);
 
-  const [agents, setAgents] = useState<Agent[]>([]);
   const [history, setHistory] = useState<Record<
     string,
     Record<string, string | Conversation[]>
   > | null>(null);
 
-  const { agents: NewAgents } = useAgents();
-  console.log('NewAgents', NewAgents);
-  const { conversations: NewConversations } = useConversations();
-  console.log('NewConversations', NewConversations);
+  const { agents, isLoading } = useAgents();
+  const { conversations } = useConversations();
 
   useEffect(() => {
     const fetchAgents = async () => {
       try {
         setLoading(true);
 
-        const [agents, history] = await Promise.all([
-          fetch('/api/agents'),
-          fetch(`/api/conversation?mode=text`),
-        ]);
+        const history = await fetch(`/api/conversation?mode=text`);
+        const historyData = await history.json();
 
-        const [agentData, historyData] = await Promise.all([
-          agents.json(),
-          history.json(),
-        ]);
-
-        setAgents(agentData.agents);
         setHistory(groupByAgent(historyData.conversations));
         setLoading(false);
       } catch (err) {
@@ -136,7 +124,7 @@ const AiAssistant = () => {
     }
   };
 
-  if (loading) return <AiAssistantSkeleton />;
+  if (isLoading) return <AiAssistantSkeleton />;
 
   return (
     <main className="min-h-dvh pt-24 pb-18 max-md:px-2 md:pt-28">
@@ -163,11 +151,7 @@ const AiAssistant = () => {
               )}
             </Button>
           </div>
-          <AgentCards
-            assistants={agents}
-            setAgents={setAgents}
-            setHistory={setHistory}
-          />
+          <AgentCards assistants={agents} setHistory={setHistory} />
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}
@@ -181,9 +165,9 @@ const AiAssistant = () => {
           </Button>
         </section>
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
-          {history && (
+          {conversations && (
             <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-              <PreviousChats history={history!} setHistory={setHistory} />
+              <PreviousChats history={conversations!} setHistory={setHistory} />
             </div>
           )}
         </section>

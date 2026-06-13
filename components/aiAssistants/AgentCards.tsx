@@ -15,7 +15,6 @@ import { Conversation } from '@/types/conversation';
 
 type PropsType = {
   assistants: Agent[];
-  setAgents: Dispatch<SetStateAction<Agent[]>>;
   setHistory: Dispatch<
     SetStateAction<Record<
       string,
@@ -24,7 +23,7 @@ type PropsType = {
   >;
 };
 
-const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
+const AgentCards = ({ assistants, setHistory }: PropsType) => {
   const dispatch = useAppDispatch();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -128,7 +127,6 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
                   setActiveCardId={setActiveCardId}
                   activeCardId={activeCardId}
                   ai={ai}
-                  setAgents={setAgents}
                   cardClickHandler={cardClickHandler}
                   setHistory={setHistory}
                 />
@@ -177,7 +175,7 @@ const AgentCards = ({ assistants, setAgents, setHistory }: PropsType) => {
         setOpen={setOpenInstructionModel}
       />
 
-      <NewAgentCreationModel setAgents={setAgents} />
+      <NewAgentCreationModel />
     </>
   );
 };

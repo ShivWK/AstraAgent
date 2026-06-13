@@ -11,7 +11,6 @@ type PropsType = {
   cardClickHandler: (val: Agent) => void;
   activeCardId: string | null;
   setActiveCardId: Dispatch<SetStateAction<string | null>>;
-  setAgents: Dispatch<SetStateAction<Agent[]>>;
   ai: Agent;
   setHistory: Dispatch<
     SetStateAction<Record<
@@ -23,23 +22,22 @@ type PropsType = {
 
 const AgentCard = ({
   cardClickHandler,
-  setAgents,
   ai,
   setActiveCardId,
   activeCardId,
   setHistory,
 }: PropsType) => {
-  const { mutate, isPending, isSuccess, isError, error, reset } =
-    useDeleteAgent();
+  const { mutate, isPending, reset } = useDeleteAgent();
   const selectedAgent = useAppSelector(selectSelectedAgent);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-
-  console.log('Pending:', isPending);
-  console.log('Deleted', isSuccess);
 
   const crossClickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    mutate(ai._id);
+    mutate(ai._id, {
+      onSuccess: (data) => {
+        console.log(data); // doubt not executed
+        reset();
+      },
+    });
 
     // if (deleteLoading) return;
     // setDeleteLoading(true);
@@ -77,7 +75,7 @@ const AgentCard = ({
   };
 
   const handleCardClick = () => {
-    if (deleteLoading) return;
+    if (isPending) return;
     setActiveCardId((prev) => (prev === ai._id ? null : ai._id));
     cardClickHandler(ai);
   };
@@ -86,7 +84,7 @@ const AgentCard = ({
     <div
       onClick={handleCardClick}
       key={ai._id}
-      className={`group rounded-primary border-agent-card-border hover:shadow-agent-card-hover bg-agent-card-bg relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] transition-all duration-100 ease-linear select-none hover:scale-105 ${deleteLoading && 'opacity-50'}`}
+      className={`group rounded-primary border-agent-card-border hover:shadow-agent-card-hover bg-agent-card-bg relative flex w-45 shrink-0 grow-0 transform cursor-pointer flex-col items-center gap-1 border-2 px-4 py-3 shadow-[0_0_10px_1px_#155dfc] transition-all duration-100 ease-linear select-none hover:scale-105 ${isPending && 'opacity-50'}`}
     >
       {ai.createdBy && (
         <button
