@@ -5,6 +5,7 @@ import { TrashIcon, Check } from 'lucide-react';
 import useAppSelector from '@/hooks/useAppSelector';
 import { selectSelectedAgent } from '@/features/agents/agentsSlice';
 import { Conversation } from '@/types/conversation';
+import { useDeleteAgent } from '@/hooks/queries/agent/useDeleteAgent';
 
 type PropsType = {
   cardClickHandler: (val: Agent) => void;
@@ -28,44 +29,51 @@ const AgentCard = ({
   activeCardId,
   setHistory,
 }: PropsType) => {
+  const { mutate, isPending, isSuccess, isError, error, reset } =
+    useDeleteAgent();
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  console.log('Pending:', isPending);
+  console.log('Deleted', isSuccess);
+
   const crossClickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (deleteLoading) return;
-    setDeleteLoading(true);
     e.stopPropagation();
+    mutate(ai._id);
 
-    try {
-      const response = await fetch(`/api/agents/${ai._id}`, {
-        method: 'DELETE',
-      });
+    // if (deleteLoading) return;
+    // setDeleteLoading(true);
 
-      const data = await response.json();
+    // try {
+    //   const response = await fetch(`/api/agents/${ai._id}`, {
+    //     method: 'DELETE',
+    //   });
 
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
+    //   const data = await response.json();
 
-      setAgents((prv) => {
-        return [...prv.filter((obj) => obj._id !== ai._id)];
-      });
+    //   if (!response.ok) {
+    //     throw new Error(data.message);
+    //   }
 
-      setHistory((prev) => {
-        if (!prev) return prev;
+    //   setAgents((prv) => {
+    //     return [...prv.filter((obj) => obj._id !== ai._id)];
+    //   });
 
-        const { [ai._id]: _, ...rest } = prev;
-        return rest;
-      });
-    } catch (err) {
-      if (err instanceof Error) {
-        console.log(err.message);
-      } else {
-        console.log('Random error in delete', err);
-      }
-    } finally {
-      setDeleteLoading(false);
-    }
+    //   setHistory((prev) => {
+    //     if (!prev) return prev;
+
+    //     const { [ai._id]: _, ...rest } = prev;
+    //     return rest;
+    //   });
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     console.log(err.message);
+    //   } else {
+    //     console.log('Random error in delete', err);
+    //   }
+    // } finally {
+    //   setDeleteLoading(false);
+    // }
   };
 
   const handleCardClick = () => {

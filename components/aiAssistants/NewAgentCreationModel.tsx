@@ -44,7 +44,7 @@ type PropsType = {
   setAgents: Dispatch<SetStateAction<Agent[]>>;
 };
 
-type FromType = z.infer<typeof agentCreationSchema>;
+export type FormType = z.infer<typeof agentCreationSchema>;
 
 const NewAgentCreationModel = ({ setAgents }: PropsType) => {
   const open = useAppSelector(selectOpenAgentCreationModal);
@@ -56,7 +56,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FromType>({
+  } = useForm<FormType>({
     resolver: zodResolver(agentCreationSchema),
     mode: 'onBlur',
     shouldUnregister: true,
@@ -74,7 +74,7 @@ const NewAgentCreationModel = ({ setAgents }: PropsType) => {
     agentCreationPlaceholders[selectedDomain] ||
     'e.g. Describe the role you want this assistant to play';
 
-  const submitHandler = async (data: FromType) => {
+  const submitHandler = async (data: FormType) => {
     try {
       const response = await fetch('/api/agents', {
         method: 'POST',

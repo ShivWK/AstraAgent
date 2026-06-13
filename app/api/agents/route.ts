@@ -119,7 +119,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Agent created successfully',
         agent,
       },
       { status: 201 },
