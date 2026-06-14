@@ -1,18 +1,18 @@
 import { Bot, MessagesSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import DotBounceLoader from './DotBounceLoader';
 import { useSession } from 'next-auth/react';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { setLoginError, setOpenLoginModel } from '@/features/auth/authSlice';
 import { useAgent } from '@/hooks/queries/agent/useAgent';
+import { useCreateConversation } from '@/hooks/queries/conversation/useCreateConversation';
 
 const QuickAccess = () => {
   const { status } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const [conversationLoading, setConversationLoading] = useState(false);
+  const { mutate, isPending, reset } = useCreateConversation();
   const { agent: selectedAgent, isLoading: loading } = useAgent(
     '69f379dc374e6de2592d01f3',
     status === 'authenticated',
@@ -23,7 +23,7 @@ const QuickAccess = () => {
   };
 
   const handleTalkToAgentBtnClick = async () => {
-    if (conversationLoading || loading) return;
+    if (isPending || loading) return;
 
     if (status === 'unauthenticated') {
       dispatch(setLoginError('Please sign in or sign up to continue'));
@@ -31,55 +31,40 @@ const QuickAccess = () => {
       return;
     }
 
-    try {
-      setConversationLoading(true);
-      const response = await fetch('api/conversation/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          agentId: selectedAgent?._id,
-          agentTitle: selectedAgent?.title,
-          agentName: selectedAgent?.name,
-          defaultAgentModel: selectedAgent?.model,
-          key: selectedAgent?.key,
-          mode: 'text',
-          newCreation: false,
-          customInstruction: '',
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message);
-      }
-
-      const conversationID = result.conversation._id;
-
-      router.push(
-        `/ai-workspace?conversation_id=${conversationID}&mode=text&agentId=${result.conversation.agentId}`,
-      );
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.log('Error:', err.message);
-      } else {
-        console.log('Unknown error', err);
-      }
-    }
+    mutate(
+      {
+        agentId: selectedAgent?._id,
+        agentTitle: selectedAgent?.title,
+        agentName: selectedAgent?.name,
+        defaultAgentModel: selectedAgent?.model,
+        key: selectedAgent?.key,
+        mode: 'text',
+        newCreation: false,
+        customInstruction: '',
+      },
+      {
+        onSuccess: (data) => {
+          router.push(
+            `/ai-workspace?conversation_id=${data.conversation._id}&mode=text&agentId=${data.conversation.agentId}`,
+          );
+        },
+      },
+    );
   };
 
   return (
     <div className="mt-1.5 flex w-full flex-col gap-4 md:max-w-2xl md:flex-row md:gap-6">
       <div
-        className={`${loading || conversationLoading ? 'pointer-events-none' : 'hover:shadow-talk-card-shadow pointer-events-auto shadow-[0_10px_20px_rgba(0,0,0,0.5)] active:scale-95'} relative overflow-hidden rounded-3xl transition-all duration-150 ease-linear`}
+        className={`${loading || isPending ? 'pointer-events-none' : 'hover:shadow-talk-card-shadow pointer-events-auto shadow-[0_10px_20px_rgba(0,0,0,0.5)] active:scale-95'} relative overflow-hidden rounded-3xl transition-all duration-150 ease-linear`}
       >
-        {(loading || conversationLoading) && (
+        {(loading || isPending) && (
           <div className="absolute top-0 left-0 z-40 flex h-full w-full items-center justify-center bg-gray-900/20">
             <DotBounceLoader allColor={'text-gray-100'} nmSize="text-3xl" />
           </div>
         )}
         <button
           onClick={handleTalkToAgentBtnClick}
-          disabled={loading || conversationLoading}
+          disabled={loading || isPending}
           className="border-talk-card-border bg-talk-card-background relative overflow-hidden rounded-3xl border p-5 disabled:opacity-50 max-md:w-full md:shadow-xl"
         >
           <div className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-blue-500/10 blur-3xl" />
