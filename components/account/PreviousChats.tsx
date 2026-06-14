@@ -1,89 +1,32 @@
-import { useEffect, useState } from 'react';
-import groupByAgent from '@/utils/groupByAgent';
-import { Conversation } from '@/types/conversation';
+import { useState, useMemo } from 'react';
 import Chats from '../aiAssistants/PreviousChats';
+import { useConversations } from '@/hooks/queries/conversation/useConversations';
 
 const PreviousChats = () => {
-  const [loading, setLoading] = useState(true);
-  const [previousChats, setPreviousChats] = useState<Record<
-    string,
-    Record<string, string | Conversation[]>
-  > | null>(null);
-  const [previousChatsToShow, setPreviousChatsToShow] = useState<Record<
-    string,
-    Record<string, string | Conversation[]>
-  > | null>(null);
   const [lastIndex, setLastIndex] = useState(3);
-  const [isFull, setIsFull] = useState(false);
+  const { conversations, isLoading } = useConversations();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/conversation?mode=text');
-        const result = await response.json();
+  const previousChatsToShow = useMemo(() => {
+    if (!conversations) return null;
 
-        if (!response.ok) {
-          throw new Error('Something went wrong', result.message);
-        }
+    const cleaned = Object.fromEntries(
+      Object.entries(conversations).filter(
+        ([_, agentData]) => agentData.conversations?.length > 0,
+      ),
+    );
 
-        setPreviousChats(groupByAgent(result.conversations));
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.log(err.message);
-        }
-        console.log('Unexpected Error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (!previousChats) return;
-
-    const toShow = Object.entries(previousChats).slice(0, lastIndex);
-    const final = Object.fromEntries(toShow);
-
-    setPreviousChatsToShow(final);
-    setLoading(false);
-  }, [previousChats, lastIndex]);
-
-  useEffect(() => {
-    if (!previousChats || !previousChatsToShow) return;
-
-    const full =
-      Object.entries(previousChatsToShow).length ===
-      Object.entries(previousChats).length;
-    setIsFull(full);
-  }, [previousChatsToShow, previousChats]);
+    return Object.fromEntries(Object.entries(cleaned).slice(0, lastIndex));
+  }, [conversations, lastIndex]);
 
   const moreClickHandler = () => {
     setLastIndex((prv) => prv + 3);
   };
 
-  useEffect(() => {
-    setPreviousChatsToShow((prev) => {
-      if (!prev) return prev;
-
-      let hasChange = false;
-
-      const cleaned = Object.entries(prev).reduce(
-        (acc, [agentId, agentData]) => {
-          if (agentData?.conversations?.length > 0) {
-            acc[agentId] = agentData;
-          } else {
-            hasChange = true;
-          }
-          return acc;
-        },
-        {} as typeof prev,
-      );
-
-      return hasChange ? cleaned : prev;
-    });
-  }, [previousChatsToShow]);
+  const isFull =
+    conversations &&
+    previousChatsToShow &&
+    Object.keys(previousChatsToShow).length ===
+      Object.keys(conversations).length;
 
   return (
     <div>
@@ -91,7 +34,7 @@ const PreviousChats = () => {
         Previous Chats
       </h2>
       <div className="bg-primary-dark-bg rounded-md p-1">
-        {loading ? (
+        {isLoading ? (
           <div className="flex flex-col gap-3 p-1">
             <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
             <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
@@ -99,25 +42,21 @@ const PreviousChats = () => {
         ) : (
           previousChatsToShow &&
           Object.entries(previousChatsToShow!).length !== 0 && (
-            <Chats
-              history={previousChatsToShow!}
-              setHistory={setPreviousChatsToShow}
-              hideHeading={true}
-            />
+            <Chats history={previousChatsToShow!} hideHeading={true} />
           )
         )}
 
-        {!previousChatsToShow && !loading && (
+        {!previousChatsToShow && !isLoading && (
           <p className="py-6 text-center text-white">
             No previous chats available
           </p>
         )}
       </div>
 
-      {!loading && previousChatsToShow && !isFull && (
+      {!isLoading && previousChatsToShow && !isFull && (
         <button
           onClick={moreClickHandler}
-          disabled={isFull || loading}
+          disabled={isFull || isLoading}
           className="mx-auto mt-4 mb-1 block rounded bg-blue-700 px-4 py-1 font-normal tracking-wider text-white transition-all duration-150 ease-linear active:translate-y-0.5 disabled:opacity-50 disabled:active:translate-y-0"
         >
           More

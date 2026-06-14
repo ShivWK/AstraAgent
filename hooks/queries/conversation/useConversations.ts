@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import groupByAgent from '@/utils/groupByAgent';
 
 export const useConversations = () => {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: queryKeys.conversations,
     queryFn: conversationApi.getConversations,
     select: (data) => {
@@ -13,5 +13,5 @@ export const useConversations = () => {
     },
   });
 
-  return { conversations: data, isLoading, isError, error };
+  return { conversations: data, isLoading };
 };
