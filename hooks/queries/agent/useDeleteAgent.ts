@@ -2,7 +2,7 @@ import { agentsApi } from '@/lib/api/agents';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/react_query/query-keys';
 import { type Agent } from '@/types/agents';
-import { Conversation } from '@/types/conversation';
+import { type Conversation } from '@/types/conversation';
 
 export const useDeleteAgent = () => {
   const queryClient = useQueryClient();

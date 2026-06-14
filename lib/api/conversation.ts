@@ -13,4 +13,13 @@ export const conversationApi = {
       `/api/conversation/${id}`,
     );
   },
+
+  deleteConversation: (id: string) => {
+    return fetcher<{ message: string; conversationId?: string }>(
+      `/api/conversation/delete_conversation?id=${id}`,
+      {
+        method: 'DELETE',
+      },
+    );
+  },
 };
