@@ -13,49 +13,23 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
-import { Conversation } from '@/types/conversation';
 import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
 import { useAgents } from '@/hooks/queries/agent/useAgents';
 import { useConversations } from '@/hooks/queries/conversation/useConversations';
 
 const AiAssistant = () => {
-  const selectedAgent = useAppSelector(selectSelectedAgent);
-  const agentInstruction = useAppSelector(selectAgentInstruction);
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-
   const [conversationLoading, setConversationLoading] = useState(false);
 
-  const [history, setHistory] = useState<Record<
-    string,
-    Record<string, string | Conversation[]>
-  > | null>(null);
-
   const { agents, isLoading } = useAgents();
-  const { conversations } = useConversations();
+  const { conversations, isLoading: oldConversationLoading } =
+    useConversations();
 
-  // useEffect(() => {
-  //   setHistory((prev) => {
-  //     if (!prev) return prev;
+  const selectedAgent = useAppSelector(selectSelectedAgent);
+  const agentInstruction = useAppSelector(selectAgentInstruction);
+  const dispatch = useAppDispatch();
 
-  //     let hasChange = false;
-
-  //     const cleaned = Object.entries(prev).reduce(
-  //       (acc, [agentId, agentData]) => {
-  //         if (agentData?.conversations?.length > 0) {
-  //           acc[agentId] = agentData;
-  //         } else {
-  //           hasChange = true;
-  //         }
-  //         return acc;
-  //       },
-  //       {} as typeof prev,
-  //     );
-
-  //     return hasChange ? cleaned : prev;
-  //   });
-  // }, [history]);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(setSelectedInteractionMode('text'));
@@ -100,7 +74,7 @@ const AiAssistant = () => {
     }
   };
 
-  if (isLoading) return <AiAssistantSkeleton />;
+  if (isLoading || oldConversationLoading) return <AiAssistantSkeleton />;
 
   return (
     <main className="min-h-dvh pt-24 pb-18 max-md:px-2 md:pt-28">
@@ -143,7 +117,7 @@ const AiAssistant = () => {
         <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
           {conversations && (
             <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-              <PreviousChats history={conversations!} setHistory={setHistory} />
+              <PreviousChats history={conversations!} />
             </div>
           )}
         </section>

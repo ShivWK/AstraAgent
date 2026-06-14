@@ -1,26 +1,16 @@
 import Image from 'next/image';
 import { logoForAgents } from '@/utils/text_assistants';
 import { Conversation } from '@/types/conversation';
-import { useState, SetStateAction, Dispatch } from 'react';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import PreviousChat from './PreviousChat';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
   hideHeading?: boolean;
-  setHistory: Dispatch<
-    SetStateAction<Record<
-      string,
-      Record<string, string | Conversation[]>
-    > | null>
-  >;
 };
 
-const PreviousChats = ({
-  history,
-  setHistory,
-  hideHeading = false,
-}: PropsType) => {
+const PreviousChats = ({ history, hideHeading = false }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (agentId: string) => {
@@ -89,7 +79,6 @@ const PreviousChats = ({
                         <PreviousChat
                           key={conversation._id}
                           conversation={conversation}
-                          setHistory={setHistory}
                         />
                       ),
                     )}
