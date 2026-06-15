@@ -9,7 +9,7 @@ import {
   setSelectedInteractionMode,
 } from '@/features/agents/agentsSlice';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
@@ -17,13 +17,13 @@ import AgentCards from './AgentCards';
 import { useAgents } from '@/hooks/queries/agent/useAgents';
 import { useConversations } from '@/hooks/queries/conversation/useConversations';
 import PreviousConversations from '../previousConversations/PreviousConversations';
+import { useCreateConversation } from '@/hooks/queries/conversation/useCreateConversation';
 
 const AiAssistant = () => {
-  const [conversationLoading, setConversationLoading] = useState(false);
-
   const { agents, isLoading } = useAgents();
   const { conversations, isLoading: oldConversationLoading } =
     useConversations();
+  const { mutate, isPending } = useCreateConversation();
 
   const selectedAgent = useAppSelector(selectSelectedAgent);
   const agentInstruction = useAppSelector(selectAgentInstruction);
@@ -36,42 +36,28 @@ const AiAssistant = () => {
   }, [dispatch]);
 
   const startSessionClickHandler = async () => {
-    if (!selectedAgent || conversationLoading) return;
-
-    try {
-      setConversationLoading(true);
-      const response = await fetch('api/conversation/create', {
-        method: 'POST',
-        body: JSON.stringify({
-          agentId: selectedAgent._id,
-          agentTitle: selectedAgent.title,
-          agentName: selectedAgent.name,
-          defaultAgentModel: selectedAgent.model,
-          key: selectedAgent.key,
-          mode: 'text',
-          newCreation: false,
-          customInstruction: agentInstruction,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message);
-      }
-
-      const conversationID = result.conversation._id;
-
-      router.push(
-        `/ai-workspace?conversation_id=${conversationID}&mode=text&agentId=${result.conversation.agentId}`,
-      );
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.log(err.message);
-      } else {
-        console.log('Unknown error', err);
-      }
-    }
+    if (!selectedAgent || isPending) return;
+    mutate(
+      {
+        agentId: selectedAgent._id,
+        agentTitle: selectedAgent.title,
+        agentName: selectedAgent.name,
+        defaultAgentModel: selectedAgent.model,
+        key: selectedAgent.key,
+        mode: 'text',
+        newCreation: false,
+        customInstruction: agentInstruction,
+      },
+      {
+        onSuccess: (data) => {
+          if (data.success) {
+            router.push(
+              `/ai-workspace?conversation_id=${data.conversation._id}&mode=text&agentId=${data.conversation.agentId}`,
+            );
+          }
+        },
+      },
+    );
   };
 
   if (isLoading || oldConversationLoading) return <AiAssistantSkeleton />;
@@ -92,11 +78,11 @@ const AiAssistant = () => {
             <Button
               variant={'secondary'}
               onClick={startSessionClickHandler}
-              disabled={selectedAgent === null || conversationLoading}
+              disabled={selectedAgent === null || isPending}
               className={`${selectedAgent !== null && 'btn-continue'} bg-button-background rounded-full py-5 text-lg font-normal text-white hover:-translate-y-0.5 hover:text-black active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-75 max-md:hidden`}
             >
               Start Session
-              {conversationLoading && (
+              {isPending && (
                 <Spinner className="size-5" data-icon="inline-end" />
               )}
             </Button>
@@ -105,18 +91,16 @@ const AiAssistant = () => {
           <Button
             variant={'secondary'}
             onClick={startSessionClickHandler}
-            disabled={selectedAgent === null || conversationLoading}
+            disabled={selectedAgent === null || isPending}
             className={`${selectedAgent !== null && 'btn-continue'} bg-button-background mx-auto mt-8 flex rounded-full py-6 text-lg font-normal text-white hover:-translate-y-0.5 hover:text-black active:scale-95 disabled:cursor-not-allowed disabled:opacity-75 md:hidden`}
           >
             Start Session
-            {conversationLoading && (
-              <Spinner className="size-5" data-icon="inline-end" />
-            )}
+            {isPending && <Spinner className="size-5" data-icon="inline-end" />}
           </Button>
         </section>
         <section className="section__history mt-10 md:mx-auto md:mt-15 md:max-w-4xl">
           {conversations && (
-            <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center">
+            <div className="bg-primary-dark-bg rounded-xl px-1 py-1.5 max-md:text-center md:px-3 md:py-2">
               <PreviousConversations big={true} />
             </div>
           )}

@@ -12,7 +12,7 @@ const QuickAccess = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const { mutate, isPending, reset } = useCreateConversation();
+  const { mutate, isPending } = useCreateConversation();
   const { agent: selectedAgent, isLoading: loading } = useAgent(
     '69f379dc374e6de2592d01f3',
     status === 'authenticated',
