@@ -1,4 +1,6 @@
 import { QueryClient, QueryCache, MutationCache } from '@tanstack/react-query';
+import store from '../store';
+import { addToast } from '@/features/toast/toastSlice';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,10 +13,26 @@ export const queryClient = new QueryClient({
   },
 
   queryCache: new QueryCache({
-    onError: (error, query) => {},
+    onError: (error) => {
+      store.dispatch(
+        addToast({
+          message:
+            error instanceof Error ? error.message : 'Something went wrong',
+          type: 'error',
+        }),
+      );
+    },
   }),
 
   mutationCache: new MutationCache({
-    onError: (error, mutation) => {},
+    onError: (error) => {
+      store.dispatch(
+        addToast({
+          message:
+            error instanceof Error ? error.message : 'Something went wrong',
+          type: 'error',
+        }),
+      );
+    },
   }),
 });

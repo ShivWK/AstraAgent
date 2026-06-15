@@ -99,7 +99,7 @@ const TextInputMethod = ({
 
   return (
     <form
-      className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-0.5 rounded-xl border-2 border-white p-1 transition-all duration-150 md:bottom-4 md:w-[88%] dark:border-blue-900`}
+      className={`absolute bottom-3 left-1/2 z-40 flex w-[95%] -translate-x-1/2 flex-col items-end gap-0.5 rounded-xl border-2 border-white p-1 transition-all duration-150 md:bottom-4 md:w-[88%] dark:border-blue-800`}
       onClick={() => inputRef.current?.focus()}
       style={{
         background: recording
@@ -153,7 +153,7 @@ const TextInputMethod = ({
             type="button"
             onClick={micBtnClickHandler}
             disabled={streaming || loading || !connected}
-            className={`transform rounded-md p-1.5 ${recording ? 'bg-black/50' : 'bg-blue-500 dark:bg-blue-900'} text-white transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+            className={`transform rounded-md p-1.5 ${recording ? 'bg-black/50' : 'bg-blue-500 dark:bg-blue-800'} text-white transition-all duration-150 ease-linear active:scale-95 disabled:cursor-none disabled:opacity-50 ${loading || sttLoading || !connected ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
           >
             {recording ? (
               <X aria-hidden="true" className="size-5.5 md:size-4.5" />
@@ -175,7 +175,7 @@ const TextInputMethod = ({
           type="button"
           onClick={handleSubmit}
           disabled={(!text.trim() && !streaming) || !connected}
-          className={`flex items-center gap-1.5 rounded-md bg-blue-500 p-1.5 px-2.5 text-white disabled:cursor-not-allowed disabled:opacity-70 md:text-sm dark:bg-blue-900 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
+          className={`flex items-center gap-1.5 rounded-md bg-blue-500 p-1.5 px-2.5 text-white disabled:cursor-not-allowed disabled:opacity-70 md:text-sm dark:bg-blue-800 ${loading && !streaming ? 'cursor-wait opacity-70' : 'cursor-pointer'}`}
         >
           {loading ? (
             streaming ? (

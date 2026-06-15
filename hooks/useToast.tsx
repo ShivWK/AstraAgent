@@ -21,9 +21,9 @@ type ToastArray = {
 type PropsType =
   | 'top-left'
   | 'top-right'
+  | 'top-mid'
   | 'bottom-left'
   | 'bottom-right'
-  | 'top-mid'
   | 'bottom-mid';
 
 const useToast = (position: PropsType = 'bottom-right') => {

@@ -12,7 +12,6 @@
   width: 300px;
   max-width: 400px;
   overflow: hidden;
-  z-index: 99999999;
 }
 
 .toast-msg {
@@ -145,36 +144,42 @@
   position: fixed;
   top: 4rem;
   right: 10px;
+  z-index: 99999999;
 }
 
 .bottom-right {
   position: fixed;
   bottom: 10px;
   right: 10px;
+  z-index: 99999999;
 }
 
 .top-left {
   position: fixed;
   top: 4rem;
   left: 10px;
+  z-index: 99999999;
 }
 
 .bottom-left {
   position: fixed;
   bottom: 10px;
   left: 10px;
+  z-index: 99999999;
 }
 
-.top-mid {
+.top-center {
   position: fixed;
   top: 4rem;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 99999999;
 }
 
-.bottom-mid {
+.bottom-center {
   position: fixed;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 99999999;
 }

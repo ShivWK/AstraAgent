@@ -3,6 +3,7 @@ import authReducer from '../features/auth/authSlice';
 import agentsReducer from '../features/agents/agentsSlice';
 import themeReducer from '../features/theme/themeSlice';
 import workspaceReducer from '../features/workspace/workspaceSlice';
+import toastReducer from '../features/toast/toastSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     agents: agentsReducer,
     theme: themeReducer,
     workspace: workspaceReducer,
+    toast: toastReducer,
   },
 });
 
