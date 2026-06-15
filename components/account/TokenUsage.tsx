@@ -36,10 +36,10 @@ const TokenUsage = ({ user, authLoader }: Props) => {
   };
 
   return (
-    <div className="mb-5 w-full max-w-md rounded-2xl border border-[rgba(120,160,255,0.22)] bg-[#B2DEF8] p-5 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+    <div className="dark:bg-primary-dark-bg mb-5 w-full max-w-md rounded-2xl border border-[rgba(120,160,255,0.22)] bg-[#B2DEF8] p-5 shadow-lg dark:border-gray-700">
       <div className="mb-4 flex items-center justify-between">
         <p className="text-quick-cards-heading text-sm">Token Usage</p>
-        <p className="text-quick-cards-subheading text-xs">
+        <p className="text-quick-cards-heading text-xs">
           {usedTokens} / {totalTokens}
         </p>
       </div>
@@ -54,7 +54,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
 
         {tokens < 0 && (
           <div className="flex flex-col">
-            <p className="ml-auto text-2xl font-semibold text-orange-400">
+            <p className="ml-auto text-2xl font-semibold text-orange-400 dark:text-orange-300">
               {tokens.toLocaleString().slice(1)}
             </p>
             <div className="text-quick-cards-heading relative flex items-center gap-1 text-xs md:gap-2">
@@ -89,14 +89,14 @@ const TokenUsage = ({ user, authLoader }: Props) => {
         )}
       </div>
 
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-700">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-blue-400">
         <div
           className={`h-full rounded-full bg-linear-to-r ${getColor()} transition-all duration-500 ease-out`}
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      <div className="text-quick-cards-subheading mt-3 flex justify-between text-xs">
+      <div className="text-quick-cards-heading mt-3 flex justify-between text-xs">
         <span>{progress.toFixed(1)}% used</span>
         <span>{tokens && tokens > 0 ? 'Active' : 'Exhausted'}</span>
       </div>

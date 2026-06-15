@@ -36,7 +36,7 @@ const Conversations = ({ history, hideHeading = false }: PropsType) => {
             return (
               <div
                 key={agentId}
-                className={`${openGroups[agentId] ? 'border md:border-2' : 'border-none'} rounded-lg border-gray-500 p-1 md:rounded-xl`}
+                className={`${openGroups[agentId] && 'border'} rounded-md border-gray-500 p-1 md:rounded-xl`}
               >
                 <div
                   onClick={() => toggleGroup(agentId)}
