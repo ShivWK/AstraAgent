@@ -128,7 +128,7 @@ const AgentCards = ({ assistants }: PropsType) => {
         </div>
 
         {isOverflowing && (
-          <div className="absolute left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3 md:-bottom-7">
+          <div className="absolute top-70 left-1/2 flex w-[23%] -translate-x-1/2 items-center gap-3 md:top-75 md:-bottom-7">
             <button
               onClick={() => scrollClickHandler(-1)}
               className="hidden transition-all duration-100 ease-in active:scale-90 md:block"
@@ -166,7 +166,6 @@ const AgentCards = ({ assistants }: PropsType) => {
         open={openInstructionModel}
         setOpen={setOpenInstructionModel}
       />
-
       <NewAgentCreationModel />
     </>
   );

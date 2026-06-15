@@ -92,13 +92,13 @@ const AiAssistant = () => {
             variant={'secondary'}
             onClick={startSessionClickHandler}
             disabled={selectedAgent === null || isPending}
-            className={`${selectedAgent !== null && 'btn-continue'} bg-button-background mx-auto mt-8 flex rounded-full py-6 text-lg font-normal text-white hover:-translate-y-0.5 hover:text-black active:scale-95 disabled:cursor-not-allowed disabled:opacity-75 md:hidden`}
+            className={`${selectedAgent !== null && 'btn-continue'} bg-button-background mx-auto mt-9 flex rounded-full py-6 text-lg font-normal text-white hover:-translate-y-0.5 hover:text-black active:scale-95 disabled:cursor-not-allowed disabled:opacity-75 md:hidden`}
           >
             Start Session
             {isPending && <Spinner className="size-5" data-icon="inline-end" />}
           </Button>
         </section>
-        <section className="section__history mt-10 md:mx-auto md:mt-15 md:max-w-4xl">
+        <section className="section__history mt-10 md:mx-auto md:mt-20 md:max-w-4xl">
           {conversations && (
             <div className="bg-primary-dark-bg rounded-xl px-1 py-1.5 max-md:text-center md:px-3 md:py-2">
               <PreviousConversations big={true} />
