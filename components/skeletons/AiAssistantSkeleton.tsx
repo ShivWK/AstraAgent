@@ -19,12 +19,18 @@ const AiAssistantSkeleton = () => {
           <div className="mx-auto mt-8 h-12 w-40 rounded-full bg-gray-300 md:hidden dark:bg-gray-700" />
         </section>
 
-        <section className="mx-auto mt-10 flex w-full flex-col gap-4 md:w-[80%]">
-          <div className="w-full rounded-xl bg-gray-300 p-4 md:w-[45%] md:basis-1/2 dark:bg-gray-700">
+        <section className="mx-auto mt-10 flex w-full flex-col gap-4 md:mx-auto md:mt-15 md:w-[80%] md:max-w-4xl">
+          <div className="w-full rounded-xl bg-gray-300 p-4 dark:bg-gray-700">
             <div className="mb-2 h-5 w-40 rounded bg-gray-400 dark:bg-gray-600" />
             <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-600" />
           </div>
-          <div className="w-full rounded-xl bg-gray-300 p-4 md:w-[45%] md:basis-1/2 dark:bg-gray-700">
+
+          <div className="w-full rounded-xl bg-gray-300 p-4 dark:bg-gray-700">
+            <div className="mb-2 h-5 w-40 rounded bg-gray-400 dark:bg-gray-600" />
+            <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-600" />
+          </div>
+
+          <div className="w-full rounded-xl bg-gray-300 p-4 dark:bg-gray-700">
             <div className="mb-2 h-5 w-40 rounded bg-gray-400 dark:bg-gray-600" />
             <div className="h-4 w-32 rounded bg-gray-400 dark:bg-gray-600" />
           </div>

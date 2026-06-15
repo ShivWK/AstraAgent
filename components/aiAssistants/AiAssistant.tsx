@@ -114,7 +114,7 @@ const AiAssistant = () => {
             )}
           </Button>
         </section>
-        <section className="section__history mt-10 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
+        <section className="section__history mt-10 md:mx-auto md:mt-15 md:max-w-4xl">
           {conversations && (
             <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center">
               <PreviousConversations big={true} />
