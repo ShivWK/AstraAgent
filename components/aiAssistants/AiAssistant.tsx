@@ -13,10 +13,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
-import PreviousChats from './PreviousChats';
 import AgentCards from './AgentCards';
 import { useAgents } from '@/hooks/queries/agent/useAgents';
 import { useConversations } from '@/hooks/queries/conversation/useConversations';
+import PreviousConversations from '../previousConversations/PreviousConversations';
 
 const AiAssistant = () => {
   const [conversationLoading, setConversationLoading] = useState(false);
@@ -114,10 +114,10 @@ const AiAssistant = () => {
             )}
           </Button>
         </section>
-        <section className="section__history mt-10 flex flex-col gap-8 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
+        <section className="section__history mt-10 md:mx-auto md:mt-15 md:max-w-4xl md:flex-row md:justify-between md:gap-50">
           {conversations && (
-            <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center md:basis-1/2">
-              <PreviousChats history={conversations!} />
+            <div className="bg-primary-dark-bg rounded-xl px-3 py-2 max-md:text-center">
+              <PreviousConversations big={true} />
             </div>
           )}
         </section>

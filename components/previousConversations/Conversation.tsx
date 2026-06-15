@@ -1,6 +1,6 @@
 import { useDeleteConversation } from '@/hooks/queries/conversation/useDeleteConversation';
 import { useRouter } from 'next/navigation';
-import { Conversation } from '@/types/conversation';
+import { type Conversation } from '@/types/conversation';
 import { X } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 
@@ -8,7 +8,7 @@ type PropsType = {
   conversation: Conversation;
 };
 
-const PreviousChat = ({ conversation }: PropsType) => {
+const Conversation = ({ conversation }: PropsType) => {
   const { mutate, isPending, reset } = useDeleteConversation();
   const router = useRouter();
 
@@ -28,7 +28,11 @@ const PreviousChat = ({ conversation }: PropsType) => {
     id: string,
   ) => {
     e.stopPropagation();
-    mutate(id);
+    mutate(id, {
+      onSuccess: () => {
+        reset();
+      },
+    });
   };
 
   return (
@@ -60,4 +64,4 @@ const PreviousChat = ({ conversation }: PropsType) => {
   );
 };
 
-export default PreviousChat;
+export default Conversation;

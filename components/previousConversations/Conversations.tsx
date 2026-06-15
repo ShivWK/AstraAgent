@@ -1,16 +1,16 @@
 import Image from 'next/image';
 import { logoForAgents } from '@/utils/text_assistants';
-import { Conversation } from '@/types/conversation';
+import { type Conversation } from '@/types/conversation';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import PreviousChat from './PreviousChat';
+import PreviousConversation from './Conversation';
 
 type PropsType = {
   history: Record<string, Record<string, string | Conversation[]>>;
   hideHeading?: boolean;
 };
 
-const PreviousChats = ({ history, hideHeading = false }: PropsType) => {
+const Conversations = ({ history, hideHeading = false }: PropsType) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
   const toggleGroup = (agentId: string) => {
@@ -76,7 +76,7 @@ const PreviousChats = ({ history, hideHeading = false }: PropsType) => {
                   <div className="flex flex-col gap-2">
                     {(group.conversations as Conversation[]).map(
                       (conversation) => (
-                        <PreviousChat
+                        <PreviousConversation
                           key={conversation._id}
                           conversation={conversation}
                         />
@@ -93,4 +93,4 @@ const PreviousChats = ({ history, hideHeading = false }: PropsType) => {
   );
 };
 
-export default PreviousChats;
+export default Conversations;

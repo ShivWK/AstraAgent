@@ -9,8 +9,8 @@ import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 import ProfileCard from '@/components/account/ProfileCard';
 import TokenUsage from '@/components/account/TokenUsage';
 import { selectDbLoader, selectUser } from '@/features/auth/authSlice';
-import PreviousChats from '@/components/account/PreviousChats';
 import useAppSelector from '@/hooks/useAppSelector';
+import PreviousConversations from '@/components/previousConversations/PreviousConversations';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -86,7 +86,7 @@ const Page = () => {
           </aside>
           <section className="w-full self-start p-2 md:basis-full">
             <TokenUsage user={userDetails} authLoader={authLoader} />
-            <PreviousChats />
+            <PreviousConversations />
           </section>
         </div>
       </main>

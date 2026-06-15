@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react';
-import Chats from '../aiAssistants/PreviousChats';
+import Conversations from './Conversations';
 import { useConversations } from '@/hooks/queries/conversation/useConversations';
 
-const PreviousChats = () => {
+const PreviousConversations = ({ big = false }: { big?: boolean }) => {
   const [lastIndex, setLastIndex] = useState(3);
+
   const { conversations, isLoading } = useConversations();
 
   const previousChatsToShow = useMemo(() => {
@@ -30,7 +31,9 @@ const PreviousChats = () => {
 
   return (
     <div>
-      <h2 className="mb-4 w-full text-xl font-medium text-white">
+      <h2
+        className={`${big ? 'mb-2 text-xl md:text-2xl' : 'mb-4'} w-full text-xl font-semibold text-white`}
+      >
         Previous Chats
       </h2>
       <div className="bg-primary-dark-bg rounded-md p-1">
@@ -42,7 +45,7 @@ const PreviousChats = () => {
         ) : (
           previousChatsToShow &&
           Object.entries(previousChatsToShow!).length !== 0 && (
-            <Chats history={previousChatsToShow!} hideHeading={true} />
+            <Conversations history={previousChatsToShow!} hideHeading={true} />
           )
         )}
 
@@ -66,4 +69,4 @@ const PreviousChats = () => {
   );
 };
 
-export default PreviousChats;
+export default PreviousConversations;
