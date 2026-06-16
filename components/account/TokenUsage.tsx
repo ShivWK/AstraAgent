@@ -89,7 +89,7 @@ const TokenUsage = ({ user, authLoader }: Props) => {
         )}
       </div>
 
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-blue-400">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-gray-600">
         <div
           className={`h-full rounded-full bg-linear-to-r ${getColor()} transition-all duration-500 ease-out`}
           style={{ width: `${progress}%` }}
