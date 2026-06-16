@@ -205,7 +205,9 @@ const RechargeModal = ({
                 tokens
               </p>
             ) : (
-              <p className="text-gray-300">Select a plan or enter amount</p>
+              <p className="text-gray-900 dark:text-gray-300">
+                Select a plan or enter amount
+              </p>
             )}
           </div>
 
