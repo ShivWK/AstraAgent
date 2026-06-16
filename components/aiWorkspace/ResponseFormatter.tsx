@@ -8,7 +8,9 @@ const ResponseFormatter = ({ chat }: { chat: string }) => {
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeHighlight]}
       components={{
-        hr: () => <hr className="my-5 border-t border-gray-400/90" />,
+        hr: () => (
+          <hr className="my-5 border-t border-gray-800/90 dark:border-gray-400/90" />
+        ),
 
         h1: ({ children }) => (
           <h1 className="mb-6 text-2xl font-semibold">{children}</h1>

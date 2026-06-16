@@ -8,7 +8,7 @@ export default function ReadMore({ text }: { text: string }) {
   return (
     <div>
       <p
-        className={`text-sm leading-4.5 text-gray-200 italic transition-all duration-300 ease-linear ${
+        className={`text-justify text-sm leading-4.5 text-white italic transition-all duration-300 ease-linear ${
           expanded ? '' : 'line-clamp-1'
         }`}
       >
@@ -17,9 +17,9 @@ export default function ReadMore({ text }: { text: string }) {
 
       <button
         onClick={() => setExpanded(!expanded)}
-        className="text-xs font-medium text-green-400 hover:underline"
+        className="text-sm font-medium text-green-400 italic hover:underline"
       >
-        {expanded ? 'Show less' : 'More'}
+        {expanded ? 'Show less' : '...More'}
       </button>
     </div>
   );
