@@ -85,7 +85,7 @@ const SessionInstructionModal = ({ open, setOpen }: PropsType) => {
             </div>
           </div>
 
-          <p className="text-sm leading-4.5 tracking-wide">
+          <p className="text-justify text-sm leading-4.5 tracking-wide">
             {agent.subHeading}
           </p>
 

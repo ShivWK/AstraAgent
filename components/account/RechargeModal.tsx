@@ -60,7 +60,8 @@ const RechargeModal = ({
   };
 
   const handleCustomChange = (val: string) => {
-    setCustomAmount(val);
+    const numbersOnly = val.replace(/\D+/g, '');
+    setCustomAmount(numbersOnly);
     setSelectedPlan(null);
   };
 
@@ -109,26 +110,26 @@ const RechargeModal = ({
       onClose={() => setIsOpen(false)}
       showClasses="opacity-100 scale-100"
       hideClasses="opacity-0 scale-0"
-      className="fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-blue-900 text-center shadow-lg md:w-[32%]"
+      className="bg-modal-background border-modal-border fixed top-1/2 left-1/2 w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-xl border text-center shadow-lg md:w-[32%]"
     >
       <>
         <div className="flex flex-col gap-5 p-4 pt-8 text-white">
           <button
             aria-label="Close recharge modal"
             onClick={() => setIsOpen(false)}
-            className="absolute top-3 right-3 rounded-full bg-gray-700 p-0.5 text-gray-400 transition-all duration-150 ease-linear hover:bg-gray-600 hover:text-white"
+            className="absolute top-3 right-3 text-gray-600 transition-all duration-150 ease-linear hover:text-black dark:text-gray-400 dark:hover:text-white"
           >
             <X size={21} />
           </button>
 
-          <div>
+          <div className="text-black dark:text-white">
             <h2 className="text-xl font-semibold">Recharge Tokens</h2>
-            <p className="text-sm text-gray-300">
+            <p className="text-sm text-gray-900 dark:text-gray-300">
               Choose a plan or enter custom amount
             </p>
           </div>
 
-          <div className="flex flex-col justify-evenly max-md:gap-3 md:flex-row">
+          <div className="mt-0.5 flex flex-col justify-evenly max-md:gap-3 md:mt-5 md:flex-row">
             {PLANS.map((plan) => {
               const isActive = selectedPlan?.id === plan.id;
 
@@ -138,8 +139,8 @@ const RechargeModal = ({
                   onClick={() => handlePlanSelect(plan)}
                   className={`relative rounded-xl border p-4 text-left transition ${
                     isActive
-                      ? 'border-blue-500 bg-blue-500/10'
-                      : 'border-gray-500 hover:border-gray-400'
+                      ? 'border-blue-600 bg-blue-600/10 dark:border-blue-500 dark:bg-blue-500/10'
+                      : 'border-gray-600 hover:border-black dark:border-gray-500 dark:hover:border-gray-400'
                   }`}
                 >
                   {plan.highlight && (
@@ -148,21 +149,17 @@ const RechargeModal = ({
                     </span>
                   )}
 
-                  <p className="hidden text-center text-xl font-semibold text-gray-200 md:block md:text-sm">
+                  <p className="hidden text-center text-xl font-semibold text-gray-900 md:block md:text-sm dark:text-gray-200">
                     {plan.label}
                   </p>
                   <div className="flex items-center gap-5 md:flex-col md:gap-2">
-                    <p className="mt-1 text-4xl font-bold md:text-2xl">
+                    <p className="mt-1 text-4xl font-bold text-black md:text-2xl dark:text-white">
                       ₹{plan.price}
                     </p>
 
-                    <div className="flex flex-col items-start gap-0.5 md:items-center">
-                      <p className="text-xl font-semibold text-gray-200 md:hidden md:text-sm">
-                        {plan.label}
-                      </p>
-                      <p className="text-gray-200 md:text-sm">
-                        {plan.tokens} tokens
-                      </p>
+                    <div className="flex flex-col items-start gap-0.5 text-xl text-gray-800 md:items-center md:text-sm dark:text-gray-200">
+                      <p className="font-semibold md:hidden">{plan.label}</p>
+                      <p>{plan.tokens} tokens</p>
                     </div>
                   </div>
                 </button>
@@ -170,30 +167,41 @@ const RechargeModal = ({
             })}
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-gray-400" />
-            <span className="text-xs text-gray-300">OR</span>
-            <div className="h-px flex-1 bg-gray-400" />
+          <div className="mt-0.5 flex items-center gap-3 md:mt-3 md:mb-2">
+            <div className="h-px flex-1 bg-gray-900 dark:bg-gray-400" />
+            <span className="text-xs text-black dark:text-gray-300">OR</span>
+            <div className="h-px flex-1 bg-gray-900 dark:bg-gray-400" />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm text-gray-300">Enter custom amount</label>
+            <label
+              htmlFor="custom_amount"
+              className="text-sm text-gray-950 dark:text-gray-300"
+            >
+              Enter custom amount
+            </label>
             <input
-              type="number"
+              id="custom_amount"
+              type="text"
+              inputMode="numeric"
               max={10}
               value={customAmount}
               onChange={(e) => handleCustomChange(e.target.value)}
               placeholder="₹ Enter amount"
-              className="rounded-lg border border-gray-700 bg-black px-3 py-2 outline-none focus:border-blue-500"
+              className="rounded-lg border border-gray-700 bg-gray-300 px-3 py-2 outline-none placeholder:text-gray-700 focus:border-blue-500 dark:bg-black dark:placeholder:text-gray-500"
             />
-            <p className="text-xs text-gray-300">₹1 = 10 tokens</p>
+            <p className="text-xs text-black dark:text-gray-300">
+              ₹1 = 10 tokens
+            </p>
           </div>
 
-          <div className="-mt-4 text-sm">
+          <div className="text-sm text-gray-900 md:mt-3 dark:text-white">
             {tokens > 0 ? (
               <p>
                 You will get{' '}
-                <span className="font-semibold text-blue-400">{tokens}</span>{' '}
+                <span className="font-semibold text-blue-600 dark:text-blue-400">
+                  {tokens}
+                </span>{' '}
                 tokens
               </p>
             ) : (
