@@ -188,7 +188,7 @@ const RechargeModal = ({
               value={customAmount}
               onChange={(e) => handleCustomChange(e.target.value)}
               placeholder="₹ Enter amount"
-              className="rounded-lg border border-gray-700 bg-gray-300 px-3 py-2 outline-none placeholder:text-gray-700 focus:border-blue-500 dark:bg-black dark:placeholder:text-gray-500"
+              className="rounded-lg border border-gray-700 bg-gray-300 px-3 py-2 text-black outline-none placeholder:text-gray-600 focus:border-blue-500 dark:bg-black dark:text-white dark:placeholder:text-gray-500"
             />
             <p className="text-xs text-black dark:text-gray-300">
               ₹1 = 10 tokens
