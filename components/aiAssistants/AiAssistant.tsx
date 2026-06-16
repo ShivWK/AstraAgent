@@ -71,7 +71,7 @@ const AiAssistant = () => {
               <h1 className="text-quick-cards-heading text-3xl font-bold md:text-2xl">
                 Welcome to the world of AI Assistant
               </h1>
-              <p className="text-quick-cards-subheading text-xl">
+              <p className="text-quick-cards-heading text-xl">
                 Choose your AI companion to simplify your task
               </p>
             </div>
