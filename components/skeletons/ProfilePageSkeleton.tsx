@@ -9,17 +9,14 @@ const ProfilePageSkeleton = () => {
           >
             <div className="h-32 w-32 rounded-full" />
           </div>
-
           <div className="h-6 w-1/2 animate-pulse rounded-md bg-gray-400/60"></div>
           <div className="h-6 w-3/4 animate-pulse rounded-md bg-gray-400/60"></div>
-
           <div className="mt-2 h-24 w-full animate-pulse rounded-2xl bg-gray-400/60" />
-
           <div className="mt-4 h-8 w-full animate-pulse rounded-lg bg-gray-400/60" />
         </aside>
 
         <section className="w-full self-start p-2 md:basis-full">
-          <div className="mb-5 h-45 w-full animate-pulse rounded-2xl bg-gray-400/60 md:w-[52%]"></div>
+          <div className="mb-5 h-45 w-full animate-pulse rounded-2xl bg-gray-400 md:w-[52%] dark:bg-gray-400/70"></div>
           <div className="bg-primary-dark-bg rounded-md p-2">
             <div className="mx-auto flex w-full flex-col gap-2">
               <div className="w-full animate-pulse rounded-xl bg-gray-400/60 p-4">
