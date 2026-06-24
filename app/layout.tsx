@@ -43,12 +43,28 @@ export default async function RootLayout({ children }: PropsType) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+      (() => {
+        try {
+          const saved = localStorage.getItem("theme") || "system";
+          const isDark =
+            saved === "dark" ||
+            (saved === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+          document.documentElement.classList.toggle("dark", isDark);
+        } catch {}
+      })();
+    `,
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background bg-cover bg-fixed bg-center bg-no-repeat antialiased`}
       >
         <Providers>
-          <ThemeInit />
           <ThemeSync />
           <Suspense fallback={null}>
             <AuthIntentHandler />
@@ -59,32 +75,4 @@ export default async function RootLayout({ children }: PropsType) {
       </body>
     </html>
   );
-}
-
-{
-  /* <Script id="theme-script" strategy='beforeInteractive'>{
-          `
-        (function() {
-          try {
-            const savedTheme = localStorage.getItem('theme') || 'system';
-
-            let isDark = false;
-
-            if (savedTheme === 'dark') {
-              isDark = true;
-            } else if (savedTheme === 'light') {
-              isDark = false;
-            } else {
-              isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            }
-
-            if (isDark) {
-              document.documentElement.classList.add('dark');
-            } else {
-              document.documentElement.classList.remove('dark');
-            }
-          } catch (e) {}
-        })();
-      `
-        }</Script> */
 }

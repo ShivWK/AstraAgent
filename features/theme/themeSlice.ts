@@ -7,8 +7,20 @@ type StateType = {
   mode: Theme;
 };
 
+const getInitialTheme = (): Theme => {
+  if (typeof window === 'undefined') return 'system';
+
+  const saved = localStorage.getItem('theme');
+
+  if (saved === 'light' || saved === 'dark' || saved === 'system') {
+    return saved;
+  }
+
+  return 'system';
+};
+
 const initialState: StateType = {
-  mode: 'system',
+  mode: getInitialTheme(),
 };
 
 const themeSlice = createSlice({

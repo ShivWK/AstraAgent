@@ -37,12 +37,12 @@ export default function NotFound() {
               Go Home
             </Link>
 
-            <Link
-              href="/"
+            <button
+              onClick={handleBackClick}
               className="rounded-full border border-blue-400/40 bg-white/20 px-7 py-3 font-semibold text-gray-900 backdrop-blur-md transition hover:bg-white/30 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
             >
-              Go Home
-            </Link>
+              Go Back
+            </button>
           </div>
 
           {/* Footer Text */}
