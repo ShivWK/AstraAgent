@@ -36,11 +36,13 @@ const PreviousConversations = ({ big = false }: { big?: boolean }) => {
       >
         Previous Chats
       </h2>
+
       <div className="bg-primary-dark-bg rounded-md p-1">
         {isLoading ? (
-          <div className="flex flex-col gap-3 p-1">
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
-            <div className="h-16 w-full animate-pulse rounded-md bg-gray-500" />
+          <div className="flex flex-col gap-4 p-1">
+            <div className="h-17 w-full animate-pulse rounded-md bg-gray-400/60" />
+            <div className="h-17 w-full animate-pulse rounded-md bg-gray-400/60" />
+            <div className="h-17 w-full animate-pulse rounded-md bg-gray-400/60" />
           </div>
         ) : (
           previousChatsToShow &&

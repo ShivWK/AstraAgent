@@ -15,14 +15,9 @@ import { queryKeys } from '@/lib/react_query/query-keys';
 type PropsType = {
   user: User;
   logoutLoading?: boolean;
-  authLoader: boolean;
 };
 
-export default function ProfileCard({
-  user,
-  logoutLoading,
-  authLoader,
-}: PropsType) {
+export default function ProfileCard({ user, logoutLoading }: PropsType) {
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
   const queryClient = useQueryClient();
   const { data } = useSession();
@@ -163,11 +158,6 @@ export default function ProfileCard({
 
     rzp1.open();
   };
-
-  if (authLoader)
-    return (
-      <div className="mt-2 h-24 w-full animate-pulse rounded-2xl bg-gray-500"></div>
-    );
 
   return user!.role === 'admin' ? (
     <div className="mt-2 flex w-full items-center gap-3 rounded-2xl bg-gray-900 px-6 py-4">

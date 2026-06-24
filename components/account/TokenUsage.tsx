@@ -5,10 +5,9 @@ import { useRef, useState } from 'react';
 
 type Props = {
   user: User;
-  authLoader: boolean;
 };
 
-const TokenUsage = ({ user, authLoader }: Props) => {
+const TokenUsage = ({ user }: Props) => {
   const { totalTokens, tokens } = user;
   const [openInfoBox, setOpenInfoBox] = useState(false);
 
@@ -20,12 +19,6 @@ const TokenUsage = ({ user, authLoader }: Props) => {
   const progress = totalTokens! > 0 ? (usedTokens / totalTokens!) * 100 : 0;
 
   if (user?.role === 'admin') return null;
-
-  if (authLoader) {
-    return (
-      <div className="mb-5 h-45 w-full animate-pulse rounded-2xl bg-gray-500 md:w-[52%]"></div>
-    );
-  }
 
   const getColor = () => {
     if (progress < 50) return 'from-green-500 to-green-400';

@@ -10,6 +10,7 @@ import ProfileCard from '@/components/account/ProfileCard';
 import TokenUsage from '@/components/account/TokenUsage';
 import PreviousConversations from '@/components/previousConversations/PreviousConversations';
 import { useUserQuery } from '@/hooks/queries/user/useUserQuery';
+import ProfilePageSkeleton from '@/components/skeletons/ProfilePageSkeleton';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -32,7 +33,8 @@ const Page = () => {
     setOpenEmailVerificationModal(true);
   };
 
-  if (isError || !userDetails) return <p className="pt-20">Error occurred</p>;
+  if (isError) return <p className="pt-20">Error occurred</p>;
+  if (isPending || !userDetails) return <ProfilePageSkeleton />;
 
   return (
     <>
@@ -63,11 +65,7 @@ const Page = () => {
               <span>{userDetails?.email || 'User Email Address'}</span>
             </p>
 
-            <ProfileCard
-              logoutLoading={logoutLoading}
-              user={userDetails}
-              authLoader={isPending}
-            />
+            <ProfileCard logoutLoading={logoutLoading} user={userDetails} />
 
             <button
               onClick={authClickHandler}
@@ -85,7 +83,7 @@ const Page = () => {
             </button>
           </aside>
           <section className="w-full self-start p-2 md:basis-full">
-            <TokenUsage user={userDetails} authLoader={isPending} />
+            <TokenUsage user={userDetails} />
             <PreviousConversations />
           </section>
         </div>
