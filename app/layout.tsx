@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: PropsType) {
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background bg-cover bg-fixed bg-center bg-no-repeat antialiased`}
       >
         <Providers>
           <ThemeInit />
