@@ -43,9 +43,27 @@ export default async function RootLayout({ children }: PropsType) {
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background antialiased`}
+      >
+        <Providers>
+          <ThemeInit />
+          <ThemeSync />
+          <Suspense fallback={null}>
+            <AuthIntentHandler />
+          </Suspense>
+          <Header />
+          {children}
+        </Providers>
+      </body>
+    </html>
+  );
+}
+
+{
+  /* <Script id="theme-script" strategy='beforeInteractive'>{
+          `
         (function() {
           try {
             const savedTheme = localStorage.getItem('theme') || 'system';
@@ -67,23 +85,6 @@ export default async function RootLayout({ children }: PropsType) {
             }
           } catch (e) {}
         })();
-      `,
-          }}
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} pretty-scrollbar bg-primary-background antialiased`}
-      >
-        <Providers>
-          <ThemeInit />
-          <ThemeSync />
-          <Suspense fallback={null}>
-            <AuthIntentHandler />
-          </Suspense>
-          <Header />
-          {children}
-        </Providers>
-      </body>
-    </html>
-  );
+      `
+        }</Script> */
 }

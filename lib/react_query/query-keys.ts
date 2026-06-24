@@ -5,7 +5,7 @@ export const queryKeys = {
   agent: (id: string) => ['agent', id] as const,
 
   conversations: ['conversations'] as const,
-  conversation: (id: string) => ['conversation', id],
+  conversation: (id: string) => ['conversation', id] as const,
 
   chats: (agentId: string) => ['chats', agentId] as const,
 };

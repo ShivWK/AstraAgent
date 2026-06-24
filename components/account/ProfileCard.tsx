@@ -9,7 +9,8 @@ import {
   type RazorpayFailedResponse,
 } from '@/types/razorpayTypes';
 import { User } from '@/types/user';
-import useRefresher from '@/hooks/useRefreshAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/lib/react_query/query-keys';
 
 type PropsType = {
   user: User;
@@ -23,9 +24,9 @@ export default function ProfileCard({
   authLoader,
 }: PropsType) {
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
+  const queryClient = useQueryClient();
   const { data } = useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const refresh = useRefresher();
 
   const handleRechargeClick = () => {
     if (logoutLoading) return;
@@ -73,14 +74,14 @@ export default function ProfileCard({
       order_id: razorpayOrderId,
 
       prefill: {
-        name: user.name || '',
-        email: user.email || '',
+        name: user?.name || '',
+        email: user?.email || '',
         contact: '+919876543210',
       },
 
       notes: {
         userId: data?.user?.id || '',
-        email: user.email || '',
+        email: user?.email || '',
         orderDetailsId,
       },
 
@@ -129,7 +130,11 @@ export default function ProfileCard({
           type: 'success',
           trigger: triggerToast,
         });
-        await refresh();
+
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.user,
+          exact: true,
+        });
       },
 
       modal: {
@@ -180,7 +185,7 @@ export default function ProfileCard({
       <div className="bg-token-card mt-2 flex w-full flex-col items-center gap-3 rounded-2xl px-6 py-2 pb-3.5">
         <p className="text-lg font-medium text-white">Current Balance</p>
         <p className="-mt-2 text-xl font-medium text-white">
-          {Math.max(0, user.tokens).toLocaleString() || 0}
+          {Math.max(0, user?.tokens || 0).toLocaleString() || 0}
         </p>
         <button
           onClick={handleRechargeClick}

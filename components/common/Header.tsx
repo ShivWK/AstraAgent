@@ -9,36 +9,25 @@ import {
   setOpenLoginModel,
   selectLoginError,
   setLoginError,
-  selectUser,
-  selectDbLoader,
 } from '@/features/auth/authSlice';
 import { setOpenSidebar, setSlideSidebar } from '@/features/agents/agentsSlice';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import useAppSelector from '@/hooks/useAppSelector';
 import { useSession } from 'next-auth/react';
-import { useEffect, useRef } from 'react';
-import useRefresher from '@/hooks/useRefreshAuth';
 import ThemeToggleBtn from '../theme/ThemeToggleBtn';
+import { useUserQuery } from '@/hooks/queries/user/useUserQuery';
 
 const Header = () => {
   const errorMessage = useAppSelector(selectLoginError);
 
   const { status } = useSession();
-  const userDetails = useAppSelector(selectUser);
-  const globalDbLoader = useAppSelector(selectDbLoader);
   const dispatch = useAppDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
-  const hasUpdated = useRef(false);
-  const refresh = useRefresher();
-
-  useEffect(() => {
-    if (status === 'authenticated' && !hasUpdated.current) {
-      hasUpdated.current = true;
-      refresh();
-    }
-  }, [status, refresh]);
+  const { user: userDetails, isPending } = useUserQuery(
+    status === 'authenticated',
+  );
 
   const authClickHandler = () => {
     if (errorMessage) {
@@ -51,6 +40,8 @@ const Header = () => {
     dispatch(setOpenSidebar(true));
     dispatch(setSlideSidebar(true));
   };
+
+  console.log('status', status);
 
   return (
     <>
@@ -85,7 +76,7 @@ const Header = () => {
           <div className="flex items-center gap-4 md:gap-5">
             <ThemeToggleBtn />
             {status === 'loading' ||
-            (globalDbLoader && status === 'authenticated') ? (
+            (isPending && status === 'authenticated') ? (
               <div className="bg-recharge-btn h-12 w-12 animate-pulse rounded-full" />
             ) : status === 'unauthenticated' ? (
               <button
@@ -101,7 +92,7 @@ const Header = () => {
                   onClick={() => router.push('/account')}
                   className="transition-all duration-75 ease-linear hover:shadow-blue-400 active:scale-95"
                 >
-                  {userDetails.image ? (
+                  {userDetails?.image ? (
                     <Image
                       src={userDetails.image!}
                       alt="Profile picture"

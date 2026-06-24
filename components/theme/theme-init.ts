@@ -9,7 +9,6 @@ const ThemeInit = () => {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
-    console.log('Theme form local', savedTheme);
 
     if (
       savedTheme === 'light' ||

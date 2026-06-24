@@ -1,5 +1,3 @@
-import { selectUser } from '@/features/auth/authSlice';
-import useAppSelector from '@/hooks/useAppSelector';
 import useClickOutside from '@/hooks/useClickOutside';
 import { User } from '@/types/user';
 import { Info, CircleX } from 'lucide-react';
@@ -11,7 +9,7 @@ type Props = {
 };
 
 const TokenUsage = ({ user, authLoader }: Props) => {
-  const { totalTokens, tokens } = useAppSelector(selectUser);
+  const { totalTokens, tokens } = user;
   const [openInfoBox, setOpenInfoBox] = useState(false);
 
   const popupRef = useRef<HTMLDivElement | null>(null);

@@ -8,16 +8,14 @@ import { signOut } from 'next-auth/react';
 import EmailVerificationModal from '@/components/auth/EmailVerificationModal';
 import ProfileCard from '@/components/account/ProfileCard';
 import TokenUsage from '@/components/account/TokenUsage';
-import { selectDbLoader, selectUser } from '@/features/auth/authSlice';
-import useAppSelector from '@/hooks/useAppSelector';
 import PreviousConversations from '@/components/previousConversations/PreviousConversations';
+import { useUserQuery } from '@/hooks/queries/user/useUserQuery';
 
 const Page = () => {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [openEmailVerificationModal, setOpenEmailVerificationModal] =
     useState(false);
-  const userDetails = useAppSelector(selectUser);
-  const authLoader = useAppSelector(selectDbLoader);
+  const { user: userDetails, isPending, isError } = useUserQuery(true);
 
   const authClickHandler = async () => {
     if (logoutLoading) return;
@@ -34,6 +32,8 @@ const Page = () => {
     setOpenEmailVerificationModal(true);
   };
 
+  if (isError || !userDetails) return <p className="pt-20">Error occurred</p>;
+
   return (
     <>
       <main className="min-h-dvh pt-20 pb-8 max-md:px-2 md:pt-26">
@@ -48,7 +48,7 @@ const Page = () => {
             <ProfileChange user={userDetails} />
             <p className="text-lg">{userDetails?.name || 'User Name'}</p>
             <p className="-mt-2 flex items-center gap-2 text-lg">
-              {userDetails?.emailVerified === null && !authLoader && (
+              {userDetails?.emailVerified === null && !isPending && (
                 <button
                   onClick={handleEmailVerificationClick}
                   aria-label="Verify Email"
@@ -60,13 +60,13 @@ const Page = () => {
                   />
                 </button>
               )}
-              <span>{userDetails.email || 'User Email Address'}</span>
+              <span>{userDetails?.email || 'User Email Address'}</span>
             </p>
 
             <ProfileCard
               logoutLoading={logoutLoading}
               user={userDetails}
-              authLoader={authLoader}
+              authLoader={isPending}
             />
 
             <button
@@ -85,13 +85,13 @@ const Page = () => {
             </button>
           </aside>
           <section className="w-full self-start p-2 md:basis-full">
-            <TokenUsage user={userDetails} authLoader={authLoader} />
+            <TokenUsage user={userDetails} authLoader={isPending} />
             <PreviousConversations />
           </section>
         </div>
       </main>
       <EmailVerificationModal
-        email={userDetails.email}
+        email={userDetails?.email}
         open={openEmailVerificationModal}
         setOpen={setOpenEmailVerificationModal}
       />
