@@ -4,7 +4,6 @@ import Header from '@/components/common/Header';
 import { ReactNode, Suspense } from 'react';
 import AuthIntentHandler from '@/components/auth/AuthIntentHandler';
 import ThemeSync from '@/components/theme/theme-sync';
-import ThemeInit from '@/components/theme/theme-init';
 import './globals.css';
 
 const geistSans = Geist({
