@@ -13,7 +13,7 @@ export type Toast = {
 };
 
 type AddToastPayload = {
-  type: 'success' | 'error' | 'info';
+  type: ToastType;
   message: string;
   duration?: number;
   animation?: AnimationType;

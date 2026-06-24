@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { setTokens } from '@/features/auth/authSlice';
 import useAppDispatch from './useAppDispatch';
 import { createKey } from '@/utils/createKey';
+import { addToast } from '@/features/toast/toastSlice';
 
 const ttsCache = new Map<string, string>();
 
@@ -42,6 +43,8 @@ const useTts = (speaker = 'shubh') => {
     setActiveId(null);
     setIsPaused(false);
 
+    const MAX_TTS_CHARS = 2500;
+
     try {
       let audioBase64: string | null = null;
 
@@ -51,6 +54,18 @@ const useTts = (speaker = 'shubh') => {
         setLoadingId(null);
         setActiveId(id);
       } else {
+        if (text.length > MAX_TTS_CHARS) {
+          dispatch(
+            addToast({
+              type: 'warning',
+              message:
+                'Response too long for TTS. Please ask for a shorter response',
+            }),
+          );
+          setLoadingId(null);
+          return;
+        }
+
         const res = await fetch('/api/tts', {
           method: 'POST',
           headers: {
