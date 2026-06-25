@@ -33,7 +33,7 @@ const Page = () => {
     setOpenEmailVerificationModal(true);
   };
 
-  if (isError) return <p className="pt-20">Error occurred</p>;
+  if (isError) throw new Error('Something went wrong!');
   if (isPending || !userDetails) return <ProfilePageSkeleton />;
 
   return (
