@@ -99,11 +99,9 @@ const AiAssistant = () => {
           </Button>
         </section>
         <section className="section__history mt-10 md:mx-auto md:mt-20 md:max-w-4xl">
-          {conversations && (
-            <div className="bg-primary-dark-bg rounded-xl px-1 py-1.5 max-md:text-center md:px-3 md:py-2">
-              <PreviousConversations big={true} />
-            </div>
-          )}
+          <div className="bg-primary-dark-bg rounded-xl px-1 py-1.5 max-md:text-center md:px-3 md:py-2">
+            <PreviousConversations big={true} />
+          </div>
         </section>
       </div>
     </main>
