@@ -9,10 +9,11 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
 import { User } from '@/types/user';
-import useRefresher from '@/hooks/useRefreshAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/lib/react_query/query-keys';
 
 const ProfileChange = ({ user }: { user: User }) => {
-  const refresh = useRefresher();
+  const queryClient = useQueryClient();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
   const { ToastContainer, triggerToast } = useToast('bottom-mid');
 
@@ -78,7 +79,10 @@ const ProfileChange = ({ user }: { user: User }) => {
         trigger: triggerToast,
       });
 
-      await refresh();
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.user,
+        exact: true,
+      });
       setPreviewURl(null);
     } catch (err) {
       console.log(err);

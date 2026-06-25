@@ -63,7 +63,7 @@ const AiAssistant = () => {
   if (isLoading || oldConversationLoading) return <AiAssistantSkeleton />;
 
   return (
-    <main className="min-h-dvh pt-24 pb-18 max-md:px-2 md:pt-28">
+    <main className="min-h-dvh pt-24 pb-15 max-md:px-2 md:pt-28">
       <div className="mx-auto max-w-300">
         <section className="w-full">
           <div className="flex flex-col items-center justify-between gap-2 md:flex-row">
