@@ -59,7 +59,7 @@ const useTts = (speaker = 'shubh') => {
             addToast({
               type: 'warning',
               message:
-                'Response too long for TTS. Please ask for a shorter response',
+                'Response is too long for TTS. Please ask agent for a shorter response',
             }),
           );
           setLoadingId(null);
