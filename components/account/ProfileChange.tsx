@@ -6,16 +6,17 @@ import * as z from 'zod';
 import { profileFormSchema } from '@/lib/validations/auth.schema';
 import { Spinner } from '../ui/spinner';
 import { ChangeEvent, useEffect, useState } from 'react';
-import useToast from '@/hooks/useToast';
-import { showToast } from '@/utils/showToast';
 import { User } from '@/types/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/react_query/query-keys';
+import useAppDispatch from '@/hooks/useAppDispatch';
+import { addToast } from '@/features/toast/toastSlice';
 
 const ProfileChange = ({ user }: { user: User }) => {
   const queryClient = useQueryClient();
   const [previewURL, setPreviewURl] = useState<string | null>(null);
-  const { ToastContainer, triggerToast } = useToast('bottom-mid');
+
+  const dispatch = useAppDispatch();
 
   type FormType = z.infer<typeof profileFormSchema>;
 
@@ -57,27 +58,31 @@ const ProfileChange = ({ user }: { user: User }) => {
         const minutes = Math.floor(retryAfter / 60);
         const seconds = retryAfter % 60;
 
-        showToast({
-          message: `Too many requests. Try again in ${minutes}m ${seconds}s`,
-          type: 'warning',
-          trigger: triggerToast,
-        });
+        dispatch(
+          addToast({
+            message: `Too many requests. Try again in ${minutes}m ${seconds}s`,
+            type: 'warning',
+          }),
+        );
+
         return;
       }
 
       if (!response.ok) {
-        showToast({
-          message: result.error,
-          type: 'error',
-          trigger: triggerToast,
-        });
+        dispatch(
+          addToast({
+            message: result.error,
+            type: 'error',
+          }),
+        );
       }
 
-      showToast({
-        message: 'Profile picture updated successfully',
-        type: 'success',
-        trigger: triggerToast,
-      });
+      dispatch(
+        addToast({
+          message: 'Profile picture updated successfully',
+          type: 'success',
+        }),
+      );
 
       queryClient.invalidateQueries({
         queryKey: queryKeys.user,
@@ -86,11 +91,12 @@ const ProfileChange = ({ user }: { user: User }) => {
       setPreviewURl(null);
     } catch (err) {
       console.log(err);
-      showToast({
-        message: 'Something went wrong. Please try again later.',
-        type: 'error',
-        trigger: triggerToast,
-      });
+      dispatch(
+        addToast({
+          message: 'Something went wrong. Please try again later.',
+          type: 'error',
+        }),
+      );
     }
   };
 
@@ -98,11 +104,12 @@ const ProfileChange = ({ user }: { user: User }) => {
     const firstError = Object.values(errors)[0];
 
     if (firstError?.message) {
-      showToast({
-        message: firstError.message as string,
-        type: 'error',
-        trigger: triggerToast,
-      });
+      dispatch(
+        addToast({
+          message: firstError.message as string,
+          type: 'error',
+        }),
+      );
     }
   };
 
@@ -119,68 +126,65 @@ const ProfileChange = ({ user }: { user: User }) => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(submitHandler, onInvalid)}>
-        <div className="relative">
-          <div
-            role="img"
-            className="rounded-full border bg-linear-to-br from-[#1f58fd] via-[#5bddfd] to-[#1f58fd] p-1"
-          >
-            <Image
-              src={
-                previewURL
-                  ? previewURL
-                  : user?.image
-                    ? user?.image
-                    : '/assistants/general_ai.png'
-              }
-              alt="Profile picture"
-              height={300}
-              width={300}
-              quality={100}
-              className="h-32 w-32 rounded-full"
-            />
-          </div>
-          <label
-            htmlFor="profile"
-            aria-label="Upload profile picture"
-            className="cursor-pointer"
-          >
-            <div className="absolute top-25 left-23 inline-block rounded-full bg-blue-500 p-2 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900">
-              <Pencil aria-hidden="true" strokeWidth={1.5} size={20} />
-            </div>
-          </label>
-          <input
-            {...register('profileImage')}
-            type="file"
-            id="profile"
-            className="hidden"
-            onChange={inputChangeHandler}
+    <form onSubmit={handleSubmit(submitHandler, onInvalid)}>
+      <div className="relative">
+        <div
+          role="img"
+          className="rounded-full border bg-linear-to-br from-[#1f58fd] via-[#5bddfd] to-[#1f58fd] p-1"
+        >
+          <Image
+            src={
+              previewURL
+                ? previewURL
+                : user?.image
+                  ? user?.image
+                  : '/assistants/general_ai.png'
+            }
+            alt="Profile picture"
+            height={300}
+            width={300}
+            quality={100}
+            className="h-32 w-32 rounded-full"
           />
-          <div
-            className={`w-full transition-all duration-150 ease-linear ${previewURL ? 'h-13' : 'h-0'} overflow-hidden`}
-          >
-            <button
-              type="submit"
-              className="mx-auto mt-4 flex items-center gap-2 rounded-md bg-blue-500 px-3 py-1 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <Spinner
-                  aria-hidden="true"
-                  data-icon="inline-start"
-                  className="size-5"
-                />
-              ) : (
-                <Save aria-hidden="true" strokeWidth={1.5} size={20} />
-              )}
-              Save
-            </button>
-          </div>
         </div>
-      </form>
-      {ToastContainer}
-    </>
+        <label
+          htmlFor="profile"
+          aria-label="Upload profile picture"
+          className="cursor-pointer"
+        >
+          <div className="absolute top-25 left-23 inline-block rounded-full bg-blue-500 p-2 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900">
+            <Pencil aria-hidden="true" strokeWidth={1.5} size={20} />
+          </div>
+        </label>
+        <input
+          {...register('profileImage')}
+          type="file"
+          id="profile"
+          className="hidden"
+          onChange={inputChangeHandler}
+        />
+        <div
+          className={`w-full transition-all duration-150 ease-linear ${previewURL ? 'h-13' : 'h-0'} overflow-hidden`}
+        >
+          <button
+            type="submit"
+            className="mx-auto mt-4 flex items-center gap-2 rounded-md bg-blue-500 px-3 py-1 text-white transition-all duration-150 ease-linear active:scale-90 dark:bg-gray-900"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <Spinner
+                aria-hidden="true"
+                data-icon="inline-start"
+                className="size-5"
+              />
+            ) : (
+              <Save aria-hidden="true" strokeWidth={1.5} size={20} />
+            )}
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
   );
 };
 
