@@ -15,14 +15,11 @@ import AiAssistantSkeleton from '@/components/skeletons/AiAssistantSkeleton';
 import { Spinner } from '@/components/ui/spinner';
 import AgentCards from './AgentCards';
 import { useAgents } from '@/hooks/queries/agent/useAgents';
-import { useConversations } from '@/hooks/queries/conversation/useConversations';
 import PreviousConversations from '../previousConversations/PreviousConversations';
 import { useCreateConversation } from '@/hooks/queries/conversation/useCreateConversation';
 
 const AiAssistant = () => {
   const { agents, isLoading } = useAgents();
-  const { conversations, isLoading: oldConversationLoading } =
-    useConversations();
   const { mutate, isPending } = useCreateConversation();
 
   const selectedAgent = useAppSelector(selectSelectedAgent);
@@ -60,7 +57,7 @@ const AiAssistant = () => {
     );
   };
 
-  if (isLoading || oldConversationLoading) return <AiAssistantSkeleton />;
+  if (isLoading) return <AiAssistantSkeleton />;
 
   return (
     <main className="min-h-dvh pt-24 pb-15 max-md:px-2 md:pt-28">
