@@ -83,6 +83,12 @@ const PreviousChat = ({
           ),
         };
       });
+
+      const isCurrentConversation = currentConversation?._id === id;
+
+      if (isCurrentConversation) {
+        await handleNewConversationCreation();
+      }
     } catch (err) {
       if (err instanceof Error) {
         console.log(err.message);
@@ -91,6 +97,41 @@ const PreviousChat = ({
       }
     } finally {
       setDeleteLoading(false);
+    }
+  };
+
+  const handleNewConversationCreation = async () => {
+    try {
+      const response = await fetch('api/conversation/create', {
+        method: 'POST',
+        body: JSON.stringify({
+          agentId: currentConversation?.agentId,
+          agentTitle: currentConversation?.title,
+          agentName: currentConversation?.agentName,
+          defaultAgentModel: currentConversation?.defaultAgentModel,
+          key: currentConversation?.key,
+          mode: 'text',
+          newCreation: true,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message);
+      }
+
+      const conversationID = result.conversation._id;
+      dispatch(setSlideSidebar(false));
+      router.replace(
+        `/ai-workspace?conversation_id=${conversationID}&mode=text&agentId=${result.conversation.agentId}`,
+      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.log(err.message);
+      } else {
+        console.log('Unknown error', err);
+      }
     }
   };
 

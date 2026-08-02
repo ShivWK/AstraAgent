@@ -186,7 +186,7 @@ const AgentDetails = ({
                 <span>:</span>
               </div>
 
-              <p className="text-md -mt-0.5 font-medium">
+              <p className="text-md -mt-0.5 font-medium text-white">
                 {currentModel?.name}
                 {selectedAgent?.model === currentModel?.id && ' (Default)'}
               </p>
