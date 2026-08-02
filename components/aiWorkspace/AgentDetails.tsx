@@ -146,7 +146,7 @@ const AgentDetails = ({
         <div
           className="bg-model-details mt-3 w-full overflow-hidden rounded-lg border border-gray-300 backdrop-blur-md dark:border-gray-600"
           style={{
-            height: height === 0 ? '3.5rem' : `${height}px`,
+            height: height === 0 ? '3.8rem' : `${height}px`,
             transition: 'height 0.25s linear',
           }}
         >
@@ -184,11 +184,12 @@ const AgentDetails = ({
               <div className="flex w-[85%] flex-wrap items-center gap-0.5 text-white">
                 <p className="text-sm">Current Model</p>
                 <span>:</span>
-                <p className="text-md -mt-0.5 font-medium">
-                  {currentModel?.name}
-                  {selectedAgent?.model === currentModel?.id && ' (Default)'}
-                </p>
               </div>
+
+              <p className="text-md -mt-0.5 font-medium">
+                {currentModel?.name}
+                {selectedAgent?.model === currentModel?.id && ' (Default)'}
+              </p>
 
               <p
                 className={`my-2 w-fit rounded-md border border-gray-300 bg-linear-to-tr from-green-400/40 text-white ${currentModel?.color} px-2 py-0.5 font-medium`}

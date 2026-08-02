@@ -507,7 +507,7 @@ html:not(.dark) {
   --workspace-model-details-bg: linear-gradient(
     to bottom right,
     oklch(62.3% 0.214 259.815),
-    oklch(67.606% 0.04599 260.404 / 0.685)
+    oklch(40.72% 0.0578 259.957 / 0.582)
   );
 
   --workspace-fade-bg: linear-gradient(
