@@ -17,6 +17,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import ReadMore from '../common/ReadMore';
 import useToast from '@/hooks/useToast';
 import { showToast } from '@/utils/showToast';
+import { Spinner } from '../ui/spinner';
 
 type PropsType = {
   conversation: Conversation | null;
@@ -172,6 +173,12 @@ const AgentDetails = ({
                   strokeWidth={2.5}
                 />
                 <p className="text-lg font-medium text-white">Model Details</p>
+                {isSwitchingModel && (
+                  <Spinner
+                    className="mx-1 size-6 text-white"
+                    strokeWidth={2.5}
+                  />
+                )}
               </div>
 
               <div className="flex w-[85%] flex-wrap items-center gap-0.5 text-white">
